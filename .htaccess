@@ -1,0 +1,20 @@
+RewriteEngine on
+ErrorDocument 403 /alfasport/error/page_403.php
+ErrorDocument 404 /alfasport/error/page_404.php
+ErrorDocument 500 /alfasport/error/page_500.php
+
+RewriteRule ^login\.html$ auth/login.php [L]
+RewriteRule ^daftar\.html$ auth/register.php [L]
+RewriteRule ^aksiLogin\.html$ auth/authentication.php [L]
+RewriteRule ^keluar\.html$ auth/logout.php [L]
+
+RewriteRule ^home\.html$ index.php [L]
+RewriteRule ^data_toko\.html$ index.php?page=inc/toko/view_toko [L]
+RewriteRule ^data_karyawan\.html$ index.php?page=inc/karyawan/view_karyawan [L]
+RewriteRule ^data_vendor\.html$ index.php?page=inc/vendor/view_vendor [L]
+RewriteRule ^data_distributor\.html$ index.php?page=inc/distributor/view_distributor [L]
+RewriteRule ^data_member\.html$ index.php?page=inc/member/view_member [L]
+
+RewriteRule ^stok_barang_gudang\.html$ index.php?page=inc/gudang/stok_barang [L]
+RewriteRule ^stok_barang_toko\.html$ index.php?page=inc/toko/stok_barang [L]
+RewriteRule ^penyesuaian_stok\.html$ index.php?page=inc/penyesuaian/penyusuaian_stok [L]

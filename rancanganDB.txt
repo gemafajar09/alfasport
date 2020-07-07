@@ -1,0 +1,56 @@
+# tb_admin
+* id_admin
+- nama
+- username
+- password
+- level
+
+# tb_store
+* id_store
+- nama_store
+
+# tb_barang_gudang
+* id_barnag
+- kd_barnag
+- nama_barang
+- merek_barnag
+- divisi
+- kategori
+- gender
+- jumlah
+- harga_modal
+- harga_jual
+
+# tb_barang_toko
+* id_barang_toko
+- id_store
+- id_barang
+- jumlah_stok
+- harga_modal_toko
+- harga_jual_toko
+
+# tb_return
+* id_return
+- id_store
+- id_barang
+- jumlah
+- tanggal
+- id_admin
+
+# tb_transfer
+* id_transfer
+- invoice
+- id_toko
+- id_toko_tujuan
+- id_barang
+- jumlah
+- tanggal
+- id_admin
+
+# tb_terima_transfer
+* id_terima_transfer
+- invoice
+- id_toko_pengirim
+- id_barang
+- jumlah
+- tanggal
