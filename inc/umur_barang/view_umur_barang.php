@@ -1,6 +1,6 @@
 <div class="page-title">
     <div class="title_left">
-    <h3>Data Vendor</h3>
+    <h3>Data Umur Barang</h3>
     </div>
 
     <div class="title_right">
@@ -50,13 +50,13 @@
 </div>
 
 <!-- The Modal -->
-<div class="modal" id="dataVendor">
+<div class="modal" id="umurBarang">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Data Vendor</h4>
+        <h4 class="modal-title">Data Umur Barang</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
@@ -76,7 +76,7 @@
 <script>
 function tampil()
 {
-    $('#dataVendor').modal()
+    $('#umurBarang').modal()
 }
     $('#isi').load('inc/vendor/data_vendor.php');
 </script>

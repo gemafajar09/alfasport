@@ -12,10 +12,9 @@
                 <li><a href="home.html"><i class="fa fa-home"></i> Dashboard</a></li>
                 <li><a><i class="fa fa-database"></i> Master Data <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="data_toko.html">Toko</a></li>
-                        <li><a href="data_karyawan.html">Karyawan</a></li>
-                        <li><a href="data_vendor.html">Vendor</a></li>
-                        <li><a href="data_distributor.html">Distributor</a></li>
+                        <li><a href="data_toko.html">Data Toko</a></li>
+                        <li><a href="data_karyawan.html">Data Karyawan</a></li>
+                        <li><a href="data_umur_barang.html">Data Umur Barang</a></li>
                         <li><a href="data_member.html">Member</a></li>
                         <li><a href="data_supplier.html">Supplier</a></li>
                     </ul>
