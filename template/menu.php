@@ -17,6 +17,7 @@
                         <li><a href="data_vendor.html">Vendor</a></li>
                         <li><a href="data_distributor.html">Distributor</a></li>
                         <li><a href="data_member.html">Member</a></li>
+                        <li><a href="data_supplier.html">Supplier</a></li>
                     </ul>
                 </li>
                 <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
