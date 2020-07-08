@@ -156,7 +156,7 @@ Similar to tables and dark tables, use the modifier classes `.thead-light` or `.
 Use `.table-striped` to add zebra-striping to any table row within the `<tbody>`.
 
 {% capture example %}
-<table class="table table-striped">
+<table class="table table-striped" id="datatable-responsive">
   <thead>
     <tr>
       <th scope="col">#</th>

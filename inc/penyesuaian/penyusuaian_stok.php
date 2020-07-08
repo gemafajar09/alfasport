@@ -1,6 +1,6 @@
 <div class="page-title">
     <div class="title_left">
-    <h3>Penyesuaian Stok</h3>
+        <h3>Penyesuaian Stok</h3>
     </div>
 
     <div class="title_right">
@@ -49,17 +49,17 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content table-responsive">
-        <table class="table table-striped" style="font-size:11px">
+        <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
             <thead>
-            <tr>
-                <th>No</th>
-                <th>Tanggal</th>
-                <th>Toko</th>
-                <th>Tipe Penyesuaian</th>
-                <th>Create At</th>
-                <th>Create By</th>
-                <th>Action</th>
-            </tr>
+                <tr>
+                    <th>No</th>
+                    <th>Tanggal</th>
+                    <th>Toko</th>
+                    <th>Tipe Penyesuaian</th>
+                    <th>Create At</th>
+                    <th>Create By</th>
+                    <th>Action</th>
+                </tr>
             </thead>
             <tbody id="isi"></tbody>
         </table>
