@@ -1,6 +1,6 @@
 <div class="page-title">
     <div class="title_left">
-    <h3>Data Barang Gudang</h3>
+        <h3>Data Barang Gudang</h3>
     </div>
 
     <div class="title_right">
@@ -43,28 +43,30 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content table-responsive">
-        <table class="table table-striped" style="font-size:11px">
+        <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nama</th>
-                <th>Merek</th>
-                <th>Kategiri</th>
-                <th>Divsi</th>
-                <th>Sub Divisi</th>
-                <th>Gender</th>
-                <th>Jumlah</th>
-                <th colspan=2><center>Harga</center></th>
-                <th>Total</th>
-                <th>Action</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Merek</th>
+                    <th>Kategiri</th>
+                    <th>Divsi</th>
+                    <th>Sub Divisi</th>
+                    <th>Gender</th>
+                    <th>Jumlah</th>
+                    <th colspan=2>
+                        <center>Harga</center>
+                    </th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
                 <th colspan="8"></th>
                 <th>Harga Modal</th>
                 <th>Harga Jual</th>
                 <th colspan="2"></th>
-            <tr>
+                <tr>
 
-            </tr>
+                </tr>
             </thead>
             <tbody id="isi"></tbody>
         </table>
