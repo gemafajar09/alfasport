@@ -83,7 +83,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+        <button type="button" onclick="simpan()" class="btn btn-primary" data-dismiss="modal">Simpan</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
 
@@ -130,7 +130,7 @@ function edit(id)
     }).then(function(res){
         var data = res.data
         $('#alamat').val(data.alamat)
-        $('#nama').val(data.nama)
+        $('#nama').val(data.nama_member)
         $('#no_telpon').val(data.no_telpon)
         $('#no_hp').val(data.no_hp)
         $('#id_member').val(data.id_member)
