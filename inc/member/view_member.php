@@ -82,10 +82,11 @@
                 </div>
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
+      <div class="modal-footer">
+        <button type="button" onclick="simpan()" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
 
         </div>
     </div>
@@ -121,22 +122,23 @@
         })
     }
 
-    function edit(id) {
-        axios.post('inc/member/aksi_edit_member.php', {
-            'id_member': id
-        }).then(function(res) {
-            var data = res.data
-            $('#alamat').val(data.alamat)
-            $('#nama').val(data.nama)
-            $('#no_telpon').val(data.no_telpon)
-            $('#no_hp').val(data.no_hp)
-            $('#id_member').val(data.id_member)
-            $('#dataMember').modal()
-        }).catch(function(err) {
-            console.log(err)
-        })
-    }
 
+function edit(id)
+{
+    axios.post('inc/member/aksi_edit_member.php',{
+        'id_member':id
+    }).then(function(res){
+        var data = res.data
+        $('#alamat').val(data.alamat)
+        $('#nama').val(data.nama_member)
+        $('#no_telpon').val(data.no_telpon)
+        $('#no_hp').val(data.no_hp)
+        $('#id_member').val(data.id_member)
+        $('#dataMember').modal()
+    }).catch(function(err){
+        console.log(err)
+    })
+}
     function hapus(id) {
         axios.post('inc/member/aksi_hapus_member.php', {
             'id_member': id
