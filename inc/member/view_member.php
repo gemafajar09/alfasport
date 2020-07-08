@@ -51,7 +51,7 @@
 
 <!-- The Modal -->
 <div class="modal" id="dataMember">
-  <div class="modal-dialog modal-xl">
+  <div class="modal-dialog modal-md">
     <div class="modal-content">
 
       <!-- Modal Header -->
@@ -61,7 +61,25 @@
       </div>
 
       <div class="modal-body">
-        
+        <div class="container">
+            <div class="form-group">
+                <label>Nama</label>
+                <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama..">
+            </div>
+            <div class="form-group">
+                <label>No Telpon</label>
+                <input type="number" name="no_telpon" id="no_telpon" class="form-control" placeholder="No TElpon..">
+            </div>
+            <div class="form-group">
+                <label>No Hp</label>
+                <input type="number" name="no_hp" id="no_hp" class="form-control" placeholder="No Hp..">
+                <input type="hidden" id="id_member">
+            </div>
+            <div class="form-group">
+                <label>Alamat</label>
+                <textarea name="alamat" style="height:118px" id="alamat" class="form-control"></textarea>
+            </div>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -77,6 +95,68 @@
 function tampil()
 {
     $('#dataMember').modal()
+}
+
+function simpan()
+{
+    var nama = $('#nama').val()
+    var alamat = $('#alamat').val()
+    var no_telpon = $('#no_telpon').val()
+    var no_hp = $('#no_hp').val()
+    var id_member = $('#id_member').val()
+
+    axios.post('inc/member/aksi_simpan_member.php',{
+        'nama': nama,
+        'id_member': id_member,
+        'alamat': alamat,
+        'no_hp': no_hp,
+        'no_telpon': no_telpon,
+    }).then(function(res){
+        kosong()
+        $('#dataMember').modal('hide')
+        $('#isi').load('inc/member/data_member.php');
+    }).catch(function(err){
+        console.log(err)
+        kosong()
+        $('#dataMember').modal('hide')
+        $('#isi').load('inc/member/data_member.php');
+    })
+}
+
+function edit(id)
+{
+    axios.post('inc/member/aksi_edit_member.php',{
+        'id_member':id
+    }).then(function(res){
+        var data = res.data
+        $('#alamat').val(data.alamat)
+        $('#nama').val(data.nama)
+        $('#no_telpon').val(data.no_telpon)
+        $('#no_hp').val(data.no_hp)
+        $('#id_member').val(data.id_member)
+        $('#dataMember').modal()
+    }).catch(function(err){
+        console.log(err)
+    })
+}
+
+function hapus(id)
+{
+    axios.post('inc/member/aksi_hapus_member.php',{
+        'id_member':id
+    }).then(function(res){
+        var data = res.data
+        $('#isi').load('inc/member/data_member.php');
+    })
+}
+
+function kosong()
+{
+    $('#id_member').val('')
+    $('#alamat').val('')
+    $('#nama').val('')
+    $('#no_telpon').val('')
+    $('#no_hp').val('')
 }
     $('#isi').load('inc/member/data_member.php');
 </script>
