@@ -5,7 +5,7 @@ if(isset($_POST['login']))
 {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $cek = $con->query("SELECT * FROM tb_admin WHERE username = '$username'")->fetch_assoc();
+    $cek = $con->query("SELECT * FROM tb_admin WHERE username = '$username'")->fetch();
     if($cek['username'] == $username)
     {
         if(password_verify($password, $cek['password'],))

@@ -1,6 +1,6 @@
 <?php
 $base_url = 'http://localhost/alfasport/';
-require "./Medoo.php";
+require "Medoo.php";
 
 use Medoo\Medoo;
 
