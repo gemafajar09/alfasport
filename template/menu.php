@@ -24,7 +24,7 @@
                             <li><a href="data_satuan.html">Satuan</a></li>
                             <li><a href="stok_barang_toko.html">Ukuran</a></li>
                             <li><a href="data_kategori.html">Kategori</a></li>
-                            <li><a href="stok_barang_toko.html">Divisi</a></li>
+                            <li><a href="data_divisi.html">Divisi</a></li>
                             <li><a href="penyesuaian_stok.html">Sub Divisi</a></li>
                             <li><a href="penyesuaian_stok.html">Gender</a></li>
                             <li><a href="penyesuaian_stok.html">Merek</a></li>
