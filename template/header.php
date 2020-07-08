@@ -29,10 +29,12 @@
 
   <!-- Custom Theme Style -->
   <link href="<?= $base_url ?>build/css/custom.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
 <body class="nav-md">
   <!-- jQuery -->
   <script src="<?= $base_url ?>vendors/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
   <div class="container body">
     <div class="main_container">
