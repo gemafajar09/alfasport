@@ -28,6 +28,7 @@
                             <li><a href="data_subdivisi.html">Sub Divisi</a></li>
                             <li><a href="data_gender.html">Gender</a></li>
                             <li><a href="data_merk.html">Merk</a></li>
+                            <li><a href="data_detail_ukuran.html">Detail Ukuran</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-cube"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
