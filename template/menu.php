@@ -22,7 +22,7 @@
                     <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="data_satuan.html">Satuan</a></li>
-                            <li><a href="stok_barang_toko.html">Ukuran</a></li>
+                            <li><a href="data_ukuran.html">Ukuran</a></li>
                             <li><a href="data_kategori.html">Kategori</a></li>
                             <li><a href="data_divisi.html">Divisi</a></li>
                             <li><a href="data_subdivisi.html">Sub Divisi</a></li>
