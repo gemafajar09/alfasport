@@ -1,6 +1,6 @@
 <div class="page-title">
     <div class="title_left">
-        <h3>Data Satuan</h3>
+        <h3>Data Gender</h3>
     </div>
 
     <div class="title_right">
@@ -37,7 +37,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th style="width:180px">Satuan Barang</th>
+                    <th>Gender</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -47,13 +47,13 @@
 </div>
 
 <!-- The Modal -->
-<div class="modal" id="dataSatuan">
+<div class="modal" id="dataGender">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Data Satuan</h4>
+                <h4 class="modal-title">Data Gender</h4>
             </div>
 
             <div class="modal-body">
@@ -61,9 +61,9 @@
                     <div class="row" style="font-size:12px">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Nama Satuan</label>
-                                <input type="text" name="satuan_nama" id="satuan_nama" required="required" placeholder="Nama Satuan" class="form-control">
-                                <input type="hidden" id="satuan_id">
+                                <label>Nama Gender</label>
+                                <input type="text" name="gender_nama" id="gender_nama" required="required" placeholder="Nama Gender" class="form-control">
+                                <input type="hidden" id="gender_id">
                             </div>
                         </div>
                     </div>
@@ -81,57 +81,57 @@
 
 <script>
     function tampil() {
-        $('#dataSatuan').modal()
+        $('#dataGender').modal()
     }
 
     function simpan() {
-        var satuan_nama = $('#satuan_nama').val()
-        var satuan_id = $('#satuan_id').val()
-        axios.post('inc/satuan/aksi_simpan_satuan.php', {
-            'satuan_nama': satuan_nama,
-            'satuan_id': satuan_id,
+        var gender_nama = $('#gender_nama').val()
+        var gender_id = $('#gender_id').val()
+        axios.post('inc/gender/aksi_simpan_gender.php', {
+            'gender_nama': gender_nama,
+            'gender_id': gender_id,
         }).then(function(res) {
             var simpan = res.data
             console.log(simpan)
-            $('#dataSatuan').modal('hide')
-            $('#isi').load('inc/satuan/data_satuan.php');
+            $('#dataGender').modal('hide')
+            $('#isi').load('inc/gender/data_gender.php');
             kosong()
         }).catch(function(err) {
             alert(err)
-            $('#dataSatuan').modal('hide')
-            $('#isi').load('inc/satuan/data_satuan.php');
+            $('#dataGender').modal('hide')
+            $('#isi').load('inc/gender/data_gender.php');
             kosong()
         })
     }
 
     function edit(id) {
-        axios.post('inc/satuan/aksi_edit_satuan.php', {
-            'satuan_id': id
+        axios.post('inc/gender/aksi_edit_gender.php', {
+            'gender_id': id
         }).then(function(res) {
             var edit = res.data
-            $('#satuan_nama').val(edit.satuan_nama)
-            $('#satuan_id').val(edit.satuan_id)
-            $('#dataSatuan').modal()
+            $('#gender_nama').val(edit.gender_nama)
+            $('#gender_id').val(edit.gender_id)
+            $('#dataGender').modal()
         }).catch(function(err) {
             console.log(err)
         })
     }
 
     function hapus(id) {
-        axios.post('inc/satuan/aksi_hapus_satuan.php', {
-            'satuan_id': id
+        axios.post('inc/gender/aksi_hapus_gender.php', {
+            'gender_id': id
         }).then(function(res) {
             var hapus = res.data
-            $('#isi').load('inc/satuan/data_satuan.php');
+            $('#isi').load('inc/gender/data_gender.php');
         }).catch(function(err) {
             console.log(err)
         })
     }
 
     function kosong() {
-        $('#satuan_nama').val('')
-        $('#satuan_id').val('')
+        $('#gender_nama').val('')
+        $('#gender_id').val('')
     }
 
-    $('#isi').load('inc/satuan/data_satuan.php');
+    $('#isi').load('inc/gender/data_gender.php');
 </script>
