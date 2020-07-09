@@ -26,7 +26,7 @@
                             <li><a href="data_kategori.html">Kategori</a></li>
                             <li><a href="data_divisi.html">Divisi</a></li>
                             <li><a href="data_subdivisi.html">Sub Divisi</a></li>
-                            <li><a href="penyesuaian_stok.html">Gender</a></li>
+                            <li><a href="data_gender.html">Gender</a></li>
                             <li><a href="penyesuaian_stok.html">Merek</a></li>
                         </ul>
                     </li>
