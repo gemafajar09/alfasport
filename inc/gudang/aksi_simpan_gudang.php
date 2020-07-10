@@ -4,10 +4,15 @@ include "../../config/koneksi.php";
 $json = file_get_contents('php://input');
 $_POST = json_decode($json,true);
 $data = array(
-    'nama_member' => $_POST['nama'],
-    'alamat' => $_POST['alamat'],
-    'no_telpon' => $_POST['no_telpon'],
-    'no_hp' => $_POST['no_hp']
+    'id' => $_POST['id'],
+    'id_merek' => $_POST['nama'],
+    'jumlah' => $_POST['jumlah'],
+    'modal' => $_POST['modal'],
+    'jual' => $_POST['jual'],
+    'id_gender' => $_POST['gender'],
+    'id_kategori' => $_POST['kategori'],
+    'id_divisi' => $_POST['divisi'],
+    'id_sub_divisi' => $_POST['sub_divisi'],
 );
 
 if($_POST['id_member'] == NULL)

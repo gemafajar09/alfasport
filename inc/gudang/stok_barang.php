@@ -110,8 +110,10 @@
                                 <input type="number" name="id" id="id" class="form-control" placeholder="ID..">
                             </div>
                             <div class="form-group">
-                                <label>Nama</label>
-                                <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama..">
+                                <label>Merek</label>
+                                <select name="nama" id="nama" class="form-control">
+                                    <option value="">-Merek-</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Jumlah</label>
@@ -224,15 +226,16 @@ function edit(id)
         }).then(function(res){
             var data = res.data
             $('#id').val(data.id)
-            $('#nama').val(data.nama_member)
+            $('#nama').val(data.nama)
             $('#jumlah').val(data.jumlah)
             $('#modal').val(data.modal)
             $('#jual').val(data.jual)
             $('#mereks').val(data.merek)
             $('#genders').val(data.gender)
-            $('#kategories').val(data.kategori)
-            $('#divisi').val(data.divisis)
-            $('#sub_divisis').val(data.sub_divisi)
+            $('#kategories').val(data.id_kategori)
+            $('#divisia').val(data.id_divisi)
+            $('#sub_divisis').val(data.id_sub_divisi)
+            $('#id_gudang').val(data.id_gudang)
             $('#dataGudang').modal()
         }).catch(function(err){
             console.log(err)

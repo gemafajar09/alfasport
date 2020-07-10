@@ -1,0 +1,33 @@
+tb_ukuran           
+*id _ukuran 
+- nama_ukuran  
+
+tb_detail_ukuran                           
+* id_detail_ukuran                       
+- id_ukuran                             
+- id_kategori                                  
+- id_divisi
+- id_sub_divisi
+- id_gender
+- ukuran
+- stok
+- harga_jual
+- harga_modal
+
+tb_kategori 
+* id_kategori
+- nama_kategori
+
+tb_divisi 
+* id_divisi
+- id_kategori
+- nama_divisi
+
+tb_sub_divisi 
+* id_sub_divisi
+- id_divisi
+- nama_sub_divisi
+
+tb_gender 
+* id_gender 
+- gender
