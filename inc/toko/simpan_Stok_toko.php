@@ -19,12 +19,12 @@ $data = array(
 
 if($_POST['id_toko'] == NULL)
 {
-    $simpan = $con->insert('tb_toko', $data);
+    $simpan = $con->insert('tb_stok_toko', $data);
 }
 else
 {
     $where = array('id_toko' => $_POST['id_toko']);
-    $simpan = $con->update('tb_toko',$data,$where);
+    $simpan = $con->update('tb_stok_toko',$data,$where);
 }
 
 if($simpan == TRUE)
