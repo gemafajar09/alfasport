@@ -77,14 +77,13 @@
                         <center>Harga</center>
                     </th>
                     <th>Total</th>
-                    <th>Action</th>
+                    <th style="width:120px">Action</th>
                 </tr>
-                <th colspan="8"></th>
-                <th>Harga Modal</th>
-                <th>Harga Jual</th>
-                <th colspan="2"></th>
                 <tr>
-
+                    <th colspan="9"></th>
+                    <th>Modal</th>
+                    <th>Jual</th>
+                    <th colspan="2"></th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>
@@ -263,6 +262,7 @@ function edit(id)
             var data = res.data
             $('#id').val(data.id)
             $('#nama').val(data.nama)
+            $('#artikel').val(data.artikel)
             $('#jumlah').val(data.jumlah)
             $('#modal').val(data.modal)
             $('#jual').val(data.jual)
@@ -279,7 +279,7 @@ function edit(id)
     }
     function hapus(id) {
         axios.post('inc/toko/hapus_Stok_toko.php', {
-            'id_gudang': id
+            'id_toko': id
         }).then(function(res) {
             var data = res.data
             $('#isi').load('inc/toko/data_stok.php');

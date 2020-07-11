@@ -5,12 +5,7 @@
 
     <div class="title_right">
         <div class="col-md-5 col-sm-5   form-group pull-right top_search">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                </span>
-            </div>
+            //
         </div>
     </div>
 </div>
@@ -33,7 +28,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content table-responsive">
-        <table class="table table-striped" id="datatable-responsive" id="datatable-responsive" id="datatable-responsive" style="font-size:11px">
+        <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
             <thead>
                 <tr>
                     <th>No</th>

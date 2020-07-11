@@ -18,7 +18,7 @@ foreach($data as $i => $a){
     <td>
         <button type="button" onclick="edit('<?= $a['id_gudang'] ?>')" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
         <button type="button" id="hapus" onclick="hapus('<?= $a['id_gudang'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-        <a href="" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+        <button type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
     </td>
 </tr>
 <?php } ?>
