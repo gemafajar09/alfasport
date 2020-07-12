@@ -61,9 +61,11 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content table-responsive">
-        <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
+        <table class="table table-striped" id="datatable-responsive" id="datatable-responsive" id="datatable-responsive" style="font-size:11px">
             <thead>
                 <tr>
+                    <th>No</th>
+                    <th>Nama Toko</th>
                     <th>ID</th>
                     <th>Nama</th>
                     <th>Artikel</th>
@@ -77,10 +79,10 @@
                         <center>Harga</center>
                     </th>
                     <th>Total</th>
-                    <th style="width:120px">Action</th>
+                    <th style="width:180px">Action</th>
                 </tr>
                 <tr>
-                    <th colspan="9"></th>
+                    <th colspan="11"></th>
                     <th>Modal</th>
                     <th>Jual</th>
                     <th colspan="2"></th>
@@ -93,12 +95,12 @@
 
 <!-- The Modal -->
 <div class="modal" id="dataToko">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Data Toko</h4>
+                <h5 class="modal-title">Data Toko</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -107,102 +109,45 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>ID</label>
-                                <input type="number" name="id" id="id" class="form-control" placeholder="ID..">
-                            </div>
-                            <div class="form-group">
-                                <label>Nama</label>
-                                <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama">
-                            </div>
-                            <div class="form-group">
-                                <label>Artikel</label>
-                                <input type="text" name="artikel" id="artikel" class="form-control" placeholder="Artikel">
-                            </div>
-                            <div class="form-group">
-                                <label>Jumlah</label>
-                                <input type="text" name="jumlah" id="jumlah" class="form-control" placeholder="Jumlah..">
-                            </div>
-                            <div class="form-group">
-                                <label>Harga Modal</label>
-                                <input type="number" name="modal" id="modal" class="form-control" placeholder="Harga Modal..">
-                            </div>
-                            <div class="form-group">
-                                <label>Harga Jual</label>
-                                <input type="number" name="jual" id="jual" class="form-control" placeholder="Harga Jual..">
+                                <label for="">Nama Toko</label><br>
+                                <select name="toko" id="toko" style="width:260px" class="form-control select2">
+                                    <option value="">-PILIH-</option>
+                                    <?php
+                                        $data = $con->select('toko','*');
+                                        foreach($data as $a){
+                                    ?>
+                                        <option value="<?= $a['id_toko'] ?>"><?= $a['nama_toko'] ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <div class="form-group">
-                                <label>Gender</label>
-                                <select name="gender" id="genders" class="form-control">
-                                    <option value="">-Gender-</option>
+                                <label for="">Barang Gudang</label><br>
+                                <select name="gudang" id="gudang" style="width:460px" class="form-control select2">
+                                    <option value="">-PILIH-</option>
                                     <?php
-                                        $gender = $con->select('tb_gender','*');
-                                        foreach($gender as $b){
+                                        $data = $con->query("SELECT a.id_gudang, a.artikel, a.nama, a.id, b.ue, b.us, b.uk, b.cm FROM tb_gudang a JOIN tb_gudang_detail b ON a.id_gudang=b.id_gudang")->fetchAll();
+                                        foreach($data as $a){
                                     ?>
-                                    <option value="<?= $b['gender_id'] ?>"><?= $b['gender_nama'] ?></option>
+                                        <option value="<?= $a['id_gudang'] ?>"><?=  $a['artikel']  ?> - <?=  $a['nama']  ?> - <?=  $a['id']  ?>-(UE:<?= $a['ue'] ?>&nbsp;US:<?= $a['us'] ?>&nbsp;UK:<?= $a['uk'] ?>&nbsp;CM:<?= $a['cm'] ?>)</option>
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label>Merek</label>
-                                <select name="merek" id="mereks" class="form-control">
-                                    <option value="">-Merek-</option>
-                                    <?php
-                                        $merek = $con->select('tb_merk','*');
-                                        foreach($merek as $b){
-                                    ?>
-                                    <option value="<?= $b['merk_id'] ?>"><?= $b['merk_nama'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Kategori</label>
-                                <select name="kategoris" id="kategoris" class="form-control">
-                                    <option value="">-Kategori-</option>
-                                    <?php
-                                        $kategori = $con->select('tb_kategori','*');
-                                        foreach($kategori as $b){
-                                    ?>
-                                    <option value="<?= $b['kategori_id'] ?>"><?= $b['kategori_nama'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Divisi</label>
-                                <select name="divisi" id="divisis" class="form-control">
-                                    <option value="">-Divisi-</option>
-                                    <?php
-                                        $divisi = $con->select('tb_divisi','*');
-                                        foreach($divisi as $b){
-                                    ?>
-                                    <option value="<?= $b['divisi_id'] ?>"><?= $b['divisi_nama'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Sub Divisi</label>
-                                <select name="sub_divisi" id="sub_divisis" class="form-control">
-                                    <option value="">-Sub Divisi-</option>
-                                    <?php
-                                        $subdivisi = $con->select('tb_subdivisi','*');
-                                        foreach($subdivisi as $b){
-                                    ?>
-                                    <option value="<?= $b['subdivisi_id'] ?>"><?= $b['subdivisi_nama'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <input type="hidden" id="id_toko">
                         </div>
-                    </div>
+                        <div class="col-md-3 text-left">
+                            <label for="">Jumlah</label><br>
+                            <input type="text" style="width:80px" name="jumlah" id="jumlah" class="form-control">
+                            <input type="hidden" id="id_stok_toko">
+                        </div>
+                        </div>
                 </div>
             </div>
 
-      <div class="modal-footer">
-        <button type="button" onclick="simpan()" class="btn btn-primary" data-dismiss="modal">Simpan</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
+            <div class="modal-footer">
+                <button type="button" onclick="simpan()" class="btn btn-primary btn-sm" data-dismiss="modal">Simpan</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
 
         </div>
     </div>
@@ -211,36 +156,24 @@
 <script>
     function tampil()
     {
+        $('#toko').focus()
         $('#dataToko').modal()
     }
 
-    function simpan() {
-        var id = $('#id').val()
-        var nama = $('#nama').val()
-        var artikel = $('#artikel').val()
-        var jumlah = $('#jumlah').val()
-        var modal = $('#modal').val()
-        var jual = $('#jual').val()
-        var mereks = $('#mereks').val()
-        var genders = $('#genders').val()
-        var kategoris = $('#kategoris').val()
-        var divisis = $('#divisis').val()
-        var sub_divisis = $('#sub_divisis').val()
-        var id_gudang = $('#id_gudang').val()
+    $('#gudang').change(function(){
+        document.getElementById('jumlah').focus()
+    })
 
+    function simpan() {
+        var toko = $('#toko').val()
+        var gudang = $('#gudang').val()
+        var jumlah = $('#jumlah').val()
+        var id_stok_toko = $('#id_stok_toko').val()
         axios.post('inc/toko/simpan_Stok_toko.php', {
-            'id': id,
-            'nama': nama,
-            'artikel': artikel,
+            'toko': toko,
+            'gudang': gudang,
             'jumlah': jumlah,
-            'modal': modal,
-            'jual': jual,
-            'merek': mereks,
-            'gender': genders,
-            'kategori': kategoris,
-            'divisi': divisis,
-            'sub_divisi': sub_divisis,
-            'id_gudang': id_gudang
+            'id': id_stok_toko
         }).then(function(res) {
             kosong()
             $('#dataToko').modal('hide')
@@ -260,18 +193,10 @@ function edit(id)
         'id':id
         }).then(function(res){
             var data = res.data
-            $('#id').val(data.id)
-            $('#nama').val(data.nama)
-            $('#artikel').val(data.artikel)
+            $('#toko').val(data.id_toko)
+            $('#gudang').val(data.id_gudang)
             $('#jumlah').val(data.jumlah)
-            $('#modal').val(data.modal)
-            $('#jual').val(data.jual)
-            $('#mereks').val(data.id_merek)
-            $('#genders').val(data.id_gender)
-            $('#kategoris').val(data.id_kategori)
-            $('#divisis').val(data.id_divisi)
-            $('#sub_divisis').val(data.id_sub_divisi)
-            $('#id_gudang').val(data.id_gudang)
+            $('#id_stok_toko').val(data.id_stok_toko)
             $('#dataToko').modal()
         }).catch(function(err){
             console.log(err)
@@ -287,17 +212,10 @@ function edit(id)
     }
 
     function kosong() {
-        $('#id').val('')
-        $('#nama').val('')
-        $('#artikel').val('')
+        $('#id_stok_toko').val('')
+        $('#toko').val('')
+        $('#gudang').val('')
         $('#jumlah').val('')
-        $('#modal').val('')
-        $('#jual').val('')
-        $('#mereks').val('')
-        $('#genders').val('')
-        $('#kategoris').val('')
-        $('#divisis').val('')
-        $('#sub_divisis').val('')
     }
 
     $('#isi').load('inc/toko/data_stok.php');
