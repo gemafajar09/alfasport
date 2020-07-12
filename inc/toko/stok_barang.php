@@ -153,6 +153,81 @@
     </div>
 </div>
 
+<div class="modal" id="dataDetail">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama Toko</th>
+                                <th>Artikel</th>
+                                <th>Nama</th>
+                                <th>Merek</th>
+                                <th>Kategori</th>
+                                <th>Divsi</th>
+                                <th>Sub Divisi</th>
+                                <th>Gender</th>
+                                <th>Jumlah</th>
+                                <th colspan=2>
+                                    <center>Harga</center>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="10"></th>
+                                <th>Modal</th>
+                                <th>Jual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b id="id1"></b></td>
+                                <td><b id="nama_toko1"></b></td>
+                                <td><b id="artikel1"></b></td>
+                                <td><b id="nama1"></b></td>
+                                <td><b id="merek1"></b></td>
+                                <td><b id="kategori1"></b></td>
+                                <td><b id="divisi1"></b></td>
+                                <td><b id="subdivisi1"></b></td>
+                                <td><b id="gender1"></b></td>
+                                <td><b id="jumlah1"></b></td>
+                                <td><b id="modal1"></b></td>
+                                <td><b id="jual1"></b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-4 mx-auto">
+                        <center>Ukuran</center>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>UE</th>
+                                        <th>UK</th>
+                                        <th>US</th>
+                                        <th>CM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b id="ues"></b></td>
+                                        <td><b id="uks"></b></td>
+                                        <td><b id="uss"></b></td>
+                                        <td><b id="cms"></b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     function tampil()
     {
@@ -186,9 +261,38 @@
         })
     }
 
+    function show(id)
+    {
+        axios.post('inc/toko/show_detail.php',{
+            'id':id
+        }).then(function(res){
+            var data = res.data
+            $('#ues').html(data.ue)
+            $('#uks').html(data.uk)
+            $('#uss').html(data.us)
+            $('#cms').html(data.cm)
 
-function edit(id)
-{
+            $('#nama1').html(data.nama)
+            $('#nama_toko1').html(data.nama_toko)
+            $('#id1').html(data.id)
+            $('#artikel1').html(data.artikel)
+            $('#merek1').html(data.merk_nama)
+            $('#gender1').html(data.gender_nama)
+            $('#divisi1').html(data.divisi_nama)
+            $('#subdivisi1').html(data.subdivisi_nama)
+            $('#jumlah1').html(data.jml)
+            $('#modal1').html(data.modal)
+            $('#jual1').html(data.jual)
+            $('#kategori1').html(data.kategori_nama)
+        }).catch(function(err){
+            console.log(err)
+        })
+        $('#dataDetail').modal()
+    }
+
+
+    function edit(id)
+    {
     axios.post('inc/toko/edit_Stok_toko.php',{
         'id':id
         }).then(function(res){
