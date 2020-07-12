@@ -33,7 +33,7 @@
                 <tr>
                     <th>No</th>
                     <th>Merk</th>
-                    <th>Action</th>
+                    <th><center>Action</center></th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>

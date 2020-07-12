@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 10 Jul 2020 pada 15.25
+-- Waktu pembuatan: 12 Jul 2020 pada 13.44
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.3.13
 
@@ -57,10 +57,7 @@ CREATE TABLE `tb_detail_ukuran` (
   `divisi_id` int(11) NOT NULL,
   `subdivisi_id` int(11) NOT NULL,
   `gender_id` int(11) NOT NULL,
-  `detail_ukuran_ukuran` varchar(255) NOT NULL,
-  `detail_ukuran_stok` int(11) NOT NULL,
-  `detail_ukuran_harga_modal` varchar(255) NOT NULL,
-  `detail_ukuran_harga_jual` varchar(255) NOT NULL
+  `detail_ukuran` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -114,6 +111,7 @@ INSERT INTO `tb_gender` (`gender_id`, `gender_nama`) VALUES
 CREATE TABLE `tb_gudang` (
   `id_gudang` int(11) NOT NULL,
   `id` varchar(20) NOT NULL,
+  `artikel` varchar(100) NOT NULL,
   `nama` text NOT NULL,
   `id_merek` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
@@ -129,8 +127,31 @@ CREATE TABLE `tb_gudang` (
 -- Dumping data untuk tabel `tb_gudang`
 --
 
-INSERT INTO `tb_gudang` (`id_gudang`, `id`, `nama`, `id_merek`, `jumlah`, `modal`, `jual`, `id_gender`, `id_kategori`, `id_divisi`, `id_sub_divisi`) VALUES
-(1, '6546546546', 'adidsas baru', 6, 150000, 5000000, 5000000, 3, 0, 20, 7);
+INSERT INTO `tb_gudang` (`id_gudang`, `id`, `artikel`, `nama`, `id_merek`, `jumlah`, `modal`, `jual`, `id_gender`, `id_kategori`, `id_divisi`, `id_sub_divisi`) VALUES
+(31, '132', '56778', 'Nihil nostrum aut in', 6, 60005, 6000, 600, 4, 11, 22, 8);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_gudang_detail`
+--
+
+CREATE TABLE `tb_gudang_detail` (
+  `id_detail` int(11) NOT NULL,
+  `id_gudang` int(11) NOT NULL,
+  `ue` varchar(10) NOT NULL,
+  `us` varchar(10) NOT NULL,
+  `uk` varchar(10) NOT NULL,
+  `cm` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_gudang_detail`
+--
+
+INSERT INTO `tb_gudang_detail` (`id_detail`, `id_gudang`, `ue`, `us`, `uk`, `cm`) VALUES
+(21, 30, '48', '79', '33', '76'),
+(22, 31, '50', '41', '24', '40');
 
 -- --------------------------------------------------------
 
@@ -245,19 +266,18 @@ INSERT INTO `tb_satuan` (`satuan_id`, `satuan_nama`) VALUES
 --
 
 CREATE TABLE `tb_stok_toko` (
+  `id_stok_toko` int(11) NOT NULL,
   `id_toko` int(11) NOT NULL,
-  `id` varchar(20) NOT NULL,
-  `nama` text NOT NULL,
-  `artikel` text NOT NULL,
-  `id_merek` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `modal` int(11) NOT NULL,
-  `jual` int(11) NOT NULL,
-  `id_gender` int(11) NOT NULL,
-  `id_kategori` int(11) NOT NULL,
-  `id_divisi` int(11) NOT NULL,
-  `id_sub_divisi` int(11) NOT NULL
+  `id_gudang` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_stok_toko`
+--
+
+INSERT INTO `tb_stok_toko` (`id_stok_toko`, `id_toko`, `id_gudang`, `jumlah`) VALUES
+(2, 22, 31, 10);
 
 -- --------------------------------------------------------
 
@@ -311,8 +331,10 @@ CREATE TABLE `tb_ukuran` (
 --
 
 INSERT INTO `tb_ukuran` (`ukuran_id`, `ukuran_nama`) VALUES
-(2, 'UK'),
-(3, 'US');
+(1, 'UE'),
+(2, 'US'),
+(3, 'UK'),
+(4, 'CM');
 
 -- --------------------------------------------------------
 
@@ -371,6 +393,12 @@ ALTER TABLE `tb_gudang`
   ADD PRIMARY KEY (`id_gudang`);
 
 --
+-- Indeks untuk tabel `tb_gudang_detail`
+--
+ALTER TABLE `tb_gudang_detail`
+  ADD PRIMARY KEY (`id_detail`);
+
+--
 -- Indeks untuk tabel `tb_karyawan`
 --
 ALTER TABLE `tb_karyawan`
@@ -404,7 +432,7 @@ ALTER TABLE `tb_satuan`
 -- Indeks untuk tabel `tb_stok_toko`
 --
 ALTER TABLE `tb_stok_toko`
-  ADD PRIMARY KEY (`id_toko`);
+  ADD PRIMARY KEY (`id_stok_toko`);
 
 --
 -- Indeks untuk tabel `tb_subdivisi`
@@ -462,7 +490,13 @@ ALTER TABLE `tb_gender`
 -- AUTO_INCREMENT untuk tabel `tb_gudang`
 --
 ALTER TABLE `tb_gudang`
-  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_gudang_detail`
+--
+ALTER TABLE `tb_gudang_detail`
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_karyawan`
@@ -498,7 +532,7 @@ ALTER TABLE `tb_satuan`
 -- AUTO_INCREMENT untuk tabel `tb_stok_toko`
 --
 ALTER TABLE `tb_stok_toko`
-  MODIFY `id_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_stok_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_subdivisi`
@@ -516,7 +550,7 @@ ALTER TABLE `tb_supplier`
 -- AUTO_INCREMENT untuk tabel `tb_ukuran`
 --
 ALTER TABLE `tb_ukuran`
-  MODIFY `ukuran_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ukuran_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `toko`
