@@ -4,26 +4,18 @@ include "../../config/koneksi.php";
 $json = file_get_contents('php://input');
 $_POST = json_decode($json,true);
 $data = array(
-    'id' => $_POST['id'],
-    'nama' => $_POST['nama'],
-    'artikel' => $_POST['artikel'],
-    'id_merek' => $_POST['merek'],
-    'jumlah' => $_POST['jumlah'],
-    'modal' => $_POST['modal'],
-    'jual' => $_POST['jual'],
-    'id_gender' => $_POST['gender'],
-    'id_kategori' => $_POST['kategori'],
-    'id_divisi' => $_POST['divisi'],
-    'id_sub_divisi' => $_POST['sub_divisi'],
+    'id_gudang' => $_POST['gudang'],
+    'id_toko' => $_POST['toko'],
+    'jumlah' => $_POST['jumlah']
 );
 
-if($_POST['id_toko'] == NULL)
+if($_POST['id_stok_toko'] == NULL)
 {
     $simpan = $con->insert('tb_stok_toko', $data);
 }
 else
 {
-    $where = array('id_toko' => $_POST['id_toko']);
+    $where = array('id_stok_toko' => $_POST['id_stok_toko']);
     $simpan = $con->update('tb_stok_toko',$data,$where);
 }
 

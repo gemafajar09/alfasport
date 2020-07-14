@@ -32,7 +32,7 @@
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 
-<body class="nav-md">
+<body class="nav-sm">
   <!-- jQuery -->
   <script src="<?= $base_url ?>vendors/jquery/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>

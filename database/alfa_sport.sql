@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 10 Jul 2020 pada 15.25
+-- Waktu pembuatan: 13 Jul 2020 pada 18.56
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.3.13
 
@@ -47,21 +47,126 @@ INSERT INTO `tb_admin` (`id_admin`, `nama`, `username`, `password`, `password_re
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_detail_ukuran`
+-- Struktur dari tabel `tb_all_ukuran`
 --
 
-CREATE TABLE `tb_detail_ukuran` (
-  `detail_ukuran_id` int(11) NOT NULL,
-  `ukuran_id` int(11) NOT NULL,
-  `kategori_id` int(11) NOT NULL,
-  `divisi_id` int(11) NOT NULL,
-  `subdivisi_id` int(11) NOT NULL,
-  `gender_id` int(11) NOT NULL,
-  `detail_ukuran_ukuran` varchar(255) NOT NULL,
-  `detail_ukuran_stok` int(11) NOT NULL,
-  `detail_ukuran_harga_modal` varchar(255) NOT NULL,
-  `detail_ukuran_harga_jual` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `tb_all_ukuran` (
+  `id_ukuran` int(11) NOT NULL,
+  `id_merek` int(11) NOT NULL,
+  `id_kategori` int(11) NOT NULL,
+  `ue` varchar(10) NOT NULL,
+  `uk` varchar(10) NOT NULL,
+  `us` varchar(10) NOT NULL,
+  `cm` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_all_ukuran`
+--
+
+INSERT INTO `tb_all_ukuran` (`id_ukuran`, `id_merek`, `id_kategori`, `ue`, `uk`, `us`, `cm`) VALUES
+(1, 1, 1, '36', '4', '3.5', '22'),
+(2, 1, 1, '36 2/3', '4.5', '4', '22.5'),
+(3, 1, 1, '37 1/3', '5', '4.5', '23'),
+(4, 1, 1, '38', '5.5', '5', '23.5'),
+(5, 1, 1, '38 2/3', '6', '5.5', '24'),
+(6, 1, 1, '39 1/3', '6.5', '6', '24.5'),
+(7, 1, 1, '40', '7', '6.5', '25'),
+(8, 1, 1, '40 2/3', '7.5', '7', '25.5'),
+(9, 1, 1, '41 1/3', '8', '7.5', '26'),
+(10, 1, 1, '42', '8.5', '8', '26.5'),
+(11, 1, 1, '42 2/3', '9', '8.5', '27'),
+(12, 1, 1, '43 1/3', '9.5', '9', '27.5'),
+(13, 1, 1, '44', '10', '9.5', '28'),
+(14, 1, 1, '44 2/3', '10.5', '10', '28.5'),
+(15, 1, 1, '45 1/3', '11', '10.5', '29'),
+(16, 1, 1, '46', '11.5', '11', '29.5'),
+(17, 1, 1, '46 2/3', '12', '11.5', '30'),
+(18, 1, 1, '47 1/3', '12.5', '12', '30.5'),
+(19, 1, 1, '48', '13', '12.5', '31'),
+(20, 1, 1, '48 2/3', '13.5', '13', '31.5'),
+(21, 1, 1, '49 1/3', '14', '13.5', '32'),
+(22, 1, 1, '50', '14.5', '14', '32.5'),
+(23, 1, 1, '50 2/3', '15', '14.5', '33'),
+(24, 1, 1, '51 1/3', '16', '15', '33.5'),
+(25, 1, 1, '52 2/3', '17', '16', '34'),
+(26, 1, 1, '53 1/3', '18', '17', '34.5'),
+(27, 1, 1, '54 2/3', '19', '18', '35'),
+(28, 1, 1, '55 2/3', '20', '19', '35.5'),
+(29, 1, 1, '37', '4', '4', '22.5'),
+(30, 1, 1, '38', '5', '5', '23.5'),
+(31, 1, 1, '39', '6', '6', '24.5'),
+(32, 1, 1, '40 1/2', '7', '7', '25.5'),
+(33, 1, 1, '42', '8', '8', '26.5'),
+(34, 1, 1, '43', '9', '9', '27.5'),
+(35, 1, 1, '44 1/2', '10', '10', '28.5'),
+(36, 1, 1, '46', '11', '11', '29.5'),
+(37, 1, 1, '47', '12', '12', '30.5'),
+(38, 2, 1, '35 1/2', '3.5', '3', '21.5'),
+(39, 2, 1, '36    ', '4', '3.5', '22'),
+(40, 2, 1, '36 1/2', '4.5', '4', '22.5'),
+(41, 2, 1, '37 1/2', '5', '4.5', '23'),
+(42, 2, 1, '38    ', '5.5', '5', '23.5'),
+(43, 2, 1, '38 1/2', '6', '5.5', '24'),
+(44, 2, 1, '39    ', '6.5', '6', '24.5'),
+(45, 2, 1, '40    ', '7', '6', '25'),
+(46, 2, 1, '40 1/2', '7.5', '6.5', '25.5'),
+(47, 2, 1, '41    ', '8', '7', '26'),
+(48, 2, 1, '42    ', '8.5', '7.5', '26.5'),
+(49, 2, 1, '42 1/2', '9', '8', '27'),
+(50, 2, 1, '43    ', '9.5', '8.5', '27.5'),
+(51, 2, 1, '44    ', '10', '9', '28'),
+(52, 2, 1, '44 1/2', '10.5', '9.5', '28.5'),
+(53, 2, 1, '45    ', '11', '10', '29'),
+(54, 2, 1, '45 1/2', '11.5', '10.5', '29.5'),
+(55, 2, 1, '46    ', '12', '11', '30'),
+(56, 2, 1, '47    ', '12.5', '11.5', '30.5'),
+(57, 2, 1, '47 1/2', '13', '12', '31'),
+(58, 2, 1, '48    ', '13.5', '12.5', '31.5'),
+(59, 2, 1, '48 1/2', '14', '13', '32'),
+(60, 2, 1, '49 1/2', '15', '14', '32.5'),
+(61, 2, 1, '50 1/2', '16', '15', '33'),
+(62, 2, 1, '51 1/2', '17', '16', '33.5'),
+(63, 2, 1, '52 1/2', '18', '17', '34'),
+(64, 2, 1, '35 1/2', '5', '2.5', '22'),
+(65, 2, 1, '36    ', '5.5', '3', '22.4'),
+(66, 2, 1, '36 1/2', '6', '3.5', '22.9'),
+(67, 2, 1, '37 1/2', '6.5', '4', '23.3'),
+(68, 2, 1, '38    ', '7', '4.5', '23.7'),
+(69, 3, 1, '38    ', '6', '5', '24'),
+(70, 3, 1, '38 1/2', '6.5', '5.5', '24.5'),
+(71, 3, 1, '39    ', '7', '6', '25'),
+(72, 3, 1, '40    ', '7.5', '6.5', '25.5'),
+(73, 3, 1, '40 1/2', '8', '7', '26'),
+(74, 3, 1, '41    ', '8.5', '7.5', '26.5'),
+(75, 3, 1, '42    ', '9', '8', '27'),
+(76, 3, 1, '42 1/2', '9.5', '8.5', '27.5'),
+(77, 3, 1, '43    ', '10', '9', '28'),
+(78, 3, 1, '44    ', '10.5', '9.5', '28.5'),
+(79, 3, 1, '44 1/2', '11', '10', '29'),
+(80, 3, 1, '45    ', '11.5', '10.5', '29.5'),
+(81, 3, 1, '36    ', '6', '3.5', '22.5'),
+(82, 3, 1, '37    ', '6.5', '4', '23'),
+(83, 3, 1, '37 1/2', '7', '4.5', '23.5'),
+(84, 4, 1, '37    ', '0', '0', '23.5'),
+(85, 4, 1, '38    ', '0', '0', '24'),
+(86, 4, 1, '39    ', '0', '0', '25'),
+(87, 4, 1, '40    ', '0', '0', '25.5'),
+(88, 4, 1, '41    ', '0', '0', '26.5'),
+(89, 4, 1, '42    ', '0', '0', '27'),
+(90, 4, 1, '43    ', '0', '0', '28'),
+(91, 4, 1, '44    ', '0', '0', '28.5'),
+(92, 4, 1, '45    ', '0', '0', '29.5'),
+(93, 4, 1, '46    ', '0', '0', '30'),
+(94, 5, 1, '37    ', '4.5', '0', '23.3'),
+(95, 5, 1, '38    ', '5', '0', '23.7'),
+(96, 5, 1, '39    ', '6', '0', '24.1'),
+(97, 5, 1, '40    ', '7', '0', '24.5'),
+(98, 5, 1, '41    ', '7.5', '0', '25.4'),
+(99, 5, 1, '42    ', '8', '0', '25.8'),
+(100, 5, 1, '43    ', '9', '0', '26.7'),
+(101, 5, 1, '44    ', '9.5', '0', '27.1'),
+(102, 5, 1, '45    ', '10', '0', '27.9');
 
 -- --------------------------------------------------------
 
@@ -71,7 +176,6 @@ CREATE TABLE `tb_detail_ukuran` (
 
 CREATE TABLE `tb_divisi` (
   `divisi_id` int(11) NOT NULL,
-  `kategori_id` int(11) NOT NULL,
   `divisi_nama` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -79,11 +183,15 @@ CREATE TABLE `tb_divisi` (
 -- Dumping data untuk tabel `tb_divisi`
 --
 
-INSERT INTO `tb_divisi` (`divisi_id`, `kategori_id`, `divisi_nama`) VALUES
-(20, 11, 'NIKE CR7'),
-(21, 13, 'PUMA GRIEZMANN'),
-(22, 12, 'ADIDAS LM10'),
-(23, 14, 'NB SADIO MANE');
+INSERT INTO `tb_divisi` (`divisi_id`, `divisi_nama`) VALUES
+(24, 'Basketball'),
+(25, 'Football / Soccess'),
+(26, 'Outdoor / Adventur'),
+(27, 'Runing'),
+(28, 'Skate'),
+(29, 'Sportswear'),
+(30, 'Tennis'),
+(31, 'Training');
 
 -- --------------------------------------------------------
 
@@ -114,23 +222,49 @@ INSERT INTO `tb_gender` (`gender_id`, `gender_nama`) VALUES
 CREATE TABLE `tb_gudang` (
   `id_gudang` int(11) NOT NULL,
   `id` varchar(20) NOT NULL,
+  `artikel` varchar(100) NOT NULL,
   `nama` text NOT NULL,
   `id_merek` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
   `modal` int(11) NOT NULL,
   `jual` int(11) NOT NULL,
   `id_gender` int(11) NOT NULL,
   `id_kategori` int(11) NOT NULL,
   `id_divisi` int(11) NOT NULL,
-  `id_sub_divisi` int(11) NOT NULL
+  `id_sub_divisi` int(11) DEFAULT NULL,
+  `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `tb_gudang`
 --
 
-INSERT INTO `tb_gudang` (`id_gudang`, `id`, `nama`, `id_merek`, `jumlah`, `modal`, `jual`, `id_gender`, `id_kategori`, `id_divisi`, `id_sub_divisi`) VALUES
-(1, '6546546546', 'adidsas baru', 6, 150000, 5000000, 5000000, 3, 0, 20, 7);
+INSERT INTO `tb_gudang` (`id_gudang`, `id`, `artikel`, `nama`, `id_merek`, `modal`, `jual`, `id_gender`, `id_kategori`, `id_divisi`, `id_sub_divisi`, `tanggal`) VALUES
+(3, '789', '4568', 'test', 1, 2000, 2000, 3, 1, 24, 0, '2020-07-13');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_gudang_detail`
+--
+
+CREATE TABLE `tb_gudang_detail` (
+  `id_detail` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `id_ukuran` int(10) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `tanggal` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tb_gudang_detail`
+--
+
+INSERT INTO `tb_gudang_detail` (`id_detail`, `id`, `id_ukuran`, `jumlah`, `tanggal`) VALUES
+(11, 789, 9, 5, '2020-07-13'),
+(12, 789, 8, 6, '2020-07-13'),
+(13, 789, 15, 9, '2020-07-13'),
+(14, 789, 16, 10, '2020-07-13'),
+(15, 789, 19, 5, '2020-07-13');
 
 -- --------------------------------------------------------
 
@@ -172,10 +306,9 @@ CREATE TABLE `tb_kategori` (
 --
 
 INSERT INTO `tb_kategori` (`kategori_id`, `kategori_nama`) VALUES
-(11, 'NIKE'),
-(12, 'ADIDAS'),
-(13, 'PUMA'),
-(14, 'NEW BALANCE');
+(1, 'Footwear'),
+(2, 'Apparel'),
+(3, 'Hardware');
 
 -- --------------------------------------------------------
 
@@ -214,7 +347,11 @@ CREATE TABLE `tb_merk` (
 --
 
 INSERT INTO `tb_merk` (`merk_id`, `merk_nama`) VALUES
-(6, 'adidas');
+(1, 'Adidas'),
+(2, 'Nike'),
+(3, 'Puma'),
+(4, 'Specs'),
+(5, 'Kelme');
 
 -- --------------------------------------------------------
 
@@ -245,18 +382,10 @@ INSERT INTO `tb_satuan` (`satuan_id`, `satuan_nama`) VALUES
 --
 
 CREATE TABLE `tb_stok_toko` (
+  `id_stok_toko` int(11) NOT NULL,
   `id_toko` int(11) NOT NULL,
-  `id` varchar(20) NOT NULL,
-  `nama` text NOT NULL,
-  `artikel` text NOT NULL,
-  `id_merek` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `modal` int(11) NOT NULL,
-  `jual` int(11) NOT NULL,
-  `id_gender` int(11) NOT NULL,
-  `id_kategori` int(11) NOT NULL,
-  `id_divisi` int(11) NOT NULL,
-  `id_sub_divisi` int(11) NOT NULL
+  `id_gudang` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -270,15 +399,6 @@ CREATE TABLE `tb_subdivisi` (
   `divisi_id` int(11) NOT NULL,
   `subdivisi_nama` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `tb_subdivisi`
---
-
-INSERT INTO `tb_subdivisi` (`subdivisi_id`, `divisi_id`, `subdivisi_nama`) VALUES
-(7, 23, 'NB MANE LFC'),
-(8, 20, 'NIKE CR7 JFC'),
-(9, 21, 'PUMA G7 FCB');
 
 -- --------------------------------------------------------
 
@@ -311,8 +431,10 @@ CREATE TABLE `tb_ukuran` (
 --
 
 INSERT INTO `tb_ukuran` (`ukuran_id`, `ukuran_nama`) VALUES
-(2, 'UK'),
-(3, 'US');
+(1, 'UE'),
+(2, 'US'),
+(3, 'UK'),
+(4, 'CM');
 
 -- --------------------------------------------------------
 
@@ -347,10 +469,10 @@ ALTER TABLE `tb_admin`
   ADD PRIMARY KEY (`id_admin`);
 
 --
--- Indeks untuk tabel `tb_detail_ukuran`
+-- Indeks untuk tabel `tb_all_ukuran`
 --
-ALTER TABLE `tb_detail_ukuran`
-  ADD PRIMARY KEY (`detail_ukuran_id`);
+ALTER TABLE `tb_all_ukuran`
+  ADD PRIMARY KEY (`id_ukuran`);
 
 --
 -- Indeks untuk tabel `tb_divisi`
@@ -369,6 +491,12 @@ ALTER TABLE `tb_gender`
 --
 ALTER TABLE `tb_gudang`
   ADD PRIMARY KEY (`id_gudang`);
+
+--
+-- Indeks untuk tabel `tb_gudang_detail`
+--
+ALTER TABLE `tb_gudang_detail`
+  ADD PRIMARY KEY (`id_detail`);
 
 --
 -- Indeks untuk tabel `tb_karyawan`
@@ -404,7 +532,7 @@ ALTER TABLE `tb_satuan`
 -- Indeks untuk tabel `tb_stok_toko`
 --
 ALTER TABLE `tb_stok_toko`
-  ADD PRIMARY KEY (`id_toko`);
+  ADD PRIMARY KEY (`id_stok_toko`);
 
 --
 -- Indeks untuk tabel `tb_subdivisi`
@@ -441,16 +569,16 @@ ALTER TABLE `tb_admin`
   MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `tb_detail_ukuran`
+-- AUTO_INCREMENT untuk tabel `tb_all_ukuran`
 --
-ALTER TABLE `tb_detail_ukuran`
-  MODIFY `detail_ukuran_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+ALTER TABLE `tb_all_ukuran`
+  MODIFY `id_ukuran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_divisi`
 --
 ALTER TABLE `tb_divisi`
-  MODIFY `divisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `divisi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_gender`
@@ -462,7 +590,13 @@ ALTER TABLE `tb_gender`
 -- AUTO_INCREMENT untuk tabel `tb_gudang`
 --
 ALTER TABLE `tb_gudang`
-  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_gudang_detail`
+--
+ALTER TABLE `tb_gudang_detail`
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_karyawan`
@@ -486,7 +620,7 @@ ALTER TABLE `tb_member`
 -- AUTO_INCREMENT untuk tabel `tb_merk`
 --
 ALTER TABLE `tb_merk`
-  MODIFY `merk_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `merk_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_satuan`
@@ -498,7 +632,7 @@ ALTER TABLE `tb_satuan`
 -- AUTO_INCREMENT untuk tabel `tb_stok_toko`
 --
 ALTER TABLE `tb_stok_toko`
-  MODIFY `id_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_stok_toko` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_subdivisi`
@@ -516,7 +650,7 @@ ALTER TABLE `tb_supplier`
 -- AUTO_INCREMENT untuk tabel `tb_ukuran`
 --
 ALTER TABLE `tb_ukuran`
-  MODIFY `ukuran_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ukuran_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `toko`
