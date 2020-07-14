@@ -14,7 +14,7 @@
     <div class="x_title">
         <div class="row">
             <div class="col-md-6">
-                <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button>
+                <!-- <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button> -->
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -28,15 +28,21 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content table-responsive">
-        <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
+        <table class="table table-striped" id="datatable-responsive">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th style="width:40px">No</th>
+                    <th>ID</th>
+                    <th>Artikel</th>
                     <th>Nama</th>
-                    <th style="width:280px">Alamat</th>
-                    <th>No Telpon</th>
-                    <th>Hp</th>
-                    <th>Action</th>
+                    <th>Merek</th>
+                    <th>Kategori</th>
+                    <th>Divisi</th>
+                    <th>Sub Divisi</th>
+                    <th>Gender</th>
+                    <th>Tanggal Masuk</th>
+                    <th>Umur Barang</th>
+                    <!-- <th>Action</th> -->
                 </tr>
             </thead>
             <tbody id="isi"></tbody>
@@ -72,5 +78,5 @@
     function tampil() {
         $('#umurBarang').modal()
     }
-    $('#isi').load('inc/vendor/data_vendor.php');
+    $('#isi').load('inc/umur_barang/data_umur_barang.php');
 </script>

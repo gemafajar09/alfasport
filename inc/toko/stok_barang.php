@@ -61,7 +61,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content table-responsive">
-        <table class="table table-striped" id="datatable-responsive" id="datatable-responsive" id="datatable-responsive" style="font-size:11px">
+        <table class="table table-striped" id="datatable-responsive" id="datatable-responsive" id="datatable-responsive">
             <thead>
                 <tr>
                     <th>No</th>
