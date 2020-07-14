@@ -36,5 +36,6 @@
   <!-- jQuery -->
   <script src="<?= $base_url ?>vendors/jquery/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+  <script src="<?= $base_url ?>build/js/moment.min.js"></script>
   <div class="container body">
     <div class="main_container">
