@@ -1,5 +1,6 @@
 <?php
 $base_url = 'http://localhost/alfasport/';
+date_default_timezone_set("Asia/Jakarta");
 require "Medoo.php";
 
 use Medoo\Medoo;
