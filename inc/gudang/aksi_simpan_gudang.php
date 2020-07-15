@@ -18,10 +18,11 @@ if(isset($_POST['simpan']))
         $simpan = $con->insert('tb_gudang', $data);
         $ukuran = $_POST['ukuran'];
         $jumlah = $_POST['jumlah'];
+        $barcode = $_POST['barcode'];
         foreach($ukuran as $i => $a)
         {
             // echo $ukuran[$i];
-            $con->query("INSERT INTO tb_gudang_detail (id,id_ukuran,jumlah,tanggal) VALUES ('$_POST[id]','$ukuran[$i]','$jumlah[$i]','$_POST[tanggal]')");
+            $con->query("INSERT INTO tb_gudang_detail (id,id_ukuran,jumlah,barcode,tanggal) VALUES ('$_POST[id]','$ukuran[$i]','$jumlah[$i]','$barcode[$i]','$_POST[tanggal]')");
         }
     
         echo "
