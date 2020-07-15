@@ -89,7 +89,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Toko</label>
-                                <select class="form-control" name="id_toko" id="id_toko" required>
+                                <select class="form-control select2" style="width: 100%;" name="id_toko" id="id_toko" required>
                                     <option selected disabled>Pilih Toko</option>
                                     <?php
                                     $data = $con->select("toko", "*");
@@ -108,6 +108,31 @@
                                     <option value="dipakai sendiri">Dipakai Sendiri</option>
                                 </select>
                             </div>
+
+                            <div id="namasipemakai" style="display: none;">
+                                <div class="form-group">
+                                    <label>Nama Pemakai</label>
+                                    <select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
+                                        <option value="">-Pilih-</option>
+                                        <?php
+                                        $datag = $con->select('tb_karyawan', '*');
+                                        foreach ($datag as $karyawan) {
+                                        ?>
+                                            <option value="<?= $karyawan['id_karyawan'] ?>"><?= $karyawan['nama'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.getElementById("penyesuaian_stok_tipe").addEventListener("change", function() {
+                                    if (this.value == "dipakai sendiri") {
+                                        document.getElementById("namasipemakai").style.display = "block";
+                                    } else {
+                                        document.getElementById("namasipemakai").style.display = "none";
+                                    }
+                                })
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -169,7 +194,31 @@
                                     <option value="barang rusak">Barang Rusak</option>
                                     <option value="dipakai sendiri">Dipakai Sendiri</option>
                                 </select>
+
                             </div>
+                            <!-- <div id="namasipemakai1" style="display: none;">
+                                <div class="form-group">
+                                    <label>Nama Pemakai</label>
+                                    <select name="id_karyawan1" id="id_karyawan1" class="form-control select2" style="width: 100%;">
+                                        <option value="">-Pilih-</option>
+                                        <?php
+                                        $datag = $con->select('tb_karyawan', '*');
+                                        foreach ($datag as $karyawan) {
+                                        ?>
+                                            <option value="<?= $karyawan['id_karyawan'] ?>"><?= $karyawan['nama'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <script>
+                                document.getElementById("penyesuaian_stok_tipe1").addEventListener("change", function() {
+                                    if (this.value == "dipakai sendiri") {
+                                        document.getElementById("namasipemakai1").style.display = "block";
+                                    } else {
+                                        document.getElementById("namasipemakai1").style.display = "none";
+                                    }
+                                })
+                            </script> -->
                         </div>
                         <div class="col-md-3">
                             <div class="form-group mb-4">
@@ -193,42 +242,20 @@
                                         <th>Stok Akhir</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <?php
-                                    // include "../../config/koneksi.php";
-                                    // aksi di bawah
-                                    // $data = $con->query("SELECT * FROM tb_penyesuaian_stok_detail 
-                                    //     JOIN tb_gudang ON tb_penyesuaian_stok_detail.id_toko = tb_gudang.id_toko
-                                    //     JOIN tb_admin ON tb_admin.id_admin = tb_penyesuaian_stok.penyesuaian_stok_create_by
-                                    // ");
-                                    // $data = $con->query("SELECT * FROM tb_penyesuaian_stok_detail WHERE ");
-                                    $data = $con->get("tb_penyesuaian_stok", "*", array("penyesuaian_stok_id" => $_POST["penyesuaian_stok_id"]));
-                                    foreach ($data as $i => $a) {
-                                    ?>
-                                        <tr>
-                                            <td><?= $i + 1 ?></td>
-                                            <!-- <td><?= $a['id_barang'] ?></td> -->
-                                            <td><?= $a['id_barang'] ?></td>
-                                            <td><?= $a['id_stok_awal'] ?></td>
-                                            <td><?= $a['id_stok_penyesuaian'] ?></td>
-                                            <td><?= $a['penyesuaian_stok_detail_stok_akhir'] ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
+                                <tbody id="tmp"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- <div class="modal-footer">
+            <!-- <div class="modal-footer">
             <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm">Simpan</button>
             <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
         </div> -->
 
+        </div>
     </div>
-</div>
 </div>
 
 
@@ -247,28 +274,38 @@
                     <div class="row" style="font-size:12px">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Barang</label>
-                                <input type="text" name="id_barang" id="id_barang" required="required" placeholder="Nama Merk" class="form-control">
-                                <input type="text" id="penyesuaian_stok_id1">
-                                <input type="text" id="penyesuaian_stok_detail_id">
+
+                                <label>Artikel</label>
+                                <select name="id_gudang" id="id_gudang" class="form-control select2" style="width: 100%;">
+                                    <option value="">-Pilih-</option>
+                                    <?php
+                                    $datag = $con->select('tb_gudang', '*');
+                                    foreach ($datag as $gudang) {
+                                    ?>
+                                        <option value="<?= $gudang['id_gudang'] ?>"><?= $gudang['artikel'] ?></option>
+                                    <?php } ?>
+                                </select>
+                                <input type="hidden" id="penyesuaian_stok_id1">
+                                <input type="hidden" id="penyesuaian_stok_detail_id">
+
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Stok Awal</label>
-                                <input type="number" name="id_stok_awal" id="id_stok_awal" required="required" class="form-control">
+                                <input type="number" name="stok_awal" id="stok_awal" required="required" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Penyesuaian</label>
-                                <input type="number" name="id_stok_penyesuaian" id="id_stok_penyesuaian" required="required" class="form-control">
+                                <input type="number" name="stok_penyesuaian" id="stok_penyesuaian" required="required" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Stok Akhir</label>
-                                <input type="number" name="penyesuaian_stok_detail_stok_akhir" id="penyesuaian_stok_detail_stok_akhir" required="required" class="form-control">
+                                <input type="number" name="stok_akhir" id="stok_akhir" required="required" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -283,6 +320,96 @@
 
     </div>
 </div>
+
+
+<div class="modal" id="dataPenyesuaianStok2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Data Penyesuaian Stok</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row" style="font-size:12px">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="date" name="penyesuaian_stok_tgl2" id="penyesuaian_stok_tgl2" required="required" placeholder="" class="form-control" readonly disabled>
+                                <input type="hidden" id="penyesuaian_stok_id3">
+                                <?php
+                                $tgl = date('Y-m-d H:i:s');
+                                ?>
+                                <input type="hidden" id="penyesuaian_stok_create_at2" value="<?php echo $tgl; ?>">
+                                <input type="hidden" id="penyesuaian_stok_create_by2" value="<?php echo $_COOKIE['id_admin']; ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Toko</label>
+                                <select class="form-control" name="id_toko2" id="id_toko2" required disabled>
+                                    <option selected disabled>Pilih Toko</option>
+                                    <?php
+                                    $data = $con->select("toko", "*");
+                                    foreach ($data as $i => $a) {
+                                        echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Tipe Penyesuaian</label>
+                                <select class="form-control" name="penyesuaian_stok_tipe2" id="penyesuaian_stok_tipe2" required disabled>
+                                    <option selected disabled>Pilih Tipe Penyesuaian</option>
+                                    <option value="stock opname">Stock Opname</option>
+                                    <option value="barang rusak">Barang Rusak</option>
+                                    <option value="dipakai sendiri">Dipakai Sendiri</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group mb-4">
+                                <label for=""></label>
+                                <!-- <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm form-control">Simpan</button>
+                                <button type="button" class="btn btn-danger btn-sm form-control" data-dismiss="modal">Close</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" style="font-size:12px">
+                        <div class="col-md-12">
+                            <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Artikel</th>
+                                        <!-- <th>Ukuran</th> -->
+                                        <th>Stok Awal</th>
+                                        <th>Penyesuaian</th>
+                                        <th>Stok Akhir</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detailTmp"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="modal-footer">
+            <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm">Simpan</button>
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+        </div> -->
+
+        </div>
+    </div>
+</div>
+
+
+
+
 </div>
 
 
@@ -304,14 +431,16 @@
         var penyesuaian_stok_create_at = moment().format('YYYY-MM-DD HH:mm:ss')
         var penyesuaian_stok_create_by = $('#penyesuaian_stok_create_by').val()
         var id_toko = $('#id_toko').val()
+        var id_karyawan = $('#id_karyawan').val()
         var penyesuaian_stok_id = $('#penyesuaian_stok_id').val()
         axios.post('inc/penyesuaian/aksi_simpan_penyesuaian_stok.php', {
-            'id_toko': id_toko,
             'penyesuaian_stok_tgl': penyesuaian_stok_tgl,
             'penyesuaian_stok_tipe': penyesuaian_stok_tipe,
             'penyesuaian_stok_create_at': penyesuaian_stok_create_at,
             'penyesuaian_stok_create_by': penyesuaian_stok_create_by,
             'penyesuaian_stok_id': penyesuaian_stok_id,
+            'id_toko': id_toko,
+            'id_karyawan': id_karyawan,
         }).then(function(res) {
             var id = res.data
             kosong()
@@ -329,16 +458,16 @@
     function simpan2() {
         var penyesuaian_stok_detail_id = $('#penyesuaian_stok_detail_id').val()
         var penyesuaian_stok_id = $('#penyesuaian_stok_id1').val()
-        var id_barang = $('#id_barang').val()
-        var id_stok_awal = $('#id_stok_awal').val()
-        var id_stok_penyesuaian = $('#id_stok_penyesuaian').val()
-        var penyesuaian_stok_detail_stok_akhir = $('#penyesuaian_stok_detail_stok_akhir').val()
+        var id_gudang = $('#id_gudang').val()
+        var stok_awal = $('#stok_awal').val()
+        var stok_penyesuaian = $('#stok_penyesuaian').val()
+        var stok_akhir = $('#stok_akhir').val()
         axios.post('inc/penyesuaian/aksi_simpan_penyesuaian_stok_detail.php', {
             'penyesuaian_stok_id': penyesuaian_stok_id,
-            'id_barang': id_barang,
-            'id_stok_awal': id_stok_awal,
-            'id_stok_penyesuaian': id_stok_penyesuaian,
-            'penyesuaian_stok_detail_stok_akhir': penyesuaian_stok_detail_stok_akhir,
+            'id_gudang': id_gudang,
+            'stok_awal': stok_awal,
+            'stok_penyesuaian': stok_penyesuaian,
+            'stok_akhir': stok_akhir,
             'penyesuaian_stok_detail_id': penyesuaian_stok_detail_id,
         }).then(function(res) {
             var id = res.data
@@ -357,7 +486,8 @@
 
     function simpan3() {
         // var penyesuaian_stok_tgl = $('#penyesuaian_stok_tgl1').val()
-        var penyesuaian_stok_tipe = $('#penyesuaian_stok_tipe1').val()
+        var penyesuaian_stok_tipe = $('#penyesuaian_stok_tipe1').val();
+        // var id_karyawan = $('#id_karyawan1').val();
         // var penyesuaian_stok_create_at = moment().format('YYYY-MM-DD HH:mm:ss')
         // var penyesuaian_stok_create_by = $('#penyesuaian_stok_create_by1').val()
         // var id_toko = $('#id_toko1').val()
@@ -366,6 +496,7 @@
             // 'id_toko': id_toko,
             // 'penyesuaian_stok_tgl': penyesuaian_stok_tgl,
             'penyesuaian_stok_tipe': penyesuaian_stok_tipe,
+            // 'id_karyawan': id_karyawan,
             // 'penyesuaian_stok_create_at': penyesuaian_stok_create_at,
             // 'penyesuaian_stok_create_by': penyesuaian_stok_create_by,
             'penyesuaian_stok_id': penyesuaian_stok_id,
@@ -373,7 +504,7 @@
             var id = res.data
             kosong()
             // tampil2(id.penyesuaian_stok_id);
-            $('#dataPenyesuaianStok1').modal('')
+            $('#dataPenyesuaianStok1').modal()
             $('#isi').load('inc/penyesuaian/data_stok.php');
         }).catch(function(err) {
             alert(err)
@@ -383,6 +514,45 @@
         })
     }
 
+    function tampiltabel(id) {
+        axios.post('inc/penyesuaian/tmp_penyesuaian.php', {
+            'id': id
+        }).then(function(res) {
+            var data = res.data
+            $('#detailTmp').html(data);
+        }).catch(function(err) {
+            console.log(err)
+        })
+    }
+
+    function tampiltabel1(id) {
+        axios.post('inc/penyesuaian/tmp_penyesuaian.php', {
+            'id': id
+        }).then(function(res) {
+            var data = res.data
+            $('#tmp').html(data);
+        }).catch(function(err) {
+            console.log(err)
+        })
+    }
+
+    function detail(id) {
+        axios.post('inc/penyesuaian/aksi_edit_penyesuaian_stok.php', {
+            'penyesuaian_stok_id': id
+        }).then(function(res) {
+            var detail = res.data
+            $('#id_toko2').val(detail.id_toko)
+            $('#penyesuaian_stok_tgl2').val(detail.penyesuaian_stok_tgl)
+            $('#penyesuaian_stok_tipe2').val(detail.penyesuaian_stok_tipe)
+            $('#penyesuaian_stok_create_at2').val(detail.penyesuaian_stok_create_at)
+            $('#penyesuaian_stok_create_by2').val(detail.penyesuaian_stok_create_by)
+            $('#penyesuaian_stok_id3').val(detail.penyesuaian_stok_id)
+            tampiltabel(id)
+            $('#dataPenyesuaianStok2').modal()
+        }).catch(function(err) {
+            console.log(err)
+        })
+    }
 
     function edit(id) {
         axios.post('inc/penyesuaian/aksi_edit_penyesuaian_stok.php', {
@@ -399,7 +569,12 @@
         }).catch(function(err) {
             console.log(err)
         })
+        tampiltabel1(id)
     }
+
+
+
+
 
     function hapus(id) {
         axios.post('inc/penyesuaian/aksi_hapus_penyesuaian_stok.php', {
@@ -419,13 +594,14 @@
         // $('#penyesuaian_stok_create_by').val('')
         // $('#penyesuaian_stok_create_at').val('')
         $('#id_toko').val('')
+        $('#id_karyawan').val('')
     }
 
     function kosong2() {
-        $('#id_barang').val('')
-        $('#id_stok_awal').val('')
-        $('#id_stok_penyesuaian').val('')
-        $('#penyesuaian_stok_detail_stok_akhir').val('')
+        // $('#id_gudang').val('')
+        $('#stok_awal').val('')
+        $('#stok_penyesuaian').val('')
+        $('#stok_akhir').val('')
         $('#penyesuaian_stok_detail_id').val('')
     }
 

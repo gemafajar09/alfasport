@@ -15,6 +15,8 @@ if ($_POST['penyesuaian_stok_id'] == NULL) {
             "penyesuaian_stok_create_by" => $_POST["penyesuaian_stok_create_by"],
         )
     );
+    $idps = $con->id();
+
 
     $last = $con->get(
         "tb_penyesuaian_stok",
@@ -23,6 +25,16 @@ if ($_POST['penyesuaian_stok_id'] == NULL) {
         ["LIMIT" => 1]
     );
 
+    $con->insert(
+        "tb_pakai_sendiri",
+        array(
+            "penyesuaian_stok_id" => $idps,
+            "id_karyawan" => $_POST["id_karyawan"],
+            "id_toko" => $_POST["id_toko"],
+            "pakai_sendiri_status" => "0",
+            "pakai_sendiri_tgl" => $_POST["penyesuaian_stok_tgl"],
+        )
+    );
     if ($simpan == TRUE) {
         echo json_encode($last);
     } else {
