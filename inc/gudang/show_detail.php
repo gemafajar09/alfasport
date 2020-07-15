@@ -56,7 +56,7 @@ $edit = $con->query("SELECT a.id, a.artikel, a.nama, a.id_gudang, a.modal, a.jua
             </tr>
         </table>
     </div>
-    <div class="col-md-6 mx-auto py-4">
+    <div class="col-md-8 mx-auto py-4">
         <table class="table">
             <thead style="background-color:grey">
                 <tr>
