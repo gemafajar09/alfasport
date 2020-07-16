@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2020 at 04:33 AM
+-- Generation Time: Jul 16, 2020 at 11:54 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -38,6 +38,13 @@ CREATE TABLE `tb_penyesuaian_stok` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `tb_penyesuaian_stok`
+--
+
+INSERT INTO `tb_penyesuaian_stok` (`penyesuaian_stok_id`, `id_toko`, `penyesuaian_stok_tgl`, `penyesuaian_stok_tipe`, `penyesuaian_stok_create_at`, `penyesuaian_stok_create_by`) VALUES
+(2, 22, '2020-07-15', 'barang rusak', '2020-07-15 08:35:40', '1');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -55,7 +62,7 @@ ALTER TABLE `tb_penyesuaian_stok`
 -- AUTO_INCREMENT for table `tb_penyesuaian_stok`
 --
 ALTER TABLE `tb_penyesuaian_stok`
-  MODIFY `penyesuaian_stok_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `penyesuaian_stok_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

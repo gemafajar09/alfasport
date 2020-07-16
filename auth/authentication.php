@@ -1,50 +1,72 @@
 <?php
 include "../config/koneksi.php";
+include "../App/MY_url_helper.php";
 
-if(isset($_POST['login']))
-{
+if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $cek = $con->query("SELECT * FROM tb_admin WHERE username = '$username'")->fetch();
-    if($cek['username'] == $username)
-    {
-        if(password_verify($password, $cek['password'],))
-        {
-            setcookie('id_admin', "$cek[id_admin]", time() + (86400 * 30), "/");
+    $cek = $con->query("SELECT * FROM tb_karyawan WHERE username = '$username'")->fetch();
+    if ($cek['username'] == $username) {
+        if (password_verify($password, $cek['password'],)) {
+            setcookie('id_karyawan', "$cek[id_karyawan]", time() + (86400 * 30), "/");
             setcookie('nama', "$cek[nama]", time() + (86400 * 30), "/");
-            setcookie('level', "$cek[level]", time() + (86400 * 30), "/");
+            setcookie('jabatan_id', "$cek[jabatan_id]", time() + (86400 * 30), "/");
             setcookie('success', "Selamat Datang.!!", time() + 1, "/");
             header('location:home.html');
-        }
-        else
-        {
+        } else {
             setcookie('error', "Maaf Password Salah.!!", time() + 1, "/");
             header('location:home.html');
         }
-    }
-    else
-    {
+    } else {
         setcookie('error', "Maaf Username Salah.!!", time() + 1, "/");
         header('location:login.html');
     }
-}elseif(isset($_POST['regis']))
-{
-    $nama = $_POST['nama'];
-    $username = $_POST['username'];
-    $password1 = $_POST['password1'];
-    $password2 = $_POST['password2'];
-    $level = $_POST['level'];
-    if($password1 == $password2)
-    {
-        $pwd = password_hash($password1, PASSWORD_DEFAULT);
-        $simpan = $con->query("INSERT INTO tb_admin (`nama`, `username`, `password`, `password_repeat`, `level`) VALUES ('$nama','$username','$pwd', '$password1','$level' )");
-        if($simpan == TRUE)
-        {
+} elseif (isset($_POST['regis'])) {
+
+    $karakter = '123456789';
+    $shuffle  = substr(str_shuffle($karakter), 0, 6);
+
+    $id             = $shuffle;
+    $nik            = $_POST["nik"];
+    $nama           = $_POST["nama"];
+    $no_telpon      = $_POST["no_telpon"];
+    $alamat         = $_POST["alamat"];
+    $email_karyawan = $_POST["email_karyawan"];
+    $username       = $_POST["username"];
+    $foto           = $_FILES["foto"];
+    $foto_ktp       = $_FILES["foto_ktp"];
+    $id_toko        = $_POST["id_toko"];
+    $password       = $_POST["password"];
+    $password_repeat = $_POST["password_repeat"];
+
+    if ($password == $password_repeat) {
+        $pwd = password_hash($password, PASSWORD_DEFAULT);
+        $data['foto'] = fileUpload($_FILES['foto'], "../img/karyawan/");
+        $data['foto_ktp'] = fileUpload($_FILES['foto_ktp'], "../img/karyawan/");
+
+        $simpan = $con->insert(
+            "tb_karyawan",
+            array(
+                "id" => $id,
+                "nik" => $_POST["nik"],
+                "nama" => $_POST["nama"],
+                "no_telpon" => $_POST["no_telpon"],
+                "alamat" => $_POST["alamat"],
+                "email_karyawan" => $_POST["email_karyawan"],
+                "username" => $_POST["username"],
+                "password" => $pwd,
+                "password_repeat" => $password_repeat,
+                "foto" => $data["foto"],
+                "foto_ktp" => $data["foto_ktp"],
+                "jabatan_id" => '3',
+                "id_toko" => $_POST["id_toko"]
+            )
+        );
+
+        if ($simpan == TRUE) {
             setcookie('success', "Selamat Akun Success Dibuat.!!", time() + 1, "/");
             header('location:login.html');
-        }
-        else
-        {
+        } else {
             setcookie('error', "ERROR.!!", time() + 1, "/");
             header('location:daftar.html');
         }
