@@ -123,17 +123,17 @@ function integerToRoman($integer)
   // The Roman numeral should be built, return it
   return $result;
 }
-// function tgl_indo($tgl)
-// {
+function tgl_indo($tgl)
+{
 
-//   $tanggal = substr($tgl, 8, 2);
+  $tanggal = substr($tgl, 8, 2);
 
-//   $bulan = getBulan(substr($tgl, 5, 2));
+  $bulan = getBulan(substr($tgl, 5, 2));
 
-//   $tahun = substr($tgl, 0, 4);
+  $tahun = substr($tgl, 0, 4);
 
-//   return $tanggal . ' ' . $bulan . ' ' . $tahun;
-// }
+  return $tanggal . ' ' . $bulan . ' ' . $tahun;
+}
 
 function tgl_indo_waktu($tgl)
 {
