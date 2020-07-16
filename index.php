@@ -1,8 +1,8 @@
 <?php
 include "config/koneksi.php";
 include "App/MY_url_helper.php";
-if (!empty($_COOKIE['id_admin'])) {
-    $cookie = $_COOKIE['id_admin'];
+if (!empty($_COOKIE['id_karyawan'])) {
+    $cookie = $_COOKIE['id_karyawan'];
 } else {
     $cookie = 0;
 }

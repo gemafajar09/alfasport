@@ -85,7 +85,7 @@
                                 $tgl = date('Y-m-d H:i:s');
                                 ?>
                                 <input type="hidden" id="penyesuaian_stok_create_at" value="<?php echo $tgl; ?>">
-                                <input type="hidden" id="penyesuaian_stok_create_by" value="<?php echo $_COOKIE['id_admin']; ?>">
+                                <input type="hidden" id="penyesuaian_stok_create_by" value="<?php echo $_COOKIE['id_karyawan']; ?>">
                             </div>
                             <div class="form-group">
                                 <label>Toko</label>
@@ -168,7 +168,7 @@
                                 $tgl = date('Y-m-d H:i:s');
                                 ?>
                                 <input type="hidden" id="penyesuaian_stok_create_at1" value="<?php echo $tgl; ?>">
-                                <input type="hidden" id="penyesuaian_stok_create_by1" value="<?php echo $_COOKIE['id_admin']; ?>">
+                                <input type="hidden" id="penyesuaian_stok_create_by1" value="<?php echo $_COOKIE['id_karyawan']; ?>">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -341,7 +341,7 @@
                                 $tgl = date('Y-m-d H:i:s');
                                 ?>
                                 <input type="hidden" id="penyesuaian_stok_create_at2" value="<?php echo $tgl; ?>">
-                                <input type="hidden" id="penyesuaian_stok_create_by2" value="<?php echo $_COOKIE['id_admin']; ?>">
+                                <input type="hidden" id="penyesuaian_stok_create_by2" value="<?php echo $_COOKIE['id_karyawan']; ?>">
                             </div>
                         </div>
                         <div class="col-md-12">

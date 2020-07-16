@@ -25,44 +25,44 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_penyesuaian_stok_detail`
+-- Table structure for table `tb_pakai_sendiri`
 --
 
-CREATE TABLE `tb_penyesuaian_stok_detail` (
-  `penyesuaian_stok_detail_id` int(11) NOT NULL,
+CREATE TABLE `tb_pakai_sendiri` (
+  `pakai_sendiri_id` int(11) NOT NULL,
   `penyesuaian_stok_id` int(11) NOT NULL,
-  `id_gudang` int(11) NOT NULL,
-  `stok_awal` int(11) NOT NULL,
-  `stok_penyesuaian` int(11) NOT NULL,
-  `stok_akhir` int(11) NOT NULL
+  `id_karyawan` int(11) NOT NULL,
+  `id_toko` int(11) NOT NULL,
+  `pakai_sendiri_status` int(11) NOT NULL,
+  `pakai_sendiri_tgl` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_penyesuaian_stok_detail`
+-- Dumping data for table `tb_pakai_sendiri`
 --
 
-INSERT INTO `tb_penyesuaian_stok_detail` (`penyesuaian_stok_detail_id`, `penyesuaian_stok_id`, `id_gudang`, `stok_awal`, `stok_penyesuaian`, `stok_akhir`) VALUES
-(3, 2, 4, 1, 1, 1);
+INSERT INTO `tb_pakai_sendiri` (`pakai_sendiri_id`, `penyesuaian_stok_id`, `id_karyawan`, `id_toko`, `pakai_sendiri_status`, `pakai_sendiri_tgl`) VALUES
+(2, 2, 6, 22, 0, '2020-07-15');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tb_penyesuaian_stok_detail`
+-- Indexes for table `tb_pakai_sendiri`
 --
-ALTER TABLE `tb_penyesuaian_stok_detail`
-  ADD PRIMARY KEY (`penyesuaian_stok_detail_id`);
+ALTER TABLE `tb_pakai_sendiri`
+  ADD PRIMARY KEY (`pakai_sendiri_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `tb_penyesuaian_stok_detail`
+-- AUTO_INCREMENT for table `tb_pakai_sendiri`
 --
-ALTER TABLE `tb_penyesuaian_stok_detail`
-  MODIFY `penyesuaian_stok_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `tb_pakai_sendiri`
+  MODIFY `pakai_sendiri_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

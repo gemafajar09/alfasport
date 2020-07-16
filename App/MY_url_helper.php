@@ -422,14 +422,38 @@ function generateNumber()
 }
 function fileUpload($files, $lokasi)
 {
+  $allowed = array('jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG');
   $file_tmp = $files['tmp_name'];
+  $ukuran_foto = $files['size'];
+  $ukuran = 1000000;
   $file_name = explode('.', $files['name']);
   $nama_file = end($file_name);
   $file_ext = strtolower($nama_file);
-  $nama_file = str_replace(" ", "-", $file_name[0]) . "-" . substr(uniqid('', true), -5) . "." . $file_ext;
-  $lokasi_file = $lokasi . $nama_file;
-  move_uploaded_file($file_tmp, $lokasi_file);
-  return $nama_file;
+  if ($ukuran_foto <= $ukuran) {
+    if (!in_array($file_ext, $allowed)) {
+      // echo "
+      // <script>
+      //   alert('Gambar Tidak Valid');
+      //   window.history.back();
+      // </script>
+      // ";
+      // return "img-not-found.png";
+      // exit;
+      return false;
+    } else {
+      $nama_file = str_replace(" ", "-", $file_name[0]) . "-" . substr(uniqid('', true), -5) . "." . $file_ext;
+      $lokasi_file = $lokasi . $nama_file;
+      move_uploaded_file($file_tmp, $lokasi_file);
+      return $nama_file;
+    }
+  } else {
+    // echo "<script>
+    //   alert('Ukuran Gambar Lebih Dari 1 Mb!!');
+    //   window.history.back();
+    //   </script>";
+    // exit;
+    return false;
+  }
 }
 
 function fileMultiUpload($files, $index, $lokasi)
