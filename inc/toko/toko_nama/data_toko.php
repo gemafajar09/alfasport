@@ -1,5 +1,5 @@
 <?php
-include "../../config/koneksi.php";
+include "../../../config/koneksi.php";
 $data = $con->query("SELECT * FROM toko");
 foreach($data as $i => $a){
 ?>

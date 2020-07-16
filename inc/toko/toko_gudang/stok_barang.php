@@ -4,36 +4,44 @@
     </div>
 
     <div class="title_right">
-        <div class="col-md-12 col-sm-12   form-group pull-right top_search">
+        <div class="col-md-12 col-sm-12 form-group pull-right top_search">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Toko</label>
+                        <select name="tokos" id="tokos" class="form-control select2">
+                            <option value="">-Toko-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                     <div class="form-group">
                         <label>Merek</label>
-                        <select name="merek" id="merek" class="form-control select2" multiple="multiple">
+                        <select name="merek" id="merek" class="form-control select2">
                             <option value="">-Merek-</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                     <div class="form-group">
                         <label>Ketegori</label>
-                        <select name="kategori" id="kategori" class="form-control select2" multiple="multiple">
+                        <select name="kategori" id="kategori" class="form-control select2">
                             <option value="">-Kategori-</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                     <div class="form-group">
                         <label>Divisi</label>
-                        <select name="divisi" id="divisi" class="form-control select2" multiple="multiple">
+                        <select name="divisi" id="divisi" class="form-control select2">
                             <option value="">-Divisi-</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                     <div class="form-group">
                         <label>Gender</label>
-                        <select name="gender" id="gender" class="form-control select2" multiple="multiple">
+                        <select name="gender" id="gender" class="form-control select2">
                             <option value="">-Gender-</option>
                         </select>
                     </div>
@@ -75,17 +83,10 @@
                     <th>Sub Divisi</th>
                     <th>Gender</th>
                     <th>Jumlah</th>
-                    <th colspan=2>
-                        <center>Harga</center>
-                    </th>
-                    <th>Total</th>
-                    <th style="width:180px">Action</th>
-                </tr>
-                <tr>
-                    <th colspan="11"></th>
                     <th>Modal</th>
                     <th>Jual</th>
-                    <th colspan="2"></th>
+                    <!-- <th>Total</th> -->
+                    <th class="text-center" style="width:110px">Action</th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>
@@ -127,7 +128,7 @@
                                 <select name="gudang" id="gudang" style="width:460px" class="form-control select2">
                                     <option value="">-PILIH-</option>
                                     <?php
-                                        $data = $con->query("SELECT a.id_gudang, a.artikel, a.nama, a.id, b.ue, b.us, b.uk, b.cm FROM tb_gudang a JOIN tb_gudang_detail b ON a.id_gudang=b.id_gudang")->fetchAll();
+                                        $data = $con->query("SELECT a.*, b.*, c.* FROM tb_gudang_detail a JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran JOIN tb_gudang c ON a.id=c.id ")->fetchAll();
                                         foreach($data as $a){
                                     ?>
                                         <option value="<?= $a['id_gudang'] ?>"><?=  $a['artikel']  ?> - <?=  $a['nama']  ?> - <?=  $a['id']  ?>-(UE:<?= $a['ue'] ?>&nbsp;US:<?= $a['us'] ?>&nbsp;UK:<?= $a['uk'] ?>&nbsp;CM:<?= $a['cm'] ?>)</option>
@@ -244,7 +245,7 @@
         var gudang = $('#gudang').val()
         var jumlah = $('#jumlah').val()
         var id_stok_toko = $('#id_stok_toko').val()
-        axios.post('inc/toko/simpan_Stok_toko.php', {
+        axios.post('inc/toko/toko_gudang/simpan_Stok_toko.php', {
             'toko': toko,
             'gudang': gudang,
             'jumlah': jumlah,
@@ -252,18 +253,18 @@
         }).then(function(res) {
             kosong()
             $('#dataToko').modal('hide')
-            $('#isi').load('inc/toko/data_stok.php');
+            $('#isi').load('inc/toko/toko_gudang/data_stok.php');
         }).catch(function(err) {
             console.log(err)
             kosong()
             $('#dataToko').modal('hide')
-            $('#isi').load('inc/toko/data_stok.php');
+            $('#isi').load('inc/toko/toko_gudang/data_stok.php');
         })
     }
 
     function show(id)
     {
-        axios.post('inc/toko/show_detail.php',{
+        axios.post('inc/toko/toko_gudang/show_detail.php',{
             'id':id
         }).then(function(res){
             var data = res.data
@@ -293,7 +294,7 @@
 
     function edit(id)
     {
-    axios.post('inc/toko/edit_Stok_toko.php',{
+    axios.post('inc/toko/toko_gudang/edit_Stok_toko.php',{
         'id':id
         }).then(function(res){
             var data = res.data
@@ -307,11 +308,11 @@
         })
     }
     function hapus(id) {
-        axios.post('inc/toko/hapus_Stok_toko.php', {
-            'id_toko': id
+        axios.post('inc/toko/toko_gudang/hapus_Stok_toko.php', {
+            'id_stok_toko': id
         }).then(function(res) {
             var data = res.data
-            $('#isi').load('inc/toko/data_stok.php');
+            $('#isi').load('inc/toko/toko_gudang/data_stok.php');
         })
     }
 
@@ -322,5 +323,5 @@
         $('#jumlah').val('')
     }
 
-    $('#isi').load('inc/toko/data_stok.php');
+    $('#isi').load('inc/toko/toko_gudang/data_stok.php');
 </script>
