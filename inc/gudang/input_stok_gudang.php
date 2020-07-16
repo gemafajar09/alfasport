@@ -44,7 +44,7 @@
                                     $merek = $con->select('tb_merk','*');
                                     foreach($merek as $b){
                                 ?>
-                                <option value="<?= $b['merk_nama'] ?>"><?= $b['merk_nama'] ?></option>
+                                <option value="<?= $b['merk_id'] ?>"><?= $b['merk_nama'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -58,7 +58,7 @@
                                     $kategori = $con->select('tb_kategori','*');
                                     foreach($kategori as $b){
                                 ?>
-                                <option value="<?= $b['kategori_nama'] ?>"><?= $b['kategori_nama'] ?></option>
+                                <option value="<?= $b['kategori_id'] ?>"><?= $b['kategori_nama'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -72,7 +72,7 @@
                                     $divisi = $con->select('tb_divisi','*');
                                     foreach($divisi as $b){
                                 ?>
-                                <option value="<?= $b['divisi_nama'] ?>"><?= $b['divisi_nama'] ?></option>
+                                <option value="<?= $b['divisi_id'] ?>"><?= $b['divisi_nama'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -86,7 +86,7 @@
                                     $subdivisi = $con->select('tb_subdivisi','*');
                                     foreach($subdivisi as $b){
                                 ?>
-                                <option value="<?= $b['subdivisi_nama'] ?>"><?= $b['subdivisi_nama'] ?></option>
+                                <option value="<?= $b['subdivisi_id'] ?>"><?= $b['subdivisi_nama'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -100,7 +100,7 @@
                                     $gender = $con->select('tb_gender','*');
                                     foreach($gender as $b){
                                 ?>
-                                <option value="<?= $b['gender_nama'] ?>"><?= $b['gender_nama'] ?></option>
+                                <option value="<?= $b['gender_id'] ?>"><?= $b['gender_nama'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -205,7 +205,7 @@ $('#addRow').on('click',function(e){
                 "</div>";
     $('#formInput').append(html_row)
     $('.select2').select2({dropdownAutoWidth : true});   
-})
+b })
 
 function kosong1()
 {

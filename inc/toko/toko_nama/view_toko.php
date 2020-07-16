@@ -108,7 +108,7 @@
         var no_hp = $('#no_hp').val()
         var email = $('#email').val()
         var id_toko = $('#id_toko').val()
-        axios.post('inc/toko/aksi_simpan_toko.php', {
+        axios.post('inc/toko/toko_nama/aksi_simpan_toko.php', {
             'nama_toko': nama_toko,
             'alamat_toko': alamat_toko,
             'no_telpon': no_telpon,
@@ -119,7 +119,7 @@
             var simpan = res.data
             console.log(simpan)
             $('#dataToko').modal('hide')
-            $('#isi').load('inc/toko/data_toko.php');
+            $('#isi').load('inc/toko/toko_nama/data_toko.php');
             kosong()
         }).catch(function(err) {
             alert(err)
@@ -129,7 +129,7 @@
     }
 
     function edit(id) {
-        axios.post('inc/toko/aksi_edit_toko.php', {
+        axios.post('inc/toko/toko_nama/aksi_edit_toko.php', {
             'id_toko': id
         }).then(function(res) {
             var edit = res.data
@@ -146,11 +146,11 @@
     }
 
     function hapus(id) {
-        axios.post('inc/toko/aksi_hapus_toko.php', {
+        axios.post('inc/toko/toko_nama/aksi_hapus_toko.php', {
             'id_toko': id
         }).then(function(res) {
             var hapus = res.data
-            $('#isi').load('inc/toko/data_toko.php');
+            $('#isi').load('inc/toko/toko_nama/data_toko.php');
         }).catch(function(err) {
             console.log(err)
         })
@@ -165,5 +165,5 @@
         $('#id_toko').val('')
     }
 
-    $('#isi').load('inc/toko/data_toko.php');
+    $('#isi').load('inc/toko/toko_nama/data_toko.php');
 </script>
