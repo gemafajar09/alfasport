@@ -112,7 +112,7 @@
                                 <div class="form-group">
                                     <label>Jabatan</label>
                                     <select class="form-control" name="jabatan_id" id="jabatan_id" required>
-                                        <option selected disabled>Pilih Toko</option>
+                                        <option selected disabled>Pilih Jabatan</option>
                                         <?php
                                         $data = $con->select("tb_jabatan", "*");
                                         foreach ($data as $i => $a) {
