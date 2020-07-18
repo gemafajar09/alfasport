@@ -67,6 +67,12 @@
                         <label>Gender</label>
                         <select name="gender" id="gender" class="form-control select2">
                             <option value="">-Gender-</option>
+                            <?php
+                            $gender = $con->select('tb_gender','*');
+                            foreach($gender as $gender){
+                            ?>
+                                <option value="<?= $gender['gender_id'] ?>"><?= $gender['gender_nama'] ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>
@@ -187,11 +193,13 @@
             var id = res.data
             kosong()
             size(id.id_gudang)
+            toastr.info('SUCCESS..')
             $('#dataGudang').modal('hide')
             $('#isi').load('inc/gudang/data_stok.php');
         }).catch(function(err) {
             console.log(err)
             kosong()
+            toastr.warning('ERROR..')
             $('#dataGudang').modal('hide')
             $('#isi').load('inc/gudang/data_stok.php');
         })
@@ -203,7 +211,10 @@
             'id_gudang': id_gudang
         }).then(function(res) {
             var data = res.data
+            toastr.info('SUCCESS..')
             $('#isi').load('inc/gudang/data_stok.php');
+        }).catch(function(err){
+            toastr.warning('ERROR..')
         })
     }
 
@@ -213,7 +224,7 @@
         $('#us').val('')
         $('#uk').val('')
         $('#cm').val('')
-        $('#i0dgudang').val('')
+        $('#idgudang').val('')
     }
 
     function kosong() 
@@ -237,5 +248,32 @@
         kosong1()
     }
 
-    $('#isi').load('inc/gudang/data_stok.php');
+    $('#merek').change(function(e){
+        e.preventDefault()
+        var merek = $(this).val()
+        axios.post('inc/gudang/filter/merek.php',{
+            'merek':merek
+        }).then(function(res){
+            $('#isi').html(res.data)
+        }).catch(function(err){
+            console.log(err)
+        })
+    })
+
+    $(document).ready(function(){
+        $('#isi').load('inc/gudang/data_stok.php');
+    })
+
+    $('#kategori').change(function(e){
+        e.preventDefault()
+        var kategori = $(this).val()
+        axios.post('inc/gudang/filter/kategori.php',{
+            'kategori':kategori
+        }).then(function(res){
+            $('#isi').html(res.data)
+        }).catch(function(err){
+            console.log(err)
+        })
+    })
+
 </script>
