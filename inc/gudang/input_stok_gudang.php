@@ -14,7 +14,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Tanggal</label>
-                            <input type="date" required name="tanggal" id="tanggal" class="form-control">
+                            <input type="date" required name="tanggal" value="<?= date('Y-m-d') ?>" id="tanggal" class="form-control">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
@@ -180,7 +180,22 @@ $(document).ready(function(){
 $('#addRow').on('click',function(e){
     e.preventDefault();
         var kategori = $('#kategoris').val()
-        var merek = $('#mereks').val()
+        var merek = $('#mereks').val()    
+        var html_row = "<div class='row'>" + 
+                        "<div class='col-md-4'>" + 
+                            "<label>Barcode</label>" + 
+                            "<input type='text' class='form-control' name='barcode[]'>" + 
+                        "</div>" +
+                        "<div class='col-md-4'>" + 
+                            "<label>Ukuran</label><br>" + 
+                            "<select name='ukuran[]' class='form-control select2'></select>" + 
+                        "</div>" +
+                        "<div class='col-md-4'>" + 
+                            "<label>Jumlah</label>" + 
+                            "<input type='text' class='form-control' name='jumlah[]'>" + 
+                        "</div>" + 
+                    "</div>";
+        
         axios.post('inc/gudang/ukuran.php',{
             'id_merek': merek,
             'id_kategori': kategori
@@ -189,23 +204,9 @@ $('#addRow').on('click',function(e){
         }).catch(function(err){
             console.log(err)
         })
-    var html_row = "<div class='row'>" + 
-                    "<div class='col-md-4'>" + 
-                        "<label>Barcode</label>" + 
-                        "<input type='text' class='form-control' name='barcode[]'>" + 
-                    "</div>" +
-                    "<div class='col-md-4'>" + 
-                        "<label>Ukuran</label><br>" + 
-                        "<select name='ukuran[]' class='form-control select2'></select>" + 
-                    "</div>" +
-                    "<div class='col-md-4'>" + 
-                        "<label>Jumlah</label>" + 
-                        "<input type='text' class='form-control' name='jumlah[]'>" + 
-                    "</div>" + 
-                "</div>";
     $('#formInput').append(html_row)
     $('.select2').select2({dropdownAutoWidth : true});   
-b })
+})
 
 function kosong1()
 {

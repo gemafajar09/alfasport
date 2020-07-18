@@ -65,6 +65,8 @@ if (isset($_COOKIE['success'])) {
 <script src="<?= $base_url ?>vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="<?= $base_url ?>build/js/custom.min.js"></script>
+<!-- notifikasi -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
   $('.select2').select2({dropdownAutoWidth : true});
 </script>
