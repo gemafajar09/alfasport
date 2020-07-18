@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Alfa Sport</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
   <!-- Bootstrap -->
   <link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
   <link href="<?= $base_url ?>vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,6 +31,16 @@
   <link href="<?= $base_url ?>build/css/custom.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <style>
+    @font-face {
+      font-family: 'quick';
+      src: url(build/Quicksand-Regular_afda0c4733e67d13c4b46e7985d6a9ce.ttf);
+    }
+
+    * {
+      font-family: 'quick';
+    }
+  </style>
 </head>
 
 <body class="nav-md">

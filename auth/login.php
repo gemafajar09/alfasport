@@ -38,7 +38,7 @@ include "../config/koneksi.php";
           <form action="aksiLogin.html" method="POST">
             <h1>Login Form</h1>
             <div class="field item form-group">
-              <input class="form-control" data-validate-length-range="5" name="username" placeholder="Username" required="required" />
+              <input class="form-control" data-validate-length-range="2" name="username" placeholder="Username" required="required" />
             </div>
             <div>
               <input type="password" name="password" class="form-control" data-validate-length-range="5" placeholder="Password" required="required" />

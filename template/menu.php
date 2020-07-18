@@ -8,43 +8,95 @@
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-                <ul class="nav side-menu">
-                    <li><a href="home.html"><i class="fa fa-home"></i> Dashboard</a></li>
-                    <li><a><i class="fa fa-database"></i> Master Data <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="data_toko.html">Data Toko</a></li>
-                            <li><a href="data_karyawan.html">Data Karyawan</a></li>
-                            <li><a href="data_umur_barang.html">Data Umur Barang</a></li>
-                            <li><a href="data_member.html">Member</a></li>
-                            <li><a href="data_supplier.html">Supplier</a></li>
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="data_satuan.html">Satuan</a></li>
-                            <li><a href="data_ukuran.html">Ukuran</a></li>
-                            <li><a href="data_kategori.html">Kategori</a></li>
-                            <li><a href="data_divisi.html">Divisi</a></li>
-                            <li><a href="data_subdivisi.html">Sub Divisi</a></li>
-                            <li><a href="data_gender.html">Gender</a></li>
-                            <li><a href="data_merk.html">Merk</a></li>
-                            <!-- <li><a href="data_detail_ukuran.html">Detail Ukuran</a></li> -->
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-cube"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="stok_barang_gudang.html">Barang Gudang</a></li>
-                            <li><a href="stok_barang_toko.html">Barang Toko</a></li>
-                            <li><a href="penyesuaian_stok.html">Penyesuaian Barang</a></li>
-                        </ul>
-                    </li>
-                    <li><a><i class="fa fa-cubes"></i> Transfer Barang <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="tables.html">Transfer</a></li>
-                            <li><a href="tables_dynamic.html">Terima</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <?php
+                if ($_COOKIE['jabatan_id'] == 1) {
+                ?>
+                    <ul class="nav side-menu">
+                        <li><a href="home.html"><i class="fa fa-home"></i> Dashboard</a></li>
+                        <li><a><i class="fa fa-database"></i> Master Data <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="data_toko.html">Data Toko</a></li>
+                                <li><a href="data_karyawan.html">Data Karyawan</a></li>
+                                <li><a href="data_umur_barang.html">Data Umur Barang</a></li>
+                                <li><a href="data_member.html">Member</a></li>
+                                <li><a href="data_supplier.html">Supplier</a></li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="data_satuan.html">Satuan</a></li>
+                                <li><a href="data_ukuran.html">Ukuran</a></li>
+                                <li><a href="data_kategori.html">Kategori</a></li>
+                                <li><a href="data_divisi.html">Divisi</a></li>
+                                <li><a href="data_subdivisi.html">Sub Divisi</a></li>
+                                <li><a href="data_gender.html">Gender</a></li>
+                                <li><a href="data_merk.html">Merk</a></li>
+                                <!-- <li><a href="data_detail_ukuran.html">Detail Ukuran</a></li> -->
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-cube"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="stok_barang_gudang.html">Barang Gudang</a></li>
+                                <li><a href="stok_barang_toko.html">Barang Toko</a></li>
+                                <li><a href="penyesuaian_stok.html">Penyesuaian Barang</a></li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-cubes"></i> Transfer Barang <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="transfer.html">Transfer</a></li>
+                                <li><a href="tables_dynamic.html">Terima</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                <?php
+                } elseif ($_COOKIE['jabatan_id'] == 2) {
+                ?>
+                    <ul class="nav side-menu">
+                        <li><a href="home.html"><i class="fa fa-home"></i> Dashboard</a></li>
+                        <li><a><i class="fa fa-cube"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="stok_barang_gudang.html">Barang Gudang</a></li>
+                                <li><a href="stok_barang_toko.html">Barang Toko</a></li>
+                                <li><a href="penyesuaian_stok.html">Penyesuaian Barang</a></li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-cubes"></i> Transfer Barang <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="transfer.html">Transfer</a></li>
+                                <li><a href="tables_dynamic.html">Terima</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                <?php
+                } elseif ($_COOKIE['jabatan_id'] == 3) {
+                ?>
+                    <ul class="nav side-menu">
+                        <li><a href="home.html"><i class="fa fa-home"></i> Dashboard</a></li>
+                        <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="data_satuan.html">Satuan</a></li>
+                                <li><a href="data_ukuran.html">Ukuran</a></li>
+                                <li><a href="data_kategori.html">Kategori</a></li>
+                                <li><a href="data_divisi.html">Divisi</a></li>
+                                <li><a href="data_subdivisi.html">Sub Divisi</a></li>
+                                <li><a href="data_gender.html">Gender</a></li>
+                                <li><a href="data_merk.html">Merk</a></li>
+                                <!-- <li><a href="data_detail_ukuran.html">Detail Ukuran</a></li> -->
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-cube"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="stok_barang_gudang.html">Barang Gudang</a></li>
+                                <li><a href="stok_barang_toko.html">Barang Toko</a></li>
+                                <li><a href="penyesuaian_stok.html">Penyesuaian Barang</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                <?php
+                } else {
+                    echo "ok";
+                }
+                ?>
             </div>
         </div>
         <!-- /sidebar menu -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2020 at 11:52 AM
+-- Generation Time: Jul 18, 2020 at 11:37 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -50,7 +50,9 @@ CREATE TABLE `tb_karyawan` (
 --
 
 INSERT INTO `tb_karyawan` (`id_karyawan`, `id`, `nik`, `nama`, `alamat`, `no_telpon`, `email_karyawan`, `username`, `password`, `password_repeat`, `foto`, `foto_ktp`, `jabatan_id`, `id_toko`) VALUES
-(1, '238157', '123456789', 'adminowner', 'padang', '123456789', 'admin@gmail.com', 'adminowner', '$2y$10$ifIlX28K/sSWkmTqTUkMl.k3GM5hu49xZk4wo3ynBqeyKoR448JBq', 'terbukalah', '1-11425.png', '2-15205.png', 1, 22);
+(1, '238157', '123456789', 'adminowner', 'padang', '123456789', 'admin@gmail.com', 'adminowner', '$2y$10$ifIlX28K/sSWkmTqTUkMl.k3GM5hu49xZk4wo3ynBqeyKoR448JBq', 'terbukalah', '1-11425.png', '2-15205.png', 1, 0),
+(8, '418237', '12345567976', 'gema fajar ramadhan', 'padang', '084583723947', 'gema@fajar.com', 'gema', '$2y$10$qO3q0xRhIc24An6DF9nTHOPv5A8gaFt5zGTKL/vNXTn55PHQz5Bry', 'terbukalah', '1-71859.png', '2-93184.png', 3, 22),
+(9, '325861', '12341234123', 'admingudang', 'padang', '0848123231123', 'adminaa@gmail.com', 'admingudang', '$2y$10$T7XbF4w/k2KyB.wm4rciP.KcWlCHZVMYRztCt7JrCqOuXeUReayQq', 'terbukalah', '5-36100.png', '5-75148.png', 2, 0);
 
 --
 -- Indexes for dumped tables
@@ -70,7 +72,7 @@ ALTER TABLE `tb_karyawan`
 -- AUTO_INCREMENT for table `tb_karyawan`
 --
 ALTER TABLE `tb_karyawan`
-  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
