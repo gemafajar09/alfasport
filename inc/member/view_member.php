@@ -32,10 +32,12 @@
             <thead>
                 <tr>
                     <th>No</th>
+                    <th>Kode Member</th>
                     <th>Nama</th>
-                    <th style="width:280px">Alamat</th>
+                    <th>Email</th>
+                    <th>Alamat</th>
                     <th>No Telpon</th>
-                    <th>Hp</th>
+                    <th>Tanggal Lahir</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -57,30 +59,42 @@
 
             <div class="modal-body">
                 <div class="container">
-                    <div class="form-group">
-                        <label>Nama</label>
-                        <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama..">
-                    </div>
-                    <div class="form-group">
-                        <label>No Telpon</label>
-                        <input type="number" name="no_telpon" id="no_telpon" class="form-control" placeholder="No TElpon..">
-                    </div>
-                    <div class="form-group">
-                        <label>No Hp</label>
-                        <input type="number" name="no_hp" id="no_hp" class="form-control" placeholder="No Hp..">
-                        <input type="hidden" id="id_member">
-                    </div>
-                    <div class="form-group">
-                        <label>Alamat</label>
-                        <textarea name="alamat" style="height:118px" id="alamat" class="form-control"></textarea>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Nama</label>
+                                <input type="text" name="member_nama" id="member_nama" class="form-control" placeholder="Nama..">
+                            </div>
+                            <div class="form-group">
+                                <label>Tanggal Lahir</label>
+                                <input type="date" name="member_tgl_lahir" id="member_tgl_lahir" class="form-control" placeholder="Tangal">
+                            </div>
+                            <div class="form-group">
+                                <label>No Telpon</label>
+                                <input type="text" name="member_notelp" id="member_notelp" class="form-control" placeholder="No Telpon..">
+                            </div>
+                            <div class="form-group">
+                                <label>Alamat</label>
+                                <textarea name="member_alamat" id="member_alamat" class="form-control" cols="30" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="member_email" id="member_email" class="form-control" placeholder="Email..">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="member_password" id="member_password" class="form-control" placeholder="Password..">
+                                <input type="hidden" id="member_id">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-      <div class="modal-footer">
-        <button type="button" onclick="simpan()" class="btn btn-primary" data-dismiss="modal">Simpan</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
+            <div class="modal-footer">
+                <button type="button" onclick="simpan()" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
 
 
         </div>
@@ -93,18 +107,22 @@
     }
 
     function simpan() {
-        var nama = $('#nama').val()
-        var alamat = $('#alamat').val()
-        var no_telpon = $('#no_telpon').val()
-        var no_hp = $('#no_hp').val()
-        var id_member = $('#id_member').val()
+        var member_nama = $('#member_nama').val()
+        var member_email = $('#member_email').val()
+        var member_password = $('#member_password').val()
+        var member_alamat = $('#member_alamat').val()
+        var member_notelp = $('#member_notelp').val()
+        var member_tgl_lahir = $('#member_tgl_lahir').val()
+        var member_id = $('#member_id').val()
 
         axios.post('inc/member/aksi_simpan_member.php', {
-            'nama': nama,
-            'id_member': id_member,
-            'alamat': alamat,
-            'no_hp': no_hp,
-            'no_telpon': no_telpon,
+            'member_nama': member_nama,
+            'member_email': member_email,
+            'member_password': member_password,
+            'member_alamat': member_alamat,
+            'member_notelp': member_notelp,
+            'member_tgl_lahir': member_tgl_lahir,
+            'member_id': member_id,
         }).then(function(res) {
             kosong()
             $('#dataMember').modal('hide')
@@ -118,25 +136,29 @@
     }
 
 
-function edit(id)
-{
-    axios.post('inc/member/aksi_edit_member.php',{
-        'id_member':id
-    }).then(function(res){
-        var data = res.data
-        $('#alamat').val(data.alamat)
-        $('#nama').val(data.nama_member)
-        $('#no_telpon').val(data.no_telpon)
-        $('#no_hp').val(data.no_hp)
-        $('#id_member').val(data.id_member)
-        $('#dataMember').modal()
-    }).catch(function(err){
-        console.log(err)
-    })
-}
+    function edit(id) {
+        axios.post('inc/member/aksi_edit_member.php', {
+            'member_id': id
+        }).then(function(res) {
+
+            var data = res.data
+            $('#member_email').val(data.member_email)
+            $('#member_nama').val(data.member_nama)
+            $('#member_password').val(data.member_password_repeat)
+            $('#member_alamat').val(data.member_alamat)
+            $('#member_notelp').val(data.member_notelp)
+            $('#member_tgl_lahir').val(data.member_tgl_lahir)
+            $('#member_kode').val(data.member_kode)
+            $('#member_id').val(data.member_id)
+            $('#dataMember').modal()
+        }).catch(function(err) {
+            console.log(err)
+        })
+    }
+
     function hapus(id) {
         axios.post('inc/member/aksi_hapus_member.php', {
-            'id_member': id
+            'member_id': id
         }).then(function(res) {
             var data = res.data
             $('#isi').load('inc/member/data_member.php');
@@ -144,11 +166,13 @@ function edit(id)
     }
 
     function kosong() {
-        $('#id_member').val('')
-        $('#alamat').val('')
-        $('#nama').val('')
-        $('#no_telpon').val('')
-        $('#no_hp').val('')
+        $('#member_email').val('')
+        $('#member_nama').val('')
+        $('#member_password').val('')
+        $('#member_alamat').val('')
+        $('#member_tgl_lahir').val('')
+        $('#member_notelp').val('')
+        $('#member_id').val('')
     }
     $('#isi').load('inc/member/data_member.php');
 </script>
