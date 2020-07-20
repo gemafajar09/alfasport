@@ -19,6 +19,7 @@
                                 <li><a href="data_karyawan.html">Data Karyawan</a></li>
                                 <li><a href="data_umur_barang.html">Data Umur Barang</a></li>
                                 <li><a href="data_member.html">Member</a></li>
+                                <li><a href="point_member.html">Point Member</a></li>
                                 <li><a href="data_supplier.html">Supplier</a></li>
                             </ul>
                         </li>

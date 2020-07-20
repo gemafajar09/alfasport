@@ -24,10 +24,13 @@ if (isset($_POST['login'])) {
     }
 } elseif (isset($_POST['regis'])) {
 
-    $karakter = '123456789';
-    $shuffle  = substr(str_shuffle($karakter), 0, 6);
+    $date   = new DateTime(); //this returns the current date time
+    $result = $date->format('y-m-d-H-i-s');
+    $krr    = explode('-', $result);
+    $kode = implode("", $krr);
 
-    $id             = $shuffle;
+
+    $id             = $kode;
     $nik            = $_POST["nik"];
     $nama           = $_POST["nama"];
     $no_telpon      = $_POST["no_telpon"];
