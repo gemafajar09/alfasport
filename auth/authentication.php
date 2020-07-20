@@ -11,6 +11,7 @@ if (isset($_POST['login'])) {
             setcookie('id_karyawan', "$cek[id_karyawan]", time() + (86400 * 30), "/");
             setcookie('nama', "$cek[nama]", time() + (86400 * 30), "/");
             setcookie('jabatan_id', "$cek[jabatan_id]", time() + (86400 * 30), "/");
+            setcookie('id_toko', "$cek[id_toko]", time() + (86400 * 30), "/");
             setcookie('success', "Selamat Datang.!!", time() + 1, "/");
             header('location:home.html');
         } else {
