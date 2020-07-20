@@ -2,10 +2,7 @@
 include "../../config/koneksi.php";
 include "../../App/MY_url_helper.php";
 // aksi di bawah
-// $data = $con->query("SELECT * FROM tb_penyesuaian_stok 
-//                         JOIN toko ON toko.id_toko = tb_penyesuaian_stok.id_toko
-//                         JOIN tb_admin ON tb_admin.id_admin = tb_penyesuaian_stok.penyesuaian_stok_create_by
-//                     ");
+
 $data = $con->query("SELECT * FROM tb_penyesuaian_stok 
                         JOIN toko ON toko.id_toko = tb_penyesuaian_stok.id_toko
                         JOIN tb_admin ON tb_admin.id_admin = tb_penyesuaian_stok.penyesuaian_stok_create_by

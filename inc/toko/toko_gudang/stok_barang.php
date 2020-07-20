@@ -10,7 +10,13 @@
                     <div class="form-group">
                         <label>Toko</label>
                         <select name="tokos" id="tokos" class="form-control select2">
-                            <option value="">-Toko-</option>
+                            <option value="">ALL</option>
+                            <?php
+                            $data = $con->select('toko','*');
+                            foreach($data as $a){
+                            ?>
+                                <option value="<?= $a['id_toko'] ?>"><?= $a['nama_toko'] ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                 </div>

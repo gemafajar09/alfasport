@@ -31,7 +31,7 @@
         <table class="table table-striped" id="datatable-responsive">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th style="width:60px">No</th>
                     <th style="width:180px">Toko</th>
                     <th style="width:260px">Alamat</th>
                     <th style="width:140px">Telpon</th>

@@ -260,10 +260,6 @@
         })
     })
 
-    $(document).ready(function(){
-        $('#isi').load('inc/gudang/data_stok.php');
-    })
-
     $('#kategori').change(function(e){
         e.preventDefault()
         var kategori = $(this).val()
@@ -274,6 +270,22 @@
         }).catch(function(err){
             console.log(err)
         })
+    })
+
+    $('#divisi').change(function(e){
+        e.preventDefault()
+        var divisi = $(this).val()
+        axios.post('inc/gudang/filter/divisi.php',{
+            'divisi':divisi
+        }).then(function(res){
+            $('#isi').html(res.data)
+        }).catch(function(err){
+            console.log(err)
+        })
+    })
+
+    $(document).ready(function(){
+        $('#isi').load('inc/gudang/data_stok.php');
     })
 
 </script>
