@@ -32,3 +32,5 @@ RewriteRule ^update-gudang-([0-9]+)\.html$ index.php?page=inc/gudang/aksi_edit_g
 RewriteRule ^stok_barang_toko\.html$ index.php?page=inc/toko/toko_gudang/stok_barang [L]
 RewriteRule ^penyesuaian_stok\.html$ index.php?page=inc/penyesuaian/penyesuaian_stok [L]
 RewriteRule ^simpan_gudang\.html$ index.php?page=inc/gudang/aksi_simpan_gudang [L]
+
+RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/index [L]
