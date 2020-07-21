@@ -17,10 +17,9 @@ if ($_POST['penyesuaian_stok_id'] == NULL) {
     );
     $idps = $con->id();
 
-
     $last = $con->get(
         "tb_penyesuaian_stok",
-        "penyesuaian_stok_id",
+        "penyesuaian_stok_id, id_toko",
         ["ORDER" => ["penyesuaian_stok_id" => "DESC"]],
         ["LIMIT" => 1]
     );
@@ -45,10 +44,7 @@ if ($_POST['penyesuaian_stok_id'] == NULL) {
     $simpan = $con->update(
         "tb_penyesuaian_stok",
         array(
-            // "id_toko" => $_POST["id_toko"],
-            // "penyesuaian_stok_tgl" => $_POST["penyesuaian_stok_tgl"],
             "penyesuaian_stok_tipe" => $_POST["penyesuaian_stok_tipe"],
-            // "penyesuaian_stok_create_by" => $_POST["penyesuaian_stok_create_by"],
         ),
         array(
             "penyesuaian_stok_id" => $_POST["penyesuaian_stok_id"]

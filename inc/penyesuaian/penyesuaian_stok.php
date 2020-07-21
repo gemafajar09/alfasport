@@ -52,366 +52,357 @@
     </div>
 </div>
 
-<!-- The Modal -->
-<div class="modal" id="dataPenyesuaianStok">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+    <!-- The Modal -->
+    <div class="modal" id="dataPenyesuaianStok">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Data Penyesuaian Stok</h4>
-            </div>
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Data Penyesuaian Stok</h4>
+                </div>
 
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row" style="font-size:12px">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Tanggal</label>
-                                <input type="date" name="penyesuaian_stok_tgl" id="penyesuaian_stok_tgl" required="required" placeholder="Nama Merk" class="form-control">
-                                <input type="hidden" id="penyesuaian_stok_id">
-                                <?php
-                                $tgl = date('Y-m-d H:i:s');
-                                ?>
-                                <input type="hidden" id="penyesuaian_stok_create_at" value="<?php echo $tgl; ?>">
-                                <input type="hidden" id="penyesuaian_stok_create_by" value="<?php echo $_COOKIE['id_karyawan']; ?>">
-                            </div>
-                            <div class="form-group">
-                                <label>Toko</label>
-                                <select class="form-control select2" style="width: 100%;" name="id_toko" id="id_toko" required>
-                                    <option selected disabled>Pilih Toko</option>
-                                    <?php
-                                    $data = $con->select("toko", "*");
-                                    foreach ($data as $i => $a) {
-                                        echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Tipe Penyesuaian</label>
-                                <select class="form-control" name="penyesuaian_stok_tipe" id="penyesuaian_stok_tipe" required>
-                                    <option selected disabled>Pilih Tipe Penyesuaian</option>
-                                    <option value="stock opname">Stock Opname</option>
-                                    <option value="barang rusak">Barang Rusak</option>
-                                    <option value="dipakai sendiri">Dipakai Sendiri</option>
-                                </select>
-                            </div>
-
-                            <div id="namasipemakai" style="display: none;">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row" style="font-size:12px">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Nama Pemakai</label>
-                                    <select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
-                                        <option value="">-Pilih-</option>
+                                    <label>Tanggal</label>
+                                    <input type="date" name="penyesuaian_stok_tgl" id="penyesuaian_stok_tgl" required="required" placeholder="Nama Merk" class="form-control">
+                                    <input type="hidden" id="penyesuaian_stok_id">
+                                    <?php
+                                    $tgl = date('Y-m-d H:i:s');
+                                    ?>
+                                    <input type="hidden" id="penyesuaian_stok_create_at" value="<?php echo $tgl; ?>">
+                                    <input type="hidden" id="penyesuaian_stok_create_by" value="<?php echo $_COOKIE['id_karyawan']; ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Toko</label>
+                                    <select class="form-control select2" style="width: 100%;" name="id_toko" id="id_toko" required>
+                                        <option selected disabled>Pilih Toko</option>
                                         <?php
-                                        $datag = $con->select('tb_karyawan', '*');
-                                        foreach ($datag as $karyawan) {
+                                        $data = $con->select("toko", "*");
+                                        foreach ($data as $i => $a) {
+                                            echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
+                                        }
                                         ?>
-                                            <option value="<?= $karyawan['id_karyawan'] ?>"><?= $karyawan['nama'] ?></option>
-                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tipe Penyesuaian</label><br>
+                                    <select class="form-control select2" style="width: 100%;" name="penyesuaian_stok_tipe" id="penyesuaian_stok_tipe" required>
+                                        <option selected disabled>Pilih Tipe Penyesuaian</option>
+                                        <option value="stock opname">Stock Opname</option>
+                                        <option value="barang rusak">Barang Rusak</option>
+                                        <option value="dipakai sendiri">Dipakai Sendiri</option>
+                                    </select>
+                                </div>
+
+                                <div id="namasipemakai" style="display: none;">
+                                    <div class="form-group">
+                                        <label>Nama Pemakai</label>
+                                        <select name="id_karyawan" id="id_karyawan" class="form-control select2" style="width: 100%;">
+                                            <option value="">-Pilih-</option>
+                                            <?php
+                                            $datag = $con->select('tb_karyawan', '*');
+                                            foreach ($datag as $karyawan) {
+                                            ?>
+                                                <option value="<?= $karyawan['id_karyawan'] ?>"><?= $karyawan['nama'] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById("penyesuaian_stok_tipe").addEventListener("change", function() {
+                                        if (this.value == "dipakai sendiri") {
+                                            document.getElementById("namasipemakai").style.display = "block";
+                                        } else {
+                                            document.getElementById("namasipemakai").style.display = "none";
+                                        }
+                                    })
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" onclick="simpan()" class="btn btn-primary btn-sm">Simpan</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- modal 2 -->
+    <div class="modal" id="dataPenyesuaianStok1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Data Penyesuaian Stok</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row" style="font-size:12px">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tanggal</label>
+                                    <input type="date" name="penyesuaian_stok_tgl1" id="penyesuaian_stok_tgl1" required="required" placeholder="" class="form-control" readonly>
+                                    <input type="hidden" id="penyesuaian_stok_id2">
+                                    <?php
+                                    $tgl = date('Y-m-d H:i:s');
+                                    ?>
+                                    <input type="hidden" id="penyesuaian_stok_create_at1" value="<?php echo $tgl; ?>">
+                                    <input type="hidden" id="penyesuaian_stok_create_by1" value="<?php echo $_COOKIE['id_karyawan']; ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Toko</label>
+                                    <select class="form-control" name="id_toko1" id="id_toko1" required readonly>
+                                        <option selected disabled>Pilih Toko</option>
+                                        <?php
+                                        $data = $con->select("toko", "*");
+                                        foreach ($data as $i => $a) {
+                                            echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tipe Penyesuaian</label>
+                                    <select class="form-control" name="penyesuaian_stok_tipe1" id="penyesuaian_stok_tipe1" required>
+                                        <option selected disabled>Pilih Tipe Penyesuaian</option>
+                                        <option value="stock opname">Stock Opname</option>
+                                        <option value="barang rusak">Barang Rusak</option>
+                                        <option value="dipakai sendiri">Dipakai Sendiri</option>
+                                    </select>
 
-                            <script>
-                                document.getElementById("penyesuaian_stok_tipe").addEventListener("change", function() {
-                                    if (this.value == "dipakai sendiri") {
-                                        document.getElementById("namasipemakai").style.display = "block";
-                                    } else {
-                                        document.getElementById("namasipemakai").style.display = "none";
-                                    }
-                                })
-                            </script>
+                                </div>
+                                <!-- <div id="namasipemakai1" style="display: none;">
+                                    <div class="form-group">
+                                        <label>Nama Pemakai</label>
+                                        <select name="id_karyawan1" id="id_karyawan1" class="form-control select2" style="width: 100%;">
+                                            <option value="">-Pilih-</option>
+                                            <?php
+                                            $datag = $con->select('tb_karyawan', '*');
+                                            foreach ($datag as $karyawan) {
+                                            ?>
+                                                <option value="<?= $karyawan['id_karyawan'] ?>"><?= $karyawan['nama'] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <script>
+                                    document.getElementById("penyesuaian_stok_tipe1").addEventListener("change", function() {
+                                        if (this.value == "dipakai sendiri") {
+                                            document.getElementById("namasipemakai1").style.display = "block";
+                                        } else {
+                                            document.getElementById("namasipemakai1").style.display = "none";
+                                        }
+                                    })
+                                </script> -->
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-4">
+                                    <label for=""></label>
+                                    <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm form-control">Simpan</button>
+                                    <button type="button" class="btn btn-danger btn-sm form-control" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" style="font-size:12px">
+                            <div class="col-md-12">
+                                <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Artikel</th>
+                                            <!-- <th>Ukuran</th> -->
+                                            <th>Stok Awal</th>
+                                            <th>Penyesuaian</th>
+                                            <th>Stok Akhir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tmp"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" onclick="simpan()" class="btn btn-primary btn-sm">Simpan</button>
+                <!-- <div class="modal-footer">
+                <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm">Simpan</button>
                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div> -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- modal detail penyesuaian stok -->
+    <div class="modal" id="dataPenyesuaianStokDetail">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Data Penyesuaian Stok Detail</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row" style="font-size:12px">
+                            <div class="col-md-12">
+                                <div class="form-group">
+
+                                    <label>Artikel</label>
+                                    <select name="id_gudang" id="select2" class="form-control select2" style="width: 100%;"></select>
+                                    <input type="hidden" id="penyesuaian_stok_id1">
+                                    <input type="hidden" id="penyesuaian_stok_detail_id">
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Stok Awal</label>
+                                    <input type="text" name="stok_awal" readonly id="stok_awal" required="required" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Penyesuaian</label>
+                                    <input type="text" name="stok_penyesuaian" readonly id="stok_penyesuaian" required="required" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Stok Akhir</label>
+                                    <input type="text" name="stok_akhir" id="stok_akhir" required="required" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" onclick="simpan2()" class="btn btn-primary btn-sm">Simpan</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
             </div>
 
         </div>
     </div>
-</div>
 
-
-<!-- modal 2 -->
-<div class="modal" id="dataPenyesuaianStok1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Data Penyesuaian Stok</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row" style="font-size:12px">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Tanggal</label>
-                                <input type="date" name="penyesuaian_stok_tgl1" id="penyesuaian_stok_tgl1" required="required" placeholder="" class="form-control" readonly>
-                                <input type="hidden" id="penyesuaian_stok_id2">
-                                <?php
-                                $tgl = date('Y-m-d H:i:s');
-                                ?>
-                                <input type="hidden" id="penyesuaian_stok_create_at1" value="<?php echo $tgl; ?>">
-                                <input type="hidden" id="penyesuaian_stok_create_by1" value="<?php echo $_COOKIE['id_karyawan']; ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Toko</label>
-                                <select class="form-control" name="id_toko1" id="id_toko1" required readonly>
-                                    <option selected disabled>Pilih Toko</option>
-                                    <?php
-                                    $data = $con->select("toko", "*");
-                                    foreach ($data as $i => $a) {
-                                        echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Tipe Penyesuaian</label>
-                                <select class="form-control" name="penyesuaian_stok_tipe1" id="penyesuaian_stok_tipe1" required>
-                                    <option selected disabled>Pilih Tipe Penyesuaian</option>
-                                    <option value="stock opname">Stock Opname</option>
-                                    <option value="barang rusak">Barang Rusak</option>
-                                    <option value="dipakai sendiri">Dipakai Sendiri</option>
-                                </select>
-
-                            </div>
-                            <!-- <div id="namasipemakai1" style="display: none;">
+    <div class="modal" id="dataPenyesuaianStok2">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Data Penyesuaian Stok</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row" style="font-size:12px">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Nama Pemakai</label>
-                                    <select name="id_karyawan1" id="id_karyawan1" class="form-control select2" style="width: 100%;">
-                                        <option value="">-Pilih-</option>
+                                    <label>Tanggal</label>
+                                    <input type="date" name="penyesuaian_stok_tgl2" id="penyesuaian_stok_tgl2" required="required" placeholder="" class="form-control" readonly disabled>
+                                    <input type="hidden" id="penyesuaian_stok_id3">
+                                    <?php
+                                    $tgl = date('Y-m-d H:i:s');
+                                    ?>
+                                    <input type="hidden" id="penyesuaian_stok_create_at2" value="<?php echo $tgl; ?>">
+                                    <input type="hidden" id="penyesuaian_stok_create_by2" value="<?php echo $_COOKIE['id_karyawan']; ?>">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Toko</label>
+                                    <select class="form-control" name="id_toko2" id="id_toko2" required disabled>
+                                        <option selected disabled>Pilih Toko</option>
                                         <?php
-                                        $datag = $con->select('tb_karyawan', '*');
-                                        foreach ($datag as $karyawan) {
+                                        $data = $con->select("toko", "*");
+                                        foreach ($data as $i => $a) {
+                                            echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
+                                        }
                                         ?>
-                                            <option value="<?= $karyawan['id_karyawan'] ?>"><?= $karyawan['nama'] ?></option>
-                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
-                            <script>
-                                document.getElementById("penyesuaian_stok_tipe1").addEventListener("change", function() {
-                                    if (this.value == "dipakai sendiri") {
-                                        document.getElementById("namasipemakai1").style.display = "block";
-                                    } else {
-                                        document.getElementById("namasipemakai1").style.display = "none";
-                                    }
-                                })
-                            </script> -->
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group mb-4">
-                                <label for=""></label>
-                                <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm form-control">Simpan</button>
-                                <button type="button" class="btn btn-danger btn-sm form-control" data-dismiss="modal">Close</button>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Tipe Penyesuaian</label>
+                                    <select class="form-control" name="penyesuaian_stok_tipe2" id="penyesuaian_stok_tipe2" required disabled>
+                                        <option selected disabled>Pilih Tipe Penyesuaian</option>
+                                        <option value="stock opname">Stock Opname</option>
+                                        <option value="barang rusak">Barang Rusak</option>
+                                        <option value="dipakai sendiri">Dipakai Sendiri</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group mb-4">
+                                    <label for=""></label>
+                                    <!-- <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm form-control">Simpan</button>
+                                    <button type="button" class="btn btn-danger btn-sm form-control" data-dismiss="modal">Close</button> -->
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="row" style="font-size:12px">
-                        <div class="col-md-12">
-                            <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Artikel</th>
-                                        <!-- <th>Ukuran</th> -->
-                                        <th>Stok Awal</th>
-                                        <th>Penyesuaian</th>
-                                        <th>Stok Akhir</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tmp"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="modal-footer">
-            <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm">Simpan</button>
-            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-        </div> -->
-
-        </div>
-    </div>
-</div>
-
-
-
-<!-- modal detail penyesuaian stok -->
-<div class="modal" id="dataPenyesuaianStokDetail">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Data Penyesuaian Stok Detail</h4>
-            </div>
-
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row" style="font-size:12px">
-                        <div class="col-md-12">
-                            <div class="form-group">
-
-                                <label>Artikel</label>
-                                <select name="id_gudang" id="id_gudang" class="form-control select2" style="width: 100%;">
-                                    <option value="">-Pilih-</option>
-                                    <?php
-                                    $datag = $con->select('tb_gudang', '*');
-                                    foreach ($datag as $gudang) {
-                                    ?>
-                                        <option value="<?= $gudang['id_gudang'] ?>"><?= $gudang['artikel'] ?></option>
-                                    <?php } ?>
-                                </select>
-                                <input type="hidden" id="penyesuaian_stok_id1">
-                                <input type="hidden" id="penyesuaian_stok_detail_id">
-
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Stok Awal</label>
-                                <input type="number" name="stok_awal" id="stok_awal" required="required" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Penyesuaian</label>
-                                <input type="number" name="stok_penyesuaian" id="stok_penyesuaian" required="required" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Stok Akhir</label>
-                                <input type="number" name="stok_akhir" id="stok_akhir" required="required" class="form-control">
+                        <hr>
+                        <div class="row" style="font-size:12px">
+                            <div class="col-md-12">
+                                <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Artikel</th>
+                                            <!-- <th>Ukuran</th> -->
+                                            <th>Stok Awal</th>
+                                            <th>Penyesuaian</th>
+                                            <th>Stok Akhir</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="detailTmp"></tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" onclick="simpan2()" class="btn btn-primary btn-sm">Simpan</button>
+                <!-- <div class="modal-footer">
+                <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm">Simpan</button>
                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div> -->
+
             </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="modal" id="dataPenyesuaianStok2">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Data Penyesuaian Stok</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row" style="font-size:12px">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Tanggal</label>
-                                <input type="date" name="penyesuaian_stok_tgl2" id="penyesuaian_stok_tgl2" required="required" placeholder="" class="form-control" readonly disabled>
-                                <input type="hidden" id="penyesuaian_stok_id3">
-                                <?php
-                                $tgl = date('Y-m-d H:i:s');
-                                ?>
-                                <input type="hidden" id="penyesuaian_stok_create_at2" value="<?php echo $tgl; ?>">
-                                <input type="hidden" id="penyesuaian_stok_create_by2" value="<?php echo $_COOKIE['id_karyawan']; ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Toko</label>
-                                <select class="form-control" name="id_toko2" id="id_toko2" required disabled>
-                                    <option selected disabled>Pilih Toko</option>
-                                    <?php
-                                    $data = $con->select("toko", "*");
-                                    foreach ($data as $i => $a) {
-                                        echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Tipe Penyesuaian</label>
-                                <select class="form-control" name="penyesuaian_stok_tipe2" id="penyesuaian_stok_tipe2" required disabled>
-                                    <option selected disabled>Pilih Tipe Penyesuaian</option>
-                                    <option value="stock opname">Stock Opname</option>
-                                    <option value="barang rusak">Barang Rusak</option>
-                                    <option value="dipakai sendiri">Dipakai Sendiri</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group mb-4">
-                                <label for=""></label>
-                                <!-- <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm form-control">Simpan</button>
-                                <button type="button" class="btn btn-danger btn-sm form-control" data-dismiss="modal">Close</button> -->
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row" style="font-size:12px">
-                        <div class="col-md-12">
-                            <table class="table table-striped" id="datatable-responsive" style="font-size:11px">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Artikel</th>
-                                        <!-- <th>Ukuran</th> -->
-                                        <th>Stok Awal</th>
-                                        <th>Penyesuaian</th>
-                                        <th>Stok Akhir</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="detailTmp"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="modal-footer">
-            <button type="button" onclick="simpan3()" class="btn btn-primary btn-sm">Simpan</button>
-            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-        </div> -->
-
         </div>
     </div>
 </div>
-
-
-
-
-</div>
-
-
 
 <script>
     function tampil() {
         $('#dataPenyesuaianStok').modal()
     }
 
-    function tampil2(id) {
+    function tampil2(id,id_toko) {
         // alert(id);
-        $('#penyesuaian_stok_id1').val(id)
-        $('#dataPenyesuaianStokDetail').modal()
+        console.log(id)
+        console.log(id_toko)
+        axios.post('inc/penyesuaian/artikel.php',{
+            'id_toko':id_toko
+        }).then(function(res){
+            var data = res.data
+            $('#penyesuaian_stok_id1').val(id)
+            $('#select2').html(data)
+            $('#dataPenyesuaianStokDetail').modal()
+
+        })
     }
 
     function simpan() {
@@ -433,7 +424,7 @@
         }).then(function(res) {
             var id = res.data
             kosong()
-            tampil2(id.penyesuaian_stok_id);
+            tampil2(id.penyesuaian_stok_id,id_toko);
             $('#dataPenyesuaianStok').modal('hide')
             $('#isi').load('inc/penyesuaian/data_stok.php');
         }).catch(function(err) {
@@ -561,10 +552,6 @@
         tampiltabel1(id)
     }
 
-
-
-
-
     function hapus(id) {
         axios.post('inc/penyesuaian/aksi_hapus_penyesuaian_stok.php', {
             'penyesuaian_stok_id': id
@@ -593,6 +580,19 @@
         $('#stok_akhir').val('')
         $('#penyesuaian_stok_detail_id').val('')
     }
+
+    $('#select2').change(function(e){
+        e.preventDefault()
+        var id_stok = $(this).val()
+        axios.post('inc/penyesuaian/cek_stok.php',{
+            'id_stok': id_stok
+        }).then(function(res){
+            var data = res.data
+            $('#stok_awal').val(data.jumlah)
+        }).catch(function(err){
+            console.log(err)
+        })
+    })    
 
 
     $('#isi').load('inc/penyesuaian/data_stok.php');
