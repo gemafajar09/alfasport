@@ -30,10 +30,10 @@
     <div class="x_content table-responsive">
         <table class="table table-striped" id="datatable-responsive" id="datatable-responsive" id="datatable-responsive">
             <thead>
-                <tr>
-                    <th>No</th>
-                    <th style="width:180px">Satuan Barang</th>
-                    <th>Action</th>
+                <tr class="text-center">
+                    <th style="width:30px">No</th>
+                    <th>Satuan Barang</th>
+                    <th style="width:120px">Action</th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>

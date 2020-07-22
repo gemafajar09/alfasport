@@ -92,7 +92,7 @@
                     <th>Modal</th>
                     <th>Jual</th>
                     <!-- <th>Total</th> -->
-                    <th class="text-center" style="width:110px">Action</th>
+                    <th class="text-center" style="width:160px">Action</th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>
