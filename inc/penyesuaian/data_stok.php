@@ -18,7 +18,7 @@ foreach ($data as $i => $a) {
         <td><?= $a['penyesuaian_stok_tipe'] ?></td>
         <td><?= tgl_indo_waktu($a['penyesuaian_stok_create_at']) ?></td>
         <td><?= $a['nama'] ?></td>
-        <td>
+        <td class="text-center">
             <button type="button" onclick="edit('<?= $a['penyesuaian_stok_id'] ?>')" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
             <button type="button" id="hapus" onclick="hapus('<?= $a['penyesuaian_stok_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             <button type="button" id="detail" onclick="detail('<?= $a['penyesuaian_stok_id'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>

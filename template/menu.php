@@ -46,6 +46,7 @@
                             <ul class="nav child_menu">
                                 <li><a href="transfer.html">Transfer</a></li>
                                 <li><a href="tables_dynamic.html">Terima</a></li>
+                                <li><a href="permohonan.html">Permohonan Transfer</a></li>
                             </ul>
                         </li>
                     </ul>

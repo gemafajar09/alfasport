@@ -35,3 +35,5 @@ RewriteRule ^penyesuaian_stok\.html$ index.php?page=inc/penyesuaian/penyesuaian_
 RewriteRule ^simpan_gudang\.html$ index.php?page=inc/gudang/aksi_simpan_gudang [L]
 
 RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/index [L]
+
+RewriteRule ^permohonan\.html$ index.php?page=inc/permohonan/index [L]
