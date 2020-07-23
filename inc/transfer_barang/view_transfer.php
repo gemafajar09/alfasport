@@ -117,6 +117,11 @@
                             </div>
 
                             <div class="form-group">
+                                <label>Ukuran</label>
+                                <select class="form-control select2" name="ukuran" id="ukuran" required style="width: 100%;"></select>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Jumlah</label>
                                 <input type="number" name="jumlah" id="jumlah" required="required" placeholder="Jumlah" class="form-control">
                                 <input type="hidden" id="id_transfer">
@@ -149,6 +154,7 @@
         var id_toko = $('#id_toko').val()
         var id_toko_tujuan = $('#id_toko_tujuan').val()
         var id_gudang = $('#id_gudang').val()
+        var ukuran = $('#ukuran').val()
         var jumlah = $('#jumlah').val()
         var tanggal = $('#tanggal').val()
         var id_transfer = $('#id_transfer').val()
@@ -156,6 +162,7 @@
             'id_toko': id_toko,
             'id_toko_tujuan': id_toko_tujuan,
             'id_gudang': id_gudang,
+            'id_detail': ukuran,
             'jumlah': jumlah,
             'tanggal': tanggal,
             'id_transfer': id_transfer,
@@ -202,10 +209,23 @@
         $('#id_toko').val('')
         $('#id_toko_tujuan').val('')
         $('#id_gudang').val('')
+        $('#ukuran').val('')
         $('#jumlah').val('')
         $('#tanggal').val('')
         $('#id_transfer').val('')
     }
+
+    $('#id_gudang').change(function(){
+        var id_gudang = $(this).val()
+        axios.post('inc/transfer_barang/ukuran.php',{
+            'id':id_gudang
+        }).then(function(res){
+            var data = res.data
+            $('#ukuran').html(data)
+        }).catch(function(err){
+            console.log(err)
+        })
+    })
 
     $('#isi').load('inc/transfer_barang/data_transfer.php');
 </script>
