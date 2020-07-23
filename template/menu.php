@@ -48,6 +48,7 @@
                                 <li><a href="tables_dynamic.html">Terima</a></li>
                             </ul>
                         </li>
+                        <li><a href="penjualan.html"><i class="fa fa-shopping-cart "></i> Penjualan</a></li>
                     </ul>
                 <?php
                 } elseif ($_COOKIE['jabatan_id'] == 2) {
