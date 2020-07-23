@@ -30,6 +30,10 @@ RewriteRule ^stok_barang_gudang\.html$ index.php?page=inc/gudang/stok_barang [L]
 RewriteRule ^entry_gudang\.html$ index.php?page=inc/gudang/input_stok_gudang [L]
 RewriteRule ^update-gudang-([0-9]+)\.html$ index.php?page=inc/gudang/aksi_edit_gudang&id=$1 [L]
 
+RewriteRule ^penjualan\.html$ index.php?page=inc/transaksi/view_transaksi [L]
+RewriteRule ^entry_penjualan\.html$ index.php?page=inc/transaksi/input_transaksi [L]
+
+
 RewriteRule ^stok_barang_toko\.html$ index.php?page=inc/toko/toko_gudang/stok_barang [L]
 RewriteRule ^penyesuaian_stok\.html$ index.php?page=inc/penyesuaian/penyesuaian_stok [L]
 RewriteRule ^simpan_gudang\.html$ index.php?page=inc/gudang/aksi_simpan_gudang [L]
