@@ -401,6 +401,7 @@
         }).then(function(res) {
             var simpan = res.data
             console.log(simpan)
+            window.location = 'penjualan.html';
             // $('#dataKategori').modal('hide')
             // $('#isi').load('inc/kategori/data_kategori.php');
             kosong()
