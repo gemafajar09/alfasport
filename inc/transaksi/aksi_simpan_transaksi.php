@@ -42,14 +42,10 @@ if ($_POST['transaksi_id'] == NULL) {
     $con->delete("tb_transaksi_tmp", array("tmp_kode" => $_SESSION["auto_kode"]));
     unset($_SESSION['auto_kode']);
 
-    echo "
-        <script>
-            window.location='penjualan.html';
-        </script>
-    ";
-    // if ($simpan == TRUE) {
-    //     echo json_encode($simpan);
-    // } else {
-    //     echo json_encode('ERROR');
-    // }
+
+    if ($simpan == TRUE) {
+        echo json_encode($simpan);
+    } else {
+        echo json_encode('ERROR');
+    }
 }

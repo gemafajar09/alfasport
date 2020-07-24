@@ -71,81 +71,80 @@
 </div>
 
 <div class="modal" id="dataDetail">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detail Transaksi</h2>
+            </div>
             <div class="modal-body">
-                <h4>Detail Barang Gudang</h4>
-                <hr>
-                <div id="detail"></div>
+
+                <div class="container">
+                    <div class="row my-1">
+                        <table>
+                            <tr>
+                                <td><b>ID Jual</b></td>
+                                <td>:</td>
+                                <td><b><span id="id_jual"></span></b></td>
+                            </tr>
+                            <tr>
+                                <td><b>Tanggal</b></td>
+                                <td>:</td>
+                                <td><b><span id="tgl_jual"></span></b></td>
+                            </tr>
+                            <tr>
+                                <td><b>Toko</b></td>
+                                <td>:</td>
+                                <td><b><span id="toko_nama"></span></b></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Barang</th>
+                                <th>Jumlah</th>
+                                <th>Harga</th>
+                                <th>Diskon 1</th>
+                                <th>Diskon 2</th>
+                                <th>Tipe Diskon</th>
+                                <th>Sub Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="isi2"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
-    function size(id) {
-        $('#idgudang').val(id)
-        $('#dataUkuran').modal()
-    }
+    function show(transaksi_id) {
+        axios.post('inc/transaksi/show_detail_transaksi.php', {
+                'transaksi_id': transaksi_id
+            }).then(function(res) {
+                var data = res.data
+                $('#id_jual').text(data.detail_kode)
+                $('#tgl_jual').text(data.detail_tgl)
+                $('#toko_nama').text(data.nama_toko)
 
-    function show(id) {
-        axios.post('inc/gudang/show_detail.php', {
-            'id': id
-        }).then(function(res) {
-            var data = res.data
-            $('#detail').html(data)
-        }).catch(function(err) {
-            console.log(err)
-        })
+                // modal table
+                return axios.post('inc/transaksi/show_detail_transaksi_tabel.php', {
+                    'transaksi_id': transaksi_id
+                })
+
+            }).then(function(res) {
+                $('#isi2').html(res.data);
+            })
+            .catch(function(err) {
+                console.log(err)
+            })
         $('#dataDetail').modal()
     }
 
-    function tampil() {
-        $('#dataGudang').modal()
-    }
+    function tampilTabelDetail() {
 
-    function simpan() {
-        var id = $('#id').val()
-        var artikel = $('#artikel').val()
-        var nama = $('#nama').val()
-        var jumlah = $('#jumlah').val()
-        var modal = $('#modal').val()
-        var jual = $('#jual').val()
-        var mereks = $('#mereks').val()
-        var genders = $('#genders').val()
-        var kategoris = $('#kategoris').val()
-        var divisis = $('#divisis').val()
-        var sub_divisis = $('#sub_divisis').val()
-        var tanggal = $('#tanggal').val()
-        var id_gudang = $('#id_gudang').val()
-        axios.post('inc/gudang/aksi_simpan_gudang.php', {
-            'id': id,
-            'artikel': artikel,
-            'nama': nama,
-            'jumlah': jumlah,
-            'modal': modal,
-            'jual': jual,
-            'merek': mereks,
-            'gender': genders,
-            'kategori': kategoris,
-            'divisi': divisis,
-            'sub_divisi': sub_divisis,
-            'id_gudang': id_gudang,
-            'tanggal': tanggal
-        }).then(function(res) {
-            var id = res.data
-            kosong()
-            size(id.id_gudang)
-            toastr.info('SUCCESS..')
-            $('#dataGudang').modal('hide')
-            $('#isi').load('inc/gudang/data_stok.php');
-        }).catch(function(err) {
-            console.log(err)
-            kosong()
-            toastr.warning('ERROR..')
-            $('#dataGudang').modal('hide')
-            $('#isi').load('inc/gudang/data_stok.php');
-        })
     }
 
     function hapus(transaksi_id) {
@@ -160,62 +159,11 @@
         })
     }
 
-    function kosong1() {
-        $('#ue').val('')
-        $('#us').val('')
-        $('#uk').val('')
-        $('#cm').val('')
-        $('#idgudang').val('')
-    }
-
-    function kosong() {
-        $('#id').val('')
-        $('#artikel').val('')
-        $('#nama').val('')
-        $('#jumlah').val('')
-        $('#modal').val('')
-        $('#jual').val('')
-        $('#mereks').val('')
-        $('#genders').val('')
-        $('#kategoris').val('')
-        $('#divisis').val('')
-        $('#sub_divisis').val('')
-    }
-
-    function clearData() {
-        kosong()
-        kosong1()
-    }
-
     $('#toko').change(function(e) {
         e.preventDefault()
         var toko = $(this).val()
         axios.post('inc/transaksi/filter/toko.php', {
             'toko': toko
-        }).then(function(res) {
-            $('#isi').html(res.data)
-        }).catch(function(err) {
-            console.log(err)
-        })
-    })
-
-    $('#kategori').change(function(e) {
-        e.preventDefault()
-        var kategori = $(this).val()
-        axios.post('inc/gudang/filter/kategori.php', {
-            'kategori': kategori
-        }).then(function(res) {
-            $('#isi').html(res.data)
-        }).catch(function(err) {
-            console.log(err)
-        })
-    })
-
-    $('#divisi').change(function(e) {
-        e.preventDefault()
-        var divisi = $(this).val()
-        axios.post('inc/gudang/filter/divisi.php', {
-            'divisi': divisi
         }).then(function(res) {
             $('#isi').html(res.data)
         }).catch(function(err) {
