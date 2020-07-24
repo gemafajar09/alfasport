@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                     <div class="form-group">
-                        <label>Gender</label>
+                        <label>Toko</label>
                         <select name="toko" id="toko" class="form-control select2">
                             <option value="">-Toko-</option>
                             <?php
@@ -148,13 +148,13 @@
         })
     }
 
-    function hapus(id_gudang) {
-        axios.post('inc/gudang/aksi_hapus_gudang.php', {
-            'id_gudang': id_gudang
+    function hapus(transaksi_id) {
+        axios.post('inc/transaksi/aksi_hapus_transaksi.php', {
+            'transaksi_id': transaksi_id
         }).then(function(res) {
             var data = res.data
             toastr.info('SUCCESS..')
-            $('#isi').load('inc/gudang/data_stok.php');
+            $('#isi').load('inc/transaksi/data_transaksi.php');
         }).catch(function(err) {
             toastr.warning('ERROR..')
         })

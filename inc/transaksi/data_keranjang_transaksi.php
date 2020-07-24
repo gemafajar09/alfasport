@@ -1,7 +1,6 @@
 <?php
 include "../../config/koneksi.php";
 session_start();
-
 $data = $con->query("
                 SELECT a.tmp_id, 
                         a.tmp_kode, 
@@ -42,6 +41,9 @@ foreach ($data as $i => $a) {
     <th><?= $jumlah ?></th>
     <th colspan="3">&nbsp;</th>
     <th>Total</th>
-    <th><?= 'Rp' . number_format($subtotal) ?></th>
+    <th><b><?= 'Rp' . number_format($subtotal) ?></b>
+        <input type="hidden" id="subtotal" value="<?= $subtotal ?>">
+        <input type="hidden" id="jmlTot" value="<?= $jumlah ?>">
+    </th>
     <th>&nbsp;</th>
 </tr>
