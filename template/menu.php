@@ -46,7 +46,7 @@
                             <ul class="nav child_menu">
                                 <li><a href="transfer.html">Transfer</a></li>
                                 <li><a href="tables_dynamic.html">Terima</a></li>
-                                <li><a href="permohonan.html">Permohonan Transfer</a></li>
+                                <li><a href="permohonan.html">Permohonan Transfer&nbsp;<span class="badge badge-info">0</span></a></li>
                             </ul>
                         </li>
                         <li><a href="penjualan.html"><i class="fa fa-shopping-cart "></i> Penjualan</a></li>

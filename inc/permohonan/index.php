@@ -30,6 +30,8 @@
        <div class="row">
         <?php
             $data = $con->query("SELECT 
+            a.id_transfer,
+            a.acc_owner,
             c.artikel,
             c.nama,
             a.tanggal,
@@ -58,7 +60,13 @@
                        </div>
                        <br>
                        <div align="right">
-                           <button type="button" class="btn btn-primary btn-block btn-sm">View</button>
+                           <?php if($a['acc_owner'] == 0){ ?>
+                           <button type="button" onclick="tampil('<?= $a['id_transfer'] ?>')" class="btn btn-primary btn-block btn-sm">View</button>
+                           <?php }elseif($a['acc_owner'] == 1){ ?>
+                            <button type="button" class="btn btn-success btn-block btn-sm">SUCCESS</button>
+                           <?php }elseif($a['acc_owner'] == 2){ ?>
+                            <button type="button" class="btn btn-warning btn-block btn-sm">Ditolak</button>
+                           <?php } ?>
                        </div>
                    </div>
                </div>
@@ -67,3 +75,41 @@
        </div>
     </div>
 </div>
+<input type="hidden" id="idTrans">
+
+<!-- The Modal -->
+<div class="modal" id="Acc">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h6 class="modal-title">Acc Transfer Barang</h6>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="continer" id="tampilkan">
+            
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+    function tampil(id)
+    {
+        axios.post('inc/permohonan/detail.php',{
+            'id':id
+        }).then(function(res){
+            var data = res.data
+            $('#idTrans').val(id)
+            $('#tampilkan').html(data)
+            $('#Acc').modal()
+        }).catch(function(err){
+            console.log(err)
+        })
+    }
+</script>
