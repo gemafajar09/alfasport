@@ -38,6 +38,6 @@ RewriteRule ^stok_barang_toko\.html$ index.php?page=inc/toko/toko_gudang/stok_ba
 RewriteRule ^penyesuaian_stok\.html$ index.php?page=inc/penyesuaian/penyesuaian_stok [L]
 RewriteRule ^simpan_gudang\.html$ index.php?page=inc/gudang/aksi_simpan_gudang [L]
 
-RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/index [L]
+RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/view_transfer [L]
 
 RewriteRule ^permohonan\.html$ index.php?page=inc/permohonan/index [L]
