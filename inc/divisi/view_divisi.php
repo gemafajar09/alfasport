@@ -28,7 +28,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content table-responsive">
-        <table class="table table-striped" id="datatable-responsive" id="datatable-responsive" id="datatable-responsive">
+        <table class="table table-striped" id="datatable-responsive">
             <thead>
                 <tr>
                     <th style="width:60px">No</th>

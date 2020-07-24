@@ -205,10 +205,10 @@
         })
     }
 
-    function hapus(id_gudang) 
+    function hapus(id) 
     {
         axios.post('inc/gudang/aksi_hapus_gudang.php', {
-            'id_gudang': id_gudang
+            'id': id
         }).then(function(res) {
             var data = res.data
             toastr.info('SUCCESS..')

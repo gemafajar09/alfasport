@@ -25,8 +25,8 @@
                         </li>
                         <li><a><i class="fa fa-percent"></i> Event <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href=".html">Diskon Debit / Kredit</a></li>
-                                <li><a href=".html">Diskon Voucher</a></li>
+                                <li><a href="credit.html">Diskon Debit / Kredit</a></li>
+                                <li><a href="voucher.html">Diskon Voucher</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
@@ -48,11 +48,17 @@
                                 <li><a href="penyesuaian_stok.html">Penyesuaian Barang</a></li>
                             </ul>
                         </li>
+                        <!-- hitung jumlah permohonan -->
+                        <?php
+                            $acc = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 0")->fetch();
+                            $terima = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 1 AND id_toko_tujuan='$_COOKIE[id_toko]'")->fetch();
+                        ?>
+                        <!-- tutup -->
                         <li><a><i class="fa fa-cubes"></i> Transfer Barang <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="transfer.html">Transfer</a></li>
-                                <li><a href="terima_transfer.html">Terima</a></li>
-                                <li><a href="permohonan.html">Permohonan Transfer&nbsp;<span class="badge badge-info">0</span></a></li>
+                                <li><a href="terima_transfer.html">Terima&nbsp;<span class="badge badge-info"><?= $terima['jumlah'] ?></span></a></li>
+                                <li><a href="permohonan.html">Permohonan Transfer&nbsp;<span class="badge badge-info"><?= $acc['jumlah'] ?></span></a></li>
                             </ul>
                         </li>
                         <li><a href="penjualan.html"><i class="fa fa-shopping-cart "></i> Penjualan</a></li>
