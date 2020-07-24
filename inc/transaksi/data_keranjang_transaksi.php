@@ -2,18 +2,17 @@
 include "../../config/koneksi.php";
 session_start();
 $data = $con->query("
-                SELECT a.tmp_id, 
-                        a.tmp_kode, 
-                        d.nama, 
-                        d.jual, 
-                        a.tmp_jumlah_beli, 
-                        a.tmp_total_harga 
-                FROM tb_transaksi_tmp a 
-                JOIN toko b ON a.id_toko=b.id_toko 
-                JOIN tb_stok_toko c ON a.id_toko=c.id_toko 
-                JOIN tb_gudang d ON c.id_gudang=d.id_gudang 
-                WHERE a.tmp_kode = '$_SESSION[auto_kode]'
-                ")->fetchAll();
+SELECT a.tmp_id, 
+a.tmp_kode, 
+b.nama, 
+b.jual, 
+a.tmp_jumlah_beli, 
+a.tmp_total_harga 
+FROM tb_transaksi_tmp a 
+JOIN tb_gudang b ON a.id_gudang=b.id_gudang  
+WHERE a.tmp_kode = '$_SESSION[auto_kode]'
+")->fetchAll();
+
 $jumlah = 0;
 $subtotal = 0;
 foreach ($data as $i => $a) {

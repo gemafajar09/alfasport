@@ -31,9 +31,9 @@
         <table class="table table-striped" id="datatable-responsive" id="datatable-responsive" id="datatable-responsive">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th class="text-center" style="width:40px">No</th>
                     <th>Ukuran</th>
-                    <th>Action</th>
+                    <th class="text-center" style="width:140px">Action</th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>

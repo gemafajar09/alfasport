@@ -40,4 +40,7 @@ RewriteRule ^simpan_gudang\.html$ index.php?page=inc/gudang/aksi_simpan_gudang [
 
 RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/view_transfer [L]
 
+RewriteRule ^credit\.html$ index.php?page=inc/diskon/credit/index [L]
+RewriteRule ^voucher\.html$ index.php?page=inc/diskon/vocer/index [L]
+
 RewriteRule ^permohonan\.html$ index.php?page=inc/permohonan/index [L]

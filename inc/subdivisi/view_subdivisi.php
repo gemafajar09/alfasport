@@ -31,10 +31,10 @@
         <table class="table table-striped" id="datatable-responsive" id="datatable-responsive" id="datatable-responsive">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th style="width:40px">No</th>
                     <th>Nama Divisi</th>
                     <th>Nama Subdivisi</th>
-                    <th>Action</th>
+                    <th class="text-center" style="width:140px">Action</th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>
