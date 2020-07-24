@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="home.html" class="site_title"><i class="fa fa-paw"></i> <span>AlfaSport</span></a>
+            <a href="home.html" class="site_title"><img src="<?= $base_url ?>img/a4.png" style="width:50px" alt=""> <span>AlfaSport</span></a>
         </div>
         <div class="clearfix"></div>
         <br />
@@ -21,6 +21,12 @@
                                 <li><a href="data_member.html">Member</a></li>
                                 <li><a href="point_member.html">Point Member</a></li>
                                 <li><a href="data_supplier.html">Supplier</a></li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-percent"></i> Event <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href=".html">Diskon Debit / Kredit</a></li>
+                                <li><a href=".html">Diskon Voucher</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
@@ -45,7 +51,7 @@
                         <li><a><i class="fa fa-cubes"></i> Transfer Barang <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="transfer.html">Transfer</a></li>
-                                <li><a href="tables_dynamic.html">Terima</a></li>
+                                <li><a href="terima_transfer.html">Terima</a></li>
                                 <li><a href="permohonan.html">Permohonan Transfer&nbsp;<span class="badge badge-info">0</span></a></li>
                             </ul>
                         </li>
@@ -66,7 +72,7 @@
                         <li><a><i class="fa fa-cubes"></i> Transfer Barang <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="transfer.html">Transfer</a></li>
-                                <li><a href="tables_dynamic.html">Terima</a></li>
+                                <li><a href="terima_transfer.html">Terima</a></li>
                             </ul>
                         </li>
                     </ul>
