@@ -107,7 +107,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h5 class="modal-title">Data Toko</h5>
+                <h5 class="modal-title">Stok Toko</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -117,7 +117,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Nama Toko</label><br>
-                                <select name="toko" id="toko" style="width:260px" class="form-control select2">
+                                <select name="toko" id="toko" style="width:100%" class="form-control select2">
                                     <option value="">-PILIH-</option>
                                     <?php
                                         $data = $con->select('toko','*');
@@ -128,23 +128,29 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Barang Gudang</label><br>
-                                <select name="gudang" id="gudang" style="width:460px" class="form-control select2">
+                                <select name="gudang" style="width:100%" id="gudang" class="form-control select2">
                                     <option value="">-PILIH-</option>
                                     <?php
                                         $data = $con->query("SELECT a.*, b.*, c.* FROM tb_gudang_detail a JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran JOIN tb_gudang c ON a.id=c.id ")->fetchAll();
                                         foreach($data as $a){
                                     ?>
-                                        <option value="<?= $a['id_gudang'] ?>"><?=  $a['artikel']  ?> - <?=  $a['nama']  ?> - <?=  $a['id']  ?>-(UE:<?= $a['ue'] ?>&nbsp;US:<?= $a['us'] ?>&nbsp;UK:<?= $a['uk'] ?>&nbsp;CM:<?= $a['cm'] ?>)</option>
+                                        <option value="<?= $a['id_detail'] ?>"><?=  $a['artikel']  ?> - <?=  $a['nama']  ?> - <?=  $a['id']  ?>-(UE:<?= $a['ue'] ?>&nbsp;US:<?= $a['us'] ?>&nbsp;UK:<?= $a['uk'] ?>&nbsp;CM:<?= $a['cm'] ?>)</option>
                                     <?php } ?>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3 text-left">
+                        <div class="col-md-3">
+                            <label for="">Stok</label><br>
+                            <input type="text" readonly name="stoks" id="stoks" class="form-control">
+                            <input type="hidden" id="id_ukuran">
+                            <input type="hidden" id="id_gudangs">
+                        </div>
+                        <div class="col-md-3">
                             <label for="">Jumlah</label><br>
-                            <input type="text" style="width:80px" name="jumlah" id="jumlah" class="form-control">
+                            <input type="text" onkeyup="cekStok(this)" name="jumlah" id="jumlah" class="form-control">
                             <input type="hidden" id="id_stok_toko">
                         </div>
                         </div>
@@ -241,21 +247,47 @@
         $('#toko').focus()
         $('#dataToko').modal()
     }
+    
+    function cekStok(nilai)
+    {
+        var jumlah = nilai.value 
+        var sisa = $('#stoks').val()
+        if(sisa <= jumlah)
+        {
+            alert('Stok Tidak Memadai')
+        }else{
+            console.log('aman')
+        }
+    }
 
-    $('#gudang').change(function(){
-        document.getElementById('jumlah').focus()
+    $('#gudang').change(function(e){
+        e.preventDefault();
+        var id = $(this).val()
+        axios.post('inc/toko/toko_gudang/cek_stok.php',{
+            'id':id
+        }).then(function(res){
+            var data = res.data
+            $('#stoks').val(data.jumlah)
+            $('#id_ukuran').val(data.id_ukuran)
+            $('#id_gudangs').val(data.id_gudang)
+            document.getElementById('jumlah').focus()
+        })
     })
 
     function simpan() {
         var toko = $('#toko').val()
-        var gudang = $('#gudang').val()
+        var gudang = $('#id_gudangs').val()
+        var id_ukuran = $('#id_ukuran').val()
+        var id_detail = $('#gudang').val()
         var jumlah = $('#jumlah').val()
         var id_stok_toko = $('#id_stok_toko').val()
         axios.post('inc/toko/toko_gudang/simpan_Stok_toko.php', {
             'toko': toko,
             'gudang': gudang,
             'jumlah': jumlah,
-            'id': id_stok_toko
+            'id_ukuran': id_ukuran,
+            'id_detail': id_detail,
+            'id_stok_toko': id_stok_toko
         }).then(function(res) {
             kosong()
             $('#dataToko').modal('hide')
@@ -325,6 +357,9 @@
     function kosong() {
         $('#id_stok_toko').val('')
         $('#toko').val('')
+        $('#stoks').val('')
+        $('#id_ukuran').val('')
+        $('#id_gudang').val('')
         $('#gudang').val('')
         $('#jumlah').val('')
     }

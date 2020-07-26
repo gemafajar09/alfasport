@@ -9,8 +9,7 @@ b.jual,
 a.tmp_jumlah_beli, 
 a.tmp_total_harga 
 FROM tb_transaksi_tmp a 
-JOIN tb_gudang b ON a.id_gudang=b.id_gudang  
-WHERE a.tmp_kode = '$_SESSION[auto_kode]'
+JOIN tb_gudang b ON a.id_gudang=b.id_gudang WHERE a.id_karyawan = '$_COOKIE[id_karyawan]'
 ")->fetchAll();
 
 $jumlah = 0;
