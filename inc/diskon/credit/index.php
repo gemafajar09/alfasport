@@ -33,7 +33,6 @@
                 <tr>
                     <th style="width:30px">No</th>
                     <th>Kategori</th>
-                    <th>Diskon</th>
                     <th class="text-center" style="width:140px">Action</th>
                 </tr>
             </thead>

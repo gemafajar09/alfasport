@@ -7,5 +7,5 @@ $data = $con->query("SELECT * FROM tb_stok_toko
                         WHERE tb_stok_toko.id_toko = '$_GET[id_toko]'");
 echo "<option value=''>Pilih Barang</option>";
 foreach ($data as $i => $a) {
-    echo "<option value=" . $a['id_gudang'] . ">" . $a['nama'] . "</option>";
+    echo "<option value=" . $a['id_stok_toko'] . ">" . $a['nama'] . "</option>";
 }
