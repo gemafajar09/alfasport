@@ -212,6 +212,7 @@
                                     <div class="form-group">
                                         <label>Total</label>
                                         <input type="text" class="form-control" id="subTotalBelanja" readonly>
+                                        <input type="hidden" class="form-control" id="subTotalBelanja1" readonly>
                                         <input type="hidden" class="form-control" id="jumlahTotal" readonly>
                                     </div>
                                 </div>
@@ -366,12 +367,17 @@
         {
             $('#transaksi_bank').change(function(e){
                 var bank = $(this).val()
+                var subtotal = $('#subTotalBelanja1').val()
                 axios.post('inc/transaksi/diskon.php',{
                     'id':id,
                     'bank': bank
                 }).then(function(res){
                     var data = res.data
                     $('#diskons').val(data.diskon)
+                    var disc = data.diskon
+                    var total = (subtotal * disc) / 100
+                    var bersih = subtotal - total
+                    $('#subTotalBelanja').val(bersih)
                     console.log(data.diskon)
                 }).catch(function(err){
                     console.log(err)
@@ -396,6 +402,7 @@
         var sub = document.getElementById('subtotal').value;
         var tot = document.getElementById('jmlTot').value;
         document.getElementById('subTotalBelanja').value = sub;
+        document.getElementById('subTotalBelanja1').value = sub;
         document.getElementById('jumlahTotal').value = tot;
         console.log(sub)
         console.log(tot)
