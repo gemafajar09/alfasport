@@ -7,8 +7,8 @@ foreach ($data as $i => $a) {
         <td><?= $i + 1 ?></td>
         <td><?= $a['kategori'] ?></td>
         <td class="text-center">
-            <button type="button" onclick="edit('<?= $a['id_metode'] ?>')" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-            <button type="button" id="hapus" onclick="" class="btn btn-success btn-sm"><i class="fa fa-search"></i></button>
+            <!-- <button type="button" onclick="edit('<?= $a['id_metode'] ?>')" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button> -->
+            <a href="detail-data-diskon-<?= $a['id_metode'] ?>.html" class="btn btn-success btn-sm"><i class="fa fa-search"></i></a>
         </td>
     </tr>
 <?php } ?>
