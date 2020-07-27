@@ -1,6 +1,6 @@
 <div class="page-title">
     <div class="title_left">
-        <h3>Data Diskon</h3>
+        <h3>View Diskon</h3>
     </div>
 
     <div class="title_right">
@@ -31,8 +31,8 @@
         <table class="table table-striped" id="datatable-responsive">
             <thead>
                 <tr>
-                    <th style="width:30px">No</th>
-                    <th>Kategori</th>
+                    <th style="width:120px">Kategori</th>
+                    <th>Diskon</th>
                     <th class="text-center" style="width:140px">Action</th>
                 </tr>
             </thead>
