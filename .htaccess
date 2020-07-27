@@ -42,5 +42,7 @@ RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/view_transfer [L]
 
 RewriteRule ^credit\.html$ index.php?page=inc/diskon/credit/index [L]
 RewriteRule ^voucher\.html$ index.php?page=inc/diskon/vocer/index [L]
+RewriteRule ^detail-data-diskon-([0-9]+)\.html$ index.php?page=inc/diskon/credit/detail_data_diskon&id_metode=$1 [L]
+
 
 RewriteRule ^permohonan\.html$ index.php?page=inc/permohonan/index [L]
