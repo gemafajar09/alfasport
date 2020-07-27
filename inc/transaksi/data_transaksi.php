@@ -8,12 +8,12 @@ SELECT a.transaksi_id,
        a.transaksi_tipe_bayar,
        a.transaksi_cash,
        a.transaksi_debit,
-       a.transaksi_bank,
+       d.bank,
        a.transaksi_create_at,
        c.nama
 FROM tb_transaksi a
 JOIN toko b ON a.id_toko=b.id_toko
-JOIN tb_karyawan c ON a.transaksi_create_by = c.id_karyawan
+JOIN tb_karyawan c ON a.transaksi_create_by = c.id_karyawan JOIN tb_bank d ON a.transaksi_bank=d.id_bank
 ")->fetchAll();
 foreach ($data as $i => $a) {
 ?>
@@ -24,7 +24,7 @@ foreach ($data as $i => $a) {
         <td><?= $a['transaksi_tipe_bayar'] ?></td>
         <td><?= number_format($a['transaksi_cash']) ?></td>
         <td><?= number_format($a['transaksi_debit']) ?></td>
-        <td><?= $a['transaksi_bank'] ?></td>
+        <td><?= $a['bank'] ?></td>
         <td><?= tgl_indo_waktu($a['transaksi_create_at']) ?></td>
         <td><?= $a['nama'] ?></td>
         <!-- <td></td> -->

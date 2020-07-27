@@ -1,7 +1,7 @@
 <!-- footer content -->
 <footer>
   <div class="pull-right">
-    Cv. Mediatama Web Indonesia, <a href="https://www.instagram.com/gemafajarrr">Gema fajar</a>
+    Cv. Mediatama Web Indonesia, <a href="https://www.instagram.com/gemafajarrr"></a>
   </div>
   <div class="clearfix"></div>
 </footer>
