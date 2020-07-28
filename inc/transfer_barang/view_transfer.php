@@ -128,7 +128,10 @@
                             </div>
                             <div class="form-group">
                                 <label>Tanggal</label>
-                                <input type="date" name="tanggal" id="tanggal" required="required" placeholder="Tanggal" class="form-control">
+                                <?php
+                                $tgl = date('Y-m-d');
+                                ?>
+                                <input type="date" name="tanggal" id="tanggal" value="<?php echo $tgl; ?>" required="required" placeholder="Tanggal" class="form-control">
                                 <input type="hidden" id="divisi_id">
                             </div>
                         </div>
@@ -215,14 +218,14 @@
         $('#id_transfer').val('')
     }
 
-    $('#id_gudang').change(function(){
+    $('#id_gudang').change(function() {
         var id_gudang = $(this).val()
-        axios.post('inc/transfer_barang/ukuran.php',{
-            'id':id_gudang
-        }).then(function(res){
+        axios.post('inc/transfer_barang/ukuran.php', {
+            'id': id_gudang
+        }).then(function(res) {
             var data = res.data
             $('#ukuran').html(data)
-        }).catch(function(err){
+        }).catch(function(err) {
             console.log(err)
         })
     })
