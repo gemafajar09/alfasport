@@ -55,45 +55,13 @@
                         <div class="form-group">
                             <label>Tipe Konsumen</label>
                             <select name="tipe_konsumen" id="tipe_konsumen" class="form-control select2" required>
-                                <option value="">-Konsumen-</option>
                                 <option value="Non Member">Non Member</option>
                                 <option value="Member">Member</option>
                                 <option value="Distributor">Distributor</option>
                             </select>
                         </div>
                     </div>
-                    <div id="tipe_member" style="display: none;" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>Member</label>
-                            <select name="member_id" id="member_id" class="form-control select2" style="width: 100%;" required>
-                                <option value="">-Pilih-</option>
-                                <?php
-                                $datag = $con->select('tb_member', '*');
-                                foreach ($datag as $member) {
-                                ?>
-                                    <option value="<?= $member['member_id'] ?>"><?= $member['member_nama'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div id="tipe_distributor" style="display: none;" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                        <div class="form-group">
-                            <label>Distributor</label>
-                            <select name="distributor_id" id="distributor_id" class="form-control select2" style="width: 100%;" required>
-                                <option value="">-Pilih-</option>
-                                <?php
-                                $datag = $con->select('tb_distributor', '*');
-                                foreach ($datag as $distributor) {
-                                ?>
-                                    <option value="<?= $distributor['distributor_id'] ?>"><?= $distributor['distributor_nama'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <script>
-
-                    </script>
+                    <div id="customer"></div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
@@ -105,18 +73,23 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
-                            <label>Ukuran</label>
+                            <label>
+                                <input type="radio" name="radio" id="radio" value="ue">ue&nbsp;&nbsp;
+                                <input type="radio" name="radio" id="radio" value="uk">uk&nbsp;&nbsp;
+                                <input type="radio" name="radio" id="radio" value="us">us&nbsp;&nbsp;
+                                <input type="radio" name="radio" id="radio" value="cm">cm
+                            </label>
                             <select class="form-control select2" name="ukurans" id="ukurans" required style="width: 100%;">
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-1 col-lg-1">
+                    <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
                         <div class="form-group">
                             <label>Stok</label>
                             <input type="text" readonly value="" name="transaksi_stok" id="transaksi_stok" class="form-control" onkeyup="dapatHarga()">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-1 col-lg-1">
+                    <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
                         <div class="form-group">
                             <label>Jumlah</label>
                             <input type="text" required name="transaksi_jumlah_beli" id="transaksi_jumlah_beli" class="form-control" onkeyup="dapatHarga()">
@@ -129,6 +102,12 @@
                             <input type="text" name="harga" value="" id="harga" class="form-control" readonly>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
+                        <div class="form-group">
+                            <label>Diskon</label>
+                            <input type="text" name="diskon" value="0" id="disc" class="form-control">
+                        </div>
+                    </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Sub Total</label>
@@ -137,10 +116,10 @@
                             <input type="hidden" id="id_gudangs">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="col-xs-12 col-sm-6 col-md-1 col-lg-1">
                         <div class="form-group">
                             <label>&nbsp;</label>
-                            <button type="button" id="simpans" class="btn btn-info form-control">Tambah Keranjang</button>
+                            <button type="button" id="simpans" class="btn btn-info form-control"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
@@ -275,29 +254,50 @@
     })
 
     // menampilkan tipe konsumen jika salah satu select box dipilih
-    document.getElementById("tipe_konsumen").addEventListener("change", function() {
-        if (this.value == "Member") {
-            document.getElementById("tipe_member").style.display = "block";
-        } else {
-            document.getElementById("tipe_member").style.display = "none";
+    $('#tipe_konsumen').change(function(){
+        var tipe = $(this).val()
+        if(tipe == "Member")
+        {
+            let member = "<div id='tipe_member' class='col-xs-12 col-sm-6 col-md-3 col-lg-3'>" +
+                            "<div class='form-group'>" +
+                                "<label>Member</label>" +
+                                "<input class='form-control' style='width:190px' type='text' name='member_id' id='member_id'>" +
+                            "</div>"+
+                        "</div>"
+            document.getElementById('customer').innerHTML = member;
+            
+        }else if(tipe == "Distributor"){
+            var distributor = 
+                    "<div id='tipe_distributor' class='col-xs-12 col-sm-6 col-md-3 col-lg-3'>" +
+                        "<div class='form-group'>" +
+                            "<label>Distributor</label>"+
+                            "<select name='distributor_id' style='width:180px' id='distributor_id' class='form-control select2' style='width: 100%;' required>" +
+                                "<option value=''>-Pilih-</option>"+
+                                <?php
+                                $datag = $con->select('tb_distributor', '*');
+                                foreach ($datag as $distributor) {
+                                ?>
+                                    <option value="<?= $distributor['distributor_id'] ?>"><?= $distributor['distributor_nama'] ?></option>
+                                <?php } ?>
+                            "</select>" +
+                        "</div>" +
+                    "</div>"
+            document.getElementById('customer').innerHTML = distributor;
+            $('.select2').select2({dropdownAutoWidth : true});
         }
-
-        if (this.value == "Distributor") {
-            document.getElementById("tipe_distributor").style.display = "block";
-        } else {
-            document.getElementById("tipe_distributor").style.display = "none";
-        }
-    })
+    }) 
 
     // menampilkan harga dari barang yang dipilih
-    $("#id_gudang").change(function() {
-        var id = $('#id_gudang option:selected').val();
+    $('[name="radio"]').on('click',function() {
+        var id = $('#id_gudang').val();
+        var size = $(this).val()
         console.log(id_gudang);
         $.ajax({
             type: "POST",
             url: "inc/transaksi/filter/ukuran.php",
             data: {
-                'id': id
+                'id': id,
+                'size': size
             },
             dataType: 'HTML',
             success: function(data) {
@@ -315,6 +315,7 @@
             var data = res.data
             $('#transaksi_stok').val(data.jumlah)
             $('#harga').val(data.jual)
+            $('#disc').val(data.diskon)
             $('#id_gudangs').val(data.id_gudang)
         })
     })
@@ -502,7 +503,6 @@
         $('#transaksi_stok').val(0)
         $('#harga').val(0)
         $('#ukurans').select2(null).trigger('change')
-        $('#tipe_konsumen').select2(null).trigger('change')
         $('#member_id').val(null)
         $('#distributor_id').val(null)
         $('#transaksi_jumlah_beli').val(null)
