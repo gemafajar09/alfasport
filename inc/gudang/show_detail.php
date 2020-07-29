@@ -76,8 +76,9 @@ $edit = $con->query("SELECT a.id, a.artikel, a.nama, a.id_gudang, a.modal, a.jua
                 </tr>
             </thead>
             <tbody>
+            
             <?php
-                $isi = $con->query("SELECT a.*, b.* FROM tb_gudang_detail a JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran")->fetchAll();
+                $isi = $con->query("SELECT a.id, a.jumlah, a.tanggal , b.ue, b.uk, b.us, b.cm FROM tb_gudang_detail a JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran WHERE a.id='$edit[id]'")->fetchAll();
                 foreach($isi as $i => $a){
             ?>
                 <tr>
