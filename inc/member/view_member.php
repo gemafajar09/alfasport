@@ -14,7 +14,7 @@
     <div class="x_title">
         <div class="row">
             <div class="col-md-6">
-                <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button>
+                <!-- <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button> -->
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -35,9 +35,13 @@
                     <th>Kode Member</th>
                     <th>Nama</th>
                     <th>Email</th>
-                    <th>Alamat</th>
                     <th>No Telpon</th>
                     <th>Tanggal Lahir</th>
+                    <th>Provinsi</th>
+                    <th>Kota</th>
+                    <th>Alamat</th>
+                    <th>Gender</th>
+                    <th>Profesi</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -73,6 +77,42 @@
                                 <label>No Telpon</label>
                                 <input type="text" name="member_notelp" id="member_notelp" class="form-control" placeholder="No Telpon..">
                             </div>
+
+                            <div class="form-group">
+                                <label>Provinsi</label>
+                                <select class="form-control select2" name="id_prov" id="id_prov" required style="width: 100%;">
+                                    <option selected disabled>Pilih Provinsi</option>
+                                    <?php
+                                    $data = $con->query("SELECT * FROM tb_provinsi");
+                                    foreach ($data as $i => $a) {
+                                        echo "<option value=" . $a['id_prov'] . ">" . $a['nama_prov'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <script>
+                                $("#id_prov").change(function() {
+                                    var id_prov = $('#id_prov option:selected').val();
+                                    console.log(id_prov);
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "inc/member/data_kota.php",
+                                        data: {
+                                            'id_prov': id_prov
+                                        },
+                                        success: function(response) {
+                                            $('#id_kota').html(response);
+                                        }
+                                    });
+                                })
+                            </script>
+                            <div class="form-group">
+                                <label>Kota</label>
+                                <select class="form-control select2" name="id_kota" id="id_kota" required style="width: 100%;">
+                                    <option selected disabled>Pilih Kota</option>
+                                </select>
+                            </div>
+
                             <div class="form-group">
                                 <label>Alamat</label>
                                 <textarea name="member_alamat" id="member_alamat" class="form-control" cols="30" rows="2"></textarea>
@@ -113,6 +153,8 @@
         var member_alamat = $('#member_alamat').val()
         var member_notelp = $('#member_notelp').val()
         var member_tgl_lahir = $('#member_tgl_lahir').val()
+        var id_prov = $('#id_prov').val()
+        var id_kota = $('#id_kota').val()
         var member_id = $('#member_id').val()
 
         axios.post('inc/member/aksi_simpan_member.php', {
@@ -122,6 +164,8 @@
             'member_alamat': member_alamat,
             'member_notelp': member_notelp,
             'member_tgl_lahir': member_tgl_lahir,
+            'id_prov': id_prov,
+            'id_kota': id_kota,
             'member_id': member_id,
         }).then(function(res) {
             kosong()
@@ -150,6 +194,8 @@
             $('#member_tgl_lahir').val(data.member_tgl_lahir)
             $('#member_kode').val(data.member_kode)
             $('#member_id').val(data.member_id)
+            $('#id_prov').val(data.id_prov)
+            $('#id_kota').val(data.id_kota)
             $('#dataMember').modal()
         }).catch(function(err) {
             console.log(err)
@@ -172,6 +218,8 @@
         $('#member_alamat').val('')
         $('#member_tgl_lahir').val('')
         $('#member_notelp').val('')
+        $('#id_prov').val('')
+        $('#id_kota').val('')
         $('#member_id').val('')
     }
     $('#isi').load('inc/member/data_member.php');

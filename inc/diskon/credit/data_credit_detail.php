@@ -9,7 +9,9 @@ $data = $con->query("SELECT tb_diskon.id_diskon, tb_metode.kategori, tb_bank.ban
 foreach ($data as $i => $a) {
 ?>
     <tr>
-        <td><?= $i + 1 ?></td>
+        <td>
+            <input type="checkbox" class="chk_boxes1" name="id_diskon[]" value="<?= $a['id_diskon'] ?>">
+        </td>
         <td><?= $a['kategori'] ?></td>
         <td><?= $a['bank'] ?></td>
         <td><?= $a['diskon'] ?></td>

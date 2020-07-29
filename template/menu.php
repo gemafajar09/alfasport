@@ -46,12 +46,13 @@
                                 <li><a href="stok_barang_gudang.html">Barang Gudang</a></li>
                                 <li><a href="stok_barang_toko.html">Barang Toko</a></li>
                                 <li><a href="penyesuaian_stok.html">Penyesuaian Barang</a></li>
+                                <li><a href="cari_barang.html">Searching Barang</a></li>
                             </ul>
                         </li>
                         <!-- hitung jumlah permohonan -->
                         <?php
-                            $acc = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 0")->fetch();
-                            $terima = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 1 AND id_toko_tujuan='$_COOKIE[id_toko]'")->fetch();
+                        $acc = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 0")->fetch();
+                        $terima = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 1 AND id_toko_tujuan='$_COOKIE[id_toko]'")->fetch();
                         ?>
                         <!-- tutup -->
                         <li><a><i class="fa fa-cubes"></i> Transfer Barang <span class="fa fa-chevron-down"></span></a>

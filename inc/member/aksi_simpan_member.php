@@ -24,6 +24,8 @@ if ($_POST['member_id'] == NULL) {
             'member_alamat' => $_POST['member_alamat'],
             'member_notelp' => $_POST['member_notelp'],
             'member_tgl_lahir' => $_POST['member_tgl_lahir'],
+            'id_prov' => $_POST['id_prov'],
+            'id_kota' => $_POST['id_kota'],
         )
     );
 } else {
@@ -37,6 +39,8 @@ if ($_POST['member_id'] == NULL) {
             'member_alamat' => $_POST['member_alamat'],
             'member_notelp' => $_POST['member_notelp'],
             'member_tgl_lahir' => $_POST['member_tgl_lahir'],
+            'id_prov' => $_POST['id_prov'],
+            'id_kota' => $_POST['id_kota'],
         ),
         array(
             "member_id" => $_POST["member_id"]

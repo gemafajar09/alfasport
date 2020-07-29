@@ -31,18 +31,23 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
         <div class="clearfix"></div>
     </div>
     <div class="x_content table-responsive">
-        <table class="table table-striped" id="datatable-responsive">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Metode</th>
-                    <th>Bank</th>
-                    <th>Diskon</th>
-                    <th class="text-center" style="width:140px">Action</th>
-                </tr>
-            </thead>
-            <tbody id="isi"></tbody>
-        </table>
+        <form action="editMultipleDiskon.html" method="POST">
+            <table class="table table-striped" id="datatable-checkbox">
+                <button type="submit" name="submit" class="btn btn-warning btn-md"><i class="fa fa-pencil"> Edit Sekaligus</i></button>
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="check_all" id="check_all">
+                        </th>
+                        <th>Metode</th>
+                        <th>Bank</th>
+                        <th>Diskon</th>
+                        <th class="text-center" style="width:140px">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="isi"></tbody>
+            </table>
+        </form>
     </div>
 </div>
 
@@ -124,4 +129,11 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
     }
 
     $('#isi').load('inc/diskon/credit/data_credit_detail.php?id_metode=<?= $_GET["id_metode"] ?>');
+
+
+    $(function() {
+        $('.check_all').click(function() {
+            $('.chk_boxes1').prop('checked', this.checked);
+        });
+    });
 </script>
