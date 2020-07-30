@@ -188,7 +188,7 @@
             <tbody>
                 <?php
                 // include "../../config/koneksi.php";
-                $data = $con->query("SELECT tb_gudang.nama, tb_gudang.artikel, SUM(tb_gudang_detail.jumlah) as jumlah FROM tb_gudang JOIN tb_gudang_detail ON tb_gudang.id = tb_gudang_detail.id GROUP BY tb_gudang.nama HAVING(SUM(tb_gudang_detail.jumlah)) <= 5 ")->fetchAll();
+                $data = $con->query("SELECT tb_gudang.nama, tb_gudang.artikel, SUM(tb_gudang_detail.jumlah) as jumlah, tb_cek_stok_menipis.menipis_status FROM tb_gudang JOIN tb_gudang_detail ON tb_gudang.id = tb_gudang_detail.id JOIN tb_cek_stok_menipis ON tb_gudang.id_gudang = tb_cek_stok_menipis.id_gudang WHERE tb_cek_stok_menipis.menipis_status != 1 GROUP BY tb_gudang.nama HAVING(SUM(tb_gudang_detail.jumlah)) <= 5 ")->fetchAll();
                 foreach ($data as $i => $a) {
                 ?>
                     <tr>
