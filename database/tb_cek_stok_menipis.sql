@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2020 at 09:54 AM
+-- Generation Time: Jul 30, 2020 at 09:53 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -25,42 +25,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_jabatan`
+-- Table structure for table `tb_cek_stok_menipis`
 --
 
-CREATE TABLE `tb_jabatan` (
-  `jabatan_id` int(11) NOT NULL,
-  `jabatan_nama` varchar(255) NOT NULL,
-  `jabatan_jobdesk` text NOT NULL
+CREATE TABLE `tb_cek_stok_menipis` (
+  `menipis_id` int(11) NOT NULL,
+  `id_gudang` int(11) NOT NULL,
+  `menipis_status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_jabatan`
---
-
-INSERT INTO `tb_jabatan` (`jabatan_id`, `jabatan_nama`, `jabatan_jobdesk`) VALUES
-(1, 'adminowner', ''),
-(3, 'karyawan', '<ul><li>andasd</li><li>sdasd</li><li>sd</li><li>asdas</li></ul>');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tb_jabatan`
+-- Indexes for table `tb_cek_stok_menipis`
 --
-ALTER TABLE `tb_jabatan`
-  ADD PRIMARY KEY (`jabatan_id`);
+ALTER TABLE `tb_cek_stok_menipis`
+  ADD PRIMARY KEY (`menipis_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `tb_jabatan`
+-- AUTO_INCREMENT for table `tb_cek_stok_menipis`
 --
-ALTER TABLE `tb_jabatan`
-  MODIFY `jabatan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+ALTER TABLE `tb_cek_stok_menipis`
+  MODIFY `menipis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
