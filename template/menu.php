@@ -26,7 +26,7 @@
                         <li><a><i class="fa fa-percent"></i> Event <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="credit.html">Diskon Debit / Kredit</a></li>
-                                <li><a href="">Diskon Voucher</a></li>
+                                <li><a href="voucher.html">Diskon Voucher</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
