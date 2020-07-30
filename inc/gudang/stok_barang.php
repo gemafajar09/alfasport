@@ -86,7 +86,9 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="entry_gudang.html" class="btn btn-success btn-round"><i class="fa fa-plus"></i></a>
-                <a href="entry_gudang.html" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
+                <a href="format/data_gudang.csv" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
+                <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Nama Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
+                <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Ukuran" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -124,6 +126,22 @@
     </div>
 </div>
 
+<div class="modal" id="uploadCsv">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="upload_barang.html" method="POST" enctype="multipart/form-data">
+                <label for="my-input">Upload File Barang</label>
+                    <div class="form-inline">
+                        <input id="my-input" class="form-inline" type="file" name="upload_barang">
+                        <button type="submit" name="upload" class="btn btn-primary btn-round">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal" id="dataDetail">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -136,6 +154,11 @@
 </div>
 
 <script>
+    function shows()
+    {
+        $('#uploadCsv').modal()
+    }
+
     function size(id)
     {
         $('#idgudang').val(id)
