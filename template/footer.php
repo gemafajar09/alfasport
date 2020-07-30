@@ -67,8 +67,12 @@ if (isset($_COOKIE['success'])) {
 <script src="<?= $base_url ?>build/js/custom.min.js"></script>
 <!-- notifikasi -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="<?= $base_url ?>vendors/ckeditor/ckeditor.js"></script>
+
 <script>
-  $('.select2').select2({dropdownAutoWidth : true});
+  $('.select2').select2({
+    dropdownAutoWidth: true
+  });
 </script>
 <script src="<?= $base_url ?>App/content.js"></script>
 </body>

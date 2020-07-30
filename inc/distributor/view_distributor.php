@@ -32,10 +32,11 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nama</th>
-                    <th style="width:280px">Alamat</th>
-                    <th>No Telpon</th>
-                    <th>Hp</th>
+                    <th style="width:180px">Nama</th>
+                    <th style="width:260px">Perusahaan</th>
+                    <th style="width:140px">Telpon</th>
+                    <th style="width:140px">Email</th>
+                    <th>Alamat</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -56,11 +57,39 @@
             </div>
 
             <div class="modal-body">
-
+                <div class="container">
+                    <div class="row" style="font-size:12px">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nama</label>
+                                <input type="text" name="distributor_nama" id="distributor_nama" required="required" placeholder="Nama" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Nama Perusahaan</label>
+                                <input type="text" name="distributor_perusahaan" id="distributor_perusahaan" required="required" placeholder="Nama Perusahaan" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>No Telpon</label>
+                                <input type="text" name="distributor_notelp" id="distributor_notelp" required="required" placeholder="No Telpon" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" name="distributor_email" id="distributor_email" required="required" placeholder="Email">
+                                <input type="hidden" id="distributor_id">
+                            </div>
+                            <div class="form-group">
+                                <label>Alamat</label>
+                                <textarea name="distributor_alamat" style="height:118px" id="distributor_alamat" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+                <button type="button" onclick="simpan()" class="btn btn-primary" data-dismiss="modal">Simpan</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
 
@@ -72,5 +101,71 @@
     function tampil() {
         $('#dataDistributor').modal()
     }
-    $('#isi').load('inc/distributor/data_distibutor.php');
+
+    function simpan() {
+        var distributor_nama = $('#distributor_nama').val()
+        var distributor_perusahaan = $('#distributor_perusahaan').val()
+        var distributor_notelp = $('#distributor_notelp').val()
+        var distributor_email = $('#distributor_email').val()
+        var distributor_alamat = $('#distributor_alamat').val()
+        var distributor_id = $('#distributor_id').val()
+        axios.post('inc/distributor/aksi_simpan_distributor.php', {
+            'distributor_nama': distributor_nama,
+            'distributor_perusahaan': distributor_perusahaan,
+            'distributor_notelp': distributor_notelp,
+            'distributor_email': distributor_email,
+            'distributor_alamat': distributor_alamat,
+            'distributor_id': distributor_id,
+        }).then(function(res) {
+            var simpan = res.data
+            console.log(simpan)
+            $('#datadistributor').modal('hide')
+            $('#isi').load('inc/distributor/data_distributor.php');
+            kosong()
+        }).catch(function(err) {
+            alert(err)
+            $('#datadistributor').modal('hide')
+            $('#isi').load('inc/distributor/data_distributor.php');
+            kosong()
+        })
+    }
+
+    function edit(id) {
+        axios.post('inc/distributor/aksi_edit_distributor.php', {
+            'distributor_id': id
+        }).then(function(res) {
+            var edit = res.data
+            $('#distributor_nama').val(edit.distributor_nama)
+            $('#distributor_perusahaan').val(edit.distributor_perusahaan)
+            $('#distributor_notelp').val(edit.distributor_notelp)
+            $('#distributor_email').val(edit.distributor_email)
+            $('#distributor_alamat').val(edit.distributor_alamat)
+            $('#distributor_id').val(edit.distributor_id)
+            $('#dataDistributor').modal()
+        }).catch(function(err) {
+            console.log(err)
+        })
+    }
+
+    function hapus(id) {
+        axios.post('inc/distributor/aksi_hapus_distributor.php', {
+            'distributor_id': id
+        }).then(function(res) {
+            var hapus = res.data
+            $('#isi').load('inc/distributor/data_distributor.php');
+        }).catch(function(err) {
+            console.log(err)
+        })
+    }
+
+    function kosong() {
+        $('#distributor_nama').val('')
+        $('#distributor_perusahaan').val('')
+        $('#distributor_notelp').val('')
+        $('#distributor_email').val('')
+        $('#distributor_alamat').val('')
+        $('#distributor_id').val('')
+    }
+
+    $('#isi').load('inc/distributor/data_distributor.php');
 </script>
