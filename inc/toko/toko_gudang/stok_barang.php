@@ -142,18 +142,27 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <label for="">Stok</label><br>
-                            <input type="text" readonly name="stoks" id="stoks" class="form-control">
-                            <input type="hidden" id="id_ukuran">
-                            <input type="hidden" id="id_gudangs">
+                        <div class="col-md-6 mx-auto">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">Stok</label><br>
+                                    <input type="text" readonly name="stoks" id="stoks" class="form-control">
+                                    <input type="hidden" id="id_ukuran">
+                                    <input type="hidden" id="id_gudangs">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Jumlah</label><br>
+                                    <input type="text" onkeyup="cekStok(this)" name="jumlah" id="jumlah" class="form-control">
+                                    <input type="hidden" id="id_stok_toko">
+                                </div>
+                                <div id="tambahROw"></div>
+                            </div>
+                            <br>
+                            <div align="center">
+                                <button type="button" id="addRows" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <label for="">Jumlah</label><br>
-                            <input type="text" onkeyup="cekStok(this)" name="jumlah" id="jumlah" class="form-control">
-                            <input type="hidden" id="id_stok_toko">
-                        </div>
-                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -171,6 +180,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="container">
+                    <b>Tanggal Masuk : <i id="tanggal1"></i></b>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -311,6 +321,7 @@
             $('#uss').html(data.us)
             $('#cms').html(data.cm)
 
+            $('#tanggal1').html(data.tanggal)
             $('#nama1').html(data.nama)
             $('#nama_toko1').html(data.nama_toko)
             $('#id1').html(data.id)
@@ -319,7 +330,7 @@
             $('#gender1').html(data.gender_nama)
             $('#divisi1').html(data.divisi_nama)
             $('#subdivisi1').html(data.subdivisi_nama)
-            $('#jumlah1').html(data.jml)
+            $('#jumlah1').html(data.jumlah)
             $('#modal1').html(data.modal)
             $('#jual1').html(data.jual)
             $('#kategori1').html(data.kategori_nama)

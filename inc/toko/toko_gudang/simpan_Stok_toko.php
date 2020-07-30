@@ -7,7 +7,8 @@ $data = array(
     'id_gudang' => $_POST['gudang'],
     'id_toko' => $_POST['toko'],
     'jumlah' => $_POST['jumlah'],
-    'id_ukuran' => $_POST['id_ukuran']
+    'id_ukuran' => $_POST['id_ukuran'],
+    'tanggal' => date('Y-m-d')
 );
 
 if($_POST['id_stok_toko'] == NULL)

@@ -4,6 +4,8 @@ session_start();
 $data = $con->query("
 SELECT a.tmp_id, 
 a.tmp_kode, 
+a.diskon1, 
+a.potongan, 
 b.nama, 
 b.jual, 
 a.tmp_jumlah_beli, 
@@ -24,9 +26,9 @@ foreach ($data as $i => $a) {
         <td><?= $a['nama'] ?></td>
         <td><?= $a['tmp_jumlah_beli'] ?></td>
         <td><?= 'Rp' . number_format($a['jual']) ?></td>
+        <td><?= 'Rp' .number_format($a['diskon1']) ?></td>
         <td><?= '0' ?></td>
-        <td><?= '0' ?></td>
-        <td><?= '%' ?></td>
+        <td><?= $a['potongan'].'%' ?></td>
         <td><?= 'Rp' . number_format($a['tmp_total_harga']) ?></td>
         <td class="text-center">
             <button type="button" id="hapus" onclick="hapusKeranjang('<?= $a['tmp_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>

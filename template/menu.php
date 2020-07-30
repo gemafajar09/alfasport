@@ -27,6 +27,7 @@
                             <ul class="nav child_menu">
                                 <li><a href="credit.html">Diskon Debit / Kredit</a></li>
                                 <li><a href="">Diskon Voucher</a></li>
+                                <li><a href="">Diskon Item</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
