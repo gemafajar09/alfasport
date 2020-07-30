@@ -92,7 +92,7 @@
                     <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
                         <div class="form-group">
                             <label>Jumlah</label>
-                            <input type="text" required name="transaksi_jumlah_beli" id="transaksi_jumlah_beli" class="form-control" onkeyup="dapatHarga()">
+                            <input type="text" required name="transaksi_jumlah_beli" id="transaksi_jumlah_beli" class="form-control" onkeyup="dapatHarga(this)">
                         </div>
                     </div>
 
@@ -106,6 +106,7 @@
                         <div class="form-group">
                             <label>Diskon</label>
                             <input type="text" name="diskon" value="0" id="disc" class="form-control">
+                            <input type="hidden" name="diskon1" id="diskon1" class="form-control">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
@@ -220,6 +221,12 @@
                                         <input type="hidden" id="transaksi_id" class="form-control">
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Keterangan</label>
+                                        <textarea name="katerangan" id="keterangan" class="form-control"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -321,11 +328,14 @@
     })
 
     // mendapatkan total harga dari jumlah beli kali dengan total harga
-    function dapatHarga() {
-        var jumlahBeli = document.getElementById("transaksi_jumlah_beli").value;
+    function dapatHarga(nilai) {
+        var jumlahBeli = nilai.value;
+        var diskon = $('#disc').val()
         var harga = document.getElementById("harga").value;
-        total = jumlahBeli * harga;
-        document.getElementById("transaksi_total_harga").value = total;
+        var total = (harga * diskon) / 100;
+        var final = (harga - total) * jumlahBeli;
+        document.getElementById("transaksi_total_harga").value = final;
+        document.getElementById("diskon1").value = total;
         // $('#transaksi_total_harga').val(total);
     }
 
@@ -334,6 +344,8 @@
         var tmp_kode = $('#kode').val()
         var tmp_tgl = $('#tanggal').val()
         var id_toko = $('#id_toko').val()
+        var potongan = $('#disc').val()
+        var diskon = $('#diskon1').val()
         var id_gudang = $('#id_gudangs').val()
         var tipe_konsumen = $('#tipe_konsumen').val()
         var member_id = $('#member_id').val()
@@ -351,6 +363,8 @@
             'distributor_id': distributor_id,
             'tmp_jumlah_beli': tmp_jumlah_beli,
             'tmp_total_harga': tmp_total_harga,
+            'diskon1': diskon,
+            'potongan': potongan,
             'tmp_id': tmp_id
         }).then(function(res) {
             $('#isi').load('inc/transaksi/data_keranjang_transaksi.php');
