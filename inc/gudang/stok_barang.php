@@ -88,8 +88,8 @@
                 <a href="entry_gudang.html" class="btn btn-success btn-round"><i class="fa fa-plus"></i></a>
                 <a href="format/data_gudang.csv" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
                 <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Nama Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
-                <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Ukuran" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
-            </div>
+                <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Stok Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
+           </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -130,7 +130,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-body">
-                <form action="upload_barang.html" method="POST" enctype="multipart/form-data">
+                <form action="inc/gudang/upload_csv.php" method="POST" enctype="multipart/form-data">
                 <label for="my-input">Upload File Barang</label>
                     <div class="form-inline">
                         <input id="my-input" class="form-inline" type="file" name="upload_barang">
