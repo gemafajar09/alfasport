@@ -57,7 +57,7 @@
             <hr>
         </div>
         <div id="kops" style="display: none;">
-            <div class="col-sm-4 col-md-4 col-lg-4">
+            <div class="col-sm-6 col-md-6 col-lg-6">
                 <table>
                     <tr>
                         <th>Artikel</th>
@@ -79,6 +79,11 @@
                         <td>:</td>
                         <td><span id="hargadiskon"></span></td>
                     </tr>
+                    <tr>
+                        <th>Diskon</th>
+                        <td>:</td>
+                        <td><span id="diskon"></span>%</td>
+                    </tr>
                     <!-- <tr>
                         <th>Satuan</th>
                         <td>:</td>
@@ -86,7 +91,7 @@
                     </tr> -->
                 </table>
             </div>
-            <div class="col-sm-4 col-md-4 col-lg-4">
+            <!-- <div class="col-sm-4 col-md-4 col-lg-4">
                 <table>
                     <tr>
                         <th>Diskon ID</th>
@@ -109,8 +114,8 @@
                         <td><span id="">All</span></td>
                     </tr>
                 </table>
-            </div>
-            <div class="col-sm-4 col-md-4 col-lg-4">
+            </div> -->
+            <div class="col-sm-6 col-md-6 col-lg-6">
                 <table>
                     <tr>
                         <th>Merk</th>
@@ -131,6 +136,11 @@
                         <th>Gender</th>
                         <td>:</td>
                         <td><span id="gender"></span></td>
+                    </tr>
+                    <tr>
+                        <th>Pelanggan</th>
+                        <td>:</td>
+                        <td><span id="">All</span></td>
                     </tr>
                 </table>
             </div>
@@ -172,15 +182,33 @@
             'artikel': artikel
         }).then(function(res) {
             document.getElementById("kops").style.display = "block";
-            console.log(res);
             var data = res.data;
-            $('#namaartikel').text(data.detail.artikel);
-            $('#modal').text(data.detail.modal);
-            $('#jual').text(data.detail.jual);
-            $('#gender').text(data.detail.gender_nama);
-            $('#kategori').text(data.detail.kategori_nama);
-            $('#divisi').text(data.detail.divisi_nama);
-            $('#merk').text(data.detail.merk_nama);
+            console.log(data.detail);
+            if (data.detail != false) {
+
+                var caridiskon = data.detail.jual * data.detail.diskon / 100;
+                var hargadiskon = data.detail.jual - caridiskon;
+
+                $('#namaartikel').text(data.detail.artikel);
+                $('#modal').text(data.detail.modal);
+                $('#jual').text(data.detail.jual);
+                $('#gender').text(data.detail.gender_nama);
+                $('#kategori').text(data.detail.kategori_nama);
+                $('#divisi').text(data.detail.divisi_nama);
+                $('#merk').text(data.detail.merk_nama);
+                $('#diskon').text(data.detail.diskon);
+                $('#hargadiskon').text(hargadiskon);
+            } else {
+                $('#namaartikel').text('');
+                $('#modal').text('');
+                $('#jual').text('');
+                $('#gender').text('');
+                $('#kategori').text('');
+                $('#divisi').text('');
+                $('#merk').text('');
+                $('#diskon').text('');
+                $('#hargadiskon').text('');
+            }
 
             $('#isi').html(data.table);
         }).catch(function(err) {
@@ -199,13 +227,31 @@
             document.getElementById("kops").style.display = "block";
             // console.log(res);
             var data = res.data;
-            $('#namaartikel').text(data.detail.artikel);
-            $('#modal').text(data.detail.modal);
-            $('#jual').text(data.detail.jual);
-            $('#gender').text(data.detail.gender_nama);
-            $('#kategori').text(data.detail.kategori_nama);
-            $('#divisi').text(data.detail.divisi_nama);
-            $('#merk').text(data.detail.merk_nama);
+            if (data.detail != false) {
+
+                var caridiskon = data.detail.jual * data.detail.diskon / 100;
+                var hargadiskon = data.detail.jual - caridiskon;
+
+                $('#namaartikel').text(data.detail.artikel);
+                $('#modal').text(data.detail.modal);
+                $('#jual').text(data.detail.jual);
+                $('#gender').text(data.detail.gender_nama);
+                $('#kategori').text(data.detail.kategori_nama);
+                $('#divisi').text(data.detail.divisi_nama);
+                $('#merk').text(data.detail.merk_nama);
+                $('#diskon').text(data.detail.diskon);
+                $('#hargadiskon').text(hargadiskon);
+            } else {
+                $('#namaartikel').text('');
+                $('#modal').text('');
+                $('#jual').text('');
+                $('#gender').text('');
+                $('#kategori').text('');
+                $('#divisi').text('');
+                $('#merk').text('');
+                $('#diskon').text('');
+                $('#hargadiskon').text('');
+            }
 
             $('#isi').html(data.table);
         }).catch(function(err) {

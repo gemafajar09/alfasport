@@ -26,7 +26,7 @@ $json['table'] = $con->query("SELECT
                         j.uk,
                         j.us,
                         j.cm,
-                        i.tgl_masuk
+                        i.tanggal as tgl_masuk
                     FROM tb_gudang a
                     JOIN tb_stok_toko i ON a.id_gudang = i.id_gudang 
                     JOIN toko b ON i.id_toko=b.id_toko 
@@ -47,7 +47,8 @@ $json['detail'] = $con->query("SELECT
             c.merk_nama, 
             d.gender_nama, 
             e.kategori_nama, 
-            f.divisi_nama
+            f.divisi_nama,
+            g.diskon
         FROM tb_gudang a
         JOIN tb_stok_toko i ON a.id_gudang = i.id_gudang 
         JOIN toko b ON i.id_toko=b.id_toko 
@@ -55,8 +56,9 @@ $json['detail'] = $con->query("SELECT
         JOIN tb_gender d ON a.id_gender = d.gender_id 
         JOIN tb_kategori e ON a.id_kategori = e.kategori_id 
         JOIN tb_divisi f ON a.id_divisi = f.divisi_id 
+        JOIN tb_gudang_detail g ON a.id = g.id
         WHERE a.id_gudang = '$_POST[artikel]'
-        AND b.id_toko = '$_POST[toko]'
+        AND b.id_toko = '$_POST[toko]' LIMIT 1
 ")->fetch();
 
 // pending hasil sebelum kirim ke window/browser

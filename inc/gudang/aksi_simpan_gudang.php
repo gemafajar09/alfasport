@@ -1,7 +1,6 @@
 <?php
 // include "../../config/koneksi.php";
-if(isset($_POST['simpan']))
-{
+if (isset($_POST['simpan'])) {
     $data = array(
         'id' => $_POST['id'],
         'artikel' => $_POST['artikel'],
@@ -15,17 +14,25 @@ if(isset($_POST['simpan']))
         'id_sub_divisi' => $_POST['sub_divisi'],
         'tanggal' => $_POST['tanggal']
     );
-        $simpan = $con->insert('tb_gudang', $data);
-        $ukuran = $_POST['ukuran'];
-        $jumlah = $_POST['jumlah'];
-        $barcode = $_POST['barcode'];
-        foreach($ukuran as $i => $a)
-        {
-            // echo $ukuran[$i];
-            $con->query("INSERT INTO tb_gudang_detail (id,id_ukuran,jumlah,barcode,tanggal) VALUES ('$_POST[id]','$ukuran[$i]','$jumlah[$i]','$barcode[$i]','$_POST[tanggal]')");
-        }
-    
-        echo "
+    $simpan = $con->insert('tb_gudang', $data);
+
+    // cek stok menipis
+    $last_id = $con->id();
+    $con->insert("tb_cek_stok_menipis", [
+        "id_gudang" => $last_id,
+        "id" => $_POST['id'],
+        "menipis_status" => "0"
+    ]);
+
+    $ukuran = $_POST['ukuran'];
+    $jumlah = $_POST['jumlah'];
+    $barcode = $_POST['barcode'];
+    foreach ($ukuran as $i => $a) {
+        // echo $ukuran[$i];
+        $con->query("INSERT INTO tb_gudang_detail (id,id_ukuran,jumlah,barcode,tanggal) VALUES ('$_POST[id]','$ukuran[$i]','$jumlah[$i]','$barcode[$i]','$_POST[tanggal]')");
+    }
+
+    echo "
         <script>
             window.location='entry_gudang.html'
         </script>
@@ -33,4 +40,3 @@ if(isset($_POST['simpan']))
 }
     // $where = array('id_gudang' => $_POST['id_gudang']);
     // $simpan = $con->update('tb_gudang',$data,$where);
-
