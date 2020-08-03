@@ -40,59 +40,39 @@ foreach ($data as $i => $a) {
         <!-- <td></td> -->
         <td class="text-center">
             <label class="switch">
-                <!-- <input type="checkbox" id="cek_menipis_<?= $a['id_gudang'] ?>" onclick="cek_menipis('<?= $a['id_gudang'] ?>')" value="on"> -->
                 <?php $cek = $a['menipis_status'] ?>
-                <input type="checkbox" class="cek_menipis" id="cek_menipis" value="<?= $a['id_gudang'] ?>" <?php echo ($cek == '1') ? "checked" : "" ?>>
+                <input type="checkbox" class="cek_menipis" id="cek_menipis<?= $a['id_gudang'] ?>" value="<?= $a['id_gudang'] ?>" <?php echo ($cek == '1') ? "checked" : "" ?>>
                 <span class="slider round"></span>
             </label>
             <button type="button" id="hapus" onclick="hapus('<?= $a['id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             <button type="button" onclick="show('<?= $a['id_gudang'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
         </td>
     </tr>
+    <script>
+        $('#cek_menipis<?= $a['id_gudang'] ?>').click(function(e) {
+            var id_gudang = e.currentTarget.value;
+            if ($('#cek_menipis<?= $a['id_gudang'] ?>').prop('checked')) {
+                axios.post('inc/gudang/cek_stok_menipis/aksi_update_cek_stok_tidak_laku.php', {
+                    'id_gudang': id_gudang
+                }).then(function(res) {
+                    var id = res.data
+                    toastr.info('Sukses.. Barang Di Set Tidak Laku')
+                    // $(".cek_menipis").prop("checked", true);
+                }).catch(function(err) {
+                    console.log(err)
+                    toastr.warning('ERROR..')
+                    // $(".cek_menipis").prop("checked", false);
+                })
+            } else {
+                axios.post('inc/gudang/cek_stok_menipis/aksi_update_cek_stok_laku.php', {
+                    'id_gudang': id_gudang
+                }).then(function(res) {
+                    var data = res.data
+                    toastr.info('Sukses.. Barang Di Set Laku')
+                }).catch(function(err) {
+                    toastr.warning('ERROR..')
+                })
+            }
+        });
+    </script>
 <?php } ?>
-
-<script>
-    // function cek_menipis(id) {
-    //     var stok = document.getElementById("cek_menipis_" + id).value;
-    //     // console.log(stok)
-    //     // if (stok == "on") {
-    //     //     alert('hidup')
-    //     // } else {
-    //     //     alert('mati')
-    //     // }
-    //     $(stok).click(function() {
-    //         if ($('.cek_menipis').prop('checked')) {
-    //             alert('hidup')
-    //         } else {
-    //             alert('mati')
-    //         }
-    //     });
-    // }
-
-    $('.cek_menipis').click(function(e) {
-        var id_gudang = e.currentTarget.value;
-        if ($('.cek_menipis').prop('checked')) {
-            axios.post('inc/gudang/cek_stok_menipis/aksi_simpan_cek_stok.php', {
-                'id_gudang': id_gudang
-            }).then(function(res) {
-                var id = res.data
-                toastr.info('SUCCESS..')
-                // $(".cek_me   nipis").prop("checked", true);
-            }).catch(function(err) {
-                console.log(err)
-                toastr.warning('ERROR..')
-                $('#dataGudang').modal('hide')
-                // $(".cek_menipis").prop("checked", false);
-            })
-        } else {
-            axios.post('inc/gudang/cek_stok_menipis/aksi_hapus_cek_stok.php', {
-                'id_gudang': id_gudang
-            }).then(function(res) {
-                var data = res.data
-                toastr.info('SUCCESS..')
-            }).catch(function(err) {
-                toastr.warning('ERROR..')
-            })
-        }
-    });
-</script>

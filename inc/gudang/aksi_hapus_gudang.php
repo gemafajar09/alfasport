@@ -5,7 +5,8 @@ $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 $con->delete("tb_gudang", array("id" => $_POST["id"]));
 
-$con->delete("tb_gudang_detail", array("id" => $id["id"]));
+$con->delete("tb_gudang_detail", array("id" => $_POST["id"]));
+$con->delete("tb_cek_stok_menipis", array("id" => $_POST["id"]));
 if (!$con->error()) {
     echo json_encode('SUCCESS');
 } else {

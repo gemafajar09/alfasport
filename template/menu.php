@@ -86,8 +86,7 @@
                             </ul>
                         </li>
                     </ul>
-                <?php
-                } elseif ($_COOKIE['jabatan_id'] == 3) {
+                <?php } elseif ($_COOKIE['jabatan_id'] == 3) {
                 ?>
                     <ul class="nav side-menu">
                         <li><a href="home.html"><i class="fa fa-home"></i> Dashboard</a></li>
@@ -110,6 +109,7 @@
                                 <li><a href="penyesuaian_stok.html">Penyesuaian Barang</a></li>
                             </ul>
                         </li>
+                        <li><a href="penjualan.html"><i class="fa fa-shopping-cart"></i> Penjualan</a></li>
                     </ul>
                 <?php
                 } else {
