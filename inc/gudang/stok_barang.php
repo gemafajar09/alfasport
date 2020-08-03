@@ -86,7 +86,8 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="entry_gudang.html" class="btn btn-success btn-round"><i class="fa fa-plus"></i></a>
-                <a href="format/data_gudang.csv" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
+                <a href="format/data_gudang.csv" data-toggle="tooltip" title="Format Stok Barang" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
+                <a href="format/ukuran.csv" data-toggle="tooltip" title="Format Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
                 <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Nama Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
                 <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Stok Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
            </div>
@@ -142,6 +143,22 @@
     </div>
 </div>
 
+<div class="modal" id="uploadCsvUkuran">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="inc/gudang/upload_barang.php" method="POST" enctype="multipart/form-data">
+                <label for="my-input">Upload File Barang</label>
+                    <div class="form-inline">
+                        <input id="my-input" class="form-inline" type="file" name="upload_ukuran">
+                        <button type="submit" name="upload" class="btn btn-primary btn-round">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal" id="dataDetail">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -157,6 +174,10 @@
     function shows()
     {
         $('#uploadCsv').modal()
+    }
+    function showss()
+    {
+        $('#uploadCsvUkuran').modal()
     }
 
     function size(id)

@@ -18,6 +18,7 @@ if ($_POST['transaksi_id'] == NULL) {
         'transaksi_cash' => $_POST['transaksi_cash'],
         'transaksi_debit' => $_POST['transaksi_card'],
         'transaksi_bank' => $_POST['transaksi_bank'],
+        'transaksi_diskon' => $_POST['transaksi_diskon'],
         'transaksi_create_at' => $tgl,
         'transaksi_create_by' => $_COOKIE['id_karyawan'],
     );

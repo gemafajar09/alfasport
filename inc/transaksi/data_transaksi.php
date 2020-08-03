@@ -13,7 +13,7 @@ SELECT a.transaksi_id,
        c.nama
 FROM tb_transaksi a
 JOIN toko b ON a.id_toko=b.id_toko
-JOIN tb_karyawan c ON a.transaksi_create_by = c.id_karyawan JOIN tb_bank d ON a.transaksi_bank=d.id_bank
+JOIN tb_karyawan c ON a.transaksi_create_by = c.id_karyawan LEFT JOIN tb_bank d ON a.transaksi_bank=d.id_bank
 ")->fetchAll();
 foreach ($data as $i => $a) {
 ?>
