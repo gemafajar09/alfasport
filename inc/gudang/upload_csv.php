@@ -69,6 +69,6 @@ if(isset($_POST['upload']))
         $no++;
     }
     fclose($file);
-    header('location:stok_barang_gudang.html');
+    header('location:../../stok_barang_gudang.html');
 }
 

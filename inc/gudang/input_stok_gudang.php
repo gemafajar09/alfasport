@@ -4,6 +4,7 @@
             <div class="card-header">
                 <div class="text-left">
                     <a href="stok_barang_gudang.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
+                    <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Ukuran" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
                 </div>
                 <div class="text-center">
                     Entry Barang Gudang
