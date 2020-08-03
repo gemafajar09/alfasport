@@ -200,6 +200,7 @@
                                     <div class="form-group">
                                         <label>Diskon</label>
                                         <input type="text" class="form-control" id="diskons" readonly>
+                                        <input type="hidden" class="form-control" id="diskonss" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="display: none;" id="bayar_cash">
@@ -393,6 +394,7 @@
                     var total = (subtotal * disc) / 100
                     var bersih = subtotal - total
                     $('#subTotalBelanja').val(bersih)
+                    $('#diskonss').val(total)
                     console.log(data.diskon)
                 }).catch(function(err){
                     console.log(err)
@@ -477,17 +479,21 @@
         var transaksi_cash = $('#txtBayarCash').val()
         var transaksi_card = $('#txtBayarCard').val()
         var transaksi_id = $('#transaksi_id').val()
+        var transaksi_diskon = $('#diskonss').val()
         var transaksi_jumlah_beli = $('#jumlahTotal').val()
+        var kode = $('#kode').val()
         axios.post('inc/transaksi/aksi_simpan_transaksi.php', {
             'transaksi_tipe_bayar': transaksi_tipe_bayar,
             'transaksi_bank': transaksi_bank,
             'transaksi_cash': transaksi_cash,
             'transaksi_card': transaksi_card,
             'transaksi_id': transaksi_id,
+            'transaksi_diskon': transaksi_diskon,
             'transaksi_jumlah_beli': transaksi_jumlah_beli,
         }).then(function(res) {
             var simpan = res.data
             console.log(simpan)
+            window.open('inc/struk/invo1.php?invoice='+kode, '_blank');
             window.location = 'penjualan.html';
             kosong()
         }).catch(function(err) {

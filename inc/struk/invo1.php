@@ -21,8 +21,13 @@
         }
     </style>
 </head>
-
-<body style="" onload="window.print()">
+<?php
+    include "../../config/koneksi.php";
+    $id = $_GET['invoice'];
+    $data = $con->query("SELECT * FROM tb_transaksi WHERE transaksi_kode = '$id'")->fetch();
+    $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE id_toko = '$data[id_toko]'")->fetch();
+?>
+<body onload="window.print()">
     <div class="container">
         <div class="row" style="background-color:;">
             <div class="col-sm-4">
@@ -30,11 +35,11 @@
             <div class="col-sm-4 py-4" style="background-color:white; height: 100%; border-radius: 5px; box-shadow:0 0 100px rgba(0,0,0,.1); min-height:297mm;">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        <h5>Adidas Bukittinggi</h5>
+                        <h5><?= $toko['nama_toko'] ?></h5>
                         <h6>
-                            Jl. Abdul Karim, Bukit Tinggi
+                            <p><?= $toko['alamat_toko'] ?></p>
                         </h6>
-                        <h6>0752-31271 </h6>
+                        <h6><?= $toko['telpon_toko'] ?> </h6>
                         <span><i class="fa fa-instagram"> Alfasport</i></span> | <span><i class="fa  fa-envelope-o"> Alfasport</i></span>
                         <hr style="color:black; border: 1px solid;">
                     </div>
@@ -43,12 +48,12 @@
                             <tr>
                                 <th>No Faktur</th>
                                 <td>:</td>
-                                <td></td>
+                                <td><?= $_GET['invoice'] ?></td>
                             </tr>
                             <tr>
                                 <th>Tanggal</th>
                                 <td>:</td>
-                                <td></td>
+                                <td><?= date('d-m-Y') ?></td>
                             </tr>
                         </table>
                         <hr style="color:black; border: 1px solid;">
@@ -60,25 +65,28 @@
                                 <th>Nama Barang</th>
                                 <th style="float: right;">Subtotal</th>
                             </tr>
+                            <?php
+                            $total = 0;
+                                $list = $con->query("SELECT a.*, b.id_merek, c.merk_nama, d.transaksi_diskon FROM tb_transaksi_detail a JOIN tb_gudang b ON a.id_gudang=b.id_gudang JOIN tb_merk c ON b.id_merek=c.merk_id JOIN tb_transaksi d ON d.transaksi_kode=a.detail_kode WHERE a.detail_kode = '$_GET[invoice]'")->fetchAll();
+                                foreach($list as $a){
+                                    $total += $a['detail_total_harga'];
+                            ?>
                             <tr>
-                                <td>1</td>
-                                <td>nike puma adidas</td>
-                                <td style="float: right;">843428341</td>
+                                <td><?= $a['detail_jumlah_beli'] ?></td>
+                                <td><?= $a['merk_nama'] ?></td>
+                                <td style="float: right;">Rp.<?= number_format($a['detail_total_harga']) ?></td>
                             </tr>
-                            <tr>
-                                <td>1 Item</td>
-                                <td>Total Harga</td>
-                                <td style="float: right;">23230234</td>
-                            </tr>
+
+                            <?php } ?>
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>Total Diskon</td>
-                                <td style="float: right;">54349</td>
+                                <td style="float: right;">Rp. <?= number_format($a['transaksi_diskon']) ?></td>
                             </tr>
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>Total Bayar</td>
-                                <td style="float: right;">54343249</td>
+                                <td style="float: right;">Rp.<?= number_format($total) ?></td>
                             </tr>
                         </table>
                         <hr style="color:black; border: 1px solid;">
@@ -92,7 +100,10 @@
                         <table style="font-size: 12px;">
                             <tr>
                                 <td>printed by :</td>
-                                <td>nama - tanggal cek</td>
+                                <?php
+                                    $nama = $con->query("SELECT nama FROM tb_karyawan WHERE id_karyawan = '$data[transaksi_create_by]'")->fetch();
+                                ?>
+                                <td>nama - <?= $nama['nama'] ?></td>
                             </tr>
                         </table>
                     </div>
