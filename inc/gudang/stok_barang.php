@@ -88,8 +88,8 @@
                 <a href="entry_gudang.html" class="btn btn-success btn-round"><i class="fa fa-plus"></i></a>
                 <a href="format/data_gudang.csv" data-toggle="tooltip" title="Format Stok Barang" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
                 <a href="format/ukuran.csv" data-toggle="tooltip" title="Format Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
-                <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Nama Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
-                <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Stok Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
+                <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Stok Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
+                <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
            </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">

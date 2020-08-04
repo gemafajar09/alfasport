@@ -55,6 +55,8 @@
                         <div class="form-group">
                             <label>Tipe Konsumen</label>
                             <select name="tipe_konsumen" id="tipe_konsumen" class="form-control select2" required>
+                                <option value="">-SELECT-</option>
+                                <option value="Online">Online</option>
                                 <option value="Non Member">Non Member</option>
                                 <option value="Member">Member</option>
                                 <option value="Distributor">Distributor</option>

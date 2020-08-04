@@ -29,7 +29,7 @@
 ?>
 <body onload="window.print()">
     <div class="container">
-        <div class="row" style="background-color:;">
+        <div class="row">
             <div class="col-sm-4">
             </div>
             <div class="col-sm-4 py-4" style="background-color:white; height: 100%; border-radius: 5px; box-shadow:0 0 100px rgba(0,0,0,.1); min-height:297mm;">
