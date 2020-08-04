@@ -10,7 +10,7 @@ foreach ($data as $i => $a) {
 ?>
     <tr>
         <td>
-            <input type="checkbox" class="chk_boxes1" name="id_diskon[]" value="<?= $a['id_diskon'] ?>">
+            <input type="checkbox" class="chk_boxes1" name="id_diskon[]" value="<?= $a['id_diskon'] ?>" onchange="cekeditSekaligus()">
         </td>
         <td><?= $a['kategori'] ?></td>
         <td><?= $a['bank'] ?></td>

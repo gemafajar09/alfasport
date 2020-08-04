@@ -6,7 +6,7 @@ $_POST = json_decode($json, true);
 $con->delete("tb_transaksi_detail", array("transaksi_id" => $_POST["transaksi_id"]));
 $con->delete("tb_transaksi", array("transaksi_id" => $_POST["transaksi_id"]));
 
-if (!$con->error()) {
+if (!$con->error()[1]) {
     echo json_encode('SUCCESS');
 } else {
     echo json_encode('ERROR');

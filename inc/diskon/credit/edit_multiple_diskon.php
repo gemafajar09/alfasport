@@ -85,6 +85,7 @@ if (isset($_POST['update'])) {
                 </div>
             <?php
             }
+
             ?>
             <button class="btn btn-primary" type="submit" name="update">SIMPAN</button>
         </form>
