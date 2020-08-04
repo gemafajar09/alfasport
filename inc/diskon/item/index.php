@@ -85,8 +85,6 @@
     <div class="x_title">
         <div class="row">
             <div class="col-md-6">
-                <a href="entry_gudang.html" class="btn btn-success btn-round"><i class="fa fa-plus"></i></a>
-                <a href="entry_gudang.html" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -103,7 +101,9 @@
         <table class="table table-striped" id="datatable-responsive" style="font-size:11px;font: italic small-caps bold;">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>
+                        <!-- <input type="checkbox" class="check_all" id="checkAll"> -->
+                    </th>
                     <th>ID</th>
                     <th>Artikel</th>
                     <th>Nama</th>
@@ -115,8 +115,11 @@
                     <!-- <th>Jumlah</th> -->
                     <th>Harga Modal</th>
                     <th>Harga Jual</th>
+                    <th>UE</th>
+                    <th>UK</th>
+                    <th>US</th>
+                    <th>CM</th>
                     <th>Diskon</th>
-                    <th class="text-center" style="width:160px">Action</th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>
@@ -287,5 +290,12 @@
     $(document).ready(function(){
         $('#isi').load('inc/diskon/item/data_barang.php');
     })
+
+    $(function() {
+        $('.checkAll').click(function(e) {
+            e.preventDefault()
+            $('.chk_boxes1').prop('checked', this.checked);
+        });
+    });
 
 </script>
