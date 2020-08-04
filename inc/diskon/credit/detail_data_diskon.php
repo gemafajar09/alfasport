@@ -33,11 +33,11 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
     <div class="x_content table-responsive">
         <form action="editMultipleDiskon.html" method="POST">
             <table class="table table-striped" id="datatable-checkbox">
-                <button type="submit" name="submit" class="btn btn-warning btn-md"><i class="fa fa-pencil"> Edit Sekaligus</i></button>
+                <button type="submit" name="submit" class="btn btn-warning btn-md" disabled><i class="fa fa-pencil"> Edit Sekaligus</i></button>
                 <thead>
                     <tr>
                         <th>
-                            <input type="checkbox" class="check_all" id="check_all">
+                            <input type="checkbox" class="check_all" id="check_all" onchange="cekeditSekaligus()">
                         </th>
                         <th>Metode</th>
                         <th>Bank</th>
@@ -126,6 +126,22 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
             $('#dataDiskonDetail').modal('hide')
             $('#isi').load('inc/diskon/credit/data_credit_detail.php?id_metode=<?= $_GET["id_metode"] ?>');
         })
+    }
+
+    function cekeditSekaligus() {
+        var ceklist = document.getElementsByName("id_diskon[]");
+        var banyak_ceklist = ceklist.length;
+        var banyak_dicek = 0;
+        for (var x = 0; x < banyak_ceklist; x++) {
+            if (ceklist[x].checked) {
+                banyak_dicek++;
+            }
+        }
+        if (banyak_dicek > 0) {
+            document.getElementsByName("submit")[0].disabled = false;
+        } else {
+            document.getElementsByName("submit")[0].disabled = true;
+        }
     }
 
     $('#isi').load('inc/diskon/credit/data_credit_detail.php?id_metode=<?= $_GET["id_metode"] ?>');

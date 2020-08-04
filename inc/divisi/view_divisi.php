@@ -32,6 +32,7 @@
             <thead>
                 <tr>
                     <th style="width:60px">No</th>
+                    <th>Nama Kategori</th>
                     <th>Nama Divisi</th>
                     <th class="text-center" style="width:140px">Action</th>
                 </tr>

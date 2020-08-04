@@ -41,38 +41,38 @@ foreach ($data as $i => $a) {
         <td class="text-center">
             <label class="switch">
                 <?php $cek = $a['menipis_status'] ?>
-                <input type="checkbox" class="cek_menipis" id="cek_menipis<?= $a['id_gudang'] ?>" value="<?= $a['id_gudang'] ?>" <?php echo ($cek == '1') ? "checked" : "" ?>>
+                <input type="checkbox" class="cek_menipis" id="cek_menipis<?= $a['id_gudang'] ?>" value="<?= $a['id_gudang'] ?>" onchange="cekMenipis(<?= $a['id_gudang'] ?>, this)" <?php echo ($cek == '1') ? "checked" : "" ?>>
                 <span class="slider round"></span>
             </label>
             <button type="button" id="hapus" onclick="hapus('<?= $a['id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             <button type="button" onclick="show('<?= $a['id_gudang'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
         </td>
     </tr>
-    <script>
-        $('#cek_menipis<?= $a['id_gudang'] ?>').click(function(e) {
-            var id_gudang = e.currentTarget.value;
-            if ($('#cek_menipis<?= $a['id_gudang'] ?>').prop('checked')) {
-                axios.post('inc/gudang/cek_stok_menipis/aksi_update_cek_stok_tidak_laku.php', {
-                    'id_gudang': id_gudang
-                }).then(function(res) {
-                    var id = res.data
-                    toastr.info('Sukses.. Barang Di Set Tidak Laku')
-                    // $(".cek_menipis").prop("checked", true);
-                }).catch(function(err) {
-                    console.log(err)
-                    toastr.warning('ERROR..')
-                    // $(".cek_menipis").prop("checked", false);
-                })
-            } else {
-                axios.post('inc/gudang/cek_stok_menipis/aksi_update_cek_stok_laku.php', {
-                    'id_gudang': id_gudang
-                }).then(function(res) {
-                    var data = res.data
-                    toastr.info('Sukses.. Barang Di Set Laku')
-                }).catch(function(err) {
-                    toastr.warning('ERROR..')
-                })
-            }
-        });
-    </script>
 <?php } ?>
+
+<script>
+    function cekMenipis(id_gudang, stok_checked) {
+        if (stok_checked.checked) {
+            axios.post('inc/gudang/cek_stok_menipis/aksi_update_cek_stok_tidak_laku.php', {
+                'id_gudang': id_gudang
+            }).then(function(res) {
+                var id = res.data
+                toastr.info('Sukses.. Barang Di Set Tidak Laku')
+                // $(".cek_menipis").prop("checked", true);
+            }).catch(function(err) {
+                console.log(err)
+                toastr.warning('ERROR..')
+                // $(".cek_menipis").prop("checked", false);
+            })
+        } else {
+            axios.post('inc/gudang/cek_stok_menipis/aksi_update_cek_stok_laku.php', {
+                'id_gudang': id_gudang
+            }).then(function(res) {
+                var data = res.data
+                toastr.info('Sukses.. Barang Di Set Laku')
+            }).catch(function(err) {
+                toastr.warning('ERROR..')
+            })
+        }
+    }
+</script>
