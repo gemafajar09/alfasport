@@ -2,7 +2,7 @@
 // include "../../config/koneksi.php";
 if (isset($_POST['simpan'])) {
     $data = array(
-        'id' => $_POST['id'],
+        'id' => $_POST['artikel'],
         'artikel' => $_POST['artikel'],
         'nama' => $_POST['nama'],
         'id_merek' => $_POST['merek'],
@@ -24,17 +24,9 @@ if (isset($_POST['simpan'])) {
         "menipis_status" => "0"
     ]);
 
-    $ukuran = $_POST['ukuran'];
-    $jumlah = $_POST['jumlah'];
-    $barcode = $_POST['barcode'];
-    foreach ($ukuran as $i => $a) {
-        // echo $ukuran[$i];
-        $con->query("INSERT INTO tb_gudang_detail (id,id_ukuran,jumlah,barcode,tanggal) VALUES ('$_POST[id]','$ukuran[$i]','$jumlah[$i]','$barcode[$i]','$_POST[tanggal]')");
-    }
-
     echo "
         <script>
-            window.location='entry_gudang.html'
+            window.location='input_stok-".$_POST['artikel']."-".$_POST['artikel']."-".$_POST['merek']."-".$_POST['kategori'].".html'
         </script>
         ";
 }

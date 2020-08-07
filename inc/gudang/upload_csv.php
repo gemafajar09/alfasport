@@ -1,5 +1,6 @@
 <?php
 include "../../config/koneksi.php";
+
 if(isset($_POST['upload']))
 {
     $file = fopen($_FILES['upload_barang']['tmp_name'],'r');
@@ -9,18 +10,18 @@ if(isset($_POST['upload']))
         $isi_baris = fgetcsv($file);
         // var_dump($isi_baris); exit;
         if($no > 0){
-            $merek = $con->query("SELECT merk_id FROM `tb_merk` WHERE merk_nama='$isi_baris[3]'")->fetch();
+            $merek = $con->query("SELECT merk_id FROM `tb_merk` WHERE merk_nama='$isi_baris[2]'")->fetch();
             if($merek != NULL)
             {
                 $mer = $merek['merk_id'];
             }else{
-                $ups = $con->insert('tb_merk',['merk_nama'=> $isi_baris[3]]);
+                $ups = $con->insert('tb_merk',['merk_nama'=> $isi_baris[2]]);
                 $mer = $con->query("SELECT merk_id FROM `tb_merk` ORDER BY merk_id DESC LIMIT 1")->fetch();
             }
             // 
-            $gender = $con->query("SELECT gender_id FROM `tb_gender` WHERE gender_nama='$isi_baris[6]'")->fetch();
+            $gender = $con->query("SELECT gender_id FROM `tb_gender` WHERE gender_nama='$isi_baris[5]'")->fetch();
             // 
-            $kategori = $con->query("SELECT `kategori_id` FROM `tb_kategori` WHERE kategori_nama= '$isi_baris[7]'")->fetch();
+            $kategori = $con->query("SELECT `kategori_id` FROM `tb_kategori` WHERE kategori_nama= '$isi_baris[6]'")->fetch();
             if($kategori != NULL)
             {
                 $kate = $kategori['kategori_id'];
@@ -30,7 +31,7 @@ if(isset($_POST['upload']))
                 $kate = $ambilLagi1['kategori_id'];
             }
             // 
-            $divisi = $con->query("SELECT divisi_id FROM `tb_divisi` WHERE divisi_nama = '$isi_baris[8]'")->fetch();
+            $divisi = $con->query("SELECT divisi_id FROM `tb_divisi` WHERE divisi_nama = '$isi_baris[7]'")->fetch();
             if($divisi != NULL)
             {
                 $div = $divisi['divisi_id'];
@@ -40,23 +41,23 @@ if(isset($_POST['upload']))
                 $div = $ambilLagi2['divisi_id'];
             }
             // 
-            $subdivisi = $con->query("SELECT subdivisi_id FROM `tb_subdivisi` WHERE subdivisi_nama = '$isi_baris[9]'")->fetch();
+            $subdivisi = $con->query("SELECT subdivisi_id FROM `tb_subdivisi` WHERE subdivisi_nama = '$isi_baris[8]'")->fetch();
             if($subdivisi != NULL)
             {
                 $sub = $subdivisi['subdivisi_id'];
             }else{
-                $up = $con->insert('tb_subdivisi',['divisi_id' => $divisi['divisi_id'], 'subdivisi_nama' => $isi_baris[9]]);
+                $up = $con->insert('tb_subdivisi',['divisi_id' => $divisi['divisi_id'], 'subdivisi_nama' => $isi_baris[8]]);
                 $ambilLagi = $con->query("SELECT subdivisi_id FROM tb_subdivisi ORDER BY subdivisi_id DESC LIMIT 1")->fetch();
                 $sub = $ambilLagi['subdivisi_id'];
             }
             // 
             $data = array(
                 'id' => $isi_baris[0],
-                'artikel' => $isi_baris[1],
-                'nama' => $isi_baris[2],
+                'artikel' => $isi_baris[0],
+                'nama' => $isi_baris[1],
                 'id_merek' => $mer,
-                'modal' => $isi_baris[4],
-                'jual' => $isi_baris[5],
+                'modal' => $isi_baris[3],
+                'jual' => $isi_baris[4],
                 'id_gender' => $gender['gender_id'],
                 'id_kategori' => $kate,
                 'id_divisi' => $div,

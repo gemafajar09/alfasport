@@ -21,6 +21,7 @@ if ($_POST['transaksi_id'] == NULL) {
         'transaksi_diskon' => $_POST['transaksi_diskon'],
         'transaksi_create_at' => $tgl,
         'transaksi_create_by' => $_COOKIE['id_karyawan'],
+        'keterangan' => $_POST['keterangan'],
     );
     $simpan = $con->insert('tb_transaksi', $data);
     $idtra = $con->id();

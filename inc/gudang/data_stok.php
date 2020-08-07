@@ -27,7 +27,6 @@ foreach ($data as $i => $a) {
 ?>
     <tr>
         <td><?= $i + 1 ?></td>
-        <td><?= $a['id'] ?></td>
         <td><?= $a['artikel'] ?></td>
         <td><?= $a['nama'] ?></td>
         <td><?= $a['merk_nama'] ?></td>
