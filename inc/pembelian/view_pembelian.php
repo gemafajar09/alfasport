@@ -135,12 +135,12 @@
 
 
     function hapus(pembelian_id) {
-        axios.post('inc/transaksi/aksi_hapus_transaksi.php', {
+        axios.post('inc/pembelian/aksi_hapus_pembelian.php', {
             'pembelian_id': pembelian_id
         }).then(function(res) {
             var data = res.data
             toastr.info('SUCCESS..')
-            $('#isi').load('inc/transaksi/data_transaksi.php');
+            $('#isi').load('inc/pembelian/data_pembelian.php');
         }).catch(function(err) {
             toastr.warning('ERROR..')
         })
