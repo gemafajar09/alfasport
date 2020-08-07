@@ -42,6 +42,8 @@ RewriteRule ^entry_penjualan\.html$ index.php?page=inc/transaksi/input_transaksi
 RewriteRule ^stok_barang_toko\.html$ index.php?page=inc/toko/toko_gudang/stok_barang [L]
 RewriteRule ^penyesuaian_stok\.html$ index.php?page=inc/penyesuaian/penyesuaian_stok [L]
 RewriteRule ^simpan_gudang\.html$ index.php?page=inc/gudang/aksi_simpan_gudang [L]
+RewriteRule ^input_stok-([0-9]+)-(.*)-([0-9]+)-([0-9]+)\.html$ index.php?page=inc/gudang/input_stok&id=$1&artikel=$2&merek=$3&kategori=$4 [L]
+
 
 RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/view_transfer [L]
 

@@ -107,7 +107,6 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>ID</th>
                     <th>Artikel</th>
                     <th>Nama</th>
                     <th>Merek</th>

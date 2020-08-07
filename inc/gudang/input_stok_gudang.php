@@ -4,7 +4,7 @@
             <div class="card-header">
                 <div class="text-left">
                     <a href="stok_barang_gudang.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
-                    <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Ukuran" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
+                    <!-- <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Ukuran" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button> -->
                 </div>
                 <div class="text-center">
                     Entry Barang Gudang
@@ -18,16 +18,20 @@
                             <input type="date" required name="tanggal" value="<?= date('Y-m-d') ?>" id="tanggal" class="form-control">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" required name="id" id="id" class="form-control" placeholder="ID">
-                        </div>
-                    </div>
+                    <!-- uniq id -->
+                    <?php
+
+                    $karakter = '1234567890';
+                    $shuffle  = substr(str_shuffle($karakter), 0, 14);
+                    $artikel  = substr(str_shuffle($karakter), 0, 8);
+
+                    ?>
+                    <input type="hidden" value="<?= $shuffle ?>" required name="id" id="id" class="form-control">
+
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Artikel</label>
-                            <input type="text" required name="artikel" id="artikel" class="form-control" placeholder="Artikel">
+                            <input type="text" required name="artikel" value="AS-<?= $artikel ?>" id="artikel" class="form-control" placeholder="Artikel">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
@@ -118,35 +122,7 @@
                             <input type="text" required name="jual" class="form-control" id="jual" placeholder="Harga Jual...">
                         </div>
                     </div>
-                    <div class="col-md-6 mx-auto py-4">
-                        <div class="card">
-                        <div class="card-header">
-                            Masukan Ukuran <i><marquee>Tetapkan Jumlah Kolum Ukuran/ Size Yang Akan Ditambahakan.</marquee></i>
-                        </div>
-                        <?php
-                            $no = 1;
-                            $no1 = 1;
-                        ?>
-                        <div class="card-body" id="formInput">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label>Barcode</label><br>
-                                    <input name="barcode[]" class="form-control">
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Ukuran</label><br>
-                                    <select name="ukuran[]" class="form-control select2"></select>
-                                    </div>
-                                <div class="col-md-4">
-                                    <label>Jumlah</label>
-                                    <input type="text" class="form-control" name="jumlah[]">
-                                    <!-- <input type="text" name="id_ukuran[]"> -->
-                                </div>
-                            </div>
-                        </div>
-                            <button type="button" id="addRow" class="btn btn-primary btn-block btn-sm">Add Row</button>
-                        </div> 
-                    </div>
+                    
                 </div>
                 <div class="text-right">
                     <button type="submit" name="simpan" class="btn btn-info">Simpan</button>
@@ -176,37 +152,6 @@ $(document).ready(function(){
             console.log(err)
         })
     })
-})
-
-$('#addRow').on('click',function(e){
-    e.preventDefault();
-        var kategori = $('#kategoris').val()
-        var merek = $('#mereks').val()    
-        var html_row = "<div class='row'>" + 
-                        "<div class='col-md-4'>" + 
-                            "<label>Barcode</label>" + 
-                            "<input type='text' class='form-control' name='barcode[]'>" + 
-                        "</div>" +
-                        "<div class='col-md-4'>" + 
-                            "<label>Ukuran</label><br>" + 
-                            "<select name='ukuran[]' class='form-control select2'></select>" + 
-                        "</div>" +
-                        "<div class='col-md-4'>" + 
-                            "<label>Jumlah</label>" + 
-                            "<input type='text' class='form-control' name='jumlah[]'>" + 
-                        "</div>" + 
-                    "</div>";
-        
-        axios.post('inc/gudang/ukuran.php',{
-            'id_merek': merek,
-            'id_kategori': kategori
-        }).then(function(res){
-            $('[name ="ukuran[]"]').html(res.data)
-        }).catch(function(err){
-            console.log(err)
-        })
-    $('#formInput').append(html_row)
-    $('.select2').select2({dropdownAutoWidth : true});   
 })
 
 function kosong1()

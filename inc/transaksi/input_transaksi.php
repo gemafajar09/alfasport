@@ -56,7 +56,6 @@
                             <label>Tipe Konsumen</label>
                             <select name="tipe_konsumen" id="tipe_konsumen" class="form-control select2" required>
                                 <option value="">-SELECT-</option>
-                                <option value="Online">Online</option>
                                 <option value="Non Member">Non Member</option>
                                 <option value="Member">Member</option>
                                 <option value="Distributor">Distributor</option>
@@ -88,7 +87,7 @@
                     <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
                         <div class="form-group">
                             <label>Stok</label>
-                            <input type="text" readonly value="" name="transaksi_stok" id="transaksi_stok" class="form-control" onkeyup="dapatHarga()">
+                            <input type="text" readonly value="" name="transaksi_stok" id="transaksi_stok" class="form-control">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
@@ -98,16 +97,24 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Harga</label>
                             <input type="text" name="harga" value="" id="harga" class="form-control" readonly>
+                            <input type="hidden" id="harga1">
+                            <input type="hidden" id="hasilDsc">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
+                        <div class="form-group">
+                            <label>Diskon Item</label>
+                            <input type="text" readonly name="diskon" value="0" id="discItm" class="form-control">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
                         <div class="form-group">
                             <label>Diskon</label>
-                            <input type="text" name="diskon" value="0" id="disc" class="form-control">
+                            <input type="text" name="diskon" value="0" onkeyup="potongan(this)" id="disc" class="form-control">
                             <input type="hidden" name="diskon1" id="diskon1" class="form-control">
                         </div>
                     </div>
@@ -263,6 +270,16 @@
         });
     })
 
+    function potongan(disc)
+    {
+        let diskon = disc.value
+        let harga = $('#harga1').val()
+        let hasil = (harga * parseFloat(diskon)) / 100
+        let nominal = harga - hasil
+        $('#harga').val(nominal)
+
+    }
+
     // menampilkan tipe konsumen jika salah satu select box dipilih
     $('#tipe_konsumen').change(function(){
         var tipe = $(this).val()
@@ -323,16 +340,27 @@
             'id': ukuran
         }).then(function(res){
             var data = res.data
+            var hasil = (data.jual * parseFloat(data.diskon)) / 100
+            var pengurangan = data.jual - hasil
             $('#transaksi_stok').val(data.jumlah)
-            $('#harga').val(data.jual)
-            $('#disc').val(data.diskon)
+            $('#harga').val(pengurangan)
+            $('#discItm').val(data.diskon)
+            $('#hasilDsc').val(hasil)
+            $('#harga1').val(pengurangan)
             $('#id_gudangs').val(data.id_gudang)
         })
     })
 
     // mendapatkan total harga dari jumlah beli kali dengan total harga
     function dapatHarga(nilai) {
-        var jumlahBeli = nilai.value;
+        var stok = parseInt($('#transaksi_stok').val());
+        var jumlahBeli = parseInt(nilai.value);
+        if(jumlahBeli < stok)
+        {
+            console.log('Aman')
+        }else{
+            alert('Maaf Stok Tidak Mencukupi')
+        }
         var diskon = $('#disc').val()
         var harga = document.getElementById("harga").value;
         var total = (harga * diskon) / 100;
@@ -348,7 +376,8 @@
         var tmp_tgl = $('#tanggal').val()
         var id_toko = $('#id_toko').val()
         var potongan = $('#disc').val()
-        var diskon = $('#diskon1').val()
+        var diskon1 = $('#hasilDsc').val()
+        var diskon2 = $('#diskon1').val()
         var id_gudang = $('#id_gudangs').val()
         var tipe_konsumen = $('#tipe_konsumen').val()
         var member_id = $('#member_id').val()
@@ -366,7 +395,8 @@
             'distributor_id': distributor_id,
             'tmp_jumlah_beli': tmp_jumlah_beli,
             'tmp_total_harga': tmp_total_harga,
-            'diskon1': diskon,
+            'diskon1': diskon1,
+            'diskon2': diskon2,
             'potongan': potongan,
             'tmp_id': tmp_id
         }).then(function(res) {
@@ -484,6 +514,7 @@
         var transaksi_diskon = $('#diskonss').val()
         var transaksi_jumlah_beli = $('#jumlahTotal').val()
         var kode = $('#kode').val()
+        var keterangan = $('#keterangan').val()
         axios.post('inc/transaksi/aksi_simpan_transaksi.php', {
             'transaksi_tipe_bayar': transaksi_tipe_bayar,
             'transaksi_bank': transaksi_bank,
@@ -492,6 +523,7 @@
             'transaksi_id': transaksi_id,
             'transaksi_diskon': transaksi_diskon,
             'transaksi_jumlah_beli': transaksi_jumlah_beli,
+            'keterangan': keterangan
         }).then(function(res) {
             var simpan = res.data
             console.log(simpan)

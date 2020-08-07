@@ -55,7 +55,7 @@
                     <th>Bank</th>
                     <th>Create At</th>
                     <th>Create By</th>
-                    <!-- <th>Total</th> -->
+                    <th>Keterangan</th>
                     <th class="text-center">Action</th>
                 </tr>
                 <tr>
