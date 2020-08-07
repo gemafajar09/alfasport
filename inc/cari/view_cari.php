@@ -84,37 +84,8 @@
                         <td>:</td>
                         <td><span id="diskon"></span>%</td>
                     </tr>
-                    <!-- <tr>
-                        <th>Satuan</th>
-                        <td>:</td>
-                        <td><span id=""></span></td>
-                    </tr> -->
                 </table>
             </div>
-            <!-- <div class="col-sm-4 col-md-4 col-lg-4">
-                <table>
-                    <tr>
-                        <th>Diskon ID</th>
-                        <td>:</td>
-                        <td><span id="diskonid"></span></td>
-                    </tr>
-                    <tr>
-                        <th>Diskon</th>
-                        <td>:</td>
-                        <td><span id="diskon"></span></td>
-                    </tr>
-                    <tr>
-                        <th>Berlaku</th>
-                        <td>:</td>
-                        <td><span id="berlaku"></span></td>
-                    </tr>
-                    <tr>
-                        <th>Pelanggan</th>
-                        <td>:</td>
-                        <td><span id="">All</span></td>
-                    </tr>
-                </table>
-            </div> -->
             <div class="col-sm-6 col-md-6 col-lg-6">
                 <table>
                     <tr>
@@ -151,19 +122,19 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID</th>
+                        <th>Artikel</th>
                         <th>Jumlah</th>
-                        <th colspan="4" class="text-center">Ukuran</th>
+                        <th>
+                            <select name="ukuran_nama" id="ukuran_nama" class="form-control" width="100%">
+                                <option value="ue">UE</option>
+                                <option value="uk">UK</option>
+                                <option value="us">US</option>
+                                <option value="cm">CM</option>
+                            </select>
+                        </th>
+                        <th>Umur Barang</th>
                         <th>Tanggal Masuk Gudang</th>
                         <th>Tanggal Masuk Toko</th>
-                    </tr>
-                    <tr>
-                        <th colspan="3">&nbsp;</th>
-                        <th>UE</th>
-                        <th>UK</th>
-                        <th>US</th>
-                        <th>CM</th>
-                        <th colspan="2">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody id="isi"></tbody>
@@ -258,4 +229,85 @@
             console.log(err)
         })
     })
+
+    $(document).ready(function() {
+        $("#ukuran_nama").change(function() {
+            var ukuran_nama = $(this).children("option:selected").val();
+            if (ukuran_nama == "us") {
+                var uus = document.querySelectorAll('#ukuran_us');
+                for (var us of uus) {
+                    us.style.display = "block";
+                }
+
+                var uuk = document.querySelectorAll('#ukuran_uk');
+                for (var uk of uuk) {
+                    uk.style.display = "none";
+                }
+                var uue = document.querySelectorAll('#ukuran_ue');
+                for (var ue of uue) {
+                    ue.style.display = "none";
+                }
+                var ucm = document.querySelectorAll('#ukuran_cm');
+                for (var cm of ucm) {
+                    cm.style.display = "none";
+                }
+
+            } else if (ukuran_nama == "uk") {
+
+                var uuk = document.querySelectorAll('#ukuran_uk');
+                for (var uk of uuk) {
+                    uk.style.display = "block";
+                }
+
+                var uus = document.querySelectorAll('#ukuran_us');
+                for (var us of uus) {
+                    us.style.display = "none";
+                }
+                var uue = document.querySelectorAll('#ukuran_ue');
+                for (var ue of uue) {
+                    ue.style.display = "none";
+                }
+                var ucm = document.querySelectorAll('#ukuran_cm');
+                for (var cm of ucm) {
+                    cm.style.display = "none";
+                }
+            } else if (ukuran_nama == "cm") {
+                var ucm = document.querySelectorAll('#ukuran_cm');
+                for (var cm of ucm) {
+                    cm.style.display = "block";
+                }
+
+                var uus = document.querySelectorAll('#ukuran_us');
+                for (var us of uus) {
+                    us.style.display = "none";
+                }
+                var uue = document.querySelectorAll('#ukuran_ue');
+                for (var ue of uue) {
+                    ue.style.display = "none";
+                }
+                var uuk = document.querySelectorAll('#ukuran_uk');
+                for (var uk of uuk) {
+                    uk.style.display = "none";
+                }
+            } else {
+                var uue = document.querySelectorAll('#ukuran_ue');
+                for (var ue of uue) {
+                    ue.style.display = "block";
+                }
+
+                var uus = document.querySelectorAll('#ukuran_us');
+                for (var us of uus) {
+                    us.style.display = "none";
+                }
+                var uuk = document.querySelectorAll('#ukuran_uk');
+                for (var uk of uuk) {
+                    uk.style.display = "none";
+                }
+                var ucm = document.querySelectorAll('#ukuran_cm');
+                for (var cm of ucm) {
+                    cm.style.display = "none";
+                }
+            }
+        });
+    });
 </script>
