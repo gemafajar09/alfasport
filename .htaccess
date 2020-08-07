@@ -38,6 +38,9 @@ RewriteRule ^update-gudang-([0-9]+)\.html$ index.php?page=inc/gudang/aksi_edit_g
 RewriteRule ^penjualan\.html$ index.php?page=inc/transaksi/view_transaksi [L]
 RewriteRule ^entry_penjualan\.html$ index.php?page=inc/transaksi/input_transaksi [L]
 
+RewriteRule ^pembelian\.html$ index.php?page=inc/pembelian/view_pembelian [L]
+RewriteRule ^entry_pembelian\.html$ index.php?page=inc/pembelian/input_pembelian [L]
+
 
 RewriteRule ^stok_barang_toko\.html$ index.php?page=inc/toko/toko_gudang/stok_barang [L]
 RewriteRule ^penyesuaian_stok\.html$ index.php?page=inc/penyesuaian/penyesuaian_stok [L]

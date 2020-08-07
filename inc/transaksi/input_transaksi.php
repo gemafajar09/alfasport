@@ -168,10 +168,10 @@
                                         <select name="transaksi_tipe_bayar" id="transaksi_tipe_bayar" class="form-control" required>
                                             <option value="">-Pilih-</option>
                                             <?php
-                                                $diskon = $con->select('tb_metode','*');
-                                                foreach($diskon as $a){
+                                            $diskon = $con->select('tb_metode', '*');
+                                            foreach ($diskon as $a) {
                                             ?>
-                                            <option value="<?= $a['id_metode'] ?>"><?= $a['kategori'] ?></option>
+                                                <option value="<?= $a['id_metode'] ?>"><?= $a['kategori'] ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -182,10 +182,10 @@
                                         <select name="transaksi_bank" id="transaksi_bank" class="form-control" required>
                                             <option value="">-Pilih-</option>
                                             <?php
-                                            $bank = $con->select('tb_bank','*');
-                                            foreach($bank as $b){
+                                            $bank = $con->select('tb_bank', '*');
+                                            foreach ($bank as $b) {
                                             ?>
-                                            <option value="<?= $b['id_bank'] ?>"><?= $b['bank'] ?></option>
+                                                <option value="<?= $b['id_bank'] ?>"><?= $b['bank'] ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -264,41 +264,42 @@
     })
 
     // menampilkan tipe konsumen jika salah satu select box dipilih
-    $('#tipe_konsumen').change(function(){
+    $('#tipe_konsumen').change(function() {
         var tipe = $(this).val()
-        if(tipe == "Member")
-        {
+        if (tipe == "Member") {
             let member = "<div id='tipe_member' class='col-xs-12 col-sm-6 col-md-3 col-lg-3'>" +
-                            "<div class='form-group'>" +
-                                "<label>Member</label>" +
-                                "<input class='form-control' style='width:190px' type='text' name='member_id' id='member_id'>" +
-                            "</div>"+
-                        "</div>"
+                "<div class='form-group'>" +
+                "<label>Member</label>" +
+                "<input class='form-control' style='width:190px' type='text' name='member_id' id='member_id'>" +
+                "</div>" +
+                "</div>"
             document.getElementById('customer').innerHTML = member;
-            
-        }else if(tipe == "Distributor"){
-            var distributor = 
-                    "<div id='tipe_distributor' class='col-xs-12 col-sm-6 col-md-3 col-lg-3'>" +
-                        "<div class='form-group'>" +
-                            "<label>Distributor</label>"+
-                            "<select name='distributor_id' style='width:180px' id='distributor_id' class='form-control select2' style='width: 100%;' required>" +
-                                "<option value=''>-Pilih-</option>"+
-                                <?php
-                                $datag = $con->select('tb_distributor', '*');
-                                foreach ($datag as $distributor) {
-                                ?>
-                                    <option value="<?= $distributor['distributor_id'] ?>"><?= $distributor['distributor_nama'] ?></option>
-                                <?php } ?>
-                            "</select>" +
-                        "</div>" +
-                    "</div>"
-            document.getElementById('customer').innerHTML = distributor;
-            $('.select2').select2({dropdownAutoWidth : true});
+
+        } else if (tipe == "Distributor") {
+            var distributor =
+                "<div id='tipe_distributor' class='col-xs-12 col-sm-6 col-md-3 col-lg-3'>" +
+                "<div class='form-group'>" +
+                "<label>Distributor</label>" +
+                "<select name='distributor_id' style='width:180px' id='distributor_id' class='form-control select2' style='width: 100%;' required>" +
+                "<option value=''>-Pilih-</option>" +
+                <?php
+                $datag = $con->select('tb_distributor', '*');
+                foreach ($datag as $distributor) {
+                ?> <
+                    option value = "<?= $distributor['distributor_id'] ?>" > <?= $distributor['distributor_nama'] ?> < /option>
+        <?php } ?>
+            "</select>" +
+            "</div>" +
+            "</div>"
+        document.getElementById('customer').innerHTML = distributor;
+        $('.select2').select2({
+            dropdownAutoWidth: true
+        });
         }
-    }) 
+    })
 
     // menampilkan harga dari barang yang dipilih
-    $('[name="radio"]').on('click',function() {
+    $('[name="radio"]').on('click', function() {
         var id = $('#id_gudang').val();
         var size = $(this).val()
         console.log(id_gudang);
@@ -317,11 +318,11 @@
     })
 
     // cek stok dan harga
-    $('#ukurans').change(function(){
+    $('#ukurans').change(function() {
         var ukuran = $(this).val()
-        axios.post('inc/transaksi/filter/stok.php',{
+        axios.post('inc/transaksi/filter/stok.php', {
             'id': ukuran
-        }).then(function(res){
+        }).then(function(res) {
             var data = res.data
             $('#transaksi_stok').val(data.jumlah)
             $('#harga').val(data.jual)
@@ -379,17 +380,16 @@
         })
     })
 
-    $('#transaksi_tipe_bayar').change(function(e){
+    $('#transaksi_tipe_bayar').change(function(e) {
         var id = $(this).val()
-        if(id != 3)
-        {
-            $('#transaksi_bank').change(function(e){
+        if (id != 3) {
+            $('#transaksi_bank').change(function(e) {
                 var bank = $(this).val()
                 var subtotal = $('#subTotalBelanja1').val()
-                axios.post('inc/transaksi/diskon.php',{
-                    'id':id,
+                axios.post('inc/transaksi/diskon.php', {
+                    'id': id,
                     'bank': bank
-                }).then(function(res){
+                }).then(function(res) {
                     var data = res.data
                     $('#diskons').val(data.diskon)
                     var disc = data.diskon
@@ -398,19 +398,19 @@
                     $('#subTotalBelanja').val(bersih)
                     $('#diskonss').val(total)
                     console.log(data.diskon)
-                }).catch(function(err){
+                }).catch(function(err) {
                     console.log(err)
                 })
             })
-        }else{
-            axios.post('inc/transaksi/diskon.php',{
-                'id':id,
+        } else {
+            axios.post('inc/transaksi/diskon.php', {
+                'id': id,
                 'bank': 0
-            }).then(function(res){
+            }).then(function(res) {
                 var data = res.data
                 $('#diskons').val(data.diskon)
                 console.log(data.diskon)
-            }).catch(function(err){
+            }).catch(function(err) {
                 console.log(err)
             })
         }
@@ -495,7 +495,7 @@
         }).then(function(res) {
             var simpan = res.data
             console.log(simpan)
-            window.open('inc/struk/invo1.php?invoice='+kode, '_blank');
+            window.open('inc/struk/invo1.php?invoice=' + kode, '_blank');
             window.location = 'penjualan.html';
             kosong()
         }).catch(function(err) {

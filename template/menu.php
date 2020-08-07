@@ -65,6 +65,7 @@
                                 <li><a href="permohonan.html">Permohonan Transfer&nbsp;<span class="badge badge-info"><?= $acc['jumlah'] ?></span></a></li>
                             </ul>
                         </li>
+                        <li><a href="pembelian.html"><i class="fa fa-shopping-bag "></i> Pembelian</a></li>
                         <li><a href="penjualan.html"><i class="fa fa-shopping-cart "></i> Penjualan</a></li>
                     </ul>
                 <?php
