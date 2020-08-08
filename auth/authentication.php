@@ -7,7 +7,7 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
     $cek = $con->query("SELECT * FROM tb_karyawan WHERE username = '$username'")->fetch();
     if ($cek['username'] == $username) {
-        if (password_verify($password, $cek['password'],)) {
+        if (password_verify($password, $cek['password'])) {
             setcookie('id_karyawan', "$cek[id_karyawan]", time() + (86400 * 30), "/");
             setcookie('nama', "$cek[nama]", time() + (86400 * 30), "/");
             setcookie('jabatan_id', "$cek[jabatan_id]", time() + (86400 * 30), "/");
