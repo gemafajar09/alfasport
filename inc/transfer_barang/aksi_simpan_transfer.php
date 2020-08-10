@@ -1,42 +1,22 @@
 <?php
-include "../../config/koneksi.php";
 
-$json = file_get_contents('php://input');
-$_POST = json_decode($json, true);
+if (isset($_POST['simpanT'])) {
 
-if ($_POST['id_transfer'] == NULL) {
-    $simpan = $con->insert(
-        "tb_transfer",
-        array(
-            "id_toko" => $_POST["id_toko"],
-            "id_toko_tujuan" => $_POST["id_toko_tujuan"],
-            "id_gudang" => $_POST["id_gudang"],
-            "id_detail" => $_POST["id_detail"],
-            "jumlah" => $_POST["jumlah"],
-            "tanggal" => $_POST["tanggal"],
-            "acc_owner" => "0",
-        )
-    );
-} else {
-    $simpan = $con->update(
-        "tb_transfer",
-        array(
-            "id_toko" => $_POST["id_toko"],
-            "id_toko_tujuan" => $_POST["id_toko_tujuan"],
-            "id_gudang" => $_POST["id_gudang"],
-            "id_detail" => $_POST["id_detail"],
-            "jumlah" => $_POST["jumlah"],
-            "tanggal" => $_POST["tanggal"],
-            "acc_owner" => "0",
-        ),
-        array(
-            "id_transfer" => $_POST["id_transfer"]
-        )
-    );
-}
+    var_dump($_POST);
+    exit;
 
-if ($simpan == TRUE) {
-    echo json_encode('SUCCESS');
-} else {
-    echo json_encode('ERROR');
+    // $ukuran = $_POST['ukuran'];
+    // $jumlah = $_POST['jumlah'];
+    // $barcode = $_POST['barcode'];
+    // $tanggal = date('Y-m-d');
+    // foreach ($ukuran as $i => $a) {
+    //     // echo $ukuran[$i];
+    //     $con->query("INSERT INTO tb_gudang_detail (id,id_ukuran,jumlah,barcode,tanggal) VALUES ('$_POST[id]','$ukuran[$i]','$jumlah[$i]','$barcode[$i]','$tanggal')");
+    // }
+
+    // echo "
+    // <script>
+    //     window.location='entry_gudang.html'
+    // </script>
+    // ";
 }
