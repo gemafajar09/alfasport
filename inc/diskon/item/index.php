@@ -85,6 +85,7 @@
     <div class="x_title">
         <div class="row">
             <div class="col-md-6">
+                <a href="item_diskon.html" class="btn btn-success btn-round"><i class="fa fa-plus"></i></a>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -104,22 +105,20 @@
                     <th>
                         <!-- <input type="checkbox" class="check_all" id="checkAll"> -->
                     </th>
-                    <th>ID</th>
                     <th>Artikel</th>
                     <th>Nama</th>
                     <th>Merek</th>
-                    <th>Kategori</th>
-                    <th>Divsi</th>
-                    <th>Sub Divisi</th>
-                    <th>Gender</th>
-                    <!-- <th>Jumlah</th> -->
                     <th>Harga Modal</th>
                     <th>Harga Jual</th>
                     <th>UE</th>
                     <th>UK</th>
                     <th>US</th>
                     <th>CM</th>
+                    <th>Umur Barang</th>
+                    <th>Mulai</th>
+                    <th>Berakhir</th>
                     <th>Diskon</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>

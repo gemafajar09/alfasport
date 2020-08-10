@@ -8,7 +8,7 @@
                 Entry Stok Gudang
             </div> 
         </div>
-        <form action="?page=inc/gudang/simpan_stok" method="POST">
+        <form action="inc/gudang/simpan_stok.php" method="POST">
             <div class="card-body">
                 <div class="col-md-12 mx-auto py-4">
                     <div class="card">
@@ -24,7 +24,7 @@
                                     <input name="id" type="hidden" value="<?= $_GET['id'] ?>" class="form-control">
                                 <div class="col-md-3">
                                     <label>Artikel</label><br>
-                                    <input name="artikel[]" value="<?= $_GET['artikel'] ?>" class="form-control">
+                                    <input name="artikel[]" value="<?= $_GET['id'] ?>" class="form-control">
                                 </div>
                                 <div class="col-md-3">
                                     <label>Barcode</label><br>
@@ -66,7 +66,7 @@
         var html_row = "<div class='row'>" + 
                         "<div class='col-md-3'>" + 
                             "<label>Artikel</label>" + 
-                            "<input type='text' value='<?= $_GET['artikel'] ?>' class='form-control' name='artikel[]'>" + 
+                            "<input type='text' value='<?= $_GET['id'] ?>' class='form-control' name='artikel[]'>" + 
                         "</div>" +
                         "<div class='col-md-3'>" + 
                             "<label>Barcode</label>" + 

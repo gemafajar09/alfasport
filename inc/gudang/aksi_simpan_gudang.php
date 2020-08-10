@@ -26,9 +26,10 @@ if (isset($_POST['simpan'])) {
 
     echo "
         <script>
-            window.location='input_stok-".$_POST['artikel']."-".$_POST['artikel']."-".$_POST['merek']."-".$_POST['kategori'].".html'
+            window.location='input_stok-".$_POST['artikel']."-".$_POST['merek']."-".$_POST['kategori'].".html'
         </script>
         ";
 }
     // $where = array('id_gudang' => $_POST['id_gudang']);
     // $simpan = $con->update('tb_gudang',$data,$where);
+ 
