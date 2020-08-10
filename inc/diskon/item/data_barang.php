@@ -7,13 +7,13 @@ SELECT a.id,
        a.id_gudang,
        a.modal,
        a.jual,
+       a.tanggal,
        b.merk_nama,
        c.gender_nama,
        d.kategori_nama,
        e.divisi_nama,
        f.subdivisi_nama,
        g.id_detail,
-       g.diskon,
        h.ue,
        h.uk,
        h.us,
@@ -30,30 +30,38 @@ JOIN tb_all_ukuran h ON h.id_ukuran=g.id_ukuran
 foreach($data as $i => $a){
     $modal = 'Rp'.number_format($a['modal']);
     $jual = 'Rp'.number_format($a['jual']);
+    $awal  = date_create($a['tanggal']);
+    $akhir = date_create();
+    $diff  = date_diff($awal, $akhir);
 ?>
 <tr>
-    <td>
-        <input type="checkbox" class="chk_boxes1" name="id_diskon[]" value="<?= $a['id_detail'] ?>">
-    </td>
-    <td><?= $a['id'] ?></td>
+    <td><?= $i+1 ?></td>
     <td><?= $a['artikel'] ?></td>
     <td><?= $a['nama'] ?></td>
     <td><?= $a['merk_nama'] ?></td>
-    <td><?= $a['kategori_nama'] ?></td>
-    <td><?= $a['divisi_nama'] ?></td>
-    <td><?= $a['subdivisi_nama'] ?></td>
-    <td><?= $a['gender_nama'] ?></td>
     <td><?= $modal ?></td>
     <td><?= $jual ?></td>
     <td><?= $a['ue'] ?></td>
     <td><?= $a['uk'] ?></td>
     <td><?= $a['us'] ?></td>
     <td><?= $a['cm'] ?></td>
-    <td><input type="text" class="form-control" style="width:60px" onkeyup="detail<?= $a['id_detail'] ?>(this,'<?= $a['id_detail'] ?>')" name="diskon<?= $a['id_detail'] ?>" value="<?= $a['diskon'] ?>"></td>
+    <td>
+    <?php
+        if ($diff->y == 0 && $diff->m == 0) {
+            echo $diff->d . ' hari';
+        } elseif ($diff->y == 0 && $diff->m != 0) {
+            echo $diff->m . ' bulan, ' . $diff->d . ' hari';
+        } else if ($diff->y != 0) {
+            echo $diff->y . ' tahun, ' . $diff->m . ' bulan, ' . $diff->d . ' hari';
+        }
+        ?>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
 </tr>
 
-<!-- <script src="<?= $base_url ?>vendors/jquery/dist/jquery.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
 <script>
     function detail<?= $a['id_detail'] ?>(nilai,id)
     {
@@ -66,6 +74,22 @@ foreach($data as $i => $a){
         }).then(function(res){
             var data = res.data
             $('[name="diskon<?= $a['id_detail'] ?>"]').val(data.diskon)
+        })
+    }
+
+    function mulai(habis,id)
+    {
+        let tanggal_mulai = $('#mulai').val()
+        let tanggal_berakhir = habis.value 
+        let id = id 
+        axios.post('',{
+            'tanggal_mulai': tanggal_mulai,
+            'tanggal_berakhir': tanggal_berakhir,
+            'id': id
+        }).then(function(res){
+
+        }).catch(function(err){
+
         })
     }
 </script>

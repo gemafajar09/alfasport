@@ -155,11 +155,6 @@
                                     <input type="text" onkeyup="cekStok(this)" name="jumlah" id="jumlah" class="form-control">
                                     <input type="hidden" id="id_stok_toko">
                                 </div>
-                                <div id="tambahROw"></div>
-                            </div>
-                            <br>
-                            <div align="center">
-                                <button type="button" id="addRows" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </div>

@@ -35,7 +35,7 @@
                     <th style="width:180px">Toko</th>
                     <th style="width:260px">Alamat</th>
                     <th style="width:140px">Telpon</th>
-                    <th style="width:140px">Hp</th>
+                    <th style="width:140px">Kode Pos</th>
                     <th>Email</th>
                     <th style="width:120px">Action</th>
                 </tr>
@@ -74,8 +74,8 @@
                                 <input type="text" class="form-control" name="no_telpon" id="no_telpon" required="required" placeholder="Nomor Telpon">
                             </div>
                             <div class="form-group">
-                                <label>No. Hp</label>
-                                <input type="text" class="form-control" name="no_hp" id="no_hp" required="required" placeholder="Nomor Hp">
+                                <label>Kode pos</label>
+                                <input type="text" class="form-control" name="no_hp" id="no_hp" required="required" placeholder="Kode Pos">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>

@@ -1,4 +1,6 @@
 <?php
+
+include "../../config/koneksi.php";
 if(isset($_POST['simpan']))
 {
     $ukuran = $_POST['ukuran'];
@@ -8,6 +10,7 @@ if(isset($_POST['simpan']))
     foreach ($ukuran as $i => $a) {
         // echo $ukuran[$i];
         $con->query("INSERT INTO tb_gudang_detail (id,id_ukuran,jumlah,barcode,tanggal) VALUES ('$_POST[id]','$ukuran[$i]','$jumlah[$i]','$barcode[$i]','$tanggal')");
+        
     }
     
     echo "
@@ -15,4 +18,4 @@ if(isset($_POST['simpan']))
         window.location='entry_gudang.html'
     </script>
     ";
-}
+} 
