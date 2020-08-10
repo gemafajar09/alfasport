@@ -4,7 +4,7 @@
     </div>
 
     <div class="title_right">
-        <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
             //
         </div>
     </div>
@@ -34,8 +34,6 @@
                     <th>No</th>
                     <th>Nama Toko</th>
                     <th>Nama Toko Tujuan</th>
-                    <th>Nama Barang</th>
-                    <th>Jumlah</th>
                     <th>Tanggal</th>
                     <th>Status</th>
                     <!-- <th>Action</th> -->
@@ -55,98 +53,164 @@
             <div class="modal-header">
                 <h4 class="modal-title">Data Transfer</h4>
             </div>
-
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row" style="font-size:12px">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Nama Toko Asal</label>
-                                <select class="form-control select2" name="id_toko" id="id_toko" required style="width: 100%;">
-                                    <option selected disabled>Pilih Toko</option>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row" style="font-size:12px">
+                            <div class="col-md-12">
+                                <div class="form-group" style="display: none;">
                                     <?php
-                                    $data = $con->query("SELECT * FROM toko");
-                                    foreach ($data as $i => $a) {
-                                        echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
+                                    //membaca kode barang terbesar
+                                    $kode_faktur = $con->query("SELECT max(kode_transfer) FROM tb_transfer")->fetch();
+                                    if ($kode_faktur) {
+                                        $nilai = substr($kode_faktur[0], 1);
+                                        $kode = (int) $nilai;
+                                        //tambahkan sebanyak + 1
+                                        $kode = $kode + 1;
+                                        $auto_kode = "K" . str_pad($kode, 5, "0",  STR_PAD_LEFT);
+                                    } else {
+                                        $auto_kode = "K00001";
                                     }
+                                    $_SESSION["auto_kode"] = $auto_kode;
                                     ?>
-                                </select>
-                            </div>
+                                    <label>ID</label>
+                                    <input type="text" required name="transfer_kode" id="transfer_kode" class="form-control" placeholder="ID" value="<?php echo $_SESSION["auto_kode"]; ?>" readonly>
+                                </div>
 
-                            <script>
-                                $("#id_toko").change(function() {
-                                    var id_toko = $('#id_toko option:selected').val();
-                                    console.log(id_toko);
-                                    $.ajax({
-                                        type: "GET",
-                                        url: "inc/transfer_barang/data_toko.php",
-                                        data: {
-                                            'id_toko': id_toko
-                                        },
-                                        success: function(response) {
-                                            $('#id_toko_tujuan').html(response);
+                                <div class="form-group">
+                                    <label>Nama Toko Asal</label>
+                                    <select class="form-control select2" name="id_toko" id="id_toko" required style="width: 100%;">
+                                        <option selected disabled>Pilih Toko</option>
+                                        <?php
+                                        $data = $con->query("SELECT * FROM toko");
+                                        foreach ($data as $i => $a) {
+                                            echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
                                         }
-                                    });
-                                })
-                            </script>
-
-                            <div class="form-group">
-                                <label>Nama Toko Tujuan</label>
-                                <select class="form-control select2" name="id_toko_tujuan" id="id_toko_tujuan" required style="width: 100%;">
-                                    <option selected disabled>Pilih Toko</option>
+                                        ?>
+                                    </select>
+                                </div>
+                                <script>
+                                    $("#id_toko").change(function() {
+                                        var id_toko = $('#id_toko option:selected').val();
+                                        console.log(id_toko);
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "inc/transfer_barang/data_toko.php",
+                                            data: {
+                                                'id_toko': id_toko
+                                            },
+                                            success: function(response) {
+                                                $('#id_toko_tujuan').html(response);
+                                            }
+                                        });
+                                    })
+                                    $("#id_toko").change(function() {
+                                        var id_toko = $('#id_toko option:selected').val();
+                                        console.log(id_toko);
+                                        $.ajax({
+                                            type: "GET",
+                                            url: "inc/transfer_barang/data_barang_toko.php",
+                                            data: {
+                                                'id_toko': id_toko
+                                            },
+                                            success: function(response) {
+                                                $('[name ="id_gudang[]"]').html(response);
+                                            }
+                                        });
+                                    })
+                                </script>
+                                <div class="form-group">
+                                    <label>Nama Toko Tujuan</label>
+                                    <select class="form-control select2" name="id_toko_tujuan" id="id_toko_tujuan" required style="width: 100%;">
+                                        <option selected disabled>Pilih Toko</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="display: none;">
+                                    <label>Tanggal</label>
                                     <?php
-                                    // $data = $con->query("SELECT * FROM toko WHERE id_toko != '$_GET[id]'");
-                                    // foreach ($data as $i => $a) {
-                                    //     echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
-                                    // }
+                                    $tgl = date('Y-m-d');
                                     ?>
-                                </select>
+                                    <input type="date" name="tanggal" id="tanggal" value="<?php echo $tgl; ?>" required="required" placeholder="Tanggal" class="form-control">
+                                    <input type="hidden" id="divisi_id">
+                                </div>
+                            </div>
+                            <div class="card col-md-12">
+                                <div class="card-body">
+                                    <span>
+                                        <p style="color: red;">
+                                            <marquee>
+                                                Tetapkan Jumlah Kolom Terlebih Dahulu
+                                            </marquee>
+                                        </p>
+                                    </span>
+                                    <div class="col-md-12">
+                                        <div id="formInput">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <label>Nama Barang & Ukuran</label>
+                                                        <select class="form-control select2 id_gudang" name="id_gudang[]" required style="width: 100%;">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Jumlah</label>
+                                                        <input type="number" name="jumlah[]" id="jumlah" required="required" placeholder="Jumlah" class="form-control">
+                                                        <input type="hidden" id="id_transfer">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="button" id="addRow" class="btn btn-primary btn-block btn-sm">Add Row</button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>Nama Barang</label>
-                                <select class="form-control select2" name="id_gudang" id="id_gudang" required style="width: 100%;">
-                                    <option selected disabled>Pilih Barang</option>
-                                    <?php
-                                    $data = $con->query("SELECT * FROM tb_gudang");
-                                    foreach ($data as $i => $a) {
-                                        echo "<option value=" . $a['id_gudang'] . ">" . $a['nama'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Ukuran</label>
-                                <select class="form-control select2" name="ukuran" id="ukuran" required style="width: 100%;"></select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Jumlah</label>
-                                <input type="number" name="jumlah" id="jumlah" required="required" placeholder="Jumlah" class="form-control">
-                                <input type="hidden" id="id_transfer">
-                            </div>
-                            <div class="form-group">
-                                <label>Tanggal</label>
-                                <?php
-                                $tgl = date('Y-m-d');
-                                ?>
-                                <input type="date" name="tanggal" id="tanggal" value="<?php echo $tgl; ?>" required="required" placeholder="Tanggal" class="form-control">
-                                <input type="hidden" id="divisi_id">
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" onclick="simpan()" class="btn btn-primary btn-sm">Simpan</button>
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-            </div>
-
+                <div class="modal-footer">
+                    <button type="submit" name="simpanT" class="btn btn-primary btn-sm">Simpan</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+</div>
+<?php
+
+if (isset($_POST['simpanT'])) {
+    $id_toko = $_POST['id_toko'];
+    $transfer_kode = $_POST['transfer_kode'];
+    $id_toko_tujuan = $_POST['id_toko_tujuan'];
+    $tanggal = $_POST['tanggal'];
+    $id_gudang = $_POST['id_gudang'];
+    $jumlah = $_POST['jumlah'];
+
+    $con->query("INSERT INTO `tb_transfer`(`kode_transfer`, `id_toko`, `id_toko_tujuan`,`tanggal`, `acc_owner`) VALUES ('$_POST[transfer_kode]','$_POST[id_toko]','$_POST[id_toko_tujuan]','$_POST[tanggal]','0')");
+
+    $id_transfer = $con->id();
+
+    foreach ($id_gudang as $i => $a) {
+        $data = $con->query("SELECT a.*, b.*, c.* FROM tb_gudang a LEFT JOIN tb_gudang_detail b ON a.id = b.id LEFT JOIN tb_all_ukuran c ON b.id_ukuran = c.id_ukuran WHERE a.id_gudang = '$id_gudang[$i]' ")->fetch();
+
+        $id_ukuran = $data['id_ukuran'];
+
+        $con->query("INSERT INTO `tb_transfer_detail`(`id_transfer`,`id_gudang`, `id_ukuran`, `jumlah`, `status`) VALUES ('$id_transfer','$id_gudang[$i]','$id_ukuran','$jumlah[$i]','0')");
+    }
+
+    unset($_SESSION['auto_kode']);
+
+    echo "<script>
+        window.location.href = 'transfer.html';
+    </script>";
+}
+?>
+
 
 <script>
     function tampil() {
@@ -218,13 +282,61 @@
         $('#id_transfer').val('')
     }
 
-    $('#id_gudang').change(function() {
+
+    $('#addRow').on('click', function() {
+
+        for (let i = 0; i < 100; i++) {
+            const element = i;
+            console.log(element);
+        }
+
+        var html_row =
+            "<div class='row'>" +
+            "<div class='col-md-8'>" +
+            "<div class='form-group'>" +
+            "<label>Nama Barang</label>" +
+            "<select class='form-control select2 id_gudang' name='id_gudang[]' required style='width: 100%;'>" +
+            "<option selected disabled>Pilih Barang</option>" +
+            "</select>" +
+            "</div>" +
+            "</div>" +
+            "<div class='col-md-4'>" +
+            "<div class='form-group'>" +
+            "<label>Jumlah</label>" +
+            "<input type='number' name='jumlah[]' id='jumlah' required='required' placeholder='Jumlah' class='form-control'>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
+
+
+
+        $('#formInput').append(html_row)
+        $('.select2').select2({
+            dropdownAutoWidth: true
+        });
+
+        $('[name ="id_gudang[]"]').change(function() {
+            var id_gudang = $(this).val()
+            axios.post('inc/transfer_barang/ukuran.php', {
+                'id': id_gudang
+            }).then(function(res) {
+                var data = res.data
+                console.log(data)
+                $('[name ="ukuran[]"]').html(data)
+            }).catch(function(err) {
+                console.log(err)
+            })
+        })
+    })
+
+    $('[name ="id_gudang[]"]').change(function() {
         var id_gudang = $(this).val()
         axios.post('inc/transfer_barang/ukuran.php', {
             'id': id_gudang
         }).then(function(res) {
             var data = res.data
-            $('#ukuran').html(data)
+            console.log(data)
+            $('[name ="ukuran[]"]').html(data)
         }).catch(function(err) {
             console.log(err)
         })

@@ -146,6 +146,40 @@
         </div>
         <!-- akhir modal tampilPembelian -->
 
+
+        <!-- awal modal tampilPembelian -->
+        <div class="modal" id="modalCheckout">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Entry Nota</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row" style="font-size:12px">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Foto Nota</label>
+                                        <input type="file" name="pembelian_nota" id="pembelian_nota" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="simpanCheckout" class="btn btn-primary btn-sm">Simpan</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- akhir modal tampilPembelian -->
+
+
     </div>
 </div>
 
@@ -194,25 +228,47 @@
         })
     }
 
-    // proses checkout dan proses simpan ke tabel transaksi
+
+    // meanmpilakn modal checkout
     $('#checkout').on('click', function() {
-        var pembelian_no_invoice = $('#pembelian_no_invoice').val()
-        var tanggal = $('#tanggal').val()
-        var supplier_id = $('#supplier_id').val()
-        var pembelian_id = $('#pembelian_id').val()
-        axios.post('inc/pembelian/aksi_simpan_pembelian.php', {
-            'pembelian_id': pembelian_id,
-            'supplier_id': supplier_id,
-            'tanggal': tanggal,
-            'pembelian_no_invoice': pembelian_no_invoice
-        }).then(function(res) {
-            var simpan = res.data
-            console.log(simpan)
-            window.location = 'pembelian.html';
-            kosong()
-        }).catch(function(err) {
-            alert(err)
-            kosong()
-        })
+        $('#modalCheckout').modal()
+    })
+
+    // proses checkout dan proses simpan ke tabel transaksi
+    $('#simpanCheckout').on('click', function() {
+
+        // UPLOAD GAMBAR TERLEBIH DAHULU
+        var data = new FormData();
+        var inputGambar = document.getElementById('pembelian_nota').files[0];
+
+        // Tambahkan data video ke Form Data
+        data.append('_file_upload', inputGambar);
+
+        // Kirim, 
+        axios.post('gambar_service/file-add.php', data)
+            .then(function(res) {
+                // PANGGIL AJAX UNTUK INSERT KE SIMPAN PEMBELIAN
+                var pembelian_no_invoice = $('#pembelian_no_invoice').val()
+                var tanggal = $('#tanggal').val()
+                var supplier_id = $('#supplier_id').val()
+                var pembelian_id = $('#pembelian_id').val()
+                return axios.post('inc/pembelian/aksi_simpan_pembelian.php', {
+                    'pembelian_id': pembelian_id,
+                    'supplier_id': supplier_id,
+                    'tanggal': tanggal,
+                    'pembelian_no_invoice': pembelian_no_invoice,
+                    'pembelian_nota': res.data.data.name + "." + res.data.data.extension,
+                    'pembelian_nota_id': res.data.data.id
+                })
+            })
+            .then(function(res) {
+                var simpan = res.data
+                console.log(simpan)
+                window.location = 'pembelian.html';
+                kosong()
+            }).catch(function(err) {
+                alert(err)
+                kosong()
+            })
     })
 </script>
