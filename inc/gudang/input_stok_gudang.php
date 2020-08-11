@@ -122,6 +122,42 @@
                             <input type="text" required name="jual" class="form-control" id="jual" placeholder="Harga Jual...">
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Thumbnail</label>
+                            <input type="text" name="thumbnail" class="form-control" id="thumbnail" placeholder="Thumbnail...">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Foto1</label>
+                            <input type="text" name="foto1" class="form-control" id="foto1" placeholder="Foto 1...">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Foto2</label>
+                            <input type="text" name="foto2" class="form-control" id="foto2" placeholder="Foto 2...">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Foto3</label>
+                            <input type="text" name="foto3" class="form-control" id="foto3" placeholder="Foto 3...">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Foto4</label>
+                            <input type="text" name="foto4" class="form-control" id="foto4" placeholder="Foto 4...">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Foto5</label>
+                            <input type="text" name="foto5" class="form-control" id="foto5" placeholder="Foto 5...">
+                        </div>
+                    </div>
                     
                 </div>
                 <div class="text-right">
