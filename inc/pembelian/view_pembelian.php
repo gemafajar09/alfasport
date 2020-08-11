@@ -53,6 +53,7 @@
                     <th>Vendor</th>
                     <th>Create At</th>
                     <th>Create By</th>
+                    <th>Nota</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>

@@ -10,5 +10,9 @@ foreach ($data as $i => $a) {
         <td><?= $a['uk'] ?></td>
         <td><?= $a['us'] ?></td>
         <td><?= $a['cm'] ?></td>
+        <td>
+            <button type="button" onclick="edit(<?= $a['id_ukuran'] ?>)" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+            <button type="button" id="hapus" onclick="hapus('<?= $a['id_ukuran'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+        </td>
     </tr>
 <?php } ?>

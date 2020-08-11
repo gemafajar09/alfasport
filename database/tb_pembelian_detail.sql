@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2020 at 04:44 AM
+-- Generation Time: Aug 11, 2020 at 04:36 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -42,14 +42,8 @@ CREATE TABLE `tb_pembelian_detail` (
 --
 
 INSERT INTO `tb_pembelian_detail` (`detail_id`, `pembelian_id`, `pembelian_no_invoice`, `id_gudang_detail`, `detail_jumlah`, `satuan_id`) VALUES
-(1, 1, 'P00001', 24, 1, 11),
-(2, 1, 'P00001', 26, 1, 11),
-(4, 2, 'P00002', 24, 2, 11),
-(5, 2, 'P00002', 26, 2, 11),
-(6, 2, 'P00002', 27, 1, 11),
-(7, 3, 'P00003', 24, 5, 11),
-(8, 3, 'P00003', 26, 5, 11),
-(9, 3, 'P00003', 27, 5, 11);
+(1, 1, 'P00001', 29, 1, 11),
+(2, 1, 'P00001', 31, 1, 11);
 
 --
 -- Triggers `tb_pembelian_detail`
@@ -79,7 +73,7 @@ ALTER TABLE `tb_pembelian_detail`
 -- AUTO_INCREMENT for table `tb_pembelian_detail`
 --
 ALTER TABLE `tb_pembelian_detail`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

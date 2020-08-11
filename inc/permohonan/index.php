@@ -58,7 +58,7 @@
                             <div align="right">
                                 <?php if ($a['acc_owner'] == 0) { ?>
                                     <button type="button" onclick="tampil('<?= $a['id_transfer'] ?>')" class="btn btn-primary btn-block btn-sm">View</button>
-                                <?php } elseif ($a['acc_owner'] == 1) { ?>
+                                <?php } elseif ($a['acc_owner'] == 1 or $a['acc_owner'] == 3) { ?>
                                     <button type="button" class="btn btn-success btn-block btn-sm">SUCCESS</button>
                                 <?php } elseif ($a['acc_owner'] == 2) { ?>
                                     <button type="button" class="btn btn-warning btn-block btn-sm">Ditolak</button>
