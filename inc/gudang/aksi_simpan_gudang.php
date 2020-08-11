@@ -12,7 +12,13 @@ if (isset($_POST['simpan'])) {
         'id_kategori' => $_POST['kategori'],
         'id_divisi' => $_POST['divisi'],
         'id_sub_divisi' => $_POST['sub_divisi'],
-        'tanggal' => $_POST['tanggal']
+        'tanggal' => $_POST['tanggal'],
+        'thumbnail' => $_POST['thumbnail'],
+        'foto1' => $_POST['foto1'],
+        'foto2' => $_POST['foto2'],
+        'foto3' => $_POST['foto3'],
+        'foto4' => $_POST['foto4'],
+        'foto5' => $_POST['foto5']
     );
     $simpan = $con->insert('tb_gudang', $data);
 

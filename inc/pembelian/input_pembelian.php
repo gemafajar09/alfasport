@@ -265,7 +265,6 @@
                 var simpan = res.data
                 console.log(simpan)
                 window.location = 'pembelian.html';
-                kosong()
             }).catch(function(err) {
                 alert(err)
                 kosong()
