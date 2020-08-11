@@ -15,7 +15,7 @@ if(isset($_POST['simpan']))
     
     echo "
     <script>
-        window.location='entry_gudang.html'
+        window.location='../../entry_gudang.html'
     </script>
     ";
 } 
