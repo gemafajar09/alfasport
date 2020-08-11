@@ -21,6 +21,7 @@ if (isset($_COOKIE['success'])) {
 
 <?php } ?>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="<?= $base_url ?>build/js/axios.min.js"></script>
 <!-- Bootstrap -->
 <script src="<?= $base_url ?>vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="<?= $base_url ?>vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
