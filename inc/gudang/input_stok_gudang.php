@@ -8,7 +8,7 @@
                 </div>
                 <div class="text-center">
                     Entry Barang Gudang
-                </div> 
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -46,10 +46,10 @@
                             <select name="merek" id="mereks" required class="form-control select2">
                                 <option value="">-Merek-</option>
                                 <?php
-                                    $merek = $con->select('tb_merk','*');
-                                    foreach($merek as $b){
+                                $merek = $con->select('tb_merk', '*');
+                                foreach ($merek as $b) {
                                 ?>
-                                <option value="<?= $b['merk_id'] ?>"><?= $b['merk_nama'] ?></option>
+                                    <option value="<?= $b['merk_id'] ?>"><?= $b['merk_nama'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -60,10 +60,10 @@
                             <select name="kategori" required id="kategoris" class="form-control select2">
                                 <option value="">-Kategori-</option>
                                 <?php
-                                    $kategori = $con->select('tb_kategori','*');
-                                    foreach($kategori as $b){
+                                $kategori = $con->select('tb_kategori', '*');
+                                foreach ($kategori as $b) {
                                 ?>
-                                <option value="<?= $b['kategori_id'] ?>"><?= $b['kategori_nama'] ?></option>
+                                    <option value="<?= $b['kategori_id'] ?>"><?= $b['kategori_nama'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -72,13 +72,6 @@
                         <div class="form-group">
                             <label>Divisi</label>
                             <select required name="divisi" id="divisis" class="form-control select2">
-                                <option value="">-Divisi-</option>
-                                <?php
-                                    $divisi = $con->select('tb_divisi','*');
-                                    foreach($divisi as $b){
-                                ?>
-                                <option value="<?= $b['divisi_id'] ?>"><?= $b['divisi_nama'] ?></option>
-                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -86,13 +79,6 @@
                         <div class="form-group">
                             <label>Sub Divisi</label>
                             <select name="sub_divisi" id="sub_divisis" class="form-control select2">
-                                <option value="">-Sub Divisi-</option>
-                                <?php
-                                    $subdivisi = $con->select('tb_subdivisi','*');
-                                    foreach($subdivisi as $b){
-                                ?>
-                                <option value="<?= $b['subdivisi_id'] ?>"><?= $b['subdivisi_nama'] ?></option>
-                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -102,10 +88,10 @@
                             <select required name="gender" id="genders" class="form-control select2">
                                 <option value="">-Gender-</option>
                                 <?php
-                                    $gender = $con->select('tb_gender','*');
-                                    foreach($gender as $b){
+                                $gender = $con->select('tb_gender', '*');
+                                foreach ($gender as $b) {
                                 ?>
-                                <option value="<?= $b['gender_id'] ?>"><?= $b['gender_nama'] ?></option>
+                                    <option value="<?= $b['gender_id'] ?>"><?= $b['gender_nama'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -158,58 +144,90 @@
                             <input type="text" name="foto5" class="form-control" id="foto5" placeholder="Foto 5...">
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="text-right">
                     <button type="submit" name="simpan" class="btn btn-info">Simpan</button>
-                </div>                                      
+                </div>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-$(document).ready(function(){
-    $('#tanggal').change(function()
-    {
-        $('#id').focus()
+    $("#kategoris").change(function() {
+        var kategoris = $('#kategoris option:selected').val();
+        console.log(kategoris);
+        $.ajax({
+            type: "GET",
+            url: "inc/gudang/filter/data_divisi.php",
+            data: {
+                'kategori_id': kategoris
+            },
+            success: function(response) {
+                $('#divisis').html(response);
+            }
+        });
     })
 
-    $('#kategoris').change(function(e){
-        e.preventDefault();
-        var kategori = $(this).val()
-        var merek = $('#mereks').val()
-        axios.post('inc/gudang/ukuran.php',{
-            'id_merek': merek,
-            'id_kategori': kategori
-        }).then(function(res){
-            $('[name ="ukuran[]"]').html(res.data)
-        }).catch(function(err){
-            console.log(err)
+    $("#divisis").change(function() {
+        var divisis = $('#divisis option:selected').val();
+        console.log(divisis);
+        $.ajax({
+            type: "GET",
+            url: "inc/gudang/filter/data_subdivisi.php",
+            data: {
+                'divisi_id': divisis
+            },
+            success: function(response) {
+                $('#sub_divisis').html(response);
+            }
+        });
+    })
+
+
+
+
+
+
+    $(document).ready(function() {
+        $('#tanggal').change(function() {
+            $('#id').focus()
+        })
+
+        $('#kategoris').change(function(e) {
+            e.preventDefault();
+            var kategori = $(this).val()
+            var merek = $('#mereks').val()
+            axios.post('inc/gudang/ukuran.php', {
+                'id_merek': merek,
+                'id_kategori': kategori
+            }).then(function(res) {
+                $('[name ="ukuran[]"]').html(res.data)
+            }).catch(function(err) {
+                console.log(err)
+            })
         })
     })
-})
 
-function kosong1()
-{
-    $('#ue').val('')
-    $('#us').val('')
-    $('#uk').val('')
-    $('#cm').val('')
-}
+    function kosong1() {
+        $('#ue').val('')
+        $('#us').val('')
+        $('#uk').val('')
+        $('#cm').val('')
+    }
 
-function kosong() 
-{
-    $('#id').val('')
-    $('#artikel').val('')
-    $('#nama').val('')
-    $('#jumlah').val('')
-    $('#modal').val('')
-    $('#jual').val('')
-    $('#mereks').val('')
-    $('#genders').val('')
-    $('#kategoris').val('')
-    $('#divisis').val('')
-    $('#sub_divisis').val('')
-}
+    function kosong() {
+        $('#id').val('')
+        $('#artikel').val('')
+        $('#nama').val('')
+        $('#jumlah').val('')
+        $('#modal').val('')
+        $('#jual').val('')
+        $('#mereks').val('')
+        $('#genders').val('')
+        $('#kategoris').val('')
+        $('#divisis').val('')
+        $('#sub_divisis').val('')
+    }
 </script>

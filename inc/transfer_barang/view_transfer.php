@@ -90,6 +90,30 @@
                                     </select>
                                 </div>
                                 <script>
+                                    var _dataBarang = "";
+                                    var _banyakPilihanBarang = -1;
+                                    var _pilihanBarangDefault =
+                                        "<div class='row'>" +
+                                        "<div class='col-md-8'>" +
+                                        "<div class='form-group'>" +
+                                        "<label>Nama Barang & Ukuran</label>" +
+                                        "<select class='form-control select2 id_gudang' name='id_gudang[]' required style='width: 100%;'>" +
+                                        "<option selected disabled>Pilih Barang</option>" +
+                                        "</select>" +
+                                        "</div>" +
+                                        "</div>" +
+                                        "<div class='col-md-4'>" +
+                                        "<div class='form-group'>" +
+                                        "<label>Jumlah</label>" +
+                                        "<input type='number' name='jumlah[]' id='jumlah' required='required' placeholder='Jumlah' class='form-control'>" +
+                                        "</div>" +
+                                        "</div>" +
+                                        "</div>";
+
+                                    function hapusBaris(no) {
+                                        document.getElementById("baris_" + no).innerHTML = "";
+                                    }
+
                                     $("#id_toko").change(function() {
                                         var id_toko = $('#id_toko option:selected').val();
                                         console.log(id_toko);
@@ -105,6 +129,11 @@
                                         });
                                     })
                                     $("#id_toko").change(function() {
+                                        $('#formInput').html(_pilihanBarangDefault);
+                                        $('.select2').select2({
+                                            dropdownAutoWidth: true
+                                        });
+
                                         var id_toko = $('#id_toko option:selected').val();
                                         console.log(id_toko);
                                         $.ajax({
@@ -114,6 +143,7 @@
                                                 'id_toko': id_toko
                                             },
                                             success: function(response) {
+                                                _dataBarang = response;
                                                 $('[name ="id_gudang[]"]').html(response);
                                             }
                                         });
@@ -284,31 +314,31 @@ if (isset($_POST['simpanT'])) {
 
 
     $('#addRow').on('click', function() {
-
-        for (let i = 0; i < 100; i++) {
-            const element = i;
-            console.log(element);
-        }
-
+        _banyakPilihanBarang++;
         var html_row =
-            "<div class='row'>" +
+            "<div class='row' id='baris_" + _banyakPilihanBarang + "'>" +
             "<div class='col-md-8'>" +
             "<div class='form-group'>" +
-            "<label>Nama Barang</label>" +
+            "<label>Nama Barang & Ukuran</label>" +
             "<select class='form-control select2 id_gudang' name='id_gudang[]' required style='width: 100%;'>" +
             "<option selected disabled>Pilih Barang</option>" +
+            _dataBarang +
             "</select>" +
             "</div>" +
             "</div>" +
-            "<div class='col-md-4'>" +
+            "<div class='col-md-3'>" +
             "<div class='form-group'>" +
             "<label>Jumlah</label>" +
             "<input type='number' name='jumlah[]' id='jumlah' required='required' placeholder='Jumlah' class='form-control'>" +
             "</div>" +
             "</div>" +
-            "</div>";
-
-
+            "<div class='col-md-1'>" +
+            "<div class='form-group'>" +
+            "<label>&nbsp;</label>" +
+            "<button class='btn btn-danger' type='button' onclick='hapusBaris(" + _banyakPilihanBarang + ")'><i class='fa fa-trash'></i></button>" +
+            "</div>" +
+            "</div>"
+        "</div>";
 
         $('#formInput').append(html_row)
         $('.select2').select2({
