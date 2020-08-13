@@ -60,10 +60,6 @@ if (isset($_COOKIE['success'])) {
 <script src="<?= $base_url ?>vendors/flot.curvedlines/curvedLines.js"></script>
 <!-- DateJS -->
 <script src="<?= $base_url ?>vendors/DateJS/build/date.js"></script>
-<!-- bootstrap-daterangepicker -->
-<script src="<?= $base_url ?>vendors/moment/min/moment.min.js"></script>
-<script src="<?= $base_url ?>vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script src="<?= $base_url ?>vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="<?= $base_url ?>build/js/custom.min.js"></script>
 <!-- notifikasi -->
@@ -71,6 +67,7 @@ if (isset($_COOKIE['success'])) {
 <script src="<?= $base_url ?>vendors/ckeditor/ckeditor.js"></script>
 
 <script>
+
   $('.select2').select2({
     dropdownAutoWidth: true
   });
