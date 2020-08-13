@@ -2,8 +2,8 @@
 
 if (isset($_POST['simpanT'])) {
 
-    var_dump($_POST);
-    exit;
+    // var_dump($_POST);
+    // exit;
 
     // $ukuran = $_POST['ukuran'];
     // $jumlah = $_POST['jumlah'];
