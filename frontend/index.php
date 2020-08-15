@@ -31,1216 +31,27 @@ include "../config/koneksi.php";
 	<link rel="stylesheet" type="text/css" href="css/wide-grid.css" />
 	<link rel="stylesheet" type="text/css" href="css/sport.css" />
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 </head>
 
 <body>
 
 	<div class="standard-body">
 		<div id="main" class="">
-			<header>
-				<div class="background-header"></div>
-				<div class="slider-header">
-					<!-- Top Bar -->
-					<div id="top-bar" class="full-width">
-						<div class="background-top-bar"></div>
-						<div class="background">
-							<div class="shadow"></div>
-							<div class="pattern">
-								<div class="container">
-									<div class="row">
-										<!-- Top Bar Left -->
-										<div class="col-xs-12 col-md-6">
-											<div class="overflow">
-												<!-- Currency -->
-												<form action="" method="post" enctype="multipart/form-data" id="currency_form">
-													<div class="dropdown">
-														Currency:
-														<a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">US
-															Dollar</a>
-														<ul class="dropdown-menu">
-															<li><a href="javascript:;">Euro</a></li>
-															<li><a href="javascript:;">Pound Sterling</a></li>
-															<li><a href="javascript:;">US Dollar</a></li>
-														</ul>
-													</div>
-												</form>
-
-												<!-- Language -->
-												<form action="" method="post" enctype="multipart/form-data" id="language_form">
-													<div class="dropdown">
-														Language:
-														<a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><img src="img/flags/gb.png" alt="English" title="English"> English</a>
-														<ul class="dropdown-menu">
-															<li><a href="javascript:;"><img src="img/flags/gb.png" alt="English" title="English">
-																	English</a></li>
-															<li><a href="javascript:;"><img src="img/flags/pl.png" alt="Polski" title="Polski">
-																	Polski</a></li>
-														</ul>
-													</div>
-												</form>
-											</div>
-										</div>
-
-										<!-- Top Bar Right -->
-										<div class="col-xs-12 col-md-6" id="top-bar-right">
-											<!-- Links -->
-											<ul class="top-links">
-												<li><a href="wish_list.html" id="wishlist-total">Wish List (1)</a></li>
-												<li><a href="my_account.html">My Account</a></li>
-												<li><a href="shopping_cart.html">Shopping Cart</a></li>
-												<li><a href="checkout.html">Checkout</a></li>
-											</ul>
-										</div>
-									</div><!-- // .row -->
-								</div><!-- // .container -->
-							</div><!-- // .pattern -->
-						</div><!-- // .background -->
-					</div><!-- // #top-bar -->
-
-					<!-- Top of pages -->
-					<div id="top" class="full-width">
-						<div class="background-top"></div>
-						<div class="background">
-							<div class="shadow"></div>
-							<div class="pattern">
-								<div class="container">
-									<div class="row">
-										<!-- Header Left -->
-										<div class="col-sm-3" id="header-left">
-											<!-- Logo -->
-											<div class="logo"><a href="index-2.html"><img src="img/logo.png" title="Your Store" alt="Your Store" /></a></div>
-										</div>
-
-										<div class="col-sm-9" id="header-right">
-											<div class="help-msg">
-												Need Help? Call <span style="color: #00c853; font-weight: 600">897 415 789</span>
-											</div>
-
-											<div class="header-items">
-												<div class="header-item">
-													<div class="search_form">
-														<div class="button-search"></div>
-														<div class="input-wrap">
-															<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" class="input-block-level search-query ui-autocomplete-input" name="search" placeholder="Search..." id="search_query" value="" autocomplete="off">
-														</div>
-													</div>
-												</div>
-
-												<div class="header-item">
-													<a href="http://ninethemes.net/xpresso/opencart/default/index.php?route=account/wishlist" id="wishlist-total"><i class="fa fa-heart"></i><span class="value">0</span></a>
-												</div>
-
-												<div class="header-item">
-													<a href="http://ninethemes.net/xpresso/opencart/default/index.php?route=product/compare" id="compare-total"><i class="fa fa-sync-alt"></i> <span class="value">0</span></a>
-												</div>
-
-												<div class="header-item">
-													<!-- Cart block -->
-													<div id="cart_block" class="dropdown">
-														<div class="cart-heading dropdown-toogle" data-toggle="dropdown">
-															<i class="cart-icon"><img src="img/icon-cart.png" alt=""></i>
-															<span id="cart_count_ajax"><span id="cart-total">0</span></span>
-															<strong id="total_price_ajax"><span id="total_price">$0.00</span></strong>
-														</div>
-
-														<div class="dropdown-menu" id="cart_content">
-															<div class="mini-cart-info">
-																<table>
-																	<tr>
-																		<td class="image"><a href="#"><img src="img/product-47x47.png" alt="Product" title="Product" /></a></td>
-																		<td class="name"><a href="#">Product 1</a></td>
-																		<td class="quantity">x&nbsp;2</td>
-																		<td class="total">$246.40</td>
-																		<td class="text-right remove"><a href="javascript:;" title="Remove">x</a></td>
-																	</tr>
-																	<tr>
-																		<td class="image"><a href="#"><img src="img/product-47x47.png" alt="Product" title="Product" /></a></td>
-																		<td class="name"><a href="#">Product 2</a></td>
-																		<td class="quantity">x&nbsp;2</td>
-																		<td class="total">$246.40</td>
-																		<td class="text-right remove"><a href="javascript:;" title="Remove">x</a></td>
-																	</tr>
-																</table>
-															</div>
-
-															<div class="mini-cart-total">
-																<table>
-																	<tr>
-																		<td class="right"><b>Sub-Total:</b></td>
-																		<td class="text-right right">$402.00</td>
-																	</tr>
-																	<tr>
-																		<td class="right"><b>Eco Tax (-2.00):</b></td>
-																		<td class="text-right right">$8.00</td>
-																	</tr>
-																	<tr>
-																		<td class="right"><b>VAT (20%):</b></td>
-																		<td class="text-right right">$80.40</td>
-																	</tr>
-																	<tr>
-																		<td class="right"><b>Total:</b></td>
-																		<td class="text-right right">$490.40</td>
-																	</tr>
-																</table>
-															</div>
-
-															<div class="checkout"><a href="shopping_cart.html" class="button button-secondary btn-view-cart">View Cart</a> <a href="checkout.html" class="button btn-checkout">Checkout</a></div>
-														</div><!-- // .dropdown-menu -->
-													</div><!-- // .dropdown -->
-												</div>
-											</div>
-										</div><!-- // #header-right -->
-									</div><!-- // .row -->
-								</div><!-- // .container -->
-
-								<nav id="custommegamenu" class="container-megamenu horizontal">
-									<div class="megaMenuToggle">
-										<div class="megamenuToogle-wrapper">
-											<div class="megamenuToogle-pattern">
-												<div class="container">
-													<div><span></span><span></span><span></span></div>Categories
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="megamenu-wrapper">
-										<div class="megamenu-pattern">
-											<div class="container">
-												<ul class="megamenu shift-up">
-													<li class=' with-sub-menu hover'>
-														<p class='close-menu'></p>
-														<p class='open-menu'></p>
-														<a href="category.html" class='clearfix'><span><strong>Men</strong></span></a>
-														<div class="sub-menu" style="width:100%">
-															<div class="content">
-																<p class="arrow"></p>
-																<div class="row">
-																	<div class="col-sm-3  mobile-enabled">
-																		<div style="font-weight: 600; font-size: 22px; line-height: 32px; margin-bottom: 50px;  letter-spacing: -1px; color: #000">
-																			Meet xpresso!<br>Responsive HTML Template for you!
-																		</div>
-
-																		<div style="font-size: 13px; margin-bottom: 25px">XPRESSO is a premium html template
-																			with advanced admin module. It's extremely customizable and fully responsive. Can
-																			be used for every type of store.</div>
-
-																		<a href="#" class="btn btn-tertiary">READ MORE</a>
-																	</div>
-
-																	<div class="col-sm-3  mobile-enabled">
-																		<div class="text-center"><img class="img-responsive" alt="" src="img/megamenu_cat_1.jpg" /></div>
-
-																		<div class="col-sm-6 static-menu" style="padding: 0; margin: 0">
-																			<div class="menu">
-																				<ul style="padding: 0; margin: 0">
-																					<li>
-																						<ul>
-																							<li><a href="category.html">Desktops</a></li>
-																							<li><a href="category.html">MP3 Players</a></li>
-																							<li><a href="category.html">Software</a></li>
-																							<li><a href="category.html">Monitors</a></li>
-																							<li><a href="category.html">Web Cameras</a></li>
-																						</ul>
-																					</li>
-																				</ul>
-																			</div>
-																		</div>
-
-																		<div class="col-sm-6 static-menu" style="padding: 0; margin: 0">
-																			<div class="menu">
-																				<ul style="padding: 0; margin: 0">
-																					<li>
-																						<ul>
-																							<li><a href="category.html">Phones</a></li>
-																							<li><a href="category.html">Desktops</a></li>
-																							<li><a href="category.html">Printers</a></li>
-																							<li><a href="category.html">Scanners</a></li>
-																							<li><a href="category.html">Laptops</a></li>
-																						</ul>
-																					</li>
-																				</ul>
-																			</div>
-																		</div>
-
-																		<a href="#" class="btn btn-tertiary" style="margin-top: 18px">READ MORE</a>
-																	</div>
-
-																	<div class="col-sm-3  mobile-enabled">
-																		<div class="text-center">
-																			<img class="img-responsive" alt="" src="img/megamenu_cat_2.jpg" />
-																		</div>
-
-																		<div class="col-sm-6 static-menu" style="padding: 0; margin: 0">
-																			<div class="menu">
-																				<ul style="padding: 0; margin: 0">
-																					<li>
-																						<ul>
-																							<li><a href="category.html">MP3 Players</a></li>
-																							<li><a href="category.html">Web Cameras</a></li>
-																							<li><a href="category.html">Software</a></li>
-																							<li><a href="category.html">Monitors</a></li>
-																							<li><a href="category.html">Desktops</a></li>
-																						</ul>
-																					</li>
-																				</ul>
-																			</div>
-																		</div>
-
-																		<div class="col-sm-6 static-menu" style="padding: 0; margin: 0">
-																			<div class="menu">
-																				<ul style="padding: 0; margin: 0">
-																					<li>
-																						<ul>
-																							<li><a href="category.html">Printers</a></li>
-																							<li><a href="category.html">Phones</a></li>
-																							<li><a href="category.html">Desktops</a></li>
-																							<li><a href="category.html">Laptops</a></li>
-																							<li><a href="category.html">Scanners</a></li>
-																						</ul>
-																					</li>
-																				</ul>
-																			</div>
-																		</div>
-
-																		<a href="#" class="btn btn-tertiary" style="margin-top: 18px">READ MORE</a>
-																	</div>
-
-																	<div class="col-sm-3  mobile-enabled">
-																		<div class="text-center"><img class="img-responsive" alt="" src="img/megamenu_cat_2.jpg" /></div>
-																		<div class="col-sm-6 static-menu" style="padding: 0; margin: 0">
-																			<div class="menu">
-																				<ul style="padding: 0; margin: 0">
-																					<li>
-																						<ul>
-																							<li><a href="category.html">Desktops</a></li>
-																							<li><a href="category.html">Printers</a></li>
-																							<li><a href="category.html">Phones</a></li>
-																							<li><a href="category.html">Laptops</a></li>
-																							<li><a href="category.html">Scanners</a></li>
-																						</ul>
-																					</li>
-																				</ul>
-																			</div>
-																		</div>
-
-																		<div class="col-sm-6 static-menu" style="padding: 0; margin: 0">
-																			<div class="menu">
-																				<ul style="padding: 0; margin: 0">
-																					<li>
-																						<ul>
-																							<li><a href="category.html">Web Cameras</a></li>
-																							<li><a href="category.html">Software</a></li>
-																							<li><a href="category.html">Monitors</a></li>
-																							<li><a href="category.html">Desktops</a></li>
-																							<li><a href="category.html">MP3 Players</a></li>
-																						</ul>
-																					</li>
-																				</ul>
-																			</div>
-																		</div>
-
-																		<a href="#" class="btn btn-tertiary" style="margin-top: 18px">READ MORE</a>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</li>
-													<li class=' with-sub-menu hover'>
-														<p class='close-menu'></p>
-														<p class='open-menu'></p>
-														<a href="category.html" class='clearfix'><span><strong>Women</strong></span></a>
-														<div class="sub-menu" style="width:100%">
-															<div class="content">
-																<p class="arrow"></p>
-																<div class="row">
-																	<div class="col-sm-9  mobile-enabled">
-																		<div class="row">
-																			<div class="col-sm-3 static-menu">
-																				<div class="menu">
-																					<ul>
-																						<li>
-																							<a href="category.html" class="main-menu with-submenu">Mice and
-																								Trackballs</a>
-																							<div class="open-categories"></div>
-																							<div class="close-categories"></div>
-																							<ul>
-																								<li>
-																									<a href="category.html">Printers</a>
-																								</li>
-																								<li><a href="category.html">Phones &amp; PDAs</a></li>
-																								<li><a href="category.html">PC</a></li>
-																								<li><a href="category.html">Cameras</a></li>
-																							</ul>
-																						</li>
-																						<li>
-																							<a href="category.html" class="main-menu with-submenu">Components</a>
-																							<div class="open-categories"></div>
-																							<div class="close-categories"></div>
-																							<ul>
-																								<li><a href="category.html">Monitors</a></li>
-																								<li><a href="category.html">Printers</a></li>
-																								<li><a href="category.html">Scanners</a></li>
-																								<li><a href="category.html">Monitors</a></li>
-																							</ul>
-																						</li>
-																					</ul>
-																				</div>
-																			</div>
-
-																			<div class="col-sm-3 static-menu">
-																				<div class="menu">
-																					<ul>
-																						<li>
-																							<a href="category.html" class="main-menu with-submenu">Software</a>
-																							<div class="open-categories"></div>
-																							<div class="close-categories"></div>
-																							<ul>
-																								<li><a href="category.html">Desktops</a></li>
-																								<li><a href="category.html">Macs</a></li>
-																								<li><a href="category.html">Monitors</a></li>
-																								<li><a href="category.html">MP3 Players</a></li>
-																							</ul>
-																						</li>
-																						<li>
-																							<a href="category.html" class="main-menu with-submenu">MP3 Players</a>
-																							<div class="open-categories"></div>
-																							<div class="close-categories"></div>
-																							<ul>
-																								<li><a href="category.html">Scanners</a></li>
-																								<li><a href="category.html">Mac</a></li>
-																								<li><a href="category.html">Desktops</a></li>
-																								<li><a href="category.html">Windows</a></li>
-																							</ul>
-																						</li>
-																					</ul>
-																				</div>
-																			</div>
-
-																			<div class="col-sm-3 static-menu">
-																				<div class="menu">
-																					<ul>
-																						<li>
-																							<a href="category.html" class="main-menu with-submenu">Phones &amp;
-																								PDAs</a>
-																							<div class="open-categories"></div>
-																							<div class="close-categories"></div>
-																							<ul>
-																								<li><a href="category.html">Software</a></li>
-																								<li><a href="category.html">PC</a></li>
-																								<li><a href="category.html">Scanners</a></li>
-																								<li><a href="category.html">Desktops</a></li>
-																							</ul>
-																						</li>
-																						<li>
-																							<a href="category.html" class="main-menu with-submenu">Desktops</a>
-																							<div class="open-categories"></div>
-																							<div class="close-categories"></div>
-																							<ul>
-																								<li><a href="category.html">Mice and Trackballs</a></li>
-																								<li><a href="category.html">Software</a></li>
-																								<li><a href="category.html">Windows</a></li>
-																								<li><a href="category.html">Web Cameras</a></li>
-																							</ul>
-																						</li>
-																					</ul>
-																				</div>
-																			</div>
-
-																			<div class="col-sm-3 static-menu">
-																				<div class="menu">
-																					<ul>
-																						<li>
-																							<a href="category.html" class="main-menu with-submenu">Monitors</a>
-																							<div class="open-categories"></div>
-																							<div class="close-categories"></div>
-																							<ul>
-																								<li><a href="category.html">Components</a></li>
-																								<li><a href="category.html">Web Cameras</a></li>
-																								<li><a href="category.html">Scanners</a></li>
-																								<li><a href="category.html">Macs</a></li>
-																							</ul>
-																						</li>
-																						<li>
-																							<a href="category.html" class="main-menu with-submenu">Cameras</a>
-																							<div class="open-categories"></div>
-																							<div class="close-categories"></div>
-																							<ul>
-																								<li><a href="category.html">Monitors</a></li>
-																								<li><a href="category.html">Components</a></li>
-																								<li><a href="category.html">MP3 Players</a></li>
-																								<li><a href="category.html">Monitors</a></li>
-																							</ul>
-																						</li>
-																					</ul>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-
-																	<div class="col-sm-3  mobile-disabled">
-																		<div class="text-center"><img class="img-responsive" alt="" src="img/megamenu_woman.jpg"></div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</li>
-													<li class=''>
-														<p class='close-menu'></p>
-														<p class='open-menu'></p><a href='#' class='clearfix'><span><strong>Blog</strong></span></a>
-													</li>
-
-													<li class=' with-sub-menu hover pull-right megamenu-all-cats'>
-														<p class='close-menu'></p>
-														<p class='open-menu'></p>
-														<a href="category.html" class='clearfix'><span><strong><img src="img/menu_white.png" alt="">Semua Kategori</strong></span></a>
-														<div class="sub-menu" style="width:100%">
-															<div class="content">
-																<p class="arrow"></p>
-																<div class="row">
-																	<div class="col-sm-12 mobile-enabled">
-																		<div class="row">
-
-																			<?php
-																			$data = $con->select("tb_kategori", "*", ["ORDER" => ["kategori_id" => "ASC"], "LIMIT" => 5]);
-																			foreach ($data as $i => $a) {
-																			?>
-																				<div class="col-sm-25 static-menu">
-																					<div class="menu">
-																						<ul>
-																							<li>
-																								<a href="category.html" class="main-menu with-submenu"><?= $a['kategori_nama'] ?></a>
-																								<div class="open-categories"></div>
-																								<div class="close-categories"></div>
-																								<ul>
-																									<?php
-																									$edit = $con->select("tb_divisi", "*", [
-																										"kategori_id" => $a["kategori_id"],
-																										"ORDER" => ["divisi_id" => "ASC"],
-																										"LIMIT" => 8
-																									]);
-																									foreach ($edit as $i => $b) {
-																									?>
-																										<li><a href="category.html"><?= $b['divisi_nama'] ?></a></li>
-																									<?php } ?>
-																								</ul>
-																							</li>
-																						</ul>
-																					</div>
-																				</div>
-																			<?php } ?>
-																		</div>
-																	</div>
-																	<br>
-																	<div class="col-sm-12 text-center">
-																		<hr>
-																		<a href="">View All</a>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</li>
-												</ul>
-											</div>
-										</div>
-									</div><!-- // .megamenu-wrapper -->
-								</nav><!-- // #megamenu -->
-							</div><!-- // .pattern -->
-						</div><!-- // .background -->
-					</div><!-- // #top -->
-				</div><!-- // .slider-header -->
-
-				<!-- Slider -->
-				<div id="slider" class="full-width">
-					<div class="background-slider"></div>
-					<div class="background">
-						<div class="shadow"></div>
-						<div class="pattern">
-							<!-- START REVOLUTION SLIDER  fullwidth mode -->
-
-							<div id="rev_slider_14_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" style="margin:0px auto;background-color:#E9E9E9;padding:0px;margin-top:0px;margin-bottom:0px;max-height:680px;">
-								<div id="rev_slider_14_1" class="rev_slider fullwidthabanner" style="display:none;max-height:680px;height:680px;">
-									<ul>
-										<!-- SLIDE  -->
-										<li data-transition="random" data-slotamount="7" data-masterspeed="300" data-fstransition="fade" data-fsmasterspeed="300" data-fsslotamount="7" data-saveperformance="off">
-											<!-- MAIN IMAGE -->
-											<img src="img/bg_1_sport.jpg" alt="bg_1_sport" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-											<!-- LAYERS -->
-
-											<!-- LAYER NR. 1 -->
-											<div class="tp-caption lfb" data-x="444" data-y="-14" data-speed="500" data-start="700" data-easing="Power3.easeInOut" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 2;"><img src="img/img_1_sport.png" alt="">
-											</div>
-
-											<!-- LAYER NR. 2 -->
-											<div class="tp-caption revslider-big-text sft tp-resizeme" data-x="39" data-y="120" data-speed="500" data-start="1000" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 3; max-width: auto; max-height: auto; white-space: nowrap;"><span style="font-size: 104px;font-weight: bold; color: #b0bec5;">BOXING</span>
-											</div>
-
-											<!-- LAYER NR. 3 -->
-											<div class="tp-caption revslider-big-text tp-fade tp-resizeme" data-x="47" data-y="210" data-speed="300" data-start="1100" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 4; max-width: auto; max-height: auto; white-space: nowrap;"><span style="background: #00c853; color: #fff; line-height: 30px; display: block; padding: 5px  30px ; letter-spacing: 15px; font-size: 30px;">EQUIPMENT</span>
-											</div>
-
-											<!-- LAYER NR. 4 -->
-											<div class="tp-caption revslider-excerpt-lower tp-fade tp-resizeme" data-x="47" data-y="306" data-speed="500" data-start="1500" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">Introducing the Yoga
-												3 Pro, an intelligent <br> laptop tablet that adapts to you...
-											</div>
-
-											<!-- LAYER NR. 5 -->
-											<div class="tp-caption revslider-excerpt-lower lfb tp-resizeme" data-x="48" data-y="409" data-speed="300" data-start="2000" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;"><a href='#' class='btn btn-secondary text-center btn-huge' style="padding-left: 60px; padding-right: 60px">Read more</a>
-											</div>
-										</li>
-										<!-- SLIDE  -->
-										<li data-transition="random" data-slotamount="7" data-masterspeed="300" data-saveperformance="off">
-											<!-- MAIN IMAGE -->
-											<img src="img/bg_2_sport.html" alt="bg_2_sport" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-											<!-- LAYERS -->
-
-											<!-- LAYER NR. 1 -->
-											<div class="tp-caption sfb" data-x="556" data-y="54" data-speed="500" data-start="700" data-easing="Power3.easeInOut" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 2;"><img src="img/img_2_sport.png" alt="">
-											</div>
-
-											<!-- LAYER NR. 2 -->
-											<div class="tp-caption revslider-big-text sft tp-resizeme" data-x="11" data-y="147" data-speed="300" data-start="1000" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 3; max-width: auto; max-height: auto; white-space: nowrap;"><span style="font-size: 104px;font-weight: bold; color: #fff;">ENDURO</span>
-											</div>
-
-											<!-- LAYER NR. 3 -->
-											<div class="tp-caption revslider-big-text tp-fade tp-resizeme" data-x="16" data-y="233" data-speed="300" data-start="1100" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 4; max-width: auto; max-height: auto; white-space: nowrap;"><span style="background: #1c2242; background: rgba(28,34,66, .8); color: #fff; line-height: 30px; display: block; padding: 5px  30px ; letter-spacing: 15px; font-size: 30px;">TRAILBIKES</span>
-											</div>
-
-											<!-- LAYER NR. 4 -->
-											<div class="tp-caption revslider-excerpt-lower tp-fade tp-resizeme" data-x="20" data-y="322" data-speed="300" data-start="1500" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;"><span style="color:#fff">Introducing the Yoga 3 Pro, an intelligent <br> laptop tablet that adapts
-													to you...</span>
-											</div>
-
-											<!-- LAYER NR. 5 -->
-											<div class="tp-caption revslider-excerpt-lower sfb tp-resizeme" data-x="20" data-y="428" data-speed="300" data-start="2000" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 6; max-width: auto; max-height: auto; white-space: nowrap;"><a href='#' class='btn btn-secondary text-center btn-huge' style="padding-left: 60px; padding-right: 60px">Read more</a>
-											</div>
-										</li>
-										<!-- SLIDE  -->
-										<li data-transition="random" data-slotamount="7" data-masterspeed="300" data-saveperformance="off">
-											<!-- MAIN IMAGE -->
-											<img src="img/bg_3_sport.jpg" alt="bg_3_sport" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
-											<!-- LAYERS -->
-
-											<!-- LAYER NR. 1 -->
-											<div class="tp-caption sfb" data-x="544" data-y="76" data-speed="500" data-start="700" data-easing="Power3.easeInOut" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 2;"><img src="img/img_3_sport.png" alt="">
-											</div>
-
-											<!-- LAYER NR. 2 -->
-											<div class="tp-caption revslider-big-text sft tp-resizeme" data-x="17" data-y="138" data-speed="300" data-start="1000" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 3; max-width: auto; max-height: auto; white-space: nowrap;"><span style="font-size: 75px;font-weight: bold; color: #fff;">NIKE TENNIS</span>
-											</div>
-
-											<!-- LAYER NR. 3 -->
-											<div class="tp-caption revslider-excerpt-lower sfb tp-resizeme" data-x="23" data-y="262" data-speed="300" data-start="1500" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 4; max-width: auto; max-height: auto; white-space: nowrap;"><span style="color: #fff">Introducing the Yoga 3 Pro, an intelligent <br> laptop tablet that adapts
-													to you...</span>
-											</div>
-
-											<!-- LAYER NR. 4 -->
-											<div class="tp-caption revslider-excerpt-lower sfb tp-resizeme" data-x="25" data-y="374" data-speed="300" data-start="2000" data-easing="Power3.easeInOut" data-splitin="none" data-splitout="none" data-elementdelay="0.1" data-endelementdelay="0.1" data-endspeed="300" style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;"><a href='#' class='btn btn-secondary text-center btn-huge' style="padding-left: 60px; padding-right: 60px">Read more</a>
-											</div>
-										</li>
-									</ul>
-									<div class="tp-bannertimer"></div>
-								</div>
-							</div><!-- END REVOLUTION SLIDER -->
-						</div><!-- // .pattern -->
-					</div><!-- // .background -->
-				</div><!-- // #slider -->
-			</header>
-
+			<?php
+			include "header.php";
+			?>
 			<!-- MAIN CONTENT
-          ================================================== -->
-			<div class="main-content full-width">
-				<div class="background-content"></div>
-				<div class="background">
-					<div class="shadow"></div>
-					<div class="pattern">
-						<div class="container">
+					================================================== -->
+			<?php
+			include "content.php";
+			?>
+			<!-- // .main-content -->
 
-							<!-- Featured products -->
-							<div class="box clearfix box-with-products">
-								<!-- Carousel nav -->
-								<a class="next" href="#myCarousel" id="myCarousel_next"><span></span></a>
-								<a class="prev" href="#myCarousel" id="myCarousel_prev"><span></span></a>
-
-								<div class="box-heading">Produk</div>
-								<div class="strip-line"></div>
-
-								<div class="box-content products">
-									<div class="box-product">
-										<div id="myCarousel" class="owl-carousel">
-
-											<?php
-											$products = $con->query("
-												SELECT a.id_stok_toko,
-															a.jumlah,
-															b.id,
-															b.artikel,
-															b.nama,
-															b.modal,
-															b.jual,
-															c.nama_toko,
-															d.merk_nama,
-															e.kategori_nama,
-															f.divisi_nama,
-															g.subdivisi_nama,
-															h.gender_nama
-												FROM tb_stok_toko a
-												JOIN tb_gudang b ON a.id_gudang=b.id_gudang
-												JOIN toko c ON a.id_toko=c.id_toko
-												JOIN tb_merk d ON b.id_merek=d.merk_id
-												JOIN tb_kategori e ON b.id_kategori=e.kategori_id
-												JOIN tb_divisi f ON b.id_divisi=f.divisi_id
-												JOIN tb_subdivisi g ON b.id_sub_divisi=g.subdivisi_id
-												JOIN tb_gender h ON b.id_gender=h.gender_id
-										")->fetchAll();
-											foreach ($products as $i => $product) {
-											?>
-												<div class="item">
-													<div class="product-grid">
-														<!-- Product -->
-														<div class="product clearfix product-hover">
-															<div class="left">
-																<div class="image">
-																	<a href="<?= $base_url ?>/frontend/product.php?id=<?= $product['id_stok_toko'] ?>"><img src="img/product-01.png" alt="Product" class="" /></a>
-																</div>
-															</div>
-
-															<div class="right">
-																<div class="name"><a href="<?= $base_url ?>/frontend/product.php?id=<?= $product['id_stok_toko'] ?>"><?= $product['merk_nama'] ?></a></div>
-																<div class="price">Rp. <?= number_format($product['jual']) ?></div>
-																<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i></div>
-																<div class="only-hover">
-																	<ul>
-																		<li><a href="#"><i class="fa fa-sync-alt"></i></a></li>
-																		<li><a href="#"><i class="fa fa-heart"></i></a></li>
-																	</ul>
-
-																	<a onclick="" class="button">Add to Cart</a>
-																</div>
-															</div>
-														</div><!-- // Product -->
-													</div>
-												</div>
-											<?php } ?>
-
-										</div>
-									</div>
-								</div>
-							</div><!-- // .box -->
-
-
-							<!-- Featured products -->
-							<div class="box clearfix box-with-products">
-								<!-- Carousel nav -->
-								<a class="next" href="#myCarousel1" id="myCarousel1_next"><span></span></a>
-								<a class="prev" href="#myCarousel1" id="myCarousel1_prev"><span></span></a>
-
-								<div class="box-heading">Latest products</div>
-								<div class="strip-line"></div>
-
-								<div class="box-content products">
-									<div class="box-product">
-										<div id="myCarousel1" class="owl-carousel">
-											<div class="item">
-												<div class="product-grid">
-													<!-- Product -->
-													<div class="product clearfix product-hover">
-														<div class="left">
-															<div class="image">
-																<a href="product.html"><img src="img/product-01.png" alt="Product" class="" /></a>
-															</div>
-														</div>
-
-														<div class="right">
-															<div class="name"><a href="product.html">Name of product</a></div>
-															<div class="price">$242.00</div>
-															<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i></div>
-															<div class="only-hover">
-																<ul>
-																	<li><a href="#"><i class="fa fa-sync-alt"></i></a></li>
-																	<li><a href="#"><i class="fa fa-heart"></i></a></li>
-																</ul>
-
-																<a onclick="" class="button">Add to Cart</a>
-															</div>
-														</div>
-													</div><!-- // Product -->
-												</div>
-											</div>
-
-											<div class="item">
-												<div class="product-grid">
-													<!-- Product -->
-													<div class="product clearfix product-hover">
-														<div class="left">
-															<div class="image">
-																<a href="product.html"><img src="img/product-02.png" alt="Product" class="" /></a>
-															</div>
-														</div>
-
-														<div class="right">
-															<div class="name"><a href="product.html">Name of product</a></div>
-															<div class="price"><span class="price-old">$122.00</span> <span class="price-new">$110.00</span></div>
-															<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star"></i></div>
-															<div class="only-hover">
-																<ul>
-																	<li><a href="#"><i class="fa fa-sync-alt"></i></a></li>
-																	<li><a href="#"><i class="fa fa-heart"></i></a></li>
-																</ul>
-
-																<a onclick="" class="button">Add to Cart</a>
-															</div>
-														</div>
-													</div><!-- // Product -->
-												</div>
-											</div>
-
-											<div class="item">
-												<div class="product-grid">
-													<!-- Product -->
-													<div class="product clearfix product-hover">
-														<div class="left">
-															<div class="image">
-																<a href="product.html"><img src="img/product-03.png" alt="Product" class="" /></a>
-															</div>
-														</div>
-
-														<div class="right">
-															<div class="name"><a href="product.html">Name of product</a></div>
-															<div class="price">$242.00</div>
-															<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i></div>
-															<div class="only-hover">
-																<ul>
-																	<li><a href="#"><i class="fa fa-sync-alt"></i></a></li>
-																	<li><a href="#"><i class="fa fa-heart"></i></a></li>
-																</ul>
-
-																<a onclick="" class="button">Add to Cart</a>
-															</div>
-														</div>
-													</div><!-- // Product -->
-												</div>
-											</div>
-
-											<div class="item">
-												<div class="product-grid">
-													<!-- Product -->
-													<div class="product clearfix product-hover">
-														<div class="left">
-															<div class="image">
-																<a href="product.html"><img src="img/product-04.png" alt="Product" class="" /></a>
-															</div>
-														</div>
-
-														<div class="right">
-															<div class="name"><a href="product.html">Name of product</a></div>
-															<div class="price">$242.00</div>
-															<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i></div>
-															<div class="only-hover">
-																<ul>
-																	<li><a href="#"><i class="fa fa-sync-alt"></i></a></li>
-																	<li><a href="#"><i class="fa fa-heart"></i></a></li>
-																</ul>
-
-																<a onclick="" class="button">Add to Cart</a>
-															</div>
-														</div>
-													</div><!-- // Product -->
-												</div>
-											</div>
-
-											<div class="item">
-												<div class="product-grid">
-													<!-- Product -->
-													<div class="product clearfix product-hover">
-														<div class="left">
-															<div class="image">
-																<a href="product.html"><img src="img/product-05.png" alt="Product" class="" /></a>
-															</div>
-														</div>
-
-														<div class="right">
-															<div class="name"><a href="product.html">Name of product</a></div>
-															<div class="price">$242.00</div>
-															<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i></div>
-															<div class="only-hover">
-																<ul>
-																	<li><a href="#"><i class="fa fa-sync-alt"></i></a></li>
-																	<li><a href="#"><i class="fa fa-heart"></i></a></li>
-																</ul>
-
-																<a onclick="" class="button">Add to Cart</a>
-															</div>
-														</div>
-													</div><!-- // Product -->
-												</div>
-											</div>
-
-											<div class="item">
-												<div class="product-grid">
-													<!-- Product -->
-													<div class="product clearfix product-hover">
-														<div class="left">
-															<div class="image">
-																<a href="product.html"><img src="img/product-06.png" alt="Product" class="" /></a>
-															</div>
-														</div>
-
-														<div class="right">
-															<div class="name"><a href="product.html">Name of product</a></div>
-															<div class="price">$242.00</div>
-															<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i></div>
-															<div class="only-hover">
-																<ul>
-																	<li><a href="#"><i class="fa fa-sync-alt"></i></a></li>
-																	<li><a href="#"><i class="fa fa-heart"></i></a></li>
-																</ul>
-
-																<a onclick="" class="button">Add to Cart</a>
-															</div>
-														</div>
-													</div><!-- // Product -->
-												</div>
-											</div>
-
-											<div class="item">
-												<div class="product-grid">
-													<!-- Product -->
-													<div class="product clearfix product-hover">
-														<div class="left">
-															<div class="image">
-																<a href="product.html"><img src="img/product-01.png" alt="Product" class="" /></a>
-															</div>
-														</div>
-
-														<div class="right">
-															<div class="name"><a href="product.html">Name of product</a></div>
-															<div class="price">$242.00</div>
-															<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i></div>
-															<div class="only-hover">
-																<ul>
-																	<li><a href="#"><i class="fa fa-sync-alt"></i></a></li>
-																	<li><a href="#"><i class="fa fa-heart"></i></a></li>
-																</ul>
-
-																<a onclick="" class="button">Add to Cart</a>
-															</div>
-														</div>
-													</div><!-- // Product -->
-												</div>
-											</div>
-
-											<div class="item">
-												<div class="product-grid">
-													<!-- Product -->
-													<div class="product clearfix product-hover">
-														<div class="left">
-															<div class="image">
-																<a href="product.html"><img src="img/product-03.png" alt="Product" class="" /></a>
-															</div>
-														</div>
-
-														<div class="right">
-															<div class="name"><a href="product.html">Name of product</a></div>
-															<div class="price">$242.00</div>
-															<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i></div>
-															<div class="only-hover">
-																<ul>
-																	<li><a href="#"><i class="fa fa-sync-alt"></i></a></li>
-																	<li><a href="#"><i class="fa fa-heart"></i></a></li>
-																</ul>
-
-																<a onclick="" class="button">Add to Cart</a>
-															</div>
-														</div>
-													</div><!-- // Product -->
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div><!-- // .box -->
-
-							<div style="margin-top: 30px;margin-bottom: 30px;background-image: url(img/banner_home_bg.png);background-position: top left;background-repeat: no-repeat;background-attachment: scroll;">
-								<div class="row">
-									<div class="col-lg-4 col-md-5 col-sm-hidden col-xs-hidden hidden-sm hidden-xs">
-										<div style="margin: 0 -140px 0 0;"><img class="banner-image img-responsive" alt="" src="img/banner_home_item.png" style=" position: relative;  left: 55px;"></div>
-									</div>
-
-									<div class="col-lg-8 col-md-7 col-sm-12 col-xs-12">
-										<div style="min-height: 380px;  text-align: left; color: #fff">
-											<div style="text-align: center;   padding: 127px 0 0 0;">
-												<div style="font-family: 'Montserrat'; font-size: 65px; line-height: 70px">Buy five products
-												</div>
-												<div style="font-size: 22px; letter-spacing: 4px;line-height: 32px; margin-bottom: 20px; margin-top: 10px">
-													GET 50% DISCOUNT!</div>
-												<a href="#" class="btn btn-banner" style="width: 200px; padding:11px 18px 10px 18px; font-size: 16px">Read more</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="feature-columns">
-								<div class="row">
-
-									<div class="col-md-4 ">
-										<div class="table-display" style="padding: 25px 0px; height: 104px;">
-											<div class="table-cell-display" style="width: 130px; text-align: center">
-												<img src="img/icon-track.png" alt="Free shipping">
-											</div>
-											<div class="table-cell-display">
-												<div style="font-size: 18px; color: #000; font-weight: 600; line-height: 18px;">Free shipping
-													&amp; return</div>
-												<div style="font-size: 14px; color: #000; font-weight: 300">For all orders over
-													$1000&nbsp;&nbsp;<i class="fa fa-angle-right"></i></div>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-md-4">
-										<div class="table-display" style="padding: 25px 0px; height: 104px;">
-											<div class="table-cell-display" style="width: 130px; text-align: center">
-												<img src="img/icon-wallet.png" alt="Safe &amp; Secure">
-											</div>
-											<div class="table-cell-display">
-												<div style="font-size: 18px; color: #000; font-weight: 600; line-height: 18px;">Safe &amp;
-													Secure</div>
-												<div style="font-size: 14px; color: #000; font-weight: 300">100% money back
-													guarantee&nbsp;&nbsp;<i class="fa fa-angle-right"></i></div>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-md-4">
-										<div class="table-display" style="padding: 25px 0px; height: 104px;">
-											<div class="table-cell-display" style="width: 130px; text-align: center">
-												<img src="img/icon-buoy.png" alt="Support 24 / 7">
-											</div>
-											<div class="table-cell-display">
-												<div style="font-size: 18px; color: #000; font-weight: 600; line-height: 18px;">Support 24 / 7
-												</div>
-												<div style="font-size: 14px; color: #000; font-weight: 300">Online and phone
-													support&nbsp;&nbsp;<i class="fa fa-angle-right"></i></div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-
-							<div class="box blog-module box-no-advanced">
-								<div class="box-heading">From our blog</div>
-								<div class="strip-line"></div>
-								<div class="box-content">
-									<div class="blog-list-grid">
-										<div class="col-sm-6 col-xs-12">
-											<div class="media clearfix">
-												<div class="thumb-holder"><a href="#"><img alt="" src="img/sample_01-265x180.jpg"></a></div>
-
-												<div class="media-body">
-													<h5><a href="#">Donec ut nunc sit amet urna aliquet</a></h5>
-													<div class="date-published">16.09.2015</div>
-													<div class="post-decription">Shop Laptop feature only the best laptop deals on the market. By
-														comparing laptop deals from the likes of PC World, Comet, Dixons, The Link and Carphone
-														Warehouse.</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="col-sm-6 col-xs-12">
-											<div class="media clearfix">
-												<div class="thumb-holder"><a href="#"><img alt="" src="img/sample_02-265x180.jpg"></a></div>
-
-												<div class="media-body">
-													<h5><a href="#">Nulla dictum consequat lorem ac vehicula</a></h5>
-													<div class="date-published">16.09.2015</div>
-													<div class="post-decription">Shop Laptop feature only the best laptop deals on the market. By
-														comparing laptop deals from the likes of PC World, Comet, Dixons, The Link and Carphone
-														Warehouse</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div id="carouselbrands" class="owl-carousel carousel-brands">
-								<div class="item text-center">
-									<img src="img/nfl-130x100.png" alt="NFL" class="img-responsive" />
-								</div>
-
-								<div class="item text-center">
-									<img src="img/redbull-130x100.png" alt="RedBull" class="img-responsive" />
-								</div>
-
-								<div class="item text-center">
-									<img src="img/sony-130x100.png" alt="Sony" class="img-responsive" />
-								</div>
-
-								<div class="item text-center">
-									<img src="img/cocacola-130x100.png" alt="Coca Cola" class="img-responsive" />
-								</div>
-
-								<div class="item text-center">
-									<img src="img/burgerking-130x100.png" alt="Burger King" class="img-responsive" />
-								</div>
-
-								<div class="item text-center">
-									<img src="img/canon-130x100.png" alt="Canon" class="img-responsive" />
-								</div>
-
-								<div class="item text-center">
-									<img src="img/harley-130x100.png" alt="Harley Davidson" class="img-responsive" />
-								</div>
-								<div class="item text-center">
-									<img src="img/dell-130x100.png" alt="Dell" class="img-responsive" />
-								</div>
-								<div class="item text-center">
-									<img src="img/disney-130x100.png" alt="Disney" class="img-responsive" />
-								</div>
-								<div class="item text-center">
-									<img src="img/starbucks-130x100.png" alt="Starbucks" class="img-responsive" />
-								</div>
-								<div class="item text-center">
-									<img src="img/nintendo-130x100.png" alt="Nintendo" class="img-responsive" />
-								</div>
-							</div>
-
-							<div class="help-columns" style="padding-top: 25px">
-								<div class="row">
-
-									<div class="col-md-4 ">
-										<div class="table-display" style="padding: 25px 0">
-											<div class="table-cell-display" style="width: 130px; text-align: center">
-												<img src="img/icon-help.png" alt="Need help?">
-											</div>
-											<div class="table-cell-display">
-												<div style="font-size: 18px;; line-height: 22px; line-height: 18px;">Need help?</div>
-												<div style="color: #00c853; font-size: 22px;  line-height: 22px;  font-weight: 700">Use our
-													chat!</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-md-4">
-										<div class="table-display" style="padding: 25px 0">
-											<div class="table-cell-display" style="width: 130px; text-align: center">
-												<img src="img/icon-phone.png" alt="Quick question?">
-											</div>
-											<div class="table-cell-display">
-												<div style="font-size: 18px;; line-height: 22px; line-height: 18px;">Quick question?</div>
-												<div style="color: #ff0054; font-size: 22px;  line-height: 22px;  font-weight: 700">Call - 897
-													415 789!</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="col-md-4">
-										<div class="table-display" style="padding: 25px 0">
-											<div class="table-cell-display" style="width: 130px; text-align: center">
-												<img src="img/icon-envelope.png" alt="...or send us e-mail">
-											</div>
-											<div class="table-cell-display">
-												<div style="font-size: 18px;; line-height: 22px; line-height: 18px;">...or send us e-mail</div>
-												<div style="color: #48569e; font-size: 22px;  line-height: 22px;  font-weight: 700">
-													info@xpresso.com</div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div><!-- // .container -->
-					</div><!-- // .pattern -->
-				</div><!-- // .background -->
-			</div><!-- // .main-content -->
-
-			<!-- FOOTER
-     	 ================================================== -->
-			<footer class="footer full-width">
-				<div class="background-footer"></div>
-				<div class="background">
-					<div class="shadow"></div>
-					<div class="pattern">
-						<div class="container">
-							<div class="row">
-								<!-- Information -->
-								<div class="col-sm-2">
-									<h4>Information</h4>
-									<div class="strip-line"></div>
-									<ul>
-										<li><a href="#">About Us</a></li>
-										<li><a href="#">Delivery Information</a></li>
-										<li><a href="#">Privacy Policy</a></li>
-										<li><a href="#">Terms &amp; Conditions</a></li>
-										<li><a href="#">Bestsellers</a></li>
-										<li><a href="#">About us</a></li>
-										<li><a href="#">Envato project</a></li>
-									</ul>
-								</div>
-								<!-- Customer Service -->
-								<div class="col-sm-2">
-									<h4>Customer Service</h4>
-									<div class="strip-line"></div>
-									<ul>
-										<li><a href="#">Contact Us</a></li>
-										<li><a href="#">Returns</a></li>
-										<li><a href="#">Site Map</a></li>
-										<li><a href="#">RSS</a></li>
-										<li><a href="#">Help & faq</a></li>
-										<li><a href="#">Advanced search</a></li>
-										<li><a href="#">Last minute</a></li>
-									</ul>
-								</div>
-								<!-- Extras -->
-								<div class="col-sm-2">
-									<h4>Extras</h4>
-									<div class="strip-line"></div>
-									<ul>
-										<li><a href="#">Brands</a></li>
-										<li><a href="#">Gift Vouchers</a></li>
-										<li><a href="#">Affiliates</a></li>
-										<li><a href="#">Specials </a></li>
-										<li><a href="#">Customer service </a></li>
-										<li><a href="#">New collection </a></li>
-										<li><a href="#">Privacy policy </a></li>
-									</ul>
-								</div>
-								<!-- My Account -->
-								<div class="col-sm-4">
-									<h4>Stay connected</h4>
-									<div class="strip-line"></div>
-									<div class="clearfix" style="clear:both">
-										<div class="social-icons">
-											<ul>
-												<li><a href="#"><i class="fab fa-google-plus"></i><span class="show-on-hover">Like us on
-															Google</span></a></li>
-												<li><a href="#"><i class="fab fa-instagram"></i><span class="show-on-hover">Like us on
-															Instagram</span></a></li>
-												<li><a href="#"><i class="fab fa-pinterest"></i><span class="show-on-hover">Like us on
-															Pin</span></a></li>
-												<li><a href="#"><i class="fab fa-twitter"></i><span class="show-on-hover">Like us on
-															Twitter</span></a></li>
-												<li><a href="#"><i class="fab fa-facebook"></i><span class="show-on-hover">Like us on
-															Facebook</span></a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="newsletter">
-										<h4>Newsletter</h4>
-										<div class="strip-line"></div>
-										<div class="clearfix" style="clear: both" id="newsletter96614276">
-											<input type="text" class="email" placeholder="enter your e-mail" style="margin: 5px 0px 5px 0px; padding: 0 15px;height: 45px;vertical-align: top">
-											<a class="button subscribe" style="margin: 5px 0px">Subscribe</a>
-										</div>
-									</div>
-								</div>
-							</div><!-- // .row -->
-						</div><!-- // .container -->
-					</div><!-- // .pattern -->
-				</div><!-- // .background -->
-			</footer><!-- // .footer -->
+			<?php
+			include "footer.php";
+			?>
 
 			<!-- COPYRIGHT
           ================================================== -->
@@ -1271,6 +82,8 @@ include "../config/koneksi.php";
 	</div>
 
 	<!-- JS -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/twitter-bootstrap-hover-dropdown.js"></script>
@@ -1288,6 +101,290 @@ include "../config/koneksi.php";
 	<script type="text/javascript" src="revolution-slider/jquery.themepunch.tools.min.js"></script>
 	<script type="text/javascript" src="revolution-slider/jquery.themepunch.revolution.min.js"></script>
 	<script type="text/javascript" src="revolution-slider/start.js"></script>
+
+	<!-- Magnific Popup -->
+	<script type="text/javascript" src="js/jquery.magnific-popup.min.js"></script>
+
+	<!-- Toast -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.popup-gallery').magnificPopup({
+				delegate: 'a',
+				type: 'image',
+				tLoading: 'Loading image #%curr%...',
+				mainClass: 'mfp-img-mobile',
+				gallery: {
+					enabled: true,
+					navigateByImgClick: true,
+					preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+				},
+				image: {
+					tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+					titleSrc: function(item) {
+						return item.el.attr('title');
+					}
+				}
+			});
+		});
+		//-->
+	</script>
+
+	<!-- Tabs -->
+	<script type="text/javascript">
+		$.fn.tabs = function() {
+			var selector = this;
+
+			this.each(function() {
+				var obj = $(this);
+
+				$(obj.attr('href')).hide();
+
+				$(obj).click(function() {
+					$(selector).removeClass('selected');
+
+					$(selector).each(function(i, element) {
+						$($(element).attr('href')).hide();
+					});
+
+					$(this).addClass('selected');
+
+					$($(this).attr('href')).show();
+
+					return false;
+				});
+			});
+
+			$(this).show();
+
+			$(this).first().click();
+		};
+	</script>
+
+	<script type="text/javascript">
+		$('#tabs a').tabs();
+		//-->
+	</script>
+
+	<!-- Elevate Zoom -->
+	<script type="text/javascript" src="js/jquery.elevateZoom-3.0.3.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			if ($(window).width() > 992) {
+				$('#image').elevateZoom({
+					zoomType: "inner",
+					cursor: "pointer",
+					zoomWindowFadeIn: 500,
+					zoomWindowFadeOut: 750
+				});
+
+				$('.thumbnails a, .thumbnails-carousel a').click(function() {
+					var smallImage = $(this).attr('data-image');
+					var largeImage = $(this).attr('data-zoom-image');
+					var ez = $('#image').data('elevateZoom');
+					$('#ex1').attr('href', largeImage);
+					ez.swaptheimage(smallImage, largeImage);
+					return false;
+				});
+			}
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".thumbnails-carousel").owlCarousel({
+				autoPlay: 6000, //Set AutoPlay to 3 seconds
+				navigation: true,
+				navigationText: ['', ''],
+				itemsCustom: [
+					[0, 4],
+					[450, 5],
+					[550, 6],
+					[768, 3],
+					[1200, 4]
+				],
+			});
+		});
+	</script>
+
+	<script>
+		function formatRupiah(angka, prefix) {
+			var number_string = angka.replace(/[^,\d]/g, '').toString(),
+				split = number_string.split(','),
+				sisa = split[0].length % 3,
+				rupiah = split[0].substr(0, sisa),
+				ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if (ribuan) {
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+		}
+	</script>
+
+	<script>
+		$('#cart_content').load('cart-header.php');
+		$('#isiCart').load('shop-cart.php');
+		$('#isiWhistlist').load('data-whistlist.php');
+
+
+		var stok_barang = 0;
+		$("#boxukuran").hide();
+		$("#product").hide();
+		$("#toko").change(function() {
+			// variabel dari nilai combo box toko
+			var toko = $("#toko").val();
+
+			if (toko == '') {
+				$("#boxukuran").hide();
+				$("#product").hide();
+			} else {
+				$("#boxukuran").show();
+				$("#product").show();
+			}
+		});
+
+		function setUkuran() {
+			// variabel dari nilai combo box toko
+			let toko = $("#toko").val();
+			var kodeukuran = $("#kodeukuran").val();
+
+			$.ajax({
+				type: "POST",
+				dataType: "html",
+				url: "ambil-data-ukuran.php",
+				data: {
+					'toko': toko,
+					'kodeukuran': kodeukuran
+				},
+				success: function(data) {
+					$("#ukuran").html(data);
+				}
+			});
+		}
+
+		$('#ukuran').change(function() {
+			var id_stok = $(this).val()
+			$.ajax({
+				type: "POST",
+				dataType: "JSON",
+				url: "ambil-data-stok.php",
+				data: {
+					'id_stok': id_stok
+				},
+				success: function(res) {
+					stok_barang = res.jumlah;
+					if (stok_barang < 1) {
+						toastr.warning('Stok Tidak Tersedia...');
+						$("#button-cart").prop("disabled", true);
+					} else {
+						$("#button-cart").prop("enabled", false);
+					}
+
+				}
+			})
+		})
+
+		document.getElementById("q_up").addEventListener("click", function(e) {
+			e.preventDefault();
+			var cur_val = document.getElementById("quantity_wanted").value;
+			cur_val++;
+			document.getElementById("quantity_wanted").value = cur_val;
+
+			if (parseInt(cur_val) > parseInt(stok_barang)) {
+				document.getElementById("quantity_wanted").value = stok_barang;
+			}
+			return false;
+		})
+
+		document.getElementById("q_down").addEventListener("click", function(e) {
+			e.preventDefault();
+			var min_val = 1;
+			var cur_val = document.getElementById("quantity_wanted").value;
+			if (parseInt(cur_val) == min_val) {
+				document.getElementById("quantity_wanted").value = min_val;
+			} else {
+				cur_val--;
+				document.getElementById("quantity_wanted").value = cur_val;
+			}
+			return false;
+		})
+
+		function addToCart() {
+			var product_id = $('#product_id').val()
+			var harga = $('#harga').val()
+			var toko = $('#toko').val()
+			var id_stok_toko = $('#ukuran').val()
+			var quantity_wanted = $('#quantity_wanted').val()
+
+			axios.post('aksi-simpan-cart.php', {
+				'product_id': product_id,
+				'harga': harga,
+				'toko': toko,
+				'id_stok_toko': id_stok_toko,
+				'quantity_wanted': quantity_wanted,
+			}).then(function(res) {
+				toastr.success('Barang ditambah ke keranjang');
+			}).catch(function(err) {
+				toastr.warning('Gagal tambah ke keranjang');
+			})
+		}
+
+		setInterval(function() {
+			cart();
+			whistlist();
+		}, 2000);
+
+		function cart() {
+			axios.post('cart-total.php', {
+				'id': 1
+			}).then(function(res) {
+				var data = res.data
+				document.getElementById('cart-total').innerHTML = data.jumlah
+				document.getElementById('total_price').innerHTML = formatRupiah(data.total, 'Rp. ');
+			})
+		}
+
+		function whistlist() {
+			axios.post('whistlist-total.php', {
+				'id': 1
+			}).then(function(res) {
+				var data = res.data
+				document.getElementById('whist_list').innerHTML = data.jumlah
+			})
+		}
+
+		function hapusCartItem(id) {
+			axios.post('aksi-hapus-cart.php', {
+				'product_id': id
+			}).then(function(res) {
+				var hapus = res.data
+				$('#isiCart').load('shop-cart.php');
+			}).catch(function(err) {
+				console.log(err)
+			})
+		}
+
+		function updateCartItem(id) {
+			var qty = $('#qty_cart').val()
+			axios.post('aksi-edit-cart.php', {
+				'id_cart': id,
+				'qty': qty
+			}).then(function(res) {
+				var edit = res.data
+				$('#isiCart').load('shop-cart.php');
+			}).catch(function(err) {
+				console.log(err)
+			})
+		}
+	</script>
+
 </body>
 
 </html>
