@@ -55,6 +55,7 @@ RewriteRule ^voucher\.html$ index.php?page=inc/diskon/voucher/index [L]
 RewriteRule ^item\.html$ index.php?page=inc/diskon/item/index [L]
 RewriteRule ^item_diskon\.html$ index.php?page=inc/diskon/item/buat_diskon [L]
 RewriteRule ^item_diskon_set\.html$ index.php?page=inc/diskon/item/set_diskon [L]
+RewriteRule ^simpans\.html$ index.php?page=inc/diskon/item/simpan_tabel [L]
 RewriteRule ^detail-data-diskon-([0-9]+)\.html$ index.php?page=inc/diskon/credit/detail_data_diskon&id_metode=$1 [L]
 RewriteRule ^editMultipleDiskon\.html$ index.php?page=inc/diskon/credit/edit_multiple_diskon [L]
 
