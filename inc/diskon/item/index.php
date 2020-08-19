@@ -173,7 +173,7 @@
   <div class="modal-dialog modal-lg">
 
     <div class="modal-content">
-        <form action="item_diskon_set.html" method="POST">
+        <form action="simpans.html" method="POST">
             <div class="modal-body">
               <h4 class="modal-title">Buat Diskon Promo Baru</h4>
               <p>Isi rincian dan atur harga produk untuk membuat diskon promosi.</p>
@@ -227,11 +227,11 @@
                     ?>
                     <tr>
                         <td>
-                            <input type="checkbox" class="chk_boxes1" name="id_item[]" value="">
+                            <input type="checkbox" class="chk_boxes1" name="id_item[]" value="<?= $a['artikel'] ?>">
                         </td>
                         <td>
                             <div class="form-inline">
-                                <img src="<?= $a['thumbnail'] ?>" style="width:60px" alt="">
+                                <img src="<?= $a['thumbnail'] ?>" style="width:40px" alt="">
                                 <?= $a['nama'] ?>
                             </div>
                         </td>
