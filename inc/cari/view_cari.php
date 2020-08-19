@@ -74,25 +74,26 @@
                         <td>:</td>
                         <td><span id="jual"></span></td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th>Harga Diskon</th>
                         <td>:</td>
                         <td><span id="hargadiskon"></span></td>
-                    </tr>
-                    <tr>
+                    </tr> -->
+                    <!-- <tr>
                         <th>Diskon</th>
                         <td>:</td>
                         <td><span id="diskon"></span>%</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-6">
-                <table>
+                    </tr> -->
                     <tr>
                         <th>Merk</th>
                         <td>:</td>
                         <td><span id="merk"></span></td>
                     </tr>
+                </table>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <table>
+
                     <tr>
                         <th>Divisi</th>
                         <td>:</td>
@@ -167,8 +168,8 @@
                 $('#kategori').text(data.detail.kategori_nama);
                 $('#divisi').text(data.detail.divisi_nama);
                 $('#merk').text(data.detail.merk_nama);
-                $('#diskon').text(data.detail.diskon);
-                $('#hargadiskon').text(hargadiskon);
+                // $('#diskon').text(data.detail.diskon);
+                // $('#hargadiskon').text(hargadiskon);
             } else {
                 $('#namaartikel').text('');
                 $('#modal').text('');

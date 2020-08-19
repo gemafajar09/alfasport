@@ -52,6 +52,7 @@
                                 <li><a href="cari_barang.html">Searching Barang</a></li>
                             </ul>
                         </li>
+                        <li><a href="restock_barang_gudang.html"><i class="fa fa-reorder "></i> Restock Barang Gudang</a></li>
                         <!-- hitung jumlah permohonan -->
                         <?php
                         $acc = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 0")->fetch();

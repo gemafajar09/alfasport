@@ -45,7 +45,7 @@ RewriteRule ^entry_pembelian\.html$ index.php?page=inc/pembelian/input_pembelian
 RewriteRule ^stok_barang_toko\.html$ index.php?page=inc/toko/toko_gudang/stok_barang [L]
 RewriteRule ^penyesuaian_stok\.html$ index.php?page=inc/penyesuaian/penyesuaian_stok [L]
 RewriteRule ^simpan_gudang\.html$ index.php?page=inc/gudang/aksi_simpan_gudang [L]
-RewriteRule ^input_stok-(.*)-([0-9]+)-([0-9]+)\.html$ index.php?page=inc/gudang/input_stok&id=$1&merek=$2&kategori=$3 [L]
+RewriteRule ^input_stok-([a-zA-Z0-9\-]{0,20})-([0-9]+)-([0-9]+)\.html$ index.php?page=inc/gudang/input_stok&id=$1&merek=$2&kategori=$3 [L]
 
 
 RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/view_transfer [L]
@@ -61,3 +61,7 @@ RewriteRule ^editMultipleDiskon\.html$ index.php?page=inc/diskon/credit/edit_mul
 
 RewriteRule ^permohonan\.html$ index.php?page=inc/permohonan/index [L]
 RewriteRule ^cari_barang\.html$ index.php?page=inc/cari/view_cari [L]
+
+
+RewriteRule ^restock_barang_gudang\.html$ index.php?page=inc/restock_gudang/view_restock [L]
+RewriteRule ^editMultipleRestock\.html$ index.php?page=inc/restock_gudang/edit_multiple_restock [L]

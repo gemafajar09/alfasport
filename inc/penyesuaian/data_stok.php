@@ -5,7 +5,7 @@ include "../../App/MY_url_helper.php";
 
 $data = $con->query("SELECT * FROM tb_penyesuaian_stok 
                         JOIN toko ON toko.id_toko = tb_penyesuaian_stok.id_toko
-                        JOIN tb_admin ON tb_admin.id_admin = tb_penyesuaian_stok.penyesuaian_stok_create_by
+                        JOIN tb_karyawan ON tb_karyawan.id_karyawan = tb_penyesuaian_stok.penyesuaian_stok_create_by
                     ");
 
 
@@ -19,7 +19,7 @@ foreach ($data as $i => $a) {
         <td><?= tgl_indo_waktu($a['penyesuaian_stok_create_at']) ?></td>
         <td><?= $a['nama'] ?></td>
         <td class="text-center">
-            <button type="button" onclick="edit('<?= $a['penyesuaian_stok_id'] ?>')" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
+            <!-- <button type="button" onclick="edit('<?= $a['penyesuaian_stok_id'] ?>')" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button> -->
             <button type="button" id="hapus" onclick="hapus('<?= $a['penyesuaian_stok_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             <button type="button" id="detail" onclick="detail('<?= $a['penyesuaian_stok_id'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
         </td>
