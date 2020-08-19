@@ -82,35 +82,50 @@ if ($_COOKIE['jabatan_id'] == 3) {
         <div class="x_content">
             <div class="row">
                 <div class="container">
-                    <div class="col-md-4 col-sm-4">
-                        <div class="x_panel tile fixed_height_320 overflow_hidden">
-                            <div class="x_title">
-                                <h2>Toko</h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
-                                <div class="row" style="font-size: 15px;">
-                                    <div class="col-sm-6">
-                                        <?php
-                                        $tgl = date('Y-m-d');
-                                        ?>
-                                        <p><?php echo tgl_indo($tgl); ?></p>
+                    <!-- perulangan banyak toko -->
+                    <?php
+                    $sql = $con->query("SELECT * FROM toko");
+                    foreach ($sql as $i => $data) {
+                    ?>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="x_panel tile fixed_height_320 overflow_hidden">
+                                <div class="x_title">
+                                    <h2><?= $data['nama_toko'] ?></h2>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div class="row" style="font-size: 15px;">
+                                        <div class="col-sm-6">
+                                            <?php
+                                            $tgl = date('Y-m-d');
+                                            ?>
+                                            <p><?php echo tgl_indo($tgl); ?></p>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p style="float: right;">Rp.50000</p>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <p style="float: right;">Rp.50000</p>
+                                    <div class="row" style="font-size: 15px;">
+                                        <div class="col-sm-6">
+                                            <?php
+                                            $tgl = date('m');
+                                            ?>
+                                            <p>Bulan <?php echo bulanIndo($tgl); ?></p>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p style="float: right;">Rp.50000</p>
+                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>
+
     </div>
 
 

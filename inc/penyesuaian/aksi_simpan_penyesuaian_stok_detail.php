@@ -16,7 +16,7 @@ if ($_POST['penyesuaian_stok_detail_id'] == NULL) {
         ]
     );
     // update stok gudang toko
-    $update = $con->update('tb_stok_toko',['jumlah' => $_POST['stok_akhir']],['id_stok_toko' => $_POST['id_stok_toko']]);
+    $update = $con->update('tb_stok_toko', ['jumlah' => $_POST['stok_akhir']], ['id_stok_toko' => $_POST['id_stok_toko']]);
 
     $last = $_POST["penyesuaian_stok_id"];
 

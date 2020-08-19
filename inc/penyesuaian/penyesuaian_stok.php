@@ -61,27 +61,25 @@
     </div>
 </div>
 
-<!-- The Modal -->
+<!-- The Modal ketika tombol tambah di klik-->
 <div class="modal" id="dataPenyesuaianStok">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Data Penyesuaian Stok</h4>
             </div>
-
             <div class="modal-body">
                 <div class="container">
                     <div class="row" style="font-size:12px">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Tanggal</label>
-                                <input type="date" name="penyesuaian_stok_tgl" id="penyesuaian_stok_tgl" required="required" placeholder="Nama Merk" class="form-control">
-                                <input type="hidden" id="penyesuaian_stok_id">
                                 <?php
                                 $tgl = date('Y-m-d H:i:s');
                                 ?>
+                                <input type="date" name="penyesuaian_stok_tgl" id="penyesuaian_stok_tgl" required class="form-control" value="<?php echo date('Y-m-d') ?>">
+                                <input type="hidden" id="penyesuaian_stok_id">
                                 <input type="hidden" id="penyesuaian_stok_create_at" value="<?php echo $tgl; ?>">
                                 <input type="hidden" id="penyesuaian_stok_create_by" value="<?php echo $_COOKIE['id_karyawan']; ?>">
                             </div>
@@ -121,6 +119,60 @@
         </div>
     </div>
 </div>
+
+<!-- modal detail penyesuaian stok tambah sesudah input data baru -->
+<div class="modal" id="dataPenyesuaianStokDetail">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Data Penyesuaian Stok Detail</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row" style="font-size:12px">
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                <label>Artikel</label>
+                                <select name="id_gudang" id="select2" class="form-control select2" style="width: 100%;"></select>
+                                <input type="hidden" id="penyesuaian_stok_id1">
+                                <input type="hidden" id="penyesuaian_stok_detail_id">
+                                <input type="hidden" id="id_stok_tokos">
+                                <input type="hidden" id="id_tokos">
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Stok Awal</label>
+                                <input type="text" name="stok_awal" readonly id="stok_awal" required="required" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Penyesuaian</label>
+                                <input type="text" name="stok_penyesuaian" readonly id="stok_penyesuaian" required="required" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Stok Akhir</label>
+                                <input type="text" onkeyup="selisih(this)" name="stok_akhir" id="stok_akhir" required="required" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="simpan2()" class="btn btn-primary btn-sm">Simpan</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- modal ketika tombol edit di klik  -->
 <div class="modal" id="dataPenyesuaianStok1">
@@ -203,60 +255,6 @@
     </div>
 </div>
 
-<!-- modal detail penyesuaian stok tambah sesudah input data baru -->
-<div class="modal" id="dataPenyesuaianStokDetail">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Data Penyesuaian Stok Detail</h4>
-            </div>
-
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row" style="font-size:12px">
-                        <div class="col-md-12">
-                            <div class="form-group">
-
-                                <label>Artikel</label>
-                                <select name="id_gudang" id="select2" class="form-control select2" style="width: 100%;"></select>
-                                <input type="hidden" id="penyesuaian_stok_id1">
-                                <input type="hidden" id="penyesuaian_stok_detail_id">
-                                <input type="hidden" id="id_stok_tokos">
-                                <input type="hidden" id="id_tokos">
-
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Stok Awal</label>
-                                <input type="text" name="stok_awal" readonly id="stok_awal" required="required" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Penyesuaian</label>
-                                <input type="text" name="stok_penyesuaian" readonly id="stok_penyesuaian" required="required" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Stok Akhir</label>
-                                <input type="text" onkeyup="selisih(this)" name="stok_akhir" id="stok_akhir" required="required" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" onclick="simpan2()" class="btn btn-primary btn-sm">Simpan</button>
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
-    </div>
-</div>
 
 <!-- modal ketika tombol detail di klik -->
 <div class="modal" id="dataPenyesuaianStok2">
@@ -270,46 +268,23 @@
                 <div class="container">
                     <div class="row" style="font-size:12px">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Tanggal</label>
-                                <input type="date" name="penyesuaian_stok_tgl2" id="tgl2" class="form-control" readonly disabled>
-                                <input type="hidden" id="penyesuaian_stok_id3">
-                                <?php
-                                $tgl = date('Y-m-d H:i:s');
-                                ?>
-                                <input type="hidden" id="penyesuaian_stok_create_at2" value="<?php echo $tgl; ?>">
-                                <input type="hidden" id="penyesuaian_stok_create_by2" value="<?php echo $_COOKIE['id_karyawan']; ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Toko</label>
-                                <select class="form-control" name="id_toko2" id="id_toko2" required disabled>
-                                    <option selected disabled>Pilih Toko</option>
-                                    <?php
-                                    $data = $con->select("toko", "*");
-                                    foreach ($data as $i => $a) {
-                                        echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Tipe Penyesuaian</label>
-                                <select class="form-control" name="penyesuaian_stok_tipe2" id="penyesuaian_stok_tipe2" required disabled>
-                                    <option selected disabled>Pilih Tipe Penyesuaian</option>
-                                    <option value="stock opname">Stock Opname</option>
-                                    <option value="barang rusak">Barang Rusak</option>
-                                    <option value="dipakai sendiri">Dipakai Sendiri</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group mb-4">
-                                <label for=""></label>
-                            </div>
+                            <table style="font-size: 13px;">
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <td>:</td>
+                                    <th><b><span id="penyesuaian_stok_tgl2"></span></b></th>
+                                </tr>
+                                <tr>
+                                    <th>Toko</th>
+                                    <td>:</td>
+                                    <th><b><span id="id_toko2"></span></b></th>
+                                </tr>
+                                <tr>
+                                    <th>Tipe Penyesuaian</th>
+                                    <td>:</td>
+                                    <th><b><span id="penyesuaian_stok_tipe2"></span></b></th>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                     <hr>
@@ -336,7 +311,7 @@
         </div>
     </div>
 </div>
-</div>
+
 
 <script>
     function tampil() {
@@ -377,6 +352,7 @@
             tampil2(id.penyesuaian_stok_id, id_toko);
             $('#dataPenyesuaianStok').modal('hide')
             $('#isi').load('inc/penyesuaian/data_stok.php');
+            $("#datatable-responsive").dataTable().fnPageChange("first", 1);
         }).catch(function(err) {
             alert(err)
             $('#dataPenyesuaianStok').modal('hide')
@@ -406,6 +382,7 @@
             kosong2()
             tampil2(penyesuaian_stok_id, id_toko);
             $('#isi').load('inc/penyesuaian/data_stok.php');
+            $("#datatable-responsive").dataTable().fnPageChange("first", 1);
         }).catch(function(err) {
             alert(err)
             $('#isi').load('inc/penyesuaian/data_stok.php');
@@ -435,6 +412,7 @@
             // tampil2(id.penyesuaian_stok_id);
             $('#dataPenyesuaianStok1').modal()
             $('#isi').load('inc/penyesuaian/data_stok.php');
+            $("#datatable-responsive").dataTable().fnPageChange("first", 1);
         }).catch(function(err) {
             alert(err)
             $('#dataPenyesuaianStok1').modal()
@@ -470,12 +448,12 @@
             'id': id
         }).then(function(res) {
             var detail = res.data
-            $('#id_toko2').val(detail.id_toko)
-            $('#tgl2').val(detail.penyesuaian_stok_tgl)
-            $('#penyesuaian_stok_tipe2').val(detail.penyesuaian_stok_tipe)
-            $('#penyesuaian_stok_create_at2').val(detail.penyesuaian_stok_create_at)
-            $('#penyesuaian_stok_create_by2').val(detail.penyesuaian_stok_create_by)
-            $('#penyesuaian_stok_id3').val(detail.penyesuaian_stok_id)
+            $('#id_toko2').text(detail.id_toko)
+            $('#penyesuaian_stok_tgl2').text(detail.penyesuaian_stok_tgl)
+            $('#penyesuaian_stok_tipe2').text(detail.penyesuaian_stok_tipe)
+            $('#penyesuaian_stok_create_at2').text(detail.penyesuaian_stok_create_at)
+            $('#penyesuaian_stok_create_by2').text(detail.penyesuaian_stok_create_by)
+            $('#penyesuaian_stok_id3').text(detail.penyesuaian_stok_id)
             tampiltabel(id)
             $('#dataPenyesuaianStok2').modal()
         }).catch(function(err) {
@@ -501,12 +479,23 @@
         })
     }
 
+    function ResfreshDatatable(id_table, id_body, url) {
+        $(id_table).DataTable().destroy();
+        $(id_body).load(url, function() {
+            $(id_table).DataTable();
+        });
+    }
+
     function hapus(id) {
         axios.post('inc/penyesuaian/aksi_hapus_penyesuaian_stok.php', {
             'penyesuaian_stok_id': id
         }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/penyesuaian/data_stok.php');
+            var hapus = res.data;
+            ResfreshDatatable("#datable-responsive", "#isi", 'inc/penyesuaian/data_stok.php');
+            $("#datatable-responsive").DataTable().destroy();
+            $('#isi').load('inc/penyesuaian/data_stok.php', function() {
+                $("#datatable-responsive").DataTable();
+            });
         }).catch(function(err) {
             console.log(err)
         })
@@ -532,7 +521,7 @@
     function selisih(data) {
         var stokAwal = $('#stok_awal').val()
         var akhir = data.value
-        var selisih = stokAwal - akhir
+        var selisih = akhir - stokAwal
         $('#stok_penyesuaian').val(selisih)
 
     }
@@ -573,6 +562,8 @@
             }).catch(function(err) {
                 console.log(err)
             })
+        } else {
+            $('#namasipemakai').html('');
         }
         $('.select2').select2();
     })
@@ -580,4 +571,8 @@
     kosong()
     kosong2()
     $('#isi').load('inc/penyesuaian/data_stok.php');
+    // $('#datatable-responsive').ajax.reload();
+    // var mytbl = $("#datatable-responsive").datatable();
+    // mytbl.ajax.reload(null, false);
+    // $("#datatable-responsive").datatable();
 </script>

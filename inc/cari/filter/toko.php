@@ -47,8 +47,7 @@ if ($_POST['toko'] == NULL) {
             c.merk_nama, 
             d.gender_nama, 
             e.kategori_nama, 
-            f.divisi_nama,
-            g.diskon
+            f.divisi_nama
         FROM tb_gudang a
         JOIN tb_stok_toko i ON a.id_gudang = i.id_gudang 
         JOIN toko b ON i.id_toko=b.id_toko 
@@ -98,8 +97,7 @@ if ($_POST['toko'] == NULL) {
             c.merk_nama, 
             d.gender_nama, 
             e.kategori_nama, 
-            f.divisi_nama,
-            g.diskon
+            f.divisi_nama
         FROM tb_gudang a
         JOIN tb_stok_toko i ON a.id_gudang = i.id_gudang 
         JOIN toko b ON i.id_toko=b.id_toko 
