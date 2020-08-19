@@ -1,5 +1,5 @@
 <?php
-$base_url = 'http://localhost/alfasport/';
+$base_url = 'http://localhost/mediatama/alfasport/';
 date_default_timezone_set("Asia/Jakarta");
 require "Medoo.php";
 
@@ -10,5 +10,5 @@ $con = new Medoo([
     'database_name' => 'alfa_sport',
     'server' => "localhost",
     'username' => "root",
-    'password' => ""
+    'password' => "mysql"
 ]);
