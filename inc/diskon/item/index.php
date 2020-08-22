@@ -111,18 +111,29 @@
                     <thead>
                         <tr>
                             <th style="width:60px">No</th>
-                            <th>Nama Produk</th>
-                            <th>Ukuran</th>
+                            <th>Nama Diskon</th>
                             <th>Mulai</th>
                             <th>Berakhir</th>
-                            <th>Modal</th>
-                            <th>Jual</th>
-                            <th>Diskon</th>
-                            <th>Total</th>
+                            <th>Kategori</th>
                             <th class="text-center" style="width:140px">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="isi"></tbody>
+                    <tbody>
+                        <?php
+                        $tanggal = date('Y-m-d');
+                            $data1 = $con->query("SELECT * FROM tb_flash_diskon WHERE tgl_mulai <= '$tanggal' AND tgl_berakhir >= '$tanggal'")->fetchAll();
+                            foreach($data1 as $i1 => $a1):
+                        ?>
+                        <tr>
+                            <td><?= $i1+1 ?></td>
+                            <td><a href="<?= $a1['judul'] ?>"><?= $a1['judul'] ?></a></td>
+                            <td><?= $a1['tgl_mulai'] ?></td>
+                            <td><?= $a1['tgl_berakhir'] ?></td>
+                            <td><?= $a1['kategori'] ?></td>
+                            <td></td>
+                        </tr>
+                        <?php endforeach ?>
+                    </tbody>
                 </table>
             </div>
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -130,18 +141,29 @@
                     <thead>
                         <tr>
                             <th style="width:60px">No</th>
-                            <th>Nama Produk</th>
-                            <th>Ukuran</th>
+                            <th>Nama Diskon</th>
                             <th>Mulai</th>
                             <th>Berakhir</th>
-                            <th>Modal</th>
-                            <th>Jual</th>
-                            <th>Diskon</th>
-                            <th>Total</th>
+                            <th>Kategori</th>
                             <th class="text-center" style="width:140px">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="isi"></tbody>
+                    <tbody>
+                        <?php
+                        $tanggal = date('Y-m-d');
+                            $data1 = $con->query("SELECT * FROM tb_flash_diskon WHERE tgl_mulai >= '$tanggal' AND tgl_berakhir <= '$tanggal'")->fetchAll();
+                            foreach($data1 as $i1 => $a1):
+                        ?>
+                        <tr>
+                            <td><?= $i1+1 ?></td>
+                            <td><a href="<?= $a1['judul'] ?>"><?= $a1['judul'] ?></a></td>
+                            <td><?= $a1['tgl_mulai'] ?></td>
+                            <td><?= $a1['tgl_berakhir'] ?></td>
+                            <td><?= $a1['kategori'] ?></td>
+                            <td></td>
+                        </tr>
+                        <?php endforeach ?>
+                    </tbody>
                 </table>
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
@@ -149,18 +171,29 @@
                     <thead>
                         <tr>
                             <th style="width:60px">No</th>
-                            <th>Nama Produk</th>
-                            <th>Ukuran</th>
+                            <th>Nama Diskon</th>
                             <th>Mulai</th>
                             <th>Berakhir</th>
-                            <th>Modal</th>
-                            <th>Jual</th>
-                            <th>Diskon</th>
-                            <th>Total</th>
+                            <th>Kategori</th>
                             <th class="text-center" style="width:140px">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="isi"></tbody>
+                    <tbody>
+                        <?php
+                        $tanggal = date('Y-m-d');
+                            $data1 = $con->query("SELECT * FROM tb_flash_diskon WHERE tgl_mulai >= '$tanggal' AND tgl_berakhir >= '$tanggal'")->fetchAll();
+                            foreach($data1 as $i1 => $a1):
+                        ?>
+                        <tr>
+                            <td><?= $i1+1 ?></td>
+                            <td><a href="<?= $a1['judul'] ?>"><?= $a1['judul'] ?></a></td>
+                            <td><?= $a1['tgl_mulai'] ?></td>
+                            <td><?= $a1['tgl_berakhir'] ?></td>
+                            <td><?= $a1['kategori'] ?></td>
+                            <td></td>
+                        </tr>
+                        <?php endforeach ?>
+                    </tbody>
                 </table>
             </div>
         </div>

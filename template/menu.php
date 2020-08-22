@@ -16,6 +16,7 @@
                         <li><a><i class="fa fa-database"></i> Master Data <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="data_toko.html">Data Toko</a></li>
+                                <li><a href="diskon_umur.html">Data Diskon Berdasarkan Umur</a></li>
                                 <li><a href="data_karyawan.html">Data Karyawan</a></li>
                                 <li><a href="data_jabatan.html">Data Jabatan</a></li>
                                 <li><a href="data_umur_barang.html">Data Umur Barang</a></li>
