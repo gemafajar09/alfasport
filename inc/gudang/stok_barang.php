@@ -93,7 +93,7 @@
            </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    <li><button type="button" onclick="format_excel()" data-toggle="tooltip" title="Upload Format Excel" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
                     </li>
                     <li><a class="close-link"><i class="fa fa-close"></i></a>
                     </li>
@@ -158,6 +158,27 @@
     </div>
 </div>
 
+<div class="modal" id="upload_excel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="inc/gudang/upload_template.php" method="POST" enctype="multipart/form-data">
+                <label for="my-input">Upload File Excel</label>
+                    <select name="kategoti" class="select2" style="width: 100%;" id="">
+                        <option value="">SELECT</option>
+                        <option value="1">Upload Nama Produk</option>
+                        <option value="2">Upload Ukuran</option>
+                    </select>
+                    <div class="form-inline">
+                        <input id="my-input" class="form-inline" type="file" name="template">
+                        <button type="submit" name="upload" class="btn btn-primary btn-round">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal" id="dataDetail">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -177,6 +198,10 @@
     function showss()
     {
         $('#uploadCsvUkuran').modal()
+    }
+    function format_excel()
+    {
+        $('#upload_excel').modal()
     }
 
     function size(id)
