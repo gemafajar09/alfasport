@@ -45,12 +45,12 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Voucher</th>
+                                        <th>Jenis Voucher</th>
                                         <th>Potongan Harga</th>
-                                        <th>Kode Voucher</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Berakhir</th>
-                                        <th>Status Voucher</th>
                                         <th>Toko</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="isi-akan-datang"></tbody>
@@ -64,12 +64,12 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Voucher</th>
+                                        <th>Jenis Voucher</th>
                                         <th>Potongan Harga</th>
-                                        <th>Kode Voucher</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Berakhir</th>
-                                        <th>Status Voucher</th>
                                         <th>Toko</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="isi-sedang-berjalan"></tbody>
@@ -83,12 +83,12 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Voucher</th>
+                                        <th>Jenis Voucher</th>
                                         <th>Potongan Harga</th>
-                                        <th>Kode Voucher</th>
                                         <th>Tanggal Mulai</th>
                                         <th>Tanggal Berakhir</th>
-                                        <th>Status Voucher</th>
                                         <th>Toko</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="isi-telah-berlalu"></tbody>
@@ -138,6 +138,15 @@
                             <div class="form-group">
                                 <label>Nama Voucher</label>
                                 <input type="text" name="voucher_nama" id="voucher_nama" required="required" placeholder="Nama Voucher" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Jenis</label>
+                                <select name="voucher_jenis" id="voucher_jenis" class="form-control">
+                                    <option value="harga">Potongan Harga</option>
+                                    <option value="persen">Potongan Persen</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -203,6 +212,7 @@
         var voucher_harga = $('#voucher_harga').val()
         var voucher_kode = $('#voucher_kode').val()
         var voucher_jumlah = $('#voucher_jumlah').val()
+        var voucher_jenis = $('#voucher_jenis').val()
         var id_toko = $('#id_toko').val()
         var voucher_id = $('#voucher_id').val()
 
@@ -213,6 +223,7 @@
             'voucher_tgl_akhir': voucher_tgl_akhir,
             'voucher_kode': voucher_kode,
             'voucher_jumlah': voucher_jumlah,
+            'voucher_jenis': voucher_jenis,
             'id_toko': id_toko,
             'voucher_id': voucher_id
         }).then(function(res) {

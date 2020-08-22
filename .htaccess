@@ -66,3 +66,5 @@ RewriteRule ^cari_barang\.html$ index.php?page=inc/cari/view_cari [L]
 
 RewriteRule ^restock_barang_gudang\.html$ index.php?page=inc/restock_gudang/view_restock [L]
 RewriteRule ^editMultipleRestock\.html$ index.php?page=inc/restock_gudang/edit_multiple_restock [L]
+
+RewriteRule ^detail-voucher-([0-9]+)\.html$ index.php?page=inc/diskon/voucher/detail_voucher&id_voucher=$1 [L]

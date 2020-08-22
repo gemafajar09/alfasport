@@ -6,76 +6,6 @@
     <div class="title_right">
         <div class="col-md-12 col-sm-12 form-group pull-right top_search">
             <div class="row">
-                <!-- <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                    <div class="form-group">
-                        <label>Merek</label>
-                        <select name="merek" id="merek" class="form-control select2">
-                            <option value="">-Merek-</option>
-                            <?php
-                            $merek = $con->select('tb_merk', '*');
-                            foreach ($merek as $merk) {
-                            ?>
-                                <option value="<?= $merk['merk_id'] ?>"><?= $merk['merk_nama'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                    <div class="form-group">
-                        <label>Ketegori</label>
-                        <select name="kategori" id="kategori" class="form-control select2">
-                            <option value="">-Kategori-</option>
-                            <?php
-                            $kategori = $con->select('tb_kategori', '*');
-                            foreach ($kategori as $kategori) {
-                            ?>
-                                <option value="<?= $kategori['kategori_id'] ?>"><?= $kategori['kategori_nama'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                    <div class="form-group">
-                        <label>Divisi</label>
-                        <select name="divisi" id="divisi" class="form-control select2">
-                            <option value="">-Divisi-</option>
-                            <?php
-                            $divisi = $con->select('tb_divisi', '*');
-                            foreach ($divisi as $divisi) {
-                            ?>
-                                <option value="<?= $divisi['divisi_id'] ?>"><?= $divisi['divisi_nama'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                    <div class="form-group">
-                        <label>Sub Divisi</label>
-                        <select name="tokos" id="tokos" class="form-control select2">
-                            <option value="">-Sub Divisi-</option>
-                            <?php
-                            $subdivisi = $con->select('tb_subdivisi', '*');
-                            foreach ($subdivisi as $subdivisi) {
-                            ?>
-                                <option value="<?= $subdivisi['subdivisi_id'] ?>"><?= $subdivisi['subdivisi_nama'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                    <div class="form-group">
-                        <label>Gender</label>
-                        <select name="gender" id="gender" class="form-control select2">
-                            <option value="">-Gender-</option>
-                            <?php
-                            $gender = $con->select('tb_gender', '*');
-                            foreach ($gender as $gender) {
-                            ?>
-                                <option value="<?= $gender['gender_id'] ?>"><?= $gender['gender_nama'] ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -109,49 +39,16 @@
                         </th>
                         <th>No</th>
                         <th>Artikel</th>
+                        <th>Barcode</th>
                         <th>Nama</th>
                         <th>Tanggal</th>
                         <th>Jumlah</th>
-                        <th class="text-center">Action</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="isi"></tbody>
             </table>
         </form>
-    </div>
-</div>
-
-<!-- uploadCsv -->
-<div class="modal" id="uploadCsv">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-body">
-                <form action="inc/gudang/upload_csv.php" method="POST" enctype="multipart/form-data">
-                    <label for="my-input">Upload File Barang</label>
-                    <div class="form-inline">
-                        <input id="my-input" class="form-inline" type="file" name="upload_barang">
-                        <button type="submit" name="upload" class="btn btn-primary btn-round">Upload</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- uploadCsvUkuran -->
-<div class="modal" id="uploadCsvUkuran">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-body">
-                <form action="inc/gudang/upload_barang.php" method="POST" enctype="multipart/form-data">
-                    <label for="my-input">Upload File Barang</label>
-                    <div class="form-inline">
-                        <input id="my-input" class="form-inline" type="file" name="upload_ukuran">
-                        <button type="submit" name="upload" class="btn btn-primary btn-round">Upload</button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -166,7 +63,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Artikel</label>
-                                <input type="text" id="artikel" class="form-control">
+                                <input type="text" id="artikel" class="form-control" readonly>
                                 <input type="hidden" id="id_detail">
                             </div>
                         </div>
@@ -192,30 +89,43 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal" id="cekRestock">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Riwayat Restock Barang</h4>
+            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <div class="container" id="tampilkan">
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script>
-    function shows() {
-        $('#uploadCsv').modal()
-    }
-
-    function showss() {
-        $('#uploadCsvUkuran').modal()
-    }
-
-    function show(id) {
-        axios.post('inc/restock_gudang/show_restock_detail.php', {
-            'id': id
+    function detail(id_detail) {
+        axios.post('inc/restock_gudang/aksi_detail_restock.php', {
+            'id_detail': id_detail
         }).then(function(res) {
             var data = res.data
-            $('#detail').html(data)
+            $('#tampilkan').html(data)
+            $('#cekRestock').modal();
         }).catch(function(err) {
             console.log(err)
         })
-        $('#dataDetail').modal()
     }
 
-    // --------------------------------------------
 
     function simpan() {
         var id_detail = $('#id_detail').val()
@@ -245,8 +155,8 @@
             'id_detail': id_detail
         }).then(function(res) {
             var edit = res.data
-            console.log(edit);
-            $('#artikel').val(edit.id)
+            console.log(edit)
+            $('#artikel').val(edit.id + " - " + edit.nama)
             $('#id_detail').val(edit.id_detail)
             $('#jumlah').val(edit.jumlah)
             $('#dataStokGudang').modal()
