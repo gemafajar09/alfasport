@@ -42,6 +42,7 @@ if ($_POST['toko'] == NULL) {
 
     $json['detail'] = $con->query("SELECT  
             a.artikel, 
+            a.nama, 
             a.modal, 
             a.jual, 
             c.merk_nama, 
@@ -92,6 +93,7 @@ if ($_POST['toko'] == NULL) {
 
     $json['detail'] = $con->query("SELECT  
             a.artikel, 
+            a.nama, 
             a.modal, 
             a.jual, 
             c.merk_nama, 

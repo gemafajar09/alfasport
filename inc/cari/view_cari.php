@@ -34,7 +34,7 @@
                     $artikel = $con->select('tb_gudang', '*');
                     foreach ($artikel as $a) {
                     ?>
-                        <option value="<?= $a['id_gudang'] ?>"><?= $a['artikel'] ?></option>
+                        <option value="<?= $a['id_gudang'] ?>"><?= $a['artikel'] ?> - <?= $a['nama'] ?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -65,6 +65,11 @@
                         <td><span id="namaartikel"></span></td>
                     </tr>
                     <tr>
+                        <th>Nama Barang</th>
+                        <td>:</td>
+                        <td><span id="namabarang"></span></td>
+                    </tr>
+                    <tr>
                         <th>Harga Modal</th>
                         <td>:</td>
                         <td><span id="modal"></span></td>
@@ -84,16 +89,20 @@
                         <td>:</td>
                         <td><span id="diskon"></span>%</td>
                     </tr> -->
+                    <!-- <tr>
+                        <th>Merk</th>
+                        <td>:</td>
+                        <td><span id="merk"></span></td>
+                    </tr> -->
+                </table>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <table>
                     <tr>
                         <th>Merk</th>
                         <td>:</td>
                         <td><span id="merk"></span></td>
                     </tr>
-                </table>
-            </div>
-            <div class="col-sm-6 col-md-6 col-lg-6">
-                <table>
-
                     <tr>
                         <th>Divisi</th>
                         <td>:</td>
@@ -109,11 +118,11 @@
                         <td>:</td>
                         <td><span id="gender"></span></td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th>Pelanggan</th>
                         <td>:</td>
                         <td><span id="">All</span></td>
-                    </tr>
+                    </tr> -->
                 </table>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-12">
@@ -205,6 +214,7 @@
                 var hargadiskon = data.detail.jual - caridiskon;
 
                 $('#namaartikel').text(data.detail.artikel);
+                $('#namabarang').text(data.detail.nama);
                 $('#modal').text(data.detail.modal);
                 $('#jual').text(data.detail.jual);
                 $('#gender').text(data.detail.gender_nama);
@@ -215,6 +225,7 @@
                 $('#hargadiskon').text(hargadiskon);
             } else {
                 $('#namaartikel').text('');
+                $('#namabarang').text('');
                 $('#modal').text('');
                 $('#jual').text('');
                 $('#gender').text('');

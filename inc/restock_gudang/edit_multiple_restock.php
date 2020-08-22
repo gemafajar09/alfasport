@@ -1,6 +1,5 @@
 <?php
 
-
 if (isset($_POST['update'])) {
 
     $id_detail = $_POST['id_detail'];
@@ -69,8 +68,8 @@ if (isset($_POST['update'])) {
         <form method="POST">
 
             <?php
-            $ambil = $con->query("SELECT * FROM tb_gudang_detail 
-                    WHERE id_detail IN (" . implode(",", $_POST['id_detail']) . ")
+            $ambil = $con->query("SELECT a.*, b.* FROM tb_gudang_detail as a JOIN tb_gudang as b ON a.id = b.id 
+                    WHERE a.id_detail IN (" . implode(",", $_POST['id_detail']) . ")
                     ")->fetchAll();
 
             foreach ($ambil as $i => $data) {
@@ -79,7 +78,8 @@ if (isset($_POST['update'])) {
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Artikel</label>
-                            <input type="text" name="artikel[]" id="artikel" value="<?php echo $data['id'] ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
+                            <input type="text" value="<?php echo $data['id'] . " - " . $data['nama']  ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
+                            <input type="hidden" name="artikel[]" id="artikel" value="<?php echo $data['id'] ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
                         </div>
                     </div>
                     <div class="col-md-3">

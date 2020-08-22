@@ -15,19 +15,18 @@ foreach ($data as $i => $a) {
     <tr>
         <td><?= $i + 1 ?></td>
         <td><?= $a['voucher_nama'] ?></td>
-        <td><?= $a['voucher_harga'] ?></td>
-        <td><?= $a['voucher_generate'] ?></td>
-        <td><?= tgl_indo($a['voucher_tgl_mulai']) ?></td>
-        <td><?= tgl_indo($a['voucher_tgl_akhir']) ?></td>
+        <td><?= $a['voucher_jenis'] ?></td>
         <td>
             <?php
-            if ($a['voucher_status'] == 0) {
-                echo "<p style='color: blue'>Belum Dipakai</p>";
+            if ($a['voucher_jenis'] == 'harga') {
+                echo "Rp." . number_format($a['voucher_harga']);
             } else {
-                echo "<p style='color: red'>Sudah Dipakai</p>";
+                echo  $a['voucher_harga'] . "%";
             }
             ?>
         </td>
+        <td><?= tgl_indo($a['voucher_tgl_mulai']) ?></td>
+        <td><?= tgl_indo($a['voucher_tgl_akhir']) ?></td>
         <td>
             <?php
             if ($a['id_toko'] == 0) {
@@ -36,6 +35,9 @@ foreach ($data as $i => $a) {
                 echo $a['nama_toko'];
             }
             ?>
+        </td>
+        <td>
+            <a href="detail-voucher-<?= $a['voucher_id'] ?>.html" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
         </td>
     </tr>
 <?php } ?>

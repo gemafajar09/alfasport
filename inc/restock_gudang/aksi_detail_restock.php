@@ -1,12 +1,23 @@
 <?php
 include "../../config/koneksi.php";
-
+include "../../App/MY_url_helper.php";
 $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
-
-// $data = $con->get("tb_gudang_detail", "*", array("id_detail" => $_POST['id_detail']));
-
-$data = $con->query("SELECT
+?>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Artikel</th>
+            <th>Nama Barang</th>
+            <th>Tanggal Restock</th>
+            <th>Stok Awal</th>
+            <th>Penambahan Stok</th>
+            <th>Stok Akhir</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $data_table = $con->query("SELECT
                                     tb_gudang_detail.id_detail,
                                     tb_gudang_detail.id_ukuran,
                                     tb_gudang_detail.jumlah,
@@ -28,6 +39,20 @@ $data = $con->query("SELECT
                                     tb_all_ukuran On tb_all_ukuran.id_ukuran = tb_gudang_detail.id_ukuran Inner Join
                                     tb_restock ON tb_restock.id_detail = tb_gudang_detail.id_detail 
                                 WHERE tb_restock.id_detail='$_POST[id_detail]'
-                                LIMIT 1")->fetch();
+                                ORDER BY tb_restock.restock_tgl DESC ")->fetchAll();
 
-echo json_encode($data);
+        foreach ($data_table as $i => $data) {
+        ?>
+            <tr>
+                <td><?= $data['artikel'] ?></td>
+                <td><?= $data['nama'] ?></td>
+                <td><?= tgl_indo_waktu($data['restock_tgl']) ?></td>
+                <td><?= $data['restock_jumlah_awal'] ?></td>
+                <td><?= $data['restock_jumlah_tambah'] ?></td>
+                <td><?= $data['restock_jumlah_awal'] + $data['restock_jumlah_tambah']  ?></td>
+            </tr>
+        <?php
+        }
+        ?>
+    </tbody>
+</table>
