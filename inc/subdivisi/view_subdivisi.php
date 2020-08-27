@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <label>Nama Divisi</label>
                                 <select class="form-control" name="divisi_id" id="divisi_id" required>
-                                    <option selected disabled>Pilih Kategori</option>
+                                    <option selected disabled>Pilih Divisi</option>
                                     <?php
                                     $data = $con->select("tb_divisi", "*");
                                     foreach ($data as $i => $a) {
@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Nama Subdivisi</label>
-                                <input type="text" name="subdivisi_nama" id="subdivisi_nama" required="required" placeholder="Nama Divisi" class="form-control">
+                                <input type="text" name="subdivisi_nama" id="subdivisi_nama" required="required" placeholder="Nama Subdivisi" class="form-control">
                                 <input type="hidden" id="subdivisi_id">
                             </div>
                         </div>

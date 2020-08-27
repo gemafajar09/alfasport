@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="entry_pembelian.html" class="btn btn-success btn-round"><i class="fa fa-plus"></i></a>
-                <!-- <a href="entry_gudang.html" class="btn btn-success btn-round"><i class="fa fa-download"></i></a> -->
+                <a href="cari_pembelian.html" class="btn btn-success btn-round"><i class="fa fa-search"> Riwayat Pembelian</i></a>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">

@@ -18,7 +18,8 @@ if (isset($_POST['simpan'])) {
         'foto2' => $_POST['foto2'],
         'foto3' => $_POST['foto3'],
         'foto4' => $_POST['foto4'],
-        'foto5' => $_POST['foto5']
+        'foto5' => $_POST['foto5'],
+        'berat' => $_POST['berat']
     );
     $simpan = $con->insert('tb_gudang', $data);
 
@@ -32,10 +33,9 @@ if (isset($_POST['simpan'])) {
 
     echo "
         <script>
-            window.location='input_stok-".$_POST['artikel']."-".$_POST['merek']."-".$_POST['kategori'].".html'
+            window.location='input_stok-" . $_POST['artikel'] . "-" . $_POST['merek'] . "-" . $_POST['kategori'] . ".html'
         </script>
         ";
 }
     // $where = array('id_gudang' => $_POST['id_gudang']);
     // $simpan = $con->update('tb_gudang',$data,$where);
- 

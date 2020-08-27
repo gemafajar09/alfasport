@@ -9,6 +9,10 @@ $_POST = json_decode($json, true);
         <tr>
             <th>Artikel</th>
             <th>Nama Barang</th>
+            <th>UE</th>
+            <th>UK</th>
+            <th>US</th>
+            <th>CM</th>
             <th>Tanggal Restock</th>
             <th>Stok Awal</th>
             <th>Penambahan Stok</th>
@@ -46,6 +50,10 @@ $_POST = json_decode($json, true);
             <tr>
                 <td><?= $data['artikel'] ?></td>
                 <td><?= $data['nama'] ?></td>
+                <td><?= $data['ue'] ?></td>
+                <td><?= $data['us'] ?></td>
+                <td><?= $data['uk'] ?></td>
+                <td><?= $data['cm'] ?></td>
                 <td><?= tgl_indo_waktu($data['restock_tgl']) ?></td>
                 <td><?= $data['restock_jumlah_awal'] ?></td>
                 <td><?= $data['restock_jumlah_tambah'] ?></td>
