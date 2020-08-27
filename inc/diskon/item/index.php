@@ -115,13 +115,13 @@
                             <th>Mulai</th>
                             <th>Berakhir</th>
                             <th>Kategori</th>
-                            <th class="text-center" style="width:140px">Action</th>
+                            <!-- <th class="text-center" style="width:140px">Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $tanggal = date('Y-m-d');
-                            $data1 = $con->query("SELECT * FROM tb_flash_diskon WHERE tgl_mulai <= '$tanggal' AND tgl_berakhir >= '$tanggal'")->fetchAll();
+                            $data1 = $con->query("SELECT * FROM tb_flash_diskon WHERE CURDATE() < tgl_mulai")->fetchAll(PDO::FETCH_ASSOC);
                             foreach($data1 as $i1 => $a1):
                         ?>
                         <tr>
@@ -130,7 +130,7 @@
                             <td><?= $a1['tgl_mulai'] ?></td>
                             <td><?= $a1['tgl_berakhir'] ?></td>
                             <td><?= $a1['kategori'] ?></td>
-                            <td></td>
+                            <!-- <td></td> -->
                         </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -145,13 +145,13 @@
                             <th>Mulai</th>
                             <th>Berakhir</th>
                             <th>Kategori</th>
-                            <th class="text-center" style="width:140px">Action</th>
+                            <!-- <th class="text-center" style="width:140px">Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $tanggal = date('Y-m-d');
-                            $data1 = $con->query("SELECT * FROM tb_flash_diskon WHERE tgl_mulai >= '$tanggal' AND tgl_berakhir <= '$tanggal'")->fetchAll();
+                            $data1 = $con->query("SELECT * FROM tb_flash_diskon WHERE CURDATE() >= tgl_mulai AND CURDATE() <= tgl_berakhir")->fetchAll();
                             foreach($data1 as $i1 => $a1):
                         ?>
                         <tr>
@@ -160,7 +160,7 @@
                             <td><?= $a1['tgl_mulai'] ?></td>
                             <td><?= $a1['tgl_berakhir'] ?></td>
                             <td><?= $a1['kategori'] ?></td>
-                            <td></td>
+                            <!-- <td></td> -->
                         </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -175,13 +175,13 @@
                             <th>Mulai</th>
                             <th>Berakhir</th>
                             <th>Kategori</th>
-                            <th class="text-center" style="width:140px">Action</th>
+                            <!-- <th class="text-center" style="width:140px">Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $tanggal = date('Y-m-d');
-                            $data1 = $con->query("SELECT * FROM tb_flash_diskon WHERE tgl_mulai >= '$tanggal' AND tgl_berakhir >= '$tanggal'")->fetchAll();
+                            $data1 = $con->query("SELECT * FROM tb_flash_diskon WHERE CURDATE() > tgl_berakhir")->fetchAll();
                             foreach($data1 as $i1 => $a1):
                         ?>
                         <tr>
@@ -190,7 +190,7 @@
                             <td><?= $a1['tgl_mulai'] ?></td>
                             <td><?= $a1['tgl_berakhir'] ?></td>
                             <td><?= $a1['kategori'] ?></td>
-                            <td></td>
+                            <!-- <td></td> -->
                         </tr>
                         <?php endforeach ?>
                     </tbody>

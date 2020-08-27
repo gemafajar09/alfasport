@@ -1,28 +1,28 @@
 <?php
 include "../../config/koneksi.php";
 $data = $con->query("SELECT
-alfa_sport.tb_all_ukuran.id_ukuran,
-alfa_sport.tb_merk.merk_nama,
-alfa_sport.tb_kategori.kategori_nama,
-alfa_sport.tb_divisi.divisi_nama,
-alfa_sport.tb_subdivisi.subdivisi_nama,
-alfa_sport.tb_all_ukuran.id_gender,
-alfa_sport.tb_all_ukuran.ue,
-alfa_sport.tb_all_ukuran.uk,
-alfa_sport.tb_all_ukuran.us,
-alfa_sport.tb_all_ukuran.cm
+tb_all_ukuran.id_ukuran,
+tb_merk.merk_nama,
+tb_kategori.kategori_nama,
+tb_divisi.divisi_nama,
+tb_subdivisi.subdivisi_nama,
+tb_all_ukuran.id_gender,
+tb_all_ukuran.ue,
+tb_all_ukuran.uk,
+tb_all_ukuran.us,
+tb_all_ukuran.cm
 From
-alfa_sport.tb_all_ukuran 
+tb_all_ukuran 
 LEFT Join 
-alfa_sport.tb_merk On alfa_sport.tb_all_ukuran.id_merek = alfa_sport.tb_merk.merk_id 
+tb_merk On tb_all_ukuran.id_merek = tb_merk.merk_id 
 LEFT Join
-alfa_sport.tb_kategori On alfa_sport.tb_all_ukuran.id_kategori = alfa_sport.tb_kategori.kategori_id 
+tb_kategori On tb_all_ukuran.id_kategori = tb_kategori.kategori_id 
 LEFT Join
-alfa_sport.tb_divisi On alfa_sport.tb_all_ukuran.id_divisi = alfa_sport.tb_divisi.divisi_id 
+tb_divisi On tb_all_ukuran.id_divisi = tb_divisi.divisi_id 
 LEFT Join
-alfa_sport.tb_subdivisi On alfa_sport.tb_all_ukuran.id_subdivisi = alfa_sport.tb_subdivisi.subdivisi_id 
+tb_subdivisi On tb_all_ukuran.id_subdivisi = tb_subdivisi.subdivisi_id 
 LEFT Join
-alfa_sport.tb_gender On alfa_sport.tb_all_ukuran.id_gender = alfa_sport.tb_gender.gender_id");
+tb_gender On tb_all_ukuran.id_gender = tb_gender.gender_id");
 foreach ($data as $i => $a) {
 ?>
     <tr>

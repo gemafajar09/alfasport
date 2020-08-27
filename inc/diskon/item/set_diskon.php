@@ -16,13 +16,14 @@ if($_SESSION['id_diskon'] != NULL)
 $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'")->fetch();
 ?>
 
-<form action="" method="POST">
+<form action="simpanDiskonD.html" method="POST">
     <div class="x_panel">
         <div class="x_title">
             <div class="alert alert-warning">
                     <p><h3><?= $cekD['judul'] ?></h3></p>
                     <p>Kategori Diskon : &nbsp;<i style="color:red"><?= $cekD['kategori'] ?></i></p>
                     <p>Masa Belaku : <b><?= $cekD['tgl_mulai'] ?></b> - <b><?= $cekD['tgl_berakhir'] ?></b></p>
+                    <input type="hidden" name="id_diskons" value="<?= $cekD['id_diskon'] ?>">
             </div>
             <div class="card">
                 <div class="card-body row">
@@ -41,16 +42,21 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                         <button type="button" id="sets" class="btn btn-success btn-block btn-sm" onclick="setDiskon()">Set</button>
                     </div>
                     <div class="col-md-6">
-                        <form action="" method="POST">
                             <div class="input-group mb-3">
-                                <select name="" style="width: 80%;" class="select2" id="">
+                                <select name="" style="width: 80%;" class="select2" id="artikelBarangGudang">
                                     <option value="">Cari</option>
+                                    <?php
+                                        $gudangCari = $con->query("SELECT * FROM tb_gudang")->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach($gudangCari as $dataGudang):
+                                    ?>
+                                        <option value="<?= $dataGudang['artikel'] ?>"><?= $dataGudang['nama'] ?> - <?= $dataGudang['artikel'] ?></option>
+                                    <?php endforeach ?>
                                 </select>
                                 <div class="input-group-append">
-                                    <button class="btn btn-success" type="submit">Go</button>
+                                    <button class="btn btn-success" onclick="simpanBarangGudang()" type="button">Go</button>
                                 </div>
                             </div>
-                        </form>
+                        
                     </div>
                 </div>
             </div>
@@ -88,40 +94,29 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                             </td>
                             <td>
                                 Rp.<?= number_format($isi['modal']) ?>
-                                <input type="hidden" value="<?= $isi['jual'] ?>" id="jual<?= $ii+1 ?>">
+                                <input type="hidden" value="<?= $isi['jual'] ?>" id="jual<?= $data['id_gudang']?>_<?= $ii?>">
                             </td>
                             <td>Rp.<?= number_format($isi['jual']) ?></td>
                             <td style="width: 140px;">
                                 <div class="form-inline">
-                                    <input type="text" name="besar_diskon_<?= $data['id_gudang']?>_<?= $ii?>" style="width: 70px;" class="form-control">
+                                    <input type="text" name="besar_diskon_<?= $data['id_gudang']?>_<?= $ii?>" onkeyup="hitungDiskon(<?= $i ?>,<?= $ii ?>)" style="width: 70px;" class="form-control">
                                     <input type="text" value="%" readonly class="form-control" style="width:40px">
+                                    <input type="hidden" name="barcode" value="<?= $isi['barcode'] ?>">
+                                    <input type="hidden" name="artikel" value="<?= $isi['artikel'] ?>">
                                 </div>    
                             </td>
-                            <td style="width: 80px;"><input type="text" readonly style="width: 80px;" class="form-control"></td>
-                            <td style="width: 80px;"><input type="text" id="totals_<?= $data['id_gudang']?>_<?= $ii?>" style="width: 80px;" class="form-control"></td>
+                            <td style="width: 80px;"><input type="text" name="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>"  id="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>" readonly style="width: 80px;" class="form-control"></td>
+                            <td style="width: 80px;"><input type="text" name="harga_diskon_<?= $data['id_gudang']?>_<?= $ii?>" id="harga_diskon_<?= $data['id_gudang']?>_<?= $ii?>" style="width: 80px;" class="form-control"></td>
                         </tr>
-                        <script>
-                            function disc<?= $ii+1 ?>(hasil)
-                            {
-                                var nilai = hasil.value
-                                var jual = $('#jual<?= $ii+1 ?>').val()
-                                var potongan = (parseInt(jual) * parseFloat(nilai)) / 100
-                                $('#potongan<?= $ii+1 ?>').val(potongan)
-
-                                var totals = parseInt(jual) - potongan
-                                $('#totals<?= $ii+1 ?>').val(totals)
-                            }
-
-                            
-                        </script>
                         <?php endforeach ?>
                     </table>
+                    <input type="hidden" name="data_barang" value='<?=json_encode($data_barang)?>' />
                 </div>
             </div>
             <?php endforeach ?>
             
             <div align="right">
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
             </div>
         </div>
     </div>
@@ -163,37 +158,42 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                     if(detail.checked)
                     {
                         console.log("besar_diskon_"  + data_barang[x].detail[y].id_gudang + "_" + y);
+                        var jual = $('#jual'  + data_barang[x].detail[y].id_gudang + "_" + y).val()
                         document.getElementsByName("besar_diskon_"  + data_barang[x].detail[y].id_gudang + "_" + y)[0].value = diskon;
+                            var potongan = (parseInt(jual) * parseFloat(diskon)) / 100
+                            $('#harga_selisih_' + data_barang[x].detail[y].id_gudang + "_" + y).val(potongan)
+
+                            var totals = parseInt(jual) - potongan
+                            $('#harga_diskon_' + data_barang[x].detail[y].id_gudang + "_" + y).val(totals)
                     }
                 }
             }
         }
     }
 
-    // function cekAll()
-    // {
-    //     var cekAll = document.getElementById('SetAll').checked;
-    //     {
-    //         var nilai = $('#diskon1').val()
-    //         if(cekAll)
-    //         {
-    //             for(i = 0; i <= 100; i++)
-    //             {
-    //                 var cek = document.getElementsByName("cek")[i].checked;
-    //                 if(cek == true)
-    //                 {   
-    //                     for(no = 0; no <= 50; no++)
-    //                     {
-    //                         var cek = document.getElementsByName("aktif"+no)[no].checked = true;
-    //                     }
-    //                 }else{
-    //                     alert('mati')
-    //                 }
-    //             }
-    //         }else{
-    //             alert('cek kembali')
-    //         }
-    //     }
-    // }
-    // $('#sets').click(cekAll);
+    function hitungDiskon(row1 , row2)
+    {        
+        var barang = data_barang[row1];
+        var diskon = parseFloat(document.getElementsByName("besar_diskon_" + barang.detail[row2].id_gudang + "_" + row2)[0].value);
+        var harga_barang = barang.detail[row2].jual;
+        var harga_diskon = harga_barang - (harga_barang * diskon / 100);
+        var selisih_harga = harga_barang - harga_diskon;
+        document.getElementsByName("harga_diskon_" + barang.detail[row2].id_gudang + "_" + row2)[0].value = harga_diskon;
+        document.getElementsByName("harga_selisih_" + barang.detail[row2].id_gudang + "_" + row2)[0].value = selisih_harga;
+    
+    }
+
+    function simpanBarangGudang()
+    {
+        var id_diskon = $('[name="id_diskons"]').val()
+        var kode_barang = $('#artikelBarangGudang').val()
+        axios.post('inc/diskon/item/tambahData.php',{
+            'id_diskon':id_diskon,
+            'artikel': kode_barang
+        }).then(function(res){
+            var data = res.data
+            location.reload(); 
+        })
+    }
+
 </script>
