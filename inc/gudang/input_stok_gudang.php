@@ -31,7 +31,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Artikel</label>
-                            <input type="text" required name="artikel" value="AS-<?= $artikel ?>" id="artikel" class="form-control" placeholder="Artikel">
+                            <input type="text" required name="artikel" value="" id="artikel" class="form-control" placeholder="Artikel">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
@@ -106,6 +106,13 @@
                         <div class="form-group">
                             <label>Harga Jual</label>
                             <input type="text" required name="jual" class="form-control" id="jual" placeholder="Harga Jual...">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Berat Barang</label>
+                            <input type="number" required name="berat" class="form-control" id="berat" placeholder="Berat Barang ...">
+                            <span style="color: red; font-size: 12px;">*Dalam satuan gram</span>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">

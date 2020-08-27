@@ -41,8 +41,12 @@
                         <th>Artikel</th>
                         <th>Barcode</th>
                         <th>Nama</th>
-                        <th>Tanggal</th>
+                        <th>UE</th>
+                        <th>UK</th>
+                        <th>US</th>
+                        <th>CM</th>
                         <th>Jumlah</th>
+                        <th>Tanggal</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -92,7 +96,7 @@
 
 
 <div class="modal" id="cekRestock">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">

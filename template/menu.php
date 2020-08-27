@@ -36,7 +36,8 @@
                         <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="data_satuan.html">Satuan</a></li>
-                                <li><a href="ukuran.html">Ukuran</a></li>
+                                <li><a href="ukuran.html">Ukuran Sepatu</a></li>
+                                <li><a href="ukuran_kaos_kaki.html">Ukuran Kaos Kaki</a></li>
                                 <li><a href="data_kategori.html">Kategori</a></li>
                                 <li><a href="data_divisi.html">Divisi</a></li>
                                 <li><a href="data_subdivisi.html">Sub Divisi</a></li>

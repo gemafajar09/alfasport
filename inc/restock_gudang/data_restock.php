@@ -28,8 +28,12 @@ foreach ($data as $i => $a) {
         <td><?= $a['artikel'] ?></td>
         <td><?= $a['barcode'] ?></td>
         <td><?= $a['nama'] ?></td>
-        <td><?= $a['tanggal'] ?></td>
+        <td><?= $a['ue'] ?></td>
+        <td><?= $a['uk'] ?></td>
+        <td><?= $a['us'] ?></td>
+        <td><?= $a['cm'] ?></td>
         <td><?= $a['jumlah'] ?></td>
+        <td><?= $a['tanggal'] ?></td>
         <td class="text-center">
             <button type="button" onclick="edit('<?= $a['id_detail'] ?>')" class="btn btn-warning btn-sm"><i class="fa fa-plus"></i></button>
             <button type="button" onclick="detail('<?= $a['id_detail'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
