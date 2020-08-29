@@ -78,7 +78,7 @@ if (isset($_POST['simpanT'])) {
     $id_toko_asal = $_POST['id_toko_asal'];
     $id_toko_tujuan = $_POST['id_toko_tujuan'];
 
-    var_dump($_POST);
+    // var_dump($_POST);
 
     $con->query("UPDATE tb_transfer SET acc_owner='3', transfer_ket = '$transfer_ket' WHERE id_transfer = '$id_transfer'");
 

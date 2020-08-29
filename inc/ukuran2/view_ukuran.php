@@ -469,15 +469,13 @@ if (isset($_POST['simpanT'])) {
     }
 
     function edit(id) {
+        var edit = null;
         axios.post('inc/ukuran2/aksi_edit_ukuran.php', {
             'id_ukuran': id
         }).then(function(res) {
-            var edit = res.data
+            edit = res.data
             $('#id_ukuran').val(edit.id_ukuran)
             $('#id_merek').val(edit.id_merek).change()
-            $('#id_kategori2').val(edit.id_kategori).change()
-            $('#id_divisi2').val(edit.id_divisi).change()
-            $('#id_subdivisi2').val(edit.id_subdivisi).change()
             $('#ue').val(edit.ue)
             $('#uk').val(edit.uk)
             $('#us').val(edit.us)
@@ -485,14 +483,11 @@ if (isset($_POST['simpanT'])) {
             var a = edit.id_gender;
             var cek = a.split(",");
             console.log(cek);
-
             var list_gender = document.getElementsByName("id_gender2");
             // reset centang gender
             for (var x = 0; x < list_gender.length; x++) {
                 list_gender[x].checked = false;
             }
-
-
             for (var x = 0; x < list_gender.length; x++) {
                 for (var i = 0; i < cek.length; i++) {
                     if (list_gender[x].value == cek[i]) {
@@ -501,6 +496,15 @@ if (isset($_POST['simpanT'])) {
                 }
             }
 
+            $('#id_kategori2').val(edit.id_kategori).change()
+            return axios.get('inc/ukuran2/filter/data_divisi.php?kategori_id=' + edit.id_kategori)
+        }).then(function(res) {
+            $('#id_divisi2').html(res.data);
+            $('#id_divisi2').val(edit.id_divisi).change();
+            return axios.get('inc/ukuran2/filter/data_subdivisi.php?divisi_id=' + edit.id_divisi)
+        }).then(function(res) {
+            $('#id_subdivisi2').html(res.data);
+            $('#id_subdivisi2').val(edit.id_subdivisi).change();
             $('#dataUkuranEdit').modal()
         }).catch(function(err) {
             console.log(err)
