@@ -6,9 +6,10 @@
     <div class="title_right">
         <div class="col-md-12 col-sm-12 form-group pull-right top_search">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                <div class="col-md-6"></div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
                     <div class="form-group">
-                        <label>Toko</label>
+                        <label>Pilih Toko</label>
                         <select name="toko" id="toko" class="form-control select2">
                             <option value="">-Toko-</option>
                             <?php
@@ -54,7 +55,7 @@
                     <th colspan="2" class="text-center">Jumlah</th>
                     <th>Bank</th>
                     <th>Create At</th>
-                    <th>Create By</th>
+                    <!-- <th>Create By</th> -->
                     <th>Keterangan</th>
                     <th class="text-center">Action</th>
                 </tr>
