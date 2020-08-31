@@ -24,7 +24,10 @@ RewriteRule ^data_subdivisi\.html$ index.php?page=inc/subdivisi/view_subdivisi [
 RewriteRule ^data_gender\.html$ index.php?page=inc/gender/view_gender [L]
 RewriteRule ^data_merk\.html$ index.php?page=inc/merk/view_merk [L]
 RewriteRule ^data_ukuran\.html$ index.php?page=inc/ukuran/view_ukuran [L]
+
 RewriteRule ^ukuran\.html$ index.php?page=inc/ukuran2/view_ukuran [L]
+RewriteRule ^ukuran_kaos_kaki\.html$ index.php?page=inc/ukuran_kaos_kaki/view_ukuran_kaos_kaki [L]
+
 RewriteRule ^data_detail_ukuran\.html$ index.php?page=inc/detail_ukuran/view_detail_ukuran [L]
 RewriteRule ^transfer\.html$ index.php?page=inc/transfer_barang/view_transfer [L]
 RewriteRule ^point_member\.html$ index.php?page=inc/point/view_point [L]
@@ -37,11 +40,16 @@ RewriteRule ^update-gudang-([0-9]+)\.html$ index.php?page=inc/gudang/aksi_edit_g
 
 RewriteRule ^penjualan\.html$ index.php?page=inc/transaksi/view_transaksi [L]
 RewriteRule ^entry_penjualan\.html$ index.php?page=inc/transaksi/input_transaksi [L]
+RewriteRule ^cari_penjualan\.html$ index.php?page=inc/transaksi/cari_penjualan [L]
 
 RewriteRule ^pembelian\.html$ index.php?page=inc/pembelian/view_pembelian [L]
 RewriteRule ^entry_pembelian\.html$ index.php?page=inc/pembelian/input_pembelian [L]
+<<<<<<< HEAD
 RewriteRule ^simpanDiskonUmur\.html$ index.php?page=inc/diskon_umur/set_umur [L]
 RewriteRule ^simpanDiskonD\.html$ index.php?page=inc/diskon/item/simpan_diskon [L]
+=======
+RewriteRule ^cari_pembelian\.html$ index.php?page=inc/pembelian/cari_pembelian [L]
+>>>>>>> master
 
 
 RewriteRule ^stok_barang_toko\.html$ index.php?page=inc/toko/toko_gudang/stok_barang [L]
