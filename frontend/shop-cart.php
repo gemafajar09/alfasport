@@ -9,10 +9,14 @@ $carts = $con->query("
               g.thumbnail,
               g.nama,
               g.id_gudang,
-              m.merk_nama
+              g.berat,
+              m.merk_nama,
+              t.nama_toko
         FROM cart c
         LEFT JOIN tb_gudang g ON c.id=g.id
-        LEFT JOIN tb_merk m ON g.id_merek=m.merk_id WHERE id_user='1' GROUP BY g.id")->fetchAll();
+        LEFT JOIN tb_merk m ON g.id_merek=m.merk_id
+        LEFT JOIN tb_stok_toko s ON s.id_gudang=g.id_gudang
+        LEFT JOIN toko t ON t.id_toko=s.id_toko WHERE id_user='$_COOKIE[member_id]' GROUP BY g.id")->fetchAll();
 
 $cek = count($carts);
 if ($cek < 1) {
@@ -21,7 +25,6 @@ if ($cek < 1) {
   foreach ($carts as $i => $cart) {
     $id = $cart['id'];
 ?>
-
     <tr>
       <td class="text-center">
         <a href="index.php?page=product&id=<?= $cart['id_gudang'] ?>"><img src="<?= $cart['thumbnail'] ?>" alt="Product" title="Product" class="img-thumbnail" width="100" /></a>
@@ -31,6 +34,8 @@ if ($cek < 1) {
         <a href="index.php?page=product&id=<?= $cart['id_gudang'] ?>"><?= $cart['nama'] ?></a><br />
       </td>
       <td class="text-center hidden-xs"><?= $cart['merk_nama'] ?></td>
+      <td class="text-center hidden-xs"><?= $cart['nama_toko'] ?></td>
+      <td class="text-center hidden-xs"><?= $cart['berat'] ?> gram</td>
       <td class="text-center">
         <input type="text" name="" value="<?= $cart['jumlah'] ?>" size="1" id="qty_cart" />
         &nbsp;<input type="image" src="img/update.png" alt="Update" title="Update" onclick="updateCartItem(<?= $cart['id_cart'] ?>)" />

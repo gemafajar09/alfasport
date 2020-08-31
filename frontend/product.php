@@ -27,6 +27,13 @@ JOIN tb_divisi e ON a.id_divisi=e.divisi_id
 JOIN tb_subdivisi f ON a.id_sub_divisi=f.subdivisi_id
 WHERE id_gudang = '$_GET[id]'
 ")->fetch();
+
+$id = $product['id'];
+
+$cek = $con->count("whistlist", "*", [
+	"id_user" => @$_COOKIE['member_id'],
+	"id" => $id
+]);
 ?>
 
 <!-- BREADCRUMB
@@ -96,10 +103,23 @@ WHERE id_gudang = '$_GET[id]'
 
 											<div class="col-sm-6 product-center clearfix">
 												<div itemprop="offerDetails" itemscope itemtype="http://data-vocabulary.org/Offer">
-
+													<br>
+													<h1><?= $product['nama'] ?></h1>
 													<div class="review">
 														<div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>&nbsp;&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');">0
-																reviews</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');">Write a review</a></div>
+																reviews</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');">Write a review</a>
+
+															<br><br>
+
+															<?php
+															if (isset($_COOKIE['member_id'])) {
+
+															?>
+																<a javascript:void(0) onclick='addToWhistList("<?= $id ?>")' id="tomboladdwhistlist" style="display: none;">Tambah ke whistlist</a>
+
+																<a javascript:void(0) onclick='unWhistList("<?= $id ?>")' id="tombolunwhistlist" style="display: none;">Hapus dari whistlist</a>
+															<?php } ?>
+														</div>
 													</div>
 
 													<div class="description">
@@ -112,60 +132,72 @@ WHERE id_gudang = '$_GET[id]'
 														<span class="price-new"><span itemprop="price">Rp. <?= number_format($product['jual']) ?></span></span><br />
 													</div>
 
-													<div class="description">
-														Pilih Toko :
-														<select name="toko" id="toko">
-															<option value="">Pilih Toko</option>
-															<?php
-															$data = $con->select("toko", "*");
-															foreach ($data as $i => $a) {
-															?>
-																<option value="<?= $a['id_toko'] ?>"><?= $a['nama_toko'] ?> </option>
-															<?php } ?>
-														</select>
-														<br />
-														<br />
-														<div id="boxukuran">
-															Pilih Ukuran :
-															<br>
-															<select name="kodeukuran" onchange="setUkuran()" id="kodeukuran">
-																<option value=""></option>
-																<option value="us">US</option>
-																<option value="uk">UK</option>
-																<option value="ue">EUROPE</option>
-																<option value="cm">CM</option>
+													<?php
+													if (isset($_COOKIE['member_id'])) {
+													?>
+														<div class="description">
+															Pilih Toko :
+															<select name="toko" id="toko">
+																<option value="">Pilih Toko</option>
+																<?php
+																$data = $con->select("toko", "*");
+																foreach ($data as $i => $a) {
+																?>
+																	<option value="<?= $a['id_toko'] ?>"><?= $a['nama_toko'] ?> </option>
+																<?php } ?>
 															</select>
-															<span>
-																<select name="ukuran" id="ukuran">
-
+															<br />
+															<br />
+															<div id="boxukuran">
+																Pilih Ukuran :
+																<br>
+																<select name="kodeukuran" onchange="setUkuran()" id="kodeukuran">
+																	<option value=""></option>
+																	<option value="us">US</option>
+																	<option value="uk">UK</option>
+																	<option value="ue">EUROPE</option>
+																	<option value="cm">CM</option>
 																</select>
-															</span>
-															<!-- <input type="text" readonly id="stok" class="form-control" style="width:80px"> -->
+																<span>
+																	<select name="ukuran" id="ukuran">
+
+																	</select>
+																</span>
+																<br>
+																Stok Tersedia <input type="text" readonly id="stok" class="form-control" style="width:80px">
+															</div>
 														</div>
-
-													</div>
-
+													<?php } ?>
 
 												</div>
 
-												<div id="product">
-													<div class="cart">
-														<div class="add-to-cart clearfix">
-															<p>Qty</p>
-															<div class="quantity">
-																<input type="text" name="quantity" id="quantity_wanted" size="2" value="1" />
-																<a href="#" id="q_up"><i class="fa fa-plus"></i></a>
-																<a href="#" id="q_down"><i class="fa fa-minus"></i></a>
+												<?php
+												if (isset($_COOKIE['member_id'])) {
+												?>
+													<div id="product">
+														<div class="cart">
+															<div class="add-to-cart clearfix">
+																<p>Qty</p>
+																<div class="quantity">
+																	<input type="text" name="quantity" id="quantity_wanted" size="2" value="1" />
+																	<a href="#" id="q_up"><i class="fa fa-plus"></i></a>
+																	<a href="#" id="q_down"><i class="fa fa-minus"></i></a>
+																</div>
+																<button type="button" id="button-cart" class="button" onclick="addToCart()">Add to Cart</button>
 															</div>
-															<button type="button" id="button-cart" class="button" onclick="addToCart()">Add to Cart</button>
 														</div>
+													</div><!-- End #product -->
+												<?php } ?>
 
-														<div class="links">
-															<a onclick="">Add to Wish List</a>
-															<a onclick="">Compare this Product</a>
-														</div>
+												<?php
+												if (!isset($_COOKIE['member_id'])) {
+												?>
+													<div class="description">
+														<a href="index.php?page=login" style="color: #00c853;">Silahkan login terlebih dahulu</a>
 													</div>
-												</div><!-- End #product -->
+												<?php
+												}
+												?>
 											</div><!-- End .product-center -->
 										</div>
 									</div><!-- End .col-sm-9 -->
@@ -461,3 +493,20 @@ WHERE id_gudang = '$_GET[id]'
 		</div>
 	</div>
 </div>
+
+<?php
+if ($cek == 0) {
+?>
+	<script>
+		document.getElementById("tomboladdwhistlist").style.display = "block";
+		document.getElementById("tombolunwhistlist").style.display = "none";
+	</script>
+<?php
+} else {
+?>
+	<script>
+		document.getElementById("tombolunwhistlist").style.display = "block";
+		document.getElementById("tomboladdwhistlist").style.display = "none";
+	</script>
+<?php
+}

@@ -9,7 +9,7 @@
 				<div class="clearfix">
 					<ul>
 						<li><a href="#">Home</a></li>
-						<li><a href="#">My Wish List</a></li>
+						<li><a href="#">Login</a></li>
 					</ul>
 				</div>
 			</div>
@@ -26,43 +26,46 @@
 		<div class="pattern">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-9 center-column" id="content">
-						<table class="table table-bordered table-hover">
-							<thead>
-								<tr>
-									<td class="text-center">Image</td>
-									<td class="text-left">Product Name</td>
-									<td class="text-left">Merk</td>
-									<td class="text-right">Unit Price</td>
-									<td class="text-right">Action</td>
-								</tr>
-							</thead>
-							<tbody id="isiWhistlist">
+					<div class="col-md-6 center-column">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="panel-group checkout" id="accordion">
+									<div class="panel panel-default">
+										<div class="panel-heading heading-iconed">
+										</div>
+										<div id="collapseOne" class="panel-collapse collapse in">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-12">
+														<h3>Sign In</h3>
+														<form action="aksi-login.php" method="POST">
+															<div class="form-group">
+																<label>Email</label>
+																<input type="email" name="email" class="form-control" placeholder="Masukkan email">
+															</div>
 
-							</tbody>
-						</table>
-					</div>
+															<div class="form-group">
+																<label>Password</label>
+																<input type="password" name="password" class="form-control" placeholder="password">
+															</div>
 
-					<div class="col-md-3">
-						<div class="box">
-							<div class="box-heading">Account</div>
-							<div class="strip-line"></div>
+															<button type="submit" name="login" class="btn btn-default">sign in</button>
+														</form>
+													</div>
+												</div><!-- End .row -->
+											</div>
+										</div><!-- End .panel-collapse -->
+									</div><!-- End .panel -->
 
-							<div class="box-content">
-								<ul class="list-box">
-									<li><a href="#">My Account</a></li>
-									<li><a href="#">Edit Account</a></li>
-									<li><a href="#">Password</a></li>
-									<li><a href="#">Address Books</a></li>
-									<li><a href="#">Wish List</a></li>
-									<li><a href="#">Order History</a></li>
-									<li><a href="#">Downloads</a></li>
-									<li><a href="#">Returns</a></li>
-									<li><a href="#">Transactions</a></li>
-									<li><a href="#">Newsletter</a></li>
-									<li><a href="#">Recurring payments</a></li>
-									<li><a href="#">Logout</a></li>
-								</ul>
+								</div>
+							</div>
+						</div><!-- End .row -->
+					</div><!-- End .center-column -->
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-12">
+								<br>
+								<img src="../img/login.png">
 							</div>
 						</div>
 					</div>
@@ -71,6 +74,7 @@
 		</div><!-- // .pattern -->
 	</div><!-- // .background -->
 </div><!-- // .main-content -->
+
 
 <div class="container">
 	<div class="help-columns" style="padding-top: 15px;padding-bottom:  15px;">
@@ -117,3 +121,24 @@
 		</div>
 	</div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<?php
+if (isset($_COOKIE['error'])) {
+?>
+	<script>
+		Swal.fire({
+			icon: 'error',
+			text: '<?= $_COOKIE['error'] ?>',
+		})
+	</script>
+<?php } elseif (isset($_COOKIE['success'])) {
+?>
+	<script>
+		Swal.fire({
+			icon: 'success',
+			text: '<?= $_COOKIE['success'] ?>',
+		})
+	</script>
+
+<?php } ?>

@@ -9,7 +9,7 @@
 				<div class="clearfix">
 					<ul>
 						<li><a href="#">Home</a></li>
-						<li><a href="#">My Wish List</a></li>
+						<li><a href="#">My Account</a></li>
 					</ul>
 				</div>
 			</div>
@@ -26,51 +26,20 @@
 		<div class="pattern">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-9 center-column" id="content">
-						<table class="table table-bordered table-hover">
-							<thead>
-								<tr>
-									<td class="text-center">Image</td>
-									<td class="text-left">Product Name</td>
-									<td class="text-left">Merk</td>
-									<td class="text-right">Unit Price</td>
-									<td class="text-right">Action</td>
-								</tr>
-							</thead>
-							<tbody id="isiWhistlist">
-
-							</tbody>
-						</table>
+					<div class="col-md-9 center-column">
+						<h1 style="font-size: 35px;">Hallo, <?= $_COOKIE['member_nama'] ?></h1>
+						<p style="font-size: 20px;">Selamat Datang</p>
 					</div>
 
 					<div class="col-md-3">
-						<div class="box">
-							<div class="box-heading">Account</div>
-							<div class="strip-line"></div>
-
-							<div class="box-content">
-								<ul class="list-box">
-									<li><a href="#">My Account</a></li>
-									<li><a href="#">Edit Account</a></li>
-									<li><a href="#">Password</a></li>
-									<li><a href="#">Address Books</a></li>
-									<li><a href="#">Wish List</a></li>
-									<li><a href="#">Order History</a></li>
-									<li><a href="#">Downloads</a></li>
-									<li><a href="#">Returns</a></li>
-									<li><a href="#">Transactions</a></li>
-									<li><a href="#">Newsletter</a></li>
-									<li><a href="#">Recurring payments</a></li>
-									<li><a href="#">Logout</a></li>
-								</ul>
-							</div>
-						</div>
+						<?php include "sidebar_account.php " ?>
 					</div>
 				</div><!-- // .row -->
 			</div><!-- // .container -->
 		</div><!-- // .pattern -->
 	</div><!-- // .background -->
 </div><!-- // .main-content -->
+
 
 <div class="container">
 	<div class="help-columns" style="padding-top: 15px;padding-bottom:  15px;">

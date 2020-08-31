@@ -1,3 +1,6 @@
+<?php
+$toko = $con->query("SELECT id_toko, nama_toko FROM toko WHERE id_toko='$_GET[id]'")->fetch();
+?>
 <!-- BREADCRUMB
           	================================================== -->
 <div class="breadcrumb full-width">
@@ -9,7 +12,7 @@
 				<div class="clearfix">
 					<ul>
 						<li><a href="#">Home</a></li>
-						<li><a href="#">My Wish List</a></li>
+						<li><a href="#"><?= $toko['nama_toko'] ?></a></li>
 					</ul>
 				</div>
 			</div>
@@ -19,58 +22,70 @@
 
 <!-- MAIN CONTENT
           ================================================== -->
-<div class="main-content full-width inner-page">
+<div class="main-content full-width">
 	<div class="background-content"></div>
 	<div class="background">
 		<div class="shadow"></div>
 		<div class="pattern">
 			<div class="container">
-				<div class="row">
-					<div class="col-md-9 center-column" id="content">
-						<table class="table table-bordered table-hover">
-							<thead>
-								<tr>
-									<td class="text-center">Image</td>
-									<td class="text-left">Product Name</td>
-									<td class="text-left">Merk</td>
-									<td class="text-right">Unit Price</td>
-									<td class="text-right">Action</td>
-								</tr>
-							</thead>
-							<tbody id="isiWhistlist">
 
-							</tbody>
-						</table>
-					</div>
+				<!-- Featured products -->
+				<div class="box clearfix box-with-products">
+					<!-- Carousel nav -->
+					<a class="next" href="#myCarousel" id="myCarousel_next"><span></span></a>
+					<a class="prev" href="#myCarousel" id="myCarousel_prev"><span></span></a>
 
-					<div class="col-md-3">
-						<div class="box">
-							<div class="box-heading">Account</div>
-							<div class="strip-line"></div>
+					<div class="box-heading">Produk</div>
+					<div class="strip-line"></div>
 
-							<div class="box-content">
-								<ul class="list-box">
-									<li><a href="#">My Account</a></li>
-									<li><a href="#">Edit Account</a></li>
-									<li><a href="#">Password</a></li>
-									<li><a href="#">Address Books</a></li>
-									<li><a href="#">Wish List</a></li>
-									<li><a href="#">Order History</a></li>
-									<li><a href="#">Downloads</a></li>
-									<li><a href="#">Returns</a></li>
-									<li><a href="#">Transactions</a></li>
-									<li><a href="#">Newsletter</a></li>
-									<li><a href="#">Recurring payments</a></li>
-									<li><a href="#">Logout</a></li>
-								</ul>
+					<div class="box-content products">
+						<div class="box-product">
+							<div id="myCarousel" class="owl-carousel">
+
+								<?php
+								$products = $con->query("
+												SELECT g.id_gudang,
+												g.thumbnail,
+												g.nama,
+												g.jual
+												FROM tb_gudang g LEFT JOIN tb_stok_toko s ON g.id_gudang=s.id_gudang WHERE s.id_toko='$_GET[id]'
+										")->fetchAll();
+
+								$cek = count($products);
+								if ($cek < 1) {
+									echo "<p>Produk Masih Kosong</p>";
+								} else {
+									foreach ($products as $i => $product) {
+								?>
+										<div class="item">
+											<div class="product-grid">
+												<!-- Product -->
+												<div class="product clearfix product-hover">
+													<div class="left">
+														<div class="image">
+															<a href="<?= $base_url ?>frontend/index.php?page=product&id=<?= $product['id_gudang'] ?>"><img src="<?= $product['thumbnail'] ?>" alt="Product" class="" /></a>
+														</div>
+													</div>
+
+													<div class="right">
+														<div class="name"><a href="<?= $base_url ?>frontend/index.php?page=product&id=<?= $product['id_gudang'] ?>"><?= $product['nama'] ?></a></div>
+														<div class="price">Rp. <?= number_format($product['jual']) ?></div>
+														<div class="rating"><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i><i class="fa fa-star active"></i></div>
+													</div>
+												</div><!-- // Product -->
+											</div>
+										</div>
+								<?php }
+								} ?>
+
 							</div>
 						</div>
 					</div>
-				</div><!-- // .row -->
+				</div><!-- // .box -->
 			</div><!-- // .container -->
 		</div><!-- // .pattern -->
 	</div><!-- // .background -->
-</div><!-- // .main-content -->
+</div>
 
 <div class="container">
 	<div class="help-columns" style="padding-top: 15px;padding-bottom:  15px;">

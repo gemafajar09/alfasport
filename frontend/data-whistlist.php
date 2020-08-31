@@ -2,29 +2,32 @@
 include "../config/koneksi.php";
 $whistlists = $con->query("
               SELECT
+              w.id,
               g.nama,
               g.jual,
-              g.thumbnail
-              FROM whistlist w LEFT JOIN tb_gudang g ON w.id=g.id WHERE w.id_user='1'")->fetchAll();
+              g.id_gudang,
+              g.thumbnail,
+              m.merk_nama
+              FROM whistlist w LEFT JOIN tb_gudang g ON w.id=g.id
+              LEFT JOIN tb_merk m ON g.id_merek=m.merk_id WHERE w.id_user='$_COOKIE[member_id]'")->fetchAll();
 
 $cek = count($whistlists);
 if ($cek < 1) {
-  echo "<tr><td colspan='6'>Whistlist Masih Kosong</td></tr>";
+  echo "<tr><td colspan='5'>Whistlist Masih Kosong</td></tr>";
 } else {
   foreach ($whistlists as $i => $whistlist) {
+    $id = $whistlist['id'];
 ?>
 
     <tr>
-      <td class="text-center"><a href="product.html"><img src="<?= $whistlist['thumbnail'] ?>" alt="Product" title="Product " width="100"></a></td>
-      <td class="text-left"><a href="product.html">Name of product</a></td>
-      <td class="text-left">Product 1</td>
-      <td class="text-right">In Stock</td>
+      <td class="text-center"><a href="index.php?page=product&id=<?= $whistlist['id_gudang'] ?>"><img src="<?= $whistlist['thumbnail'] ?>" alt="Product" title="Product " width="100"></a></td>
+      <td class="text-left"><a href="index.php?page=product&id=<?= $whistlist['id_gudang'] ?>"><?= $whistlist['nama'] ?></a></td>
+      <td class="text-left"><?= $whistlist['merk_nama'] ?></td>
       <td class="text-right">
-        <div class="price">$122.00</div>
+        <div class="price">Rp. <?= number_format($whistlist['jual'], 0, ",", ".") ?></div>
       </td>
       <td class="text-right">
-        <button type="button" onclick="" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="Add to Cart"><i class="fa fa-shopping-cart"></i></button>
-        <a href="wish_list.html" data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></a>
+        <a onclick='hapusWishlistItem("<?= $id ?>")' data-toggle="tooltip" title="" class="btn btn-danger" data-original-title="Remove"><i class="fa fa-times"></i></a>
       </td>
     </tr>
 

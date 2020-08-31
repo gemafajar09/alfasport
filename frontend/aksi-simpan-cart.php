@@ -4,7 +4,7 @@ include "../config/koneksi.php";
 $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 
-$data = $con->count('cart', '*', ['id' => $_POST["product_id"]]);
+$data = $con->count('cart', '*', ['id' => $_POST["product_id"], 'id_user' => $_COOKIE["member_id"]]);
 
 if ($data == 0) {
   $simpan = $con->insert(
@@ -15,7 +15,7 @@ if ($data == 0) {
       "id_toko" => $_POST["toko"],
       "id_stok_toko" => $_POST["id_stok_toko"],
       "qty" => $_POST["quantity_wanted"],
-      "id_user" => '1',
+      "id_user" => $_COOKIE['member_id'],
     )
   );
 } else {
@@ -26,7 +26,7 @@ if ($data == 0) {
     ),
     array(
       "id" => $_POST["product_id"],
-      "id_user" => '1'
+      "id_user" => $_COOKIE['member_id']
     )
   );
 }
