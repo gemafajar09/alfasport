@@ -45,19 +45,15 @@ RewriteRule ^cari_penjualan\.html$ index.php?page=inc/transaksi/cari_penjualan [
 
 RewriteRule ^pembelian\.html$ index.php?page=inc/pembelian/view_pembelian [L]
 RewriteRule ^entry_pembelian\.html$ index.php?page=inc/pembelian/input_pembelian [L]
-<<<<<<< HEAD
+
 RewriteRule ^simpanDiskonUmur\.html$ index.php?page=inc/diskon_umur/set_umur [L]
 RewriteRule ^simpanDiskonD\.html$ index.php?page=inc/diskon/item/simpan_diskon [L]
-=======
 RewriteRule ^cari_pembelian\.html$ index.php?page=inc/pembelian/cari_pembelian [L]
->>>>>>> master
-
 
 RewriteRule ^stok_barang_toko\.html$ index.php?page=inc/toko/toko_gudang/stok_barang [L]
 RewriteRule ^penyesuaian_stok\.html$ index.php?page=inc/penyesuaian/penyesuaian_stok [L]
 RewriteRule ^simpan_gudang\.html$ index.php?page=inc/gudang/aksi_simpan_gudang [L]
 RewriteRule ^input_stok-([a-zA-Z0-9\-]{0,20})-([0-9]+)-([0-9]+)\.html$ index.php?page=inc/gudang/input_stok&id=$1&merek=$2&kategori=$3 [L]
-
 
 RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/view_transfer [L]
 
