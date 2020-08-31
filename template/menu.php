@@ -38,6 +38,7 @@
                                 <li><a href="data_satuan.html">Satuan</a></li>
                                 <li><a href="ukuran.html">Ukuran Sepatu</a></li>
                                 <li><a href="ukuran_kaos_kaki.html">Ukuran Kaos Kaki</a></li>
+                                <li><a href="ukuran_baju.html">Ukuran Baju</a></li>
                                 <li><a href="data_kategori.html">Kategori</a></li>
                                 <li><a href="data_divisi.html">Divisi</a></li>
                                 <li><a href="data_subdivisi.html">Sub Divisi</a></li>
