@@ -32,8 +32,7 @@
 								<tr>
 									<td class="text-center">Image</td>
 									<td class="text-left">Product Name</td>
-									<td class="text-left">Model</td>
-									<td class="text-right">Stock</td>
+									<td class="text-left">Merk</td>
 									<td class="text-right">Unit Price</td>
 									<td class="text-right">Action</td>
 								</tr>
@@ -42,10 +41,6 @@
 
 							</tbody>
 						</table>
-
-						<div class="buttons clearfix">
-							<div class="pull-right"><a href="my_account.html" class="btn btn-primary">Continue</a></div>
-						</div>
 					</div>
 
 					<div class="col-md-3">

@@ -5,14 +5,15 @@
     $carts = $con->query("
               SELECT SUM(c.qty) AS jumlah, SUM(c.harga*c.qty) AS total,
               c.harga,
-              c.id_gudang,
+              c.id,
+              g.id_gudang,
               c.qty,
               g.thumbnail,
               g.nama,
               m.merk_nama
         FROM cart c
         LEFT JOIN tb_gudang g ON c.id=g.id
-        LEFT JOIN tb_merk m ON g.id_merek=m.merk_id WHERE id_user='1' GROUP BY g.id")->fetchAll();
+        LEFT JOIN tb_merk m ON g.id_merek=m.merk_id WHERE id_user='$_COOKIE[member_id]' GROUP BY g.id")->fetchAll();
     $subtotal = 0;
 
     $cek = count($carts);
@@ -21,6 +22,7 @@
       echo "<br><br>";
     } else {
       foreach ($carts as $i => $cart) {
+        $id = $cart['id'];
         $subtotal += $cart['total'];
     ?>
 
@@ -29,7 +31,7 @@
           <td class="name"><a href="index.php?page=product&id=<?= $cart['id_gudang'] ?>"><?= $cart['nama'] ?></a></td>
           <td class="quantity">x&nbsp;<?= $cart['jumlah'] ?></td>
           <td class="total">Rp. <?= number_format($cart['total'], 0, ",", ".") ?></td>
-          <td class="text-right remove"><a href="javascript:;" title="Remove">x</a></td>
+          <td class="text-right remove"><a onclick='hapusCartItem("<?= $id ?>")' title="Remove" style="cursor: pointer">x</a></td>
         </tr>
     <?php }
     } ?>

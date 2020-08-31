@@ -1,4 +1,6 @@
 <?php
+session_start();
+unset($_SESSION['voucher_id']);
 include "../config/koneksi.php";
 
 $json = file_get_contents('php://input');
