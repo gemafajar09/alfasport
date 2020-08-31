@@ -69,7 +69,8 @@ if(isset($_POST['upload']))
                 'foto2' => $isi_baris[11],
                 'foto3' => $isi_baris[12],
                 'foto4' => $isi_baris[13],
-                'foto5' => $isi_baris[14]
+                'foto5' => $isi_baris[14],
+                'berat' => $isi_baris[15]
             );
             // var_dump($data); exit;
             $simpan = $con->insert('tb_gudang',$data);

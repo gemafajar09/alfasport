@@ -1,2 +1,2 @@
-id,artikel,nama,id_merek,modal,jual,id_gender,id_kategori,id_divisi,id_sub_divisi
-072988-42,072988-42,PUMA ACADEMY BACKPACK,PUMA ACADEMY BACKPACK,260946,399000,Unisex,Sportswear,Hardware,Hardware
+artikel,nama,merek,kategori,divisi,subdivisi,gender,modal,jual,thumbnail,foto1,foto2,foto3,foto4,foto5,berat
+072988-42,PUMA ACADEMY BACKPACK,PUMA ACADEMY BACKPACK,,,,,,,,,,,,,
