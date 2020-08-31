@@ -119,8 +119,11 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                        <div class="form-group">
-                            <label>Sub Total</label>
+                        <label>Sub Total</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Rp.</div>
+                            </div>
                             <input type="text" required name="transaksi_total_harga" id="transaksi_total_harga" class="form-control" readonly>
                             <input type="hidden" id="tmp_id">
                             <input type="hidden" id="id_gudangs">
@@ -160,7 +163,7 @@
 
         <!-- awal modal checkout -->
         <div class="modal" id="modalCheckout">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <!-- Modal Header -->
                     <div class="modal-header">
@@ -198,8 +201,11 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Total</label>
+                                    <label>Total</label>
+                                    <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Rp.</div>
+                                    </div>
                                         <input type="text" class="form-control" id="subTotalBelanja" readonly>
                                         <input type="hidden" class="form-control" id="subTotalBelanja1" readonly>
                                         <input type="hidden" class="form-control" id="jumlahTotal" readonly>
@@ -213,20 +219,29 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="display: none;" id="bayar_cash">
-                                    <div class="form-group">
-                                        <label>Bayar Cash</label>
+                                    <label>Bayar Cash</label>
+                                    <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Rp.</div>
+                                    </div>
                                         <input type="text" class="form-control" id="txtBayarCash" onkeyup="dapatKembalian()">
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="display: none;" id="bayar_card">
-                                    <div class="form-group">
-                                        <label>Bayar Card</label>
+                                    <label>Bayar Card</label>
+                                    <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Rp.</div>
+                                    </div>
                                         <input type="text" class="form-control" id="txtBayarCard" onkeyup="dapatKembalian()">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Kembalian</label>
+                                    <label>Kembalian</label>
+                                    <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">Rp.</div>
+                                    </div>
                                         <input type="text" id="kembalian" class="form-control" readonly>
                                         <input type="hidden" id="transaksi_id" class="form-control">
                                     </div>
@@ -272,10 +287,14 @@
 
     function potongan(disc)
     {
-        let diskon = disc.value
-        let harga = $('#harga1').val()
-        let hasil = (harga * parseFloat(diskon)) / 100
-        let nominal = harga - hasil
+        var diskon = disc.value
+        var harga = $('#harga1').val()
+        var jumlah = $('#transaksi_jumlah_beli').val()
+        var hasil = (harga * parseFloat(diskon)) / 100
+        var nominal = harga - hasil
+        var totalBayar = parseInt(jumlah) * nominal
+        console.log(jumlah)
+        $('#transaksi_total_harga').val(totalBayar)
         $('#harga').val(nominal)
 
     }
@@ -341,11 +360,12 @@
             'id': ukuran
         }).then(function(res) {
             var data = res.data
-            var hasil = (data.jual * parseFloat(data.diskon)) / 100
-            var pengurangan = data.jual - hasil
+            var hasil = data.jual - data.potongan
+            console.log(hasil)
+            var pengurangan = hasil
             $('#transaksi_stok').val(data.jumlah)
             $('#harga').val(pengurangan)
-            $('#discItm').val(data.diskon)
+            $('#discItm').val(data.persen)
             $('#hasilDsc').val(hasil)
             $('#harga1').val(pengurangan)
             $('#id_gudangs').val(data.id_gudang)
@@ -368,7 +388,6 @@
         var final = (harga - total) * jumlahBeli;
         document.getElementById("transaksi_total_harga").value = final;
         document.getElementById("diskon1").value = total;
-        // $('#transaksi_total_harga').val(total);
     }
 
     // proses masuk ke keranjang
@@ -526,7 +545,6 @@
             'keterangan': keterangan
         }).then(function(res) {
             var simpan = res.data
-            console.log(simpan)
             window.open('inc/struk/invo1.php?invoice=' + kode, '_blank');
             window.location = 'penjualan.html';
             kosong()
@@ -551,8 +569,10 @@
 
     // utk mengosongkan jisa selesai pilih barang
     function kosong() {
-        $('#id_toko').select2(null).trigger('change')
-        $('#id_gudang').select2(null).trigger('change')
+        // $('#id_toko').select2(null).trigger('change')
+        // $('#id_gudang').select2(null).trigger('change')
+        $('#ukurans').val(null).trigger('change');
+        $('#id_gudang').val(null).trigger('change');
         $('#id_gudangs').val(null)
         $('#transaksi_stok').val(0)
         $('#harga').val(0)
@@ -562,5 +582,7 @@
         $('#transaksi_jumlah_beli').val(null)
         $('#transaksi_total_harga').val(0)
         $('#tmp_id').val(null)
+        $('#disc').val(null)
+        document.getElementsByName("radio")[0].checked = false;
     }
 </script>
