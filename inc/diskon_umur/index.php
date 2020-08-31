@@ -46,7 +46,9 @@
                     <td><?= $i+1 ?></td>
                     <td><?= $a['umur'] ?></td>
                     <td><?= $a['diskon'] ?></td>
-                    <td></td>
+                    <td class="text-center">
+                        <button type="button" onclick="edit('<?= $a['id_umur'] ?>')" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                    </td>
                 </tr>
                 <?php endforeach ?>
             </tbody>
@@ -61,31 +63,45 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Data Divisi</h4>
+                <h4 class="modal-title">Set Diskon Umur</h4>
             </div>
-
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row" style="font-size:12px">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Umur</label>
-                                <input type="text" name="umur" placeholder="Umur" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Diskon</label>
-                                <input type="text" name="diskon" id="dikon" required="required" placeholder="Diskon" class="form-control">
-                                <input type="hidden" id="divisi_id">
+            <form action="simpanDiskonUmur.html" method="POST">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row" style="font-size:12px">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Umur</label>
+                                    <select name="umur" class="select2" style="width: 100%;" id="umur">
+                                        <option value="">-Set Umur-</option>
+                                        <option value="30">1 Bulan</option>
+                                        <option value="60">2 Bulan</option>
+                                        <option value="90">3 Bulan</option>
+                                        <option value="120">4 Bulan</option>
+                                        <option value="150">5 Bulan</option>
+                                        <option value="180">6 Bulan</option>
+                                        <option value="210">7 Bulan</option>
+                                        <option value="240">8 Bulan</option>
+                                        <option value="270">9 Bulan</option>
+                                        <option value="300">10 Bulan</option>
+                                        <option value="330">11 Bulan</option>
+                                        <option value="360">12 Bulan</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Diskon</label>
+                                    <input type="text" name="diskon" id="diskon" required="required" placeholder="Diskon" class="form-control">
+                                    <input type="hidden" name="id_umur" id="id_umur">
+                                </div>
+                                <div align="right">
+                                    <button type="submit" name="simpan" class="btn btn-primary btn-sm">Simpan</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" onclick="simpan()" class="btn btn-primary btn-sm">Simpan</button>
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-            </div>
+            </form>
 
         </div>
     </div>
@@ -95,5 +111,20 @@
     function tampil()
     {
         $('#umurDiskon').modal()
+    }
+
+    function edit(id)
+    {
+        axios.post('inc/diskon_umur/ambilData.php',{
+            'id_umur':id
+        }).then(function(res){
+            var data = res.data
+            $('#umur').val(data.umur).trigger('change');
+            $('#diskon').val(data.diskon)
+            $('#id_umur').val(data.id_umur)
+            $('#umurDiskon').modal()
+        }).catch(function(err){
+            console.log(err)
+        })
     }
 </script>
