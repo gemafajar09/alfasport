@@ -1,7 +1,5 @@
 <?php
-/**
- * XLS parsing uses php-excel-reader from http://code.google.com/p/php-excel-reader/
- */
+
 	header('Content-Type: text/plain');
 
 	if (isset($argv[1]))

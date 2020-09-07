@@ -17,8 +17,6 @@
   <link href="<?= $base_url ?>vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <!-- NProgress -->
   <link href="<?= $base_url ?>vendors/nprogress/nprogress.css" rel="stylesheet">
-  <!-- bootstrap-daterangepicker -->
-  <!-- <link href="<?= $base_url ?>vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet"> -->
 
 
   <link href="<?= $base_url ?>vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -32,8 +30,7 @@
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css">
-
+  
 
   <style>
     @font-face {
@@ -110,6 +107,7 @@
 <body class="nav-md">
   <!-- jQuery -->
   <script src="<?= $base_url ?>vendors/jquery/dist/jquery.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css"> -->
   
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
   <script src="<?= $base_url ?>build/js/moment.min.js"></script>

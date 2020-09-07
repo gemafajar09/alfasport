@@ -4,20 +4,18 @@ include "../../config/koneksi.php";
 
 $data = $con->query("
 SELECT 
-c.id_detail,
-b.artikel,
-d.ue, 
-d.uk, 
-d.us, 
-d.cm
-FROM tb_stok_toko a 
-LEFT JOIN tb_gudang b 
-ON a.id_gudang=b.id_gudang 
-LEFT JOIN tb_gudang_detail c
-ON b.artikel=c.id
-LEFT JOIN tb_all_ukuran d
-ON d.id_ukuran=c.id_ukuran
-WHERE a.id_toko= '$_GET[id_toko]'");
+a.artikel,
+b.id_detail,
+c.ue, 
+c.uk, 
+c.us, 
+c.cm
+FROM tb_gudang a
+LEFT JOIN tb_gudang_detail b
+ON a.artikel=b.id
+LEFT JOIN tb_all_ukuran c
+ON c.id_ukuran=b.id_ukuran
+");
 foreach ($data as $i => $a) {
     echo "<option value=" . $a['id_detail'] . ">" . $a['artikel'] . " - " . $a['nama'] . " - (" . $a['ue'] . " / " . $a['uk'] . " / " . $a['us'] . " / " . $a['cm']  . ")</option>";
 }

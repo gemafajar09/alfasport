@@ -15,8 +15,8 @@ if(isset($_POST['simpan']))
                 $harga_diskon = $_POST['harga_diskon_'.$detail->id_gudang.'_'.$x];
                 $data = array(
                     'id_diskon' => $_POST['id_diskons'],
-                    'artikel' => $_POST['artikel'],
-                    'barcode' => $_POST['barcode'],
+                    'artikel' => $_POST['artikel'][$x],
+                    'barcode' => $_POST['barcode'][$x],
                     'persen' => $besar_diskon,
                     'potongan' => $harga_selisih
                 );

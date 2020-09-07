@@ -101,8 +101,8 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                                 <div class="form-inline">
                                     <input type="text" name="besar_diskon_<?= $data['id_gudang']?>_<?= $ii?>" onkeyup="hitungDiskon(<?= $i ?>,<?= $ii ?>)" style="width: 70px;" class="form-control">
                                     <input type="text" value="%" readonly class="form-control" style="width:40px">
-                                    <input type="hidden" name="barcode" value="<?= $isi['barcode'] ?>">
-                                    <input type="hidden" name="artikel" value="<?= $isi['artikel'] ?>">
+                                    <input type="hidden" name="barcode[]" value="<?= $isi['barcode'] ?>">
+                                    <input type="hidden" name="artikel[]" value="<?= $isi['artikel'] ?>">
                                 </div>    
                             </td>
                             <td style="width: 80px;"><input type="text" name="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>"  id="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>" readonly style="width: 80px;" class="form-control"></td>

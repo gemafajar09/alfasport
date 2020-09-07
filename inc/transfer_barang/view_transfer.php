@@ -81,8 +81,9 @@
                                     <label>Nama Toko Asal</label>
                                     <select class="form-control select2" name="id_toko" id="id_toko" required style="width: 100%;">
                                         <option selected disabled>Pilih Toko</option>
+                                        <option value="gudang">Gudang</option>
                                         <?php
-                                        $data = $con->query("SELECT * FROM toko");
+                                        $data = $con->query("SELECT * FROM toko WHERE nama_toko != 'Gudang'");
                                         foreach ($data as $i => $a) {
                                             echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
                                         }
@@ -116,18 +117,32 @@
 
                                     $("#id_toko").change(function() {
                                         var id_toko = $('#id_toko option:selected').val();
-                                        console.log(id_toko);
-                                        $.ajax({
-                                            type: "GET",
-                                            url: "inc/transfer_barang/data_toko.php",
-                                            data: {
-                                                'id_toko': id_toko
-                                            },
-                                            success: function(response) {
-                                                $('#id_toko_tujuan').html(response);
-                                            }
-                                        });
+                                        if(id_toko == 'gudang')
+                                        {
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "inc/transfer_barang/data_toko.php",
+                                                data: {
+                                                    'id_toko': id_toko
+                                                },
+                                                success: function(response) {
+                                                    $('#id_toko_tujuan').html(response);
+                                                }
+                                            });
+                                        }else{
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "inc/transfer_barang/data_toko.php",
+                                                data: {
+                                                    'id_toko': id_toko
+                                                },
+                                                success: function(response) {
+                                                    $('#id_toko_tujuan').html(response);
+                                                }
+                                            });
+                                        }
                                     })
+                                    
                                     $("#id_toko").change(function() {
                                         $('#formInput').html(_pilihanBarangDefault);
                                         $('.select2').select2({
@@ -135,18 +150,32 @@
                                         });
 
                                         var id_toko = $('#id_toko option:selected').val();
-                                        console.log(id_toko);
-                                        $.ajax({
-                                            type: "GET",
-                                            url: "inc/transfer_barang/data_barang_toko.php",
-                                            data: {
-                                                'id_toko': id_toko
-                                            },
-                                            success: function(response) {
-                                                _dataBarang = response;
-                                                $('[name ="id_gudang[]"]').html(response);
-                                            }
-                                        });
+                                        if(id_toko == 'gudang')
+                                        {
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "inc/transfer_barang/data_barang_gudang.php",
+                                                data: {
+                                                    'id_toko': id_toko
+                                                },
+                                                success: function(response) {
+                                                    _dataBarang = response;
+                                                    $('[name ="id_gudang[]"]').html(response);
+                                                }
+                                            });
+                                        }else{
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "inc/transfer_barang/data_barang_toko.php",
+                                                data: {
+                                                    'id_toko': id_toko
+                                                },
+                                                success: function(response) {
+                                                    _dataBarang = response;
+                                                    $('[name ="id_gudang[]"]').html(response);
+                                                }
+                                            });
+                                        }
                                     })
                                 </script>
                                 <div class="form-group">
@@ -347,29 +376,55 @@ if (isset($_POST['simpanT'])) {
 
         $('[name ="id_gudang[]"]').change(function() {
             var id_gudang = $(this).val()
-            axios.post('inc/transfer_barang/ukuran.php', {
-                'id': id_gudang
-            }).then(function(res) {
-                var data = res.data
-                console.log(data)
-                $('[name ="ukuran[]"]').html(data)
-            }).catch(function(err) {
-                console.log(err)
-            })
+            if(id_gudang == 'gudang')
+            {
+                axios.post('inc/transfer_barang/ukuran_gudang.php', {
+                    'id': id_gudang
+                }).then(function(res) {
+                    var data = res.data
+                    console.log(data)
+                    $('[name ="ukuran[]"]').html(data)
+                }).catch(function(err) {
+                    console.log(err)
+                })
+            }else{
+                axios.post('inc/transfer_barang/ukuran.php', {
+                    'id': id_gudang
+                }).then(function(res) {
+                    var data = res.data
+                    console.log(data)
+                    $('[name ="ukuran[]"]').html(data)
+                }).catch(function(err) {
+                    console.log(err)
+                })
+            }
         })
     })
 
     $('[name ="id_gudang[]"]').change(function() {
         var id_gudang = $(this).val()
-        axios.post('inc/transfer_barang/ukuran.php', {
-            'id': id_gudang
-        }).then(function(res) {
-            var data = res.data
-            console.log(data)
-            $('[name ="ukuran[]"]').html(data)
-        }).catch(function(err) {
-            console.log(err)
-        })
+        if(id_gudang == 'gudang')
+            {
+                axios.post('inc/transfer_barang/ukuran_gudang.php', {
+                    'id': id_gudang
+                }).then(function(res) {
+                    var data = res.data
+                    console.log(data)
+                    $('[name ="ukuran[]"]').html(data)
+                }).catch(function(err) {
+                    console.log(err)
+                })
+            }else{
+                axios.post('inc/transfer_barang/ukuran.php', {
+                    'id': id_gudang
+                }).then(function(res) {
+                    var data = res.data
+                    console.log(data)
+                    $('[name ="ukuran[]"]').html(data)
+                }).catch(function(err) {
+                    console.log(err)
+                })
+            }
     })
 
     $('#isi').load('inc/transfer_barang/data_transfer.php');

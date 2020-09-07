@@ -1,17 +1,18 @@
 <?php
 include "../../config/koneksi.php";
 include "../../App/MY_url_helper.php";
-$data = $con->query("SELECT 
-                        tb_transfer.id_transfer, 
-                        toko.nama_toko AS asal, 
-                        toko1.nama_toko As tujuan, 
-                        tb_transfer.tanggal, 
-                        tb_transfer.acc_owner 
-                        FROM tb_transfer 
-                        JOIN toko ON toko.id_toko = tb_transfer.id_toko 
-                        JOIN toko toko1 ON toko1.id_toko = tb_transfer.id_toko_tujuan 
-                        GROUP BY tb_transfer.kode_transfer 
-                    ")->fetchAll();
+$data = $con->query("
+SELECT 
+tb_transfer.id_transfer, 
+toko.nama_toko AS asal, 
+toko1.nama_toko As tujuan, 
+tb_transfer.tanggal, 
+tb_transfer.acc_owner 
+FROM tb_transfer 
+JOIN toko ON toko.id_toko = tb_transfer.id_toko 
+JOIN toko toko1 ON toko1.id_toko = tb_transfer.id_toko_tujuan 
+GROUP BY tb_transfer.kode_transfer 
+")->fetchAll();
 foreach ($data as $i => $a) {
 ?>
     <tr>
