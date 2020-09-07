@@ -24,27 +24,27 @@ JOIN tb_divisi e ON a.id_divisi=e.divisi_id
 JOIN tb_subdivisi f ON a.id_sub_divisi=f.subdivisi_id
 WHERE a.id_merek = '$_POST[merek]'
 ")->fetchAll();
-foreach($data as $i => $a){
-    $modal = 'Rp'.number_format($a['modal']);
-    $jual = 'Rp'.number_format($a['jual']);
+foreach ($data as $i => $a) {
+    $modal = 'Rp' . number_format($a['modal']);
+    $jual = 'Rp' . number_format($a['jual']);
 ?>
-<tr>
-    <td><?= $i+1 ?></td>
-    <td><?= $a['id'] ?></td>
-    <td><?= $a['artikel'] ?></td>
-    <td><?= $a['nama'] ?></td>
-    <td><?= $a['merk_nama'] ?></td>
-    <td><?= $a['kategori_nama'] ?></td>
-    <td><?= $a['divisi_nama'] ?></td>
-    <td><?= $a['subdivisi_nama'] ?></td>
-    <td><?= $a['gender_nama'] ?></td>
-    <td><?= $modal ?></td>
-    <td><?= $jual ?></td>
-    <!-- <td></td> -->
-    <td class="text-center">
-        <a href="update-gudang-<?= $a['id_gudang'] ?>.html" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
-        <button type="button" id="hapus" onclick="hapus('<?= $a['id_gudang'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-        <button type="button" onclick="show('<?= $a['id_gudang'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
-    </td>
-</tr>
+    <tr>
+        <td><?= $i + 1 ?></td>
+
+        <td><?= $a['artikel'] ?></td>
+        <td><?= $a['nama'] ?></td>
+        <td><?= $a['merk_nama'] ?></td>
+        <td><?= $a['kategori_nama'] ?></td>
+        <td><?= $a['divisi_nama'] ?></td>
+        <td><?= $a['subdivisi_nama'] ?></td>
+        <td><?= $a['gender_nama'] ?></td>
+        <td><?= $modal ?></td>
+        <td><?= $jual ?></td>
+        <!-- <td></td> -->
+        <td class="text-center">
+            <a href="update-gudang-<?= $a['id_gudang'] ?>.html" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+            <button type="button" id="hapus" onclick="hapus('<?= $a['id_gudang'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+            <button type="button" onclick="show('<?= $a['id_gudang'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+        </td>
+    </tr>
 <?php } ?>

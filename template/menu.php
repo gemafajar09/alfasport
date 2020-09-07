@@ -16,12 +16,14 @@
                         <li><a><i class="fa fa-database"></i> Master Data <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="data_toko.html">Data Toko</a></li>
+                                <li><a href="data_toko_online.html">Data Toko Online</a></li>
                                 <li><a href="diskon_umur.html">Data Diskon Berdasarkan Umur</a></li>
                                 <li><a href="data_karyawan.html">Data Karyawan</a></li>
                                 <li><a href="data_jabatan.html">Data Jabatan</a></li>
                                 <li><a href="data_umur_barang.html">Data Umur Barang</a></li>
                                 <li><a href="data_member.html">Member</a></li>
                                 <li><a href="point_member.html">Point Member</a></li>
+                                <li><a href="data_profesi.html">Data Profesi Member</a></li>
                                 <li><a href="data_supplier.html">Supplier</a></li>
                                 <li><a href="data_distributor.html">Distributor</a></li>
                             </ul>
@@ -38,7 +40,7 @@
                                 <li><a href="data_satuan.html">Satuan</a></li>
                                 <li><a href="ukuran.html">Ukuran Sepatu</a></li>
                                 <li><a href="ukuran_kaos_kaki.html">Ukuran Kaos Kaki</a></li>
-                                <li><a href="ukuran_baju.html">Ukuran Baju</a></li>
+                                <li><a href="ukuran_barang.html">Ukuran Semua Barang</a></li>
                                 <li><a href="data_kategori.html">Kategori</a></li>
                                 <li><a href="data_divisi.html">Divisi</a></li>
                                 <li><a href="data_subdivisi.html">Sub Divisi</a></li>
@@ -71,6 +73,7 @@
                         </li>
                         <li><a href="pembelian.html"><i class="fa fa-shopping-bag "></i> Pembelian</a></li>
                         <li><a href="penjualan.html"><i class="fa fa-shopping-cart "></i> Penjualan Offline</a></li>
+                        <li><a href="penjualan_online.html"><i class="fa fa-shopping-cart "></i> Penjualan Online</a></li>
                     </ul>
                 <?php
                 } elseif ($_COOKIE['jabatan_id'] == 2) {

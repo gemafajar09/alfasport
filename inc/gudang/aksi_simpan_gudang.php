@@ -2,7 +2,7 @@
 // include "../../config/koneksi.php";
 if (isset($_POST['simpan'])) {
     $data = array(
-        'id' => $_POST['artikel'],
+        'id' => $_POST['id'],
         'artikel' => $_POST['artikel'],
         'nama' => $_POST['nama'],
         'id_merek' => $_POST['merek'],
@@ -33,7 +33,7 @@ if (isset($_POST['simpan'])) {
 
     echo "
         <script>
-            window.location='input_stok-" . $_POST['artikel'] . "-" . $_POST['merek'] . "-" . $_POST['kategori'] . ".html'
+            window.location='input_stok-" . $_POST['id'] . "-" . $_POST['artikel'] . "-" . $_POST['merek'] . "-" . $_POST['kategori'] . ".html'
         </script>
         ";
 }

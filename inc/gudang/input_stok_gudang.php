@@ -57,7 +57,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Kategori</label>
-                            <select name="kategori" required id="kategoris" class="form-control select2">
+                            <select name="kategori" required id="kategoris" class="form-control select2" style="width: 100%;">
                                 <option value="">-Kategori-</option>
                                 <?php
                                 $kategori = $con->select('tb_kategori', '*');
@@ -71,14 +71,16 @@
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Divisi</label>
-                            <select required name="divisi" id="divisis" class="form-control select2">
+                            <select required name="divisi" id="divisis" class="form-control select2" style="width: 100%;">
+                                <option value="">-Pilih Divisi-</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Sub Divisi</label>
-                            <select name="sub_divisi" id="sub_divisis" class="form-control select2">
+                            <select name="sub_divisi" id="sub_divisis" class="form-control select2" required style="width: 100%;">
+                                <option value="">-Pilih Subdivisi-</option>
                             </select>
                         </div>
                     </div>
@@ -173,6 +175,7 @@
             },
             success: function(response) {
                 $('#divisis').html(response);
+                $('#sub_divisis').html("<option>-Pilih Subdivisi-</option>");
             }
         });
     })

@@ -32,6 +32,7 @@
             <thead>
                 <tr>
                     <th style="width:40px">No</th>
+                    <th>Nama Kategori</th>
                     <th>Nama Divisi</th>
                     <th>Nama Subdivisi</th>
                     <th class="text-center" style="width:140px">Action</th>
@@ -56,6 +57,10 @@
                 <div class="container">
                     <div class="row" style="font-size:12px">
                         <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <h6 id="kategori"></h6>
+                            </div>
                             <div class="form-group">
                                 <label>Nama Divisi</label>
                                 <select class="form-control" name="divisi_id" id="divisi_id" required>
@@ -88,6 +93,21 @@
 </div>
 
 <script>
+    $("#divisi_id").change(function() {
+        var divisi_id = $('#divisi_id option:selected').val();
+        $.ajax({
+            type: "GET",
+            dataType: 'JSON',
+            url: "inc/subdivisi/filter/data_kategori.php",
+            data: {
+                'divisi_id': divisi_id
+            },
+            success: function(res) {
+                $('#kategori').html(res.kategori_nama);
+            }
+        });
+    })
+
     function tampil() {
         $('#dataSubdivisi').modal()
     }
@@ -118,7 +138,9 @@
         axios.post('inc/subdivisi/aksi_edit_subdivisi.php', {
             'subdivisi_id': id
         }).then(function(res) {
+            console.log(res)
             var edit = res.data
+            $('#kategori').html(edit.kategori_nama);
             $('#subdivisi_nama').val(edit.subdivisi_nama)
             $('#subdivisi_id').val(edit.subdivisi_id)
             $('#divisi_id').val(edit.divisi_id)

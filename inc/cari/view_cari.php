@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label>Toko</label>
                 <select name="toko" id="toko" class="form-control select2">
-                    <option value="">-Toko-</option>
+                    <option value="">-Semua Toko-</option>
                     <?php
                     $toko = $con->select('toko', '*');
                     foreach ($toko as $t) {
@@ -133,6 +133,7 @@
                     <tr>
                         <th>No</th>
                         <th>Artikel</th>
+                        <th>Nama Toko</th>
                         <th>Jumlah</th>
                         <th>
                             <select name="ukuran_nama" id="ukuran_nama" class="form-control" width="100%">

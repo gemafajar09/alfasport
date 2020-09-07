@@ -96,6 +96,8 @@
                                 <div class="form-group">
                                     <label>Divisi</label>
                                     <select name="id_divisi" id="id_divisi" class="form-group select2" style="width: 100%;">
+                                        <option value="">-Pilih Divisi-</option>
+
                                     </select>
                                 </div>
                             </div>
@@ -104,6 +106,7 @@
                                 <div class="form-group">
                                     <label>Subivisi</label>
                                     <select name="id_subdivisi" id="id_subdivisi" class="form-group select2" style="width: 100%;">
+                                        <option value="">-Pilih Subdivisi-</option>
                                     </select>
                                 </div>
                             </div>
@@ -222,14 +225,17 @@
                             <div class="form-group">
                                 <label>Divisi</label>
                                 <select name="id_divisi" id="id_divisi2" class="form-group select2" style="width: 100%;">
+                                    <option value="">-Pilih Divisi-</option>
+
                                 </select>
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Subivisi</label>
+                                <label>Subdivisi</label>
                                 <select name="id_subdivisi" id="id_subdivisi2" class="form-group select2" style="width: 100%;">
+                                    <option value="">-Pilih Subdivisi-</option>
                                 </select>
                             </div>
                         </div>
@@ -328,6 +334,7 @@ if (isset($_POST['simpanT'])) {
             },
             success: function(response) {
                 $('#id_divisi').html(response);
+                $('#id_subdivisi').html("<option>-Pilih Subdivisi-</option>");
             }
         });
     })
@@ -358,6 +365,7 @@ if (isset($_POST['simpanT'])) {
             },
             success: function(response) {
                 $('#id_divisi2').html(response);
+                $('#id_subdivisi2').html("<option>-Pilih Subdivisi-</option>");
             }
         });
     })

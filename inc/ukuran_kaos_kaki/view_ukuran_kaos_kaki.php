@@ -33,7 +33,7 @@
                     <th class="text-center" style="width:40px">No</th>
                     <th>Nama Merk</th>
                     <th>Gender</th>
-                    <th>UE</th>
+                    <th>EU</th>
                     <th>Size</th>
                     <th>Action</th>
                 </tr>
@@ -92,6 +92,7 @@
                                 <div class="form-group">
                                     <label>Divisi</label>
                                     <select name="id_divisi" id="id_divisi" class="form-group select2" style="width: 100%;">
+                                        <option value="">-Pilih Divisi-</option>
                                     </select>
                                 </div>
                             </div>
@@ -100,6 +101,7 @@
                                 <div class="form-group">
                                     <label>Subivisi</label>
                                     <select name="id_subdivisi" id="id_subdivisi" class="form-group select2" style="width: 100%;">
+                                        <option value="">-Pilih Subdivisi-</option>
                                     </select>
                                 </div>
                             </div>
@@ -127,14 +129,14 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>UE</label>
-                                                <input type="text" name="ukuran_kaos_kaki_ue[]" class="form-control">
+                                                <label>SIZE</label>
+                                                <input type="text" name="ukuran_kaos_kaki_size[]" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>SIZE</label>
-                                                <input type="text" name="ukuran_kaos_kaki_size[]" class="form-control">
+                                                <label>EU</label>
+                                                <input type="text" name="ukuran_kaos_kaki_ue[]" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -295,6 +297,7 @@ if (isset($_POST['simpanT'])) {
             },
             success: function(response) {
                 $('#id_divisi').html(response);
+                $('#id_subdivisi').html("<option>-Pilih Subdivisi-</option>");
             }
         });
     })
@@ -325,6 +328,7 @@ if (isset($_POST['simpanT'])) {
             },
             success: function(response) {
                 $('#id_divisi2').html(response);
+                $('#id_subdivisi2').html("<option>-Pilih Subdivisi-</option>");
             }
         });
     })
@@ -352,14 +356,14 @@ if (isset($_POST['simpanT'])) {
             <div class="row" id='baris_${_banyakPilihanBarang}'>
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label>UE</label>
-                        <input type="text" name="ukuran_kaos_kaki_ue[]" id="ue" class="form-control">
+                        <label>SIZE</label>
+                        <input type="text" name="ukuran_kaos_kaki_size[]" id="uk" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label>SIZE</label>
-                        <input type="text" name="ukuran_kaos_kaki_size[]" id="uk" class="form-control">
+                        <label>UE</label>
+                        <input type="text" name="ukuran_kaos_kaki_ue[]" id="ue" class="form-control">
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -442,7 +446,6 @@ if (isset($_POST['simpanT'])) {
                     }
                 }
             }
-
             $('#id_kategori2').val(edit.id_kategori).change()
             return axios.get('inc/ukuran_kaos_kaki/filter/data_divisi.php?kategori_id=' + edit.id_kategori)
         }).then(function(res) {

@@ -30,7 +30,7 @@
     <div class="x_content table-responsive">
         <table class="table table-striped" id="datatable-responsive">
             <thead>
-                <tr  class="text-center">
+                <tr class="text-center">
                     <th style="width:60px">No</th>
                     <th style="width:180px">Toko</th>
                     <th style="width:260px">Alamat</th>
@@ -64,8 +64,46 @@
                                 <input type="text" name="nama_toko" id="nama_toko" required="required" placeholder="Nama Toko" class="form-control">
                             </div>
                             <div class="form-group">
+                                <label>Nama Provinsi</label>
+                                <select name="id_prov" id="id_prov" class="form-control select2" style="width: 100%;">
+                                    <option>-Pilih Provinsi-</option>
+                                    <?php
+                                    $data = $con->select("tb_provinsi", "*");
+                                    foreach ($data as $i => $a) {
+                                    ?>
+                                        <option value="<?php echo $a['id_prov'] ?>"><?php echo $a['nama_prov'] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <script>
+                                $("#id_prov").change(function() {
+                                    var id_prov = $('#id_prov option:selected').val();
+                                    console.log(id_prov);
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "inc/toko/toko_nama/filter/data_kota.php",
+                                        data: {
+                                            'id_prov': id_prov
+                                        },
+                                        success: function(response) {
+                                            $('#id_kota').html(response);
+                                        }
+                                    });
+                                })
+                            </script>
+                            <div class="form-group">
+                                <label>Pilih Kota</label>
+                                <select class="form-control select2" name="id_kota" id="id_kota" required style="width: 100%;">
+                                    <option selected disabled>Pilih Kota</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Alamat Toko</label>
-                                <textarea name="alamat_toko" style="height:118px" id="alamat_toko" class="form-control"></textarea>
+                                <textarea name="alamat_toko" style="height:100px" id="alamat_toko" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -75,7 +113,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Kode pos</label>
-                                <input type="text" class="form-control" name="no_hp" id="no_hp" required="required" placeholder="Kode Pos">
+                                <input type="text" class="form-control" name="kode_pos" id="kode_pos" required="required" placeholder="Kode Pos">
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
@@ -105,15 +143,19 @@
         var nama_toko = $('#nama_toko').val()
         var alamat_toko = $('#alamat_toko').val()
         var no_telpon = $('#no_telpon').val()
-        var no_hp = $('#no_hp').val()
+        var kode_pos = $('#kode_pos').val()
         var email = $('#email').val()
+        var id_prov = $('#id_prov').val()
+        var id_kota = $('#id_kota').val()
         var id_toko = $('#id_toko').val()
         axios.post('inc/toko/toko_nama/aksi_simpan_toko.php', {
             'nama_toko': nama_toko,
             'alamat_toko': alamat_toko,
             'no_telpon': no_telpon,
-            'no_hp': no_hp,
+            'kode_pos': kode_pos,
             'email': email,
+            'id_prov': id_prov,
+            'id_kota': id_kota,
             'id_toko': id_toko,
         }).then(function(res) {
             var simpan = res.data
@@ -129,16 +171,23 @@
     }
 
     function edit(id) {
+        var edit = null;
         axios.post('inc/toko/toko_nama/aksi_edit_toko.php', {
             'id_toko': id
         }).then(function(res) {
-            var edit = res.data
+            edit = res.data
             $('#nama_toko').val(edit.nama_toko)
             $('#alamat_toko').val(edit.alamat_toko)
             $('#no_telpon').val(edit.telpon_toko)
-            $('#no_hp').val(edit.hp_toko)
+            $('#kode_pos').val(edit.kode_pos_toko)
             $('#email').val(edit.email)
+            $('#id_prov').val(edit.id_prov).change()
             $('#id_toko').val(edit.id_toko)
+
+            return axios.get('inc/toko/toko_nama/filter/data_kota.php?id_prov=' + edit.id_prov)
+        }).then(function(response) {
+            $('#id_kota').html(response.data);
+            $('#id_kota').val(edit.id_kota).change()
             $('#dataToko').modal()
         }).catch(function(err) {
             console.log(err)
@@ -160,8 +209,10 @@
         $('#nama_toko').val('')
         $('#alamat_toko').val('')
         $('#no_telpon').val('')
-        $('#no_hp').val('')
+        $('#kode_pos').val('')
         $('#email').val('')
+        $('#id_prov').val('')
+        $('#id_kota').val('')
         $('#id_toko').val('')
     }
 

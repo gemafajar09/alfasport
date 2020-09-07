@@ -2,7 +2,7 @@
 include "../../config/koneksi.php";
 
 $json = file_get_contents('php://input');
-$_POST = json_decode($json,true);
+$_POST = json_decode($json, true);
 $where = array('id_gudang' => $_POST['id']);
 $edit = $con->query("SELECT a.id, a.artikel, a.nama, a.id_gudang, a.modal, a.jual, b.merk_nama, c.gender_nama, d.kategori_nama, e.divisi_nama FROM tb_gudang a JOIN tb_merk b ON a.id_merek=b.merk_id JOIN tb_gender c ON a.id_gender=c.gender_id JOIN tb_kategori d ON a.id_kategori=d.kategori_id JOIN tb_divisi e ON a.id_divisi=e.divisi_id WHERE a.id_gudang='$_POST[id]'")->fetch();
 ?>
@@ -25,11 +25,6 @@ $edit = $con->query("SELECT a.id, a.artikel, a.nama, a.id_gudang, a.modal, a.jua
                 <th>:</th>
                 <th><i id="artikel">&nbsp;&nbsp;Rp.<?= number_format($edit['jual']) ?></i></th>
             </tr>
-            <!-- <tr>
-                <th>Satuan</th>
-                <th>:</th>
-                <th><i id="artikel">&nbsp;&nbsp;</i></th>
-            </tr> -->
         </table>
     </div>
     <div class="col-md-6">
@@ -62,12 +57,13 @@ $edit = $con->query("SELECT a.id, a.artikel, a.nama, a.id_gudang, a.modal, a.jua
                 <tr>
                     <th>No</th>
                     <th>ID</th>
+                    <th>Barcode</th>
                     <th class="text-center" colspan="4">Ukuran</th>
                     <th>Jumlah</th>
                     <th>Tanggal</th>
                 </tr>
                 <tr>
-                    <th colspan="2"></th>
+                    <th colspan="3"></th>
                     <th>Ue</th>
                     <th>Uk</th>
                     <th>Us</th>
@@ -76,22 +72,23 @@ $edit = $con->query("SELECT a.id, a.artikel, a.nama, a.id_gudang, a.modal, a.jua
                 </tr>
             </thead>
             <tbody>
-            
-            <?php
-                $isi = $con->query("SELECT a.id, a.jumlah, a.tanggal , b.ue, b.uk, b.us, b.cm FROM tb_gudang_detail a JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran WHERE a.id='$edit[id]'")->fetchAll();
-                foreach($isi as $i => $a){
-            ?>
-                <tr>
-                    <td><?= $i+1 ?></td>
-                    <td><?= $a['id'] ?></td>
-                    <td><?= $a['ue'] ?></td>
-                    <td><?= $a['uk'] ?></td>
-                    <td><?= $a['us'] ?></td>
-                    <td><?= $a['cm'] ?></td>
-                    <td><?= $a['jumlah'] ?></td>
-                    <td><?= $a['tanggal'] ?></td>
-                </tr>
-            <?php } ?>
+
+                <?php
+                $isi = $con->query("SELECT a.id, a.jumlah, a.tanggal,a.barcode, b.ue, b.uk, b.us, b.cm FROM tb_gudang_detail a JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran WHERE a.id='$edit[id]'")->fetchAll();
+                foreach ($isi as $i => $a) {
+                ?>
+                    <tr>
+                        <td><?= $i + 1 ?></td>
+                        <td><?= $a['id'] ?></td>
+                        <td><?= $a['barcode'] ?></td>
+                        <td><?= $a['ue'] ?></td>
+                        <td><?= $a['uk'] ?></td>
+                        <td><?= $a['us'] ?></td>
+                        <td><?= $a['cm'] ?></td>
+                        <td><?= $a['jumlah'] ?></td>
+                        <td><?= $a['tanggal'] ?></td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
     </div>
