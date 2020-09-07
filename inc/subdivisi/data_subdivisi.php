@@ -1,10 +1,13 @@
 <?php
 include "../../config/koneksi.php";
-$data = $con->query("SELECT * FROM tb_subdivisi JOIN tb_divisi ON tb_divisi.divisi_id = tb_subdivisi.divisi_id")->fetchAll();
+$data = $con->query("SELECT * FROM tb_subdivisi 
+                    JOIN tb_divisi ON tb_divisi.divisi_id = tb_subdivisi.divisi_id
+                    JOIN tb_kategori ON tb_divisi.kategori_id = tb_kategori.kategori_id")->fetchAll();
 foreach ($data as $i => $a) {
 ?>
     <tr>
         <td><?= $i + 1 ?></td>
+        <td><?= $a['kategori_nama'] ?></td>
         <td><?= $a['divisi_nama'] ?></td>
         <td><?= $a['subdivisi_nama'] ?></td>
         <td class="text-center">

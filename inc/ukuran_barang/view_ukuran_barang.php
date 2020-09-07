@@ -1,6 +1,6 @@
 <div class="page-title">
     <div class="title_left">
-        <h3>Data Ukuran Baju</h3>
+        <h3>Data Ukuran Barang</h3>
     </div>
     <div class="title_right">
         <div class="col-md-5 col-sm-5   form-group pull-right top_search">
@@ -31,6 +31,7 @@
             <thead>
                 <tr>
                     <th class="text-center" style="width:40px">No</th>
+                    <th>Nama Barang</th>
                     <th>Nama Merk</th>
                     <th>Nama Kategori</th>
                     <th>Nama Divisi</th>
@@ -58,7 +59,13 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row" style="font-size:12px">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Nama Barang</label>
+                                    <input type="text" name="ukuran_barang_nama" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Merk</label>
                                     <select class="form-control select2" style="width: 100%;" name="id_merek" required>
@@ -72,7 +79,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Kategori</label>
                                     <select name="id_kategori" id="id_kategori" class="form-group select2" style="width: 100%;">
@@ -93,6 +100,7 @@
                                 <div class="form-group">
                                     <label>Divisi</label>
                                     <select name="id_divisi" id="id_divisi" class="form-group select2" style="width: 100%;">
+                                        <option value="">-Pilih Divisi-</option>
                                     </select>
                                 </div>
                             </div>
@@ -101,6 +109,7 @@
                                 <div class="form-group">
                                     <label>Subivisi</label>
                                     <select name="id_subdivisi" id="id_subdivisi" class="form-group select2" style="width: 100%;">
+                                        <option value="">-Pilih Subdivisi-</option>
                                     </select>
                                 </div>
                             </div>
@@ -126,36 +135,23 @@
                             <div class="col-md-12">
                                 <div id="formInput">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Ukuran S</label>
-                                                <input type="hidden" value="S" name="ukuran_baju_stok_nama[]">
-                                                <input type="number" placeholder="Stok Baju" name="ukuran_baju_detail_stok[]" class="form-control">
+                                                <label>Nama Ukuran</label>
+                                                <input class="form-control" type="text" name="ukuran_barang_detail_nama[]">
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Ukuran M</label>
-                                                <input type="hidden" value="M" name="ukuran_baju_stok_nama[]">
-                                                <input type="number" name="ukuran_baju_detail_stok[]" class="form-control" placeholder="Stok Baju">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Ukuran L</label>
-                                                <input type="hidden" value="L" name="ukuran_baju_stok_nama[]">
-                                                <input type="number" name="ukuran_baju_detail_stok[]" class="form-control" placeholder="Stok Baju">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Ukuran XL</label>
-                                                <input type="hidden" value="XL" name="ukuran_baju_stok_nama[]">
-                                                <input type="number" name="ukuran_baju_detail_stok[]" class="form-control" placeholder="Stok Baju">
+                                                <label>Stok</label>
+                                                <input type="number" name="ukuran_barang_detail_stok[]" class="form-control" placeholder="Stok Baju">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="button" id="addRow" class="btn btn-primary btn-block btn-sm">Add Row</button>
                             </div>
                         </div>
                     </div>
@@ -184,7 +180,13 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="row" style="font-size:12px">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Nama Barang</label>
+                                <input type="text" name="ukuran_barang_nama" id="ukuran_barang_nama" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Merk</label>
                                 <select class="form-control select2" style="width: 100%;" name="id_merek" id="id_merek" required>
@@ -196,10 +198,10 @@
                                     }
                                     ?>
                                 </select>
-                                <input type="hidden" id="ukuran_baju_id">
+                                <input type="hidden" id="ukuran_barang_id">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Kategori</label>
                                 <select name="id_kategori" id="id_kategori2" class="form-group select2" style="width: 100%;">
@@ -251,34 +253,6 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Ukuran S</label>
-                                <input type="hidden" value="S" name="ukuran_baju_stok_nama[]" id='ukuran_s'>
-                                <input type="number" placeholder="Stok Baju" name="ukuran_baju_detail_stok[]" class="form-control" id="ukuran_stok_s">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Ukuran M</label>
-                                <input type="hidden" value="M" name="ukuran_baju_stok_nama[]" id='ukuran_m'>
-                                <input type="number" name="ukuran_baju_detail_stok[]" class="form-control" placeholder="Stok Baju" id="ukuran_stok_m">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Ukuran L</label>
-                                <input type="hidden" value="L" name="ukuran_baju_stok_nama[]" id='ukuran_l'>
-                                <input type="number" name="ukuran_baju_detail_stok[]" class="form-control" placeholder="Stok Baju" id="ukuran_stok_l">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Ukuran XL</label>
-                                <input type="hidden" value="XL" name="ukuran_baju_stok_nama[]" id='ukuran_xl'>
-                                <input type="number" name="ukuran_baju_detail_stok[]" class="form-control" placeholder="Stok Baju" id="ukuran_stok_xl">
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -296,9 +270,10 @@
 <div class="modal" id="dataUkuranDetail">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
+            <input type="hidden" id="idDetailUkuran">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Detail Ukuran Baju</h4>
+                <h4 class="modal-title">Detail Ukuran</h4>
             </div>
             <form action="" method="POST">
                 <div class="modal-body">
@@ -317,24 +292,25 @@
 <?php
 if (isset($_POST['simpanT'])) {
     // var_dump($_POST);
+    $ukuran_barang_nama = $_POST['ukuran_barang_nama'];
     $id_merek = $_POST['id_merek'];
     $id_kategori = $_POST['id_kategori'];
     $id_divisi = $_POST['id_divisi'];
     $id_subdivisi = $_POST['id_subdivisi'];
     $a = $_POST['id_gender'];
     $id_gender = implode(",", $a);
-    $ukuran_baju_stok_nama = $_POST['ukuran_baju_stok_nama'];
-    $ukuran_baju_detail_stok = $_POST['ukuran_baju_detail_stok'];
+    $ukuran_barang_detail_nama = $_POST['ukuran_barang_detail_nama'];
+    $ukuran_barang_detail_stok = $_POST['ukuran_barang_detail_stok'];
 
-    $con->query("INSERT INTO tb_ukuran_baju(id_merek, id_kategori, id_divisi, id_subdivisi, id_gender) VALUES ('$id_merek','$id_kategori','$id_divisi','$id_subdivisi','$id_gender')");
+    $con->query("INSERT INTO tb_ukuran_barang(ukuran_barang_nama,id_merek, id_kategori, id_divisi, id_subdivisi, id_gender) VALUES ('$ukuran_barang_nama','$id_merek','$id_kategori','$id_divisi','$id_subdivisi','$id_gender')");
 
     $last_id = $con->id();
 
-    foreach ($ukuran_baju_stok_nama as $i => $a) {
-        $con->query("INSERT INTO tb_ukuran_baju_detail(ukuran_baju_id, ukuran_baju_detail_nama, ukuran_baju_detail_stok) VALUES ('$last_id','$ukuran_baju_stok_nama[$i]','$ukuran_baju_detail_stok[$i]')");
+    foreach ($ukuran_barang_detail_nama as $i => $a) {
+        $con->query("INSERT INTO tb_ukuran_barang_detail(ukuran_barang_id, ukuran_barang_detail_nama, ukuran_barang_detail_stok) VALUES ('$last_id','$ukuran_barang_detail_nama[$i]','$ukuran_barang_detail_stok[$i]')");
     }
     echo "<script>
-        window.location.href = 'ukuran_baju.html';
+        window.location.href = 'ukuran_barang.html';
     </script>";
 }
 ?>
@@ -345,12 +321,13 @@ if (isset($_POST['simpanT'])) {
         console.log(id_kategori);
         $.ajax({
             type: "GET",
-            url: "inc/ukuran_baju/filter/data_divisi.php",
+            url: "inc/ukuran_barang/filter/data_divisi.php",
             data: {
                 'kategori_id': id_kategori
             },
             success: function(response) {
                 $('#id_divisi').html(response);
+                $('#id_subdivisi').html("<option>-Pilih Subdivisi-</option>");
             }
         });
     })
@@ -360,7 +337,7 @@ if (isset($_POST['simpanT'])) {
         console.log(id_divisi);
         $.ajax({
             type: "GET",
-            url: "inc/ukuran_baju/filter/data_subdivisi.php",
+            url: "inc/ukuran_barang/filter/data_subdivisi.php",
             data: {
                 'divisi_id': id_divisi
             },
@@ -375,12 +352,13 @@ if (isset($_POST['simpanT'])) {
         // console.log(id_kategori);
         $.ajax({
             type: "GET",
-            url: "inc/ukuran_baju/filter/data_divisi.php",
+            url: "inc/ukuran_barang/filter/data_divisi.php",
             data: {
                 'kategori_id': id_kategori
             },
             success: function(response) {
                 $('#id_divisi2').html(response);
+                $('#id_subdivisi2').html("<option>-Pilih Subdivisi-</option>");
             }
         });
     })
@@ -390,7 +368,7 @@ if (isset($_POST['simpanT'])) {
         // console.log(id_divisi);
         $.ajax({
             type: "GET",
-            url: "inc/ukuran_baju/filter/data_subdivisi.php",
+            url: "inc/ukuran_barang/filter/data_subdivisi.php",
             data: {
                 'divisi_id': id_divisi
             },
@@ -401,64 +379,87 @@ if (isset($_POST['simpanT'])) {
     })
 
 
+    var _banyakPilihanBarang = -1;
+    $('#addRow').on('click', function() {
+        _banyakPilihanBarang++;
+        var html_row =
+            `
+            <div class="row" id='baris_${_banyakPilihanBarang}'>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Nama Ukuran</label>
+                        <input class="form-control" type="text" name="ukuran_barang_detail_nama[]">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Stok</label>
+                        <input type="number" name="ukuran_barang_detail_stok[]" class="form-control" placeholder="Stok Baju">
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button class='btn btn-danger form-control' type='button' onclick='hapusBaris(${_banyakPilihanBarang})'><i class='fa fa-trash'></i></button>
+                    </div>
+                </div>
+            </div>
+            `;
+        $('#formInput').append(html_row)
+    })
+
+    function hapusBaris(no) {
+        document.getElementById("baris_" + no).innerHTML = "";
+    }
+
+
     function tampil() {
         $('#dataUkuran').modal()
     }
 
     function simpan() {
-
+        var ukuran_barang_nama = $('#ukuran_barang_nama').val()
         var id_merek = $('#id_merek').val()
         var id_kategori = $('#id_kategori2').val()
         var id_divisi = $('#id_divisi2').val()
         var id_subdivisi = $('#id_subdivisi2').val()
-        var ukuran_stok_s = $('#ukuran_stok_s').val()
-        var ukuran_stok_m = $('#ukuran_stok_m').val()
-        var ukuran_stok_l = $('#ukuran_stok_l').val()
-        var ukuran_stok_xl = $('#ukuran_stok_xl').val()
         var id_gender = new Array();
         $('input[name="id_gender2"]:checked').each(function() {
             id_gender.push(this.value);
         });
 
-        var ukuran_baju_id = $('#ukuran_baju_id').val()
-        axios.post('inc/ukuran_baju/aksi_simpan_ukuran_baju.php', {
+        var ukuran_barang_id = $('#ukuran_barang_id').val()
+        axios.post('inc/ukuran_barang/aksi_simpan_ukuran_barang.php', {
+            'ukuran_barang_nama': ukuran_barang_nama,
             'id_merek': id_merek,
             'id_kategori': id_kategori,
             'id_divisi': id_divisi,
             'id_subdivisi': id_subdivisi,
             'id_gender': id_gender,
-            'ukuran_stok_s': ukuran_stok_s,
-            'ukuran_stok_m': ukuran_stok_m,
-            'ukuran_stok_l': ukuran_stok_l,
-            'ukuran_stok_xl': ukuran_stok_xl,
-            'ukuran_baju_id': ukuran_baju_id,
+            'ukuran_barang_id': ukuran_barang_id,
         }).then(function(res) {
             var simpan = res.data
             console.log(simpan)
             $('#dataUkuranEdit').modal('hide')
-            $('#isi').load('inc/ukuran_baju/data_ukuran_baju.php');
+            $('#isi').load('inc/ukuran_barang/data_ukuran_barang.php');
             kosong()
         }).catch(function(err) {
             alert(err)
             $('#dataUkuranEdit').modal('hide')
-            $('#isi').load('inc/ukuran_baju/data_ukuran_baju.php');
+            $('#isi').load('inc/ukuran_barang/data_ukuran_barang.php');
             kosong()
         })
     }
 
     function edit(id) {
         var edit = null;
-        axios.post('inc/ukuran_baju/aksi_edit_ukuran_baju.php', {
-            'ukuran_baju_id': id
+        axios.post('inc/ukuran_barang/aksi_edit_ukuran_barang.php', {
+            'ukuran_barang_id': id
         }).then(function(res) {
             edit = res.data
-
-            $('#ukuran_baju_id').val(edit.ukuran_baju_id)
+            $('#ukuran_barang_nama').val(edit.ukuran_barang_nama)
+            $('#ukuran_barang_id').val(edit.ukuran_barang_id)
             $('#id_merek').val(edit.id_merek).change()
-            $('#ukuran_stok_s').val(edit.stok_s)
-            $('#ukuran_stok_m').val(edit.stok_m)
-            $('#ukuran_stok_l').val(edit.stok_l)
-            $('#ukuran_stok_xl').val(edit.stok_xl)
             var a = edit.id_gender;
             var cek = a.split(",");
             console.log(cek);
@@ -476,11 +477,11 @@ if (isset($_POST['simpanT'])) {
             }
             console.log(edit.id_kategori);
             $('#id_kategori2').val(edit.id_kategori).change()
-            return axios.get("inc/ukuran_baju/filter/data_divisi.php?kategori_id=" + edit.id_kategori)
+            return axios.get("inc/ukuran_barang/filter/data_divisi.php?kategori_id=" + edit.id_kategori)
         }).then(function(res) {
             $('#id_divisi2').html(res.data);
             $('#id_divisi2').val(edit.id_divisi).change()
-            return axios.get("inc/ukuran_baju/filter/data_subdivisi.php?divisi_id=" + edit.id_divisi);
+            return axios.get("inc/ukuran_barang/filter/data_subdivisi.php?divisi_id=" + edit.id_divisi);
         }).then(function(res) {
             $('#id_subdivisi2').html(res.data);
             $('#id_subdivisi2').val(edit.id_subdivisi).change()
@@ -491,24 +492,24 @@ if (isset($_POST['simpanT'])) {
     }
 
     function detail(id) {
-        axios.post('inc/ukuran_baju/aksi_detail_ukuran_baju.php', {
-            'ukuran_baju_id': id
+        axios.post('inc/ukuran_barang/aksi_detail_ukuran_barang.php', {
+            'ukuran_barang_id': id
         }).then(function(res) {
             var data = res.data
             $('#tampilkan').html(data)
+            $('#idDetailUkuran').val(id)
             $('#dataUkuranDetail').modal();
         }).catch(function(err) {
             console.log(err)
         })
     }
 
-
     function hapus(id) {
-        axios.post('inc/ukuran_baju/aksi_hapus_ukuran_baju.php', {
-            'ukuran_baju_id': id
+        axios.post('inc/ukuran_barang/aksi_hapus_ukuran_barang.php', {
+            'ukuran_barang_id': id
         }).then(function(res) {
             var hapus = res.data
-            $('#isi').load('inc/ukuran_baju/data_ukuran_baju.php');
+            $('#isi').load('inc/ukuran_barang/data_ukuran_barang.php');
         }).catch(function(err) {
             console.log(err)
         })
@@ -525,5 +526,5 @@ if (isset($_POST['simpanT'])) {
         $('#ukuran_stok_xl').val('')
     }
 
-    $('#isi').load('inc/ukuran_baju/data_ukuran_baju.php');
+    $('#isi').load('inc/ukuran_barang/data_ukuran_barang.php');
 </script>

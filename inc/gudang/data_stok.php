@@ -1,26 +1,27 @@
 <?php
 include "../../config/koneksi.php";
-$data = $con->query("
-SELECT a.id,
-       a.artikel,
-       a.nama,
-       a.id_gudang,
-       a.modal,
-       a.jual,
-       b.merk_nama,
-       c.gender_nama,
-       d.kategori_nama,
-       e.divisi_nama,
-       f.subdivisi_nama,
-       g.menipis_status
-FROM tb_gudang a
-JOIN tb_merk b ON a.id_merek=b.merk_id
-JOIN tb_gender c ON a.id_gender=c.gender_id
-JOIN tb_kategori d ON a.id_kategori=d.kategori_id
-JOIN tb_divisi e ON a.id_divisi=e.divisi_id
-JOIN tb_subdivisi f ON a.id_sub_divisi=f.subdivisi_id
-LEFT JOIN tb_cek_stok_menipis g ON a.id_gudang = g.id_gudang
-")->fetchAll();
+$data = $con->query("SELECT
+                        tb_gudang.id_gudang,
+                        tb_gudang.id,
+                        tb_gudang.artikel,
+                        tb_gudang.nama,
+                        tb_gudang.modal,
+                        tb_gudang.jual,
+                        tb_merk.merk_nama,
+                        tb_gender.gender_nama,
+                        tb_kategori.kategori_nama,
+                        tb_divisi.divisi_nama,
+                        tb_subdivisi.subdivisi_nama,
+                        tb_cek_stok_menipis.menipis_status
+                    From
+                        tb_gudang  Join
+                        tb_merk On tb_merk.merk_id = tb_gudang.id_merek  Join
+                        tb_gender On tb_gender.gender_id = tb_gudang.id_gender  Join
+                        tb_kategori On tb_kategori.kategori_id = tb_gudang.id_kategori  Join
+                        tb_divisi On tb_divisi.divisi_id = tb_gudang.id_divisi  Join
+                        tb_subdivisi On tb_subdivisi.subdivisi_id = tb_gudang.id_sub_divisi  Join
+                        tb_cek_stok_menipis On tb_cek_stok_menipis.id_gudang = tb_gudang.id_gudang")->fetchAll();
+
 foreach ($data as $i => $a) {
     $modal = 'Rp' . number_format($a['modal']);
     $jual = 'Rp' . number_format($a['jual']);
@@ -43,8 +44,9 @@ foreach ($data as $i => $a) {
                 <input type="checkbox" class="cek_menipis" id="cek_menipis<?= $a['id_gudang'] ?>" value="<?= $a['id_gudang'] ?>" onchange="cekMenipis(<?= $a['id_gudang'] ?>, this)" <?php echo ($cek == '1') ? "checked" : "" ?>>
                 <span class="slider round"></span>
             </label>
-            <button type="button" id="hapus" onclick="hapus('<?= $a['id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+            <button type="button" id="edit" onclick="edit('<?= $a['id_gudang'] ?>')" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
             <button type="button" onclick="show('<?= $a['id_gudang'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+            <button type="button" id="hapus" onclick="hapus('<?= $a['id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
         </td>
     </tr>
 <?php } ?>
@@ -56,7 +58,8 @@ foreach ($data as $i => $a) {
                 'id_gudang': id_gudang
             }).then(function(res) {
                 var id = res.data
-                toastr.info('Sukses.. Barang Di Set Tidak Laku')
+                toastr.info('On')
+                // toastr.info('Sukses.. Barang Di Set Tidak Laku')
                 // $(".cek_menipis").prop("checked", true);
             }).catch(function(err) {
                 console.log(err)
@@ -68,7 +71,8 @@ foreach ($data as $i => $a) {
                 'id_gudang': id_gudang
             }).then(function(res) {
                 var data = res.data
-                toastr.info('Sukses.. Barang Di Set Laku')
+                toastr.warning('Off')
+                // toastr.info('Sukses.. Barang Di Set Laku')
             }).catch(function(err) {
                 toastr.warning('ERROR..')
             })
