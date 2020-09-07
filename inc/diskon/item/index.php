@@ -126,7 +126,7 @@
                         ?>
                         <tr>
                             <td><?= $i1+1 ?></td>
-                            <td><a href="<?= $a1['judul'] ?>"><?= $a1['judul'] ?></a></td>
+                            <td><a style="color: blue; cursor:pointer" onclick="DetailDiskon('<?= $a1['id_diskon'] ?>')"><?= $a1['judul'] ?></a></td>
                             <td><?= $a1['tgl_mulai'] ?></td>
                             <td><?= $a1['tgl_berakhir'] ?></td>
                             <td><?= $a1['kategori'] ?></td>
@@ -156,7 +156,7 @@
                         ?>
                         <tr>
                             <td><?= $i1+1 ?></td>
-                            <td><a href="<?= $a1['judul'] ?>"><?= $a1['judul'] ?></a></td>
+                            <td><a style="color: blue; cursor:pointer" onclick="DetailDiskon('<?= $a1['id_diskon'] ?>')"><?= $a1['judul'] ?></a></td>
                             <td><?= $a1['tgl_mulai'] ?></td>
                             <td><?= $a1['tgl_berakhir'] ?></td>
                             <td><?= $a1['kategori'] ?></td>
@@ -186,7 +186,7 @@
                         ?>
                         <tr>
                             <td><?= $i1+1 ?></td>
-                            <td><a href="<?= $a1['judul'] ?>"><?= $a1['judul'] ?></a></td>
+                            <td><a style="color: blue; cursor:pointer" onclick="DetailDiskon('<?= $a1['id_diskon'] ?>')"><?= $a1['judul'] ?></a></td>
                             <td><?= $a1['tgl_mulai'] ?></td>
                             <td><?= $a1['tgl_berakhir'] ?></td>
                             <td><?= $a1['kategori'] ?></td>
@@ -201,6 +201,43 @@
     </div>
 </div>
 <div class="clearfix"></div>
+
+<div class="modal" id="detailDiskon">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <table>
+                    <tr>
+                                <td>Judul</td>
+                                <td>:</td>
+                                <td></td>
+                    </tr>
+                    <tr>
+                                <td>Berakhir</td>
+                                <td>:</td>
+                                <td></td>
+                    </tr>
+                    <tr>
+                                <td>Tanggal Mulai</td>
+                                <td>:</td>
+                                <td></td>
+                    </tr>
+                    <tr>
+                                <td>Tanggal Berakhir</td>
+                                <td>:</td>
+                                <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <div id="sets" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -235,8 +272,8 @@
                           <td>Masa Promosi</td>
                           <td>
                               <div class="form-inline">
-                                      <input type="date" name="mulai" class="form-control">
-                                      <input type="date" name="selesai" class="form-control">
+                                      <input type="datetime-local" id="datetimepicker1" name="mulai" class="form-control">
+                                      <input type="datetime-local" id="datetimepicker2" name="selesai" class="form-control">
                               </div>
                           </td>
                       </tr>
@@ -294,6 +331,11 @@
     function setDiskon()
     {
         $('#sets').modal()
+    }
+
+    function DetailDiskon(id)
+    {
+        $('#detailDiskon').modal()
     }
 
 </script>

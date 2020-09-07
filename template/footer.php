@@ -71,6 +71,7 @@ if (isset($_COOKIE['success'])) {
   $('.select2').select2({
     dropdownAutoWidth: true
   });
+
 </script>
 <script src="<?= $base_url ?>App/content.js"></script>
 </body>

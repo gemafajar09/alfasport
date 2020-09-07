@@ -4,14 +4,12 @@ include "../../config/koneksi.php";
 $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 
-$data_toko = $con->query("SELECT a.*, b.*, c.*, d.*,
-                    (SELECT nama_toko FROM toko WHERE id_toko= a.id_toko) as nama_toko, 
-                    (SELECT nama_toko FROM toko WHERE id_toko= a.id_toko_tujuan) as nama_toko_tujuan 
-                    FROM tb_transfer a 
-                    JOIN tb_transfer_detail b ON a.id_transfer = b.id_transfer 
-                    JOIN tb_gudang c ON c.id_gudang = b.id_gudang 
-                    JOIN tb_all_ukuran d ON d.id_ukuran = b.id_ukuran 
-                    WHERE a.id_transfer='$_POST[id]'")->fetch();
+$data_toko = $con->query("
+SELECT 
+(SELECT nama_toko FROM toko WHERE id_toko= a.id_toko) as nama_toko, 
+(SELECT nama_toko FROM toko WHERE id_toko= a.id_toko_tujuan) as nama_toko_tujuan 
+FROM tb_transfer a 
+WHERE a.id_transfer='$_POST[id]'")->fetch();
 ?>
 <table class="table">
     <thead class="text-center">
@@ -39,12 +37,23 @@ $data_toko = $con->query("SELECT a.*, b.*, c.*, d.*,
     <tbody>
 
         <?php
-        $data_table = $con->query("SELECT a.*, b.*, c.*, d.* 
-                                FROM tb_transfer a 
-                                JOIN tb_transfer_detail b ON a.id_transfer = b.id_transfer 
-                                JOIN tb_gudang c ON c.id_gudang = b.id_gudang 
-                                JOIN tb_all_ukuran d ON d.id_ukuran = b.id_ukuran 
-                                WHERE a.id_transfer='$_POST[id]'")->fetchAll();
+        $data_table = $con->query("
+        SELECT
+        a.tanggal,
+        e.nama,
+        e.id,
+        e.artikel,
+        b.jumlah,
+        d.ue,
+        d.uk,
+        d.us,
+        d.cm
+        FROM tb_transfer a 
+        JOIN tb_transfer_detail b ON a.id_transfer = b.id_transfer 
+        JOIN tb_gudang_detail c ON c.id_detail = b.id_gudang 
+        JOIN tb_all_ukuran d ON d.id_ukuran = c.id_ukuran
+        JOIN tb_gudang e ON e.artikel=c.id
+        WHERE a.id_transfer='$_POST[id]'")->fetchAll();
         foreach ($data_table as $i => $data) {
         ?>
             <tr>
