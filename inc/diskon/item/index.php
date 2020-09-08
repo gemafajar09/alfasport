@@ -297,7 +297,7 @@
                     ?>
                     <tr>
                         <td>
-                            <input type="checkbox" class="chk_boxes1" name="id_item[]" value="<?= $a['artikel'] ?>">
+                            <input type="checkbox" class="chk_boxes1" name="id_item[]" value="<?= $a['id'] ?>">
                         </td>
                         <td>
                             <div class="form-inline">

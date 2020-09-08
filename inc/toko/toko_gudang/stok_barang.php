@@ -158,7 +158,7 @@
                                 <select name="toko" id="toko" style="width:100%" class="form-control select2">
                                     <option value="">-PILIH-</option>
                                     <?php
-                                    $data = $con->select('toko', '*');
+                                    $data = $con->query("SELECT * FROM toko WHERE nama_toko != 'Gudang'")->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($data as $a) {
                                     ?>
                                         <option value="<?= $a['id_toko'] ?>"><?= $a['nama_toko'] ?></option>

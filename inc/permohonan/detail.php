@@ -29,6 +29,7 @@ WHERE a.id_transfer='$_POST[id]'")->fetch();
             <th>ID</th>
             <th>Artikel</th>
             <th>Nama Barang</th>
+            <th>Barcode</th>
             <th>Jumlah</th>
             <th>Ukuran</th>
             <th>Tanggal</th>
@@ -44,6 +45,7 @@ WHERE a.id_transfer='$_POST[id]'")->fetch();
         e.id,
         e.artikel,
         b.jumlah,
+        c.barcode,
         d.ue,
         d.uk,
         d.us,
@@ -52,7 +54,7 @@ WHERE a.id_transfer='$_POST[id]'")->fetch();
         JOIN tb_transfer_detail b ON a.id_transfer = b.id_transfer 
         JOIN tb_gudang_detail c ON c.id_detail = b.id_gudang 
         JOIN tb_all_ukuran d ON d.id_ukuran = c.id_ukuran
-        JOIN tb_gudang e ON e.artikel=c.id
+        JOIN tb_gudang e ON e.id=c.id
         WHERE a.id_transfer='$_POST[id]'")->fetchAll();
         foreach ($data_table as $i => $data) {
         ?>
@@ -60,6 +62,7 @@ WHERE a.id_transfer='$_POST[id]'")->fetch();
                 <td><?= $data['id'] ?></td>
                 <td><?= $data['artikel'] ?></td>
                 <td><?= $data['nama'] ?></td>
+                <td><?= $data['barcode'] ?></td>
                 <td><?= $data['jumlah'] ?></td>
                 <td><?= $data['ue'] . "-" . $data['uk'] . "-" . $data['us'] . "-" . $data['cm']; ?></td>
                 <td><?= $data['tanggal'] ?></td>

@@ -75,32 +75,79 @@ if (isset($_POST['simpanT'])) {
     $transfer_ket = $_POST['transfer_ket'];
     $jumlah = $_POST['jumlah'];
     $id_gudang = $_POST['id_gudang'];
+    $id_ukuran = $_POST['id_ukuran'];
     $id_toko_asal = $_POST['id_toko_asal'];
     $id_toko_tujuan = $_POST['id_toko_tujuan'];
+    $tgl = date("Y-m-d");
 
     // var_dump($_POST);
 
     $con->query("UPDATE tb_transfer SET acc_owner='3', transfer_ket = '$transfer_ket' WHERE id_transfer = '$id_transfer'");
 
+    // cek apakah pengirim dari gudang
     foreach ($jumlah as $i => $a) {
+        if($id_toko_asal[$i] == 0)
+        {
+            // update stok toko (tambah)
+            $con->query("UPDATE tb_stok_toko SET jumlah = jumlah + '$jumlah[$i]' WHERE id_gudang='$id_gudang[$i]'");
+            // update stok gudang (kurangi)
+            $con->query("UPDATE tb_gudang_detail SET jumlah = jumlah - '$jumlah[$i]' WHERE id_detail = '$id_gudang[$i]'");
 
-        $con->query("UPDATE tb_stok_toko 
-                        Inner Join tb_transfer On tb_transfer.id_toko_tujuan = tb_stok_toko.id_toko 
-                        Inner Join tb_transfer_detail On tb_transfer_detail.id_transfer = tb_transfer.id_transfer Inner Join tb_gudang On tb_transfer_detail.id_gudang = tb_gudang.id_gudang 
-                        SET tb_stok_toko.jumlah = tb_stok_toko.jumlah + '$jumlah[$i]' 
-                        WHERE tb_stok_toko.id_gudang = '$id_gudang[$i]' 
-                        AND tb_stok_toko.id_toko = '$id_toko_tujuan[$i]'");
+        }
+        else if($id_toko_tujuan[$i] == 0)
+        {
+            // update stok gudang (tambah)
+            $con->query("UPDATE tb_gudang_detail SET jumlah = jumlah + '$jumlah[$i]' WHERE id_detail = '$id_gudang[$i]'");
+            // update stok toko (kurangi)
+            $con->query("UPDATE tb_stok_toko SET jumlah = jumlah - '$jumlah[$i]' WHERE id_gudang='$id_gudang[$i]'");
+        }
+        else if($id_toko_asal[$i] != 0 && $id_toko_tujuan[$i] != 0)
+        {
+            // cek data di stok toko tujuan apakah barang ada atau tidak
+            $cek_stok_toko = $con->query("SELECT * FROM tb_stok_toko 
+                                            JOIN tb_transfer ON tb_stok_toko.id_toko = tb_transfer.id_toko_tujuan
+                                            WHERE tb_stok_toko.id_toko = '$id_toko_tujuan[$i]'")->fetch(); 
+                                                                       
+            // jika ada maka tinggal update stok toko
+            if($cek_stok_toko > 0){
+                // update stok toko tujuan (tambah)
+                $con->query("UPDATE tb_stok_toko 
+                             Inner Join tb_transfer On tb_transfer.id_toko_tujuan = tb_stok_toko.id_toko 
+                             Inner Join tb_transfer_detail On tb_transfer_detail.id_transfer = tb_transfer.id_transfer 
+                             Inner Join tb_gudang On tb_transfer_detail.id_gudang = tb_gudang.id_gudang 
+                             SET tb_stok_toko.jumlah = tb_stok_toko.jumlah + '$jumlah[$i]' 
+                             WHERE tb_stok_toko.id_gudang = '$id_gudang[$i]' 
+                             AND tb_stok_toko.id_toko = '$id_toko_tujuan[$i]'");
+                // update stok toko asal (kurang) 
+                $con->query("UPDATE tb_stok_toko 
+                             Inner Join tb_transfer On tb_transfer.id_toko = tb_stok_toko.id_toko 
+                             Inner Join tb_transfer_detail On tb_transfer_detail.id_transfer = tb_transfer.id_transfer 
+                             Inner Join tb_gudang On tb_transfer_detail.id_gudang = tb_gudang.id_gudang 
+                             SET tb_stok_toko.jumlah = tb_stok_toko.jumlah - '$jumlah[$i]' 
+                             WHERE tb_stok_toko.id_gudang = '$id_gudang[$i]'
+                             AND tb_stok_toko.id_toko = '$id_toko_asal[$i]'");
+            }
+            // jika tidak ada maka insert dan update
+            else{   
 
-        $con->query("UPDATE tb_stok_toko 
-                    Inner Join tb_transfer On tb_transfer.id_toko = tb_stok_toko.id_toko 
-                    Inner Join tb_transfer_detail On tb_transfer_detail.id_transfer = tb_transfer.id_transfer Inner Join tb_gudang On tb_transfer_detail.id_gudang = tb_gudang.id_gudang 
-                    SET tb_stok_toko.jumlah = tb_stok_toko.jumlah - '$jumlah[$i]' 
-                    WHERE tb_stok_toko.id_gudang = '$id_gudang[$i]'
-                    AND tb_stok_toko.id_toko = '$id_toko_asal[$i]'");
+                // insert stok toko tujuan (tambah)
+                $con->query("INSERT INTO tb_stok_toko(id_toko, id_gudang, jumlah, id_ukuran, tanggal) 
+                            VALUES ('$id_toko_tujuan[$i]','$id_gudang[$i]','$jumlah[$i]','$id_ukuran[$i]','$tgl')");
+                // update stok toko asal (kurangi)
+                $con->query("UPDATE tb_stok_toko 
+                             Inner Join tb_transfer On tb_transfer.id_toko = tb_stok_toko.id_toko 
+                             Inner Join tb_transfer_detail On tb_transfer_detail.id_transfer = tb_transfer.id_transfer 
+                             Inner Join tb_gudang On tb_transfer_detail.id_gudang = tb_gudang.id_gudang 
+                             SET tb_stok_toko.jumlah = tb_stok_toko.jumlah - '$jumlah[$i]' 
+                             WHERE tb_stok_toko.id_gudang = '$id_gudang[$i]'
+                             AND tb_stok_toko.id_toko = '$id_toko_asal[$i]'");
+            }
+        }
     }
-    echo "<script>
-        window.location.href = 'terima_transfer.html';
-    </script>";
+    exit;
+    // echo "<script>
+    //     window.location.href = 'terima_transfer.html';
+    // </script>";
 }
 ?>
 
@@ -119,20 +166,6 @@ if (isset($_POST['simpanT'])) {
             console.log(err)
         })
     }
-
-    // function simpan() {
-    //     var transfer_ket = $('#transfer_ket').val();
-    //     var id_transfer = $('#id_transfer').val();
-    //     axios.post('inc/terima/aksi_update_keterangan_transfer.php', {
-    //         'transfer_ket': transfer_ket,
-    //         'id_transfer': id_transfer,
-    //     }).then(function(res) {
-    //         $('#cekBarang').modal('hide')
-    //         $('#isi').load('inc/terima/data_transfer.php');
-    //     }).catch(function(err) {
-    //         console.log(err)
-    //     })
-    // }
 
 
     $('#isi').load('inc/terima/data_transfer.php');
