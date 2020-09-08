@@ -20,7 +20,7 @@ $cek_data_barang = $con->query("SELECT
                                     tb_gudang On tb_gudang.id_gudang = tb_stok_toko.id_gudang Join
                                     tb_gudang_detail On tb_gudang_detail.id = tb_gudang.id Join
                                     toko On tb_stok_toko.id_toko = toko.id_toko
-                                Where
+                                WHERE
                                     tb_stok_toko.id_gudang = '$_POST[gudang]'
                                 AND    
                                     tb_gudang_detail.id_detail = '$_POST[id_detail]'
@@ -69,7 +69,7 @@ else {
         "tb_stok_toko",
         array(
             'id_toko' => $_POST['toko'],
-            'id_gudang' => $_POST['gudang'],
+            'id_gudang' => $_POST['id_detail'],
             'jumlah' => $_POST['jumlah'],
             'id_ukuran' => $_POST['id_ukuran'],
             'tanggal' => date('Y-m-d')

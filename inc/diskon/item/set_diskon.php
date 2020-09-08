@@ -49,7 +49,7 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                                         $gudangCari = $con->query("SELECT * FROM tb_gudang")->fetchAll(PDO::FETCH_ASSOC);
                                         foreach($gudangCari as $dataGudang):
                                     ?>
-                                        <option value="<?= $dataGudang['artikel'] ?>"><?= $dataGudang['nama'] ?> - <?= $dataGudang['artikel'] ?></option>
+                                        <option value="<?= $dataGudang['id'] ?>"><?= $dataGudang['nama'] ?> - <?= $dataGudang['artikel'] ?></option>
                                     <?php endforeach ?>
                                 </select>
                                 <div class="input-group-append">
@@ -67,7 +67,7 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
             $isi_disc = $con->query("SELECT * FROM tb_flash_diskon_detail WHERE id_diskon = '$session'")->fetchAll(PDO::FETCH_ASSOC);
                 foreach($isi_disc as $i => $a): 
                     $data_barang[] = $a;
-                    $data = $con->query("SELECT * FROM tb_gudang WHERE artikel = '$a[artikel]'")->fetch();
+                    $data = $con->query("SELECT * FROM tb_gudang WHERE id = '$a[artikel]'")->fetch();
             ?>
             <div class="row">
                 <div class="col-md-2">

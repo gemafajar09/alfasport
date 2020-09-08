@@ -31,6 +31,7 @@ $_POST = json_decode($json, true);
         e.id,
         e.artikel,
         b.jumlah,
+        d.id_ukuran,
         d.ue,
         d.uk,
         d.us,
@@ -40,7 +41,7 @@ $_POST = json_decode($json, true);
         JOIN tb_transfer_detail b ON a.id_transfer = b.id_transfer 
         JOIN tb_gudang_detail c ON c.id_detail = b.id_gudang 
         JOIN tb_all_ukuran d ON d.id_ukuran = c.id_ukuran
-        JOIN tb_gudang e ON e.artikel=c.id
+        JOIN tb_gudang e ON e.id=c.id
         WHERE a.id_transfer='$_POST[id_transfer]'
         ")->fetchAll();
         foreach ($data_table as $i => $data) {
@@ -54,6 +55,7 @@ $_POST = json_decode($json, true);
                 <input type="hidden" name="id_toko_asal[]" value="<?= $data['id_toko'] ?>">
                 <input type="hidden" name="id_toko_tujuan[]" value="<?= $data['id_toko_tujuan'] ?>">
                 <input type="hidden" name="id_gudang[]" value="<?= $data['id_gudang'] ?>">
+                <input type="hidden" name="id_ukuran[]" value="<?= $data['id_ukuran'] ?>">
                 <td><?= $data['ue'] . "-" . $data['uk'] . "-" . $data['us'] . "-" . $data['cm']; ?></td>
                 <td><?= tgl_indo($data['tanggal']) ?></td>
                 <td>

@@ -37,6 +37,7 @@
             (SELECT nama_toko FROM toko WHERE id_toko= a.id_toko_tujuan) as nama_toko_tujuan  
             FROM tb_transfer a 
             JOIN toko b ON a.id_toko=b.id_toko
+            ORDER BY a.id_transfer DESC
             ")->fetchAll();
             foreach ($data as $a) {
             ?>
@@ -48,7 +49,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <i><?= $a['nama_toko_tujuan'] ?></i>
+                                    <i><?= $a['nama_toko'] ?></i>
                                 </div>
                                 <div class="col-md-6">
                                     <i><?= $a['nama_toko_tujuan'] ?></i>
