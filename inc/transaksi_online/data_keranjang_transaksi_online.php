@@ -33,8 +33,9 @@ foreach ($data as $i => $a) {
         <td><?= $a['nama'] ?></td>
         <td><?= $a['transol_tmp_jumlah_beli'] ?></td>
         <td><?= 'Rp' . number_format($a['jual']) ?></td>
-        <td><?= number_format($a['transol_tmp_diskon1']) . '%' ?></td>
+        <td><?= 'Rp' . number_format($a['transol_tmp_diskon1']) ?></td>
         <td><?= number_format($a['transol_tmp_diskon2']) . '%' ?></td>
+        <td><?= $a['transol_tmp_potongan'] . '%' ?></td>
         <td><?= 'Rp' . number_format($a['transol_tmp_total_harga']) ?></td>
         <td class="text-center">
             <button type="button" id="hapus" onclick="hapusKeranjang('<?= $a['transol_tmp_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
@@ -45,7 +46,7 @@ foreach ($data as $i => $a) {
 <tr>
     <th colspan="2">Jumlah</th>
     <th><?= $jumlah ?></th>
-    <th colspan="2">&nbsp;</th>
+    <th colspan="3">&nbsp;</th>
     <th>Total</th>
     <th><b><?= 'Rp' . number_format($subtotal) ?></b>
         <input type="hidden" id="subtotal" value="<?= $subtotal ?>">
