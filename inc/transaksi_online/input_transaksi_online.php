@@ -155,6 +155,7 @@
                         <th>Harga</th>
                         <th>Diskon 1</th>
                         <th>Diskon 2</th>
+                        <th>Tipe Diskon</th>
                         <th>Sub Total</th>
                         <th>Action</th>
                     </tr>
@@ -369,12 +370,13 @@
         var transol_tmp_total_harga = $('#transol_tmp_total_harga').val()
 
         // backup awal
-        // var transol_tmp_potongan = $('#disc').val()
-        // var transol_tmp_diskon1 = $('#hasilDsc').val()
-        // var transol_tmp_diskon2 = $('#diskon1').val()
-        var transol_tmp_potongan = 0;
-        var transol_tmp_diskon1 = $('#disc').val();
-        var transol_tmp_diskon2 = 0;
+        var transol_tmp_potongan = $('#disc').val()
+        var transol_tmp_diskon1 = $('#hasilDsc').val()
+        var transol_tmp_diskon2 = $('#diskon1').val()
+        // backup awak
+        // var transol_tmp_potongan = 0;
+        // var transol_tmp_diskon1 = $('#disc').val();
+        // var transol_tmp_diskon2 = 0;
 
         var transol_tmp_id = $('#tmp_id').val()
         axios.post('inc/transaksi_online/aksi_simpan_keranjang_transaksi_online.php', {
