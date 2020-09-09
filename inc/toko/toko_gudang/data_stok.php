@@ -16,14 +16,22 @@ $data = $con->query("SELECT
                         tb_gudang.modal,
                         tb_gudang.jual
                     From
-                        tb_stok_toko Inner Join
-                        toko On toko.id_toko = tb_stok_toko.id_toko Inner Join
-                        tb_gudang On tb_gudang.id_gudang = tb_stok_toko.id_gudang Inner Join
-                        tb_gudang_detail On tb_gudang_detail.id_ukuran = tb_stok_toko.id_ukuran Inner Join
-                        tb_merk On tb_gudang.id_merek = tb_merk.merk_id Inner Join
-                        tb_kategori On tb_gudang.id_kategori = tb_kategori.kategori_id Inner Join
-                        tb_divisi On tb_gudang.id_divisi = tb_divisi.divisi_id Inner Join
-                        tb_subdivisi On tb_gudang.id_sub_divisi = tb_subdivisi.subdivisi_id Inner Join
+                        tb_stok_toko 
+                    Inner Join
+                        toko On toko.id_toko = tb_stok_toko.id_toko 
+                    Inner Join
+                        tb_gudang_detail On tb_gudang_detail.id_detail = tb_stok_toko.id_gudang 
+                    Inner Join
+                        tb_gudang On tb_gudang_detail.id = tb_gudang.id
+                    Inner Join
+                        tb_merk On tb_gudang.id_merek = tb_merk.merk_id 
+                    Inner Join
+                        tb_kategori On tb_gudang.id_kategori = tb_kategori.kategori_id 
+                    Inner Join
+                        tb_divisi On tb_gudang.id_divisi = tb_divisi.divisi_id 
+                    Inner Join
+                        tb_subdivisi On tb_gudang.id_sub_divisi = tb_subdivisi.subdivisi_id 
+                    Inner Join
                         tb_gender On tb_gudang.id_gender = tb_gender.gender_id
                     ")->fetchAll();
 
