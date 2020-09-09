@@ -52,28 +52,35 @@ if(isset($_POST['upload']))
                 $sub = $ambilLagi['subdivisi_id'];
             }
             // 
-            $data = array(
-                'id' => $isi_baris[0],
-                'artikel' => $isi_baris[0],
-                'nama' => $isi_baris[1],
-                'id_merek' => $mer,
-                'modal' => $isi_baris[7],
-                'jual' => $isi_baris[8],
-                'id_gender' => $gender['gender_id'],
-                'id_kategori' => $kate,
-                'id_divisi' => $div,
-                'id_sub_divisi' => $sub,
-                'tanggal' => date('Y-m-d'),
-                'thubmnail' => $isi_baris[9],
-                'foto1' => $isi_baris[10],
-                'foto2' => $isi_baris[11],
-                'foto3' => $isi_baris[12],
-                'foto4' => $isi_baris[13],
-                'foto5' => $isi_baris[14],
-                'berat' => $isi_baris[15]
-            );
+            $karakter = '1234567890';
+            $shuffle  = substr(str_shuffle($karakter), 0, 14);
+            // $data = array(
+            //     'id' => $shuffle,
+            //     'artikel' => $isi_baris[0],
+            //     'nama' => $isi_baris[1],
+            //     'id_merek' => $mer,
+            //     'modal' => $isi_baris[7],
+            //     'jual' => $isi_baris[8],
+            //     'id_gender' => $gender['gender_id'],
+            //     'id_kategori' => $kate,
+            //     'id_divisi' => $div,
+            //     'id_sub_divisi' => $sub,
+            //     'tanggal' => date('Y-m-d'),
+            //     'thubmnail' => $isi_baris[9],
+            //     'foto1' => $isi_baris[10],
+            //     'foto2' => $isi_baris[11],
+            //     'foto3' => $isi_baris[12],
+            //     'foto4' => $isi_baris[13],
+            //     'foto5' => $isi_baris[14],
+            //     'berat' => $isi_baris[15]
+            // );
+            $tanggal = date('Y-m-d');
+            $query = "INSERT INTO tb_gudang VALUES ('','$shuffle','$isi_baris[0]','$isi_baris[1]','$mer','$isi_baris[7]','$isi_baris[8]','$gender[gender_id]','$kate','$div','$sub', '$tanggal','$isi_baris[9]','$isi_baris[10]','$isi_baris[11]','$isi_baris[12]','$isi_baris[13]','$isi_baris[14]','$isi_baris[15]' )";
+            $simpan = $con->query($query);
+            $idBaru = $con->id();
+            $con->query("INSERT `tb_cek_stok_menipis` VALUES ('','$idBaru','$shuffle','0')");
             // var_dump($data); exit;
-            $simpan = $con->insert('tb_gudang',$data);
+            // $simpan = $con->insert('tb_gudang',$data);
         }
         $no++;
     }
