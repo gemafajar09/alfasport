@@ -21,28 +21,28 @@ $_POST = json_decode($json, true);
         <?php
         $id_transfer = $_POST['id_transfer'];
         $data_table = $con->query("
-        SELECT
-        a.tanggal,
-        a.id_toko,
-        a.id_toko_tujuan,
-        b.status,
-        b.transfer_detail_id,
-        e.nama,
-        e.id,
-        e.artikel,
-        b.jumlah,
-        d.id_ukuran,
-        d.ue,
-        d.uk,
-        d.us,
-        d.cm,
-        e.id_gudang
-        FROM tb_transfer a 
-        JOIN tb_transfer_detail b ON a.id_transfer = b.id_transfer 
-        JOIN tb_gudang_detail c ON c.id_detail = b.id_gudang 
-        JOIN tb_all_ukuran d ON d.id_ukuran = c.id_ukuran
-        JOIN tb_gudang e ON e.id=c.id
-        WHERE a.id_transfer='$_POST[id_transfer]'
+            SELECT
+            a.tanggal,
+            a.id_toko,
+            a.id_toko_tujuan,
+            b.status,
+            b.transfer_detail_id,
+            e.nama,
+            e.id,
+            e.artikel,
+            b.jumlah,
+            d.id_ukuran,
+            d.ue,
+            d.uk,
+            d.us,
+            d.cm,
+            c.id_detail as id_gudang
+            FROM tb_transfer a 
+            JOIN tb_transfer_detail b ON a.id_transfer = b.id_transfer 
+            JOIN tb_gudang_detail c ON c.id_detail = b.id_gudang 
+            JOIN tb_all_ukuran d ON d.id_ukuran = c.id_ukuran
+            JOIN tb_gudang e ON e.id=c.id
+            WHERE a.id_transfer='$_POST[id_transfer]'
         ")->fetchAll();
         foreach ($data_table as $i => $data) {
         ?>

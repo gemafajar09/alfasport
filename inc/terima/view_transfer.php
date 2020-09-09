@@ -88,8 +88,15 @@ if (isset($_POST['simpanT'])) {
     foreach ($jumlah as $i => $a) {
         if($id_toko_asal[$i] == 0)
         {
+            // cek id toko
+            $data = $con->query("
+            SELECT
+            id_stok_toko
+            FROM tb_stok_toko
+            WHERE id_toko= '$id_toko_tujuan[$i]' AND id_gudang= '$id_gudang[$i]' LIMIT 1
+            ")->fetch(PDO::FETCH_ASSOC);
             // update stok toko (tambah)
-            $con->query("UPDATE tb_stok_toko SET jumlah = jumlah + '$jumlah[$i]' WHERE id_gudang='$id_gudang[$i]'");
+            $con->query("UPDATE tb_stok_toko SET jumlah = jumlah + '$jumlah[$i]' WHERE id_stok_toko='$data[id_stok_toko]'");
             // update stok gudang (kurangi)
             $con->query("UPDATE tb_gudang_detail SET jumlah = jumlah - '$jumlah[$i]' WHERE id_detail = '$id_gudang[$i]'");
 
@@ -98,8 +105,15 @@ if (isset($_POST['simpanT'])) {
         {
             // update stok gudang (tambah)
             $con->query("UPDATE tb_gudang_detail SET jumlah = jumlah + '$jumlah[$i]' WHERE id_detail = '$id_gudang[$i]'");
+            // cek id toko
+            $data = $con->query("
+            SELECT
+            id_stok_toko
+            FROM tb_stok_toko
+            WHERE id_toko= '$id_toko_asal[$i]' AND id_gudang= '$id_gudang[$i]' LIMIT 1
+            ")->fetch(PDO::FETCH_ASSOC);
             // update stok toko (kurangi)
-            $con->query("UPDATE tb_stok_toko SET jumlah = jumlah - '$jumlah[$i]' WHERE id_gudang='$id_gudang[$i]'");
+            $con->query("UPDATE tb_stok_toko SET jumlah = jumlah - '$jumlah[$i]' WHERE id_stok_toko='$data[id_stok_toko]'");
         }
         else if($id_toko_asal[$i] != 0 && $id_toko_tujuan[$i] != 0)
         {
@@ -110,41 +124,57 @@ if (isset($_POST['simpanT'])) {
                                                                        
             // jika ada maka tinggal update stok toko
             if($cek_stok_toko > 0){
+                // cek id toko
+                $data = $con->query("
+                SELECT
+                id_stok_toko
+                FROM tb_stok_toko
+                WHERE id_toko= '$id_toko_tujuan[$i]' AND id_gudang= '$id_gudang[$i]' LIMIT 1
+                ")->fetch(PDO::FETCH_ASSOC);
                 // update stok toko tujuan (tambah)
                 $con->query("UPDATE tb_stok_toko 
                              Inner Join tb_transfer On tb_transfer.id_toko_tujuan = tb_stok_toko.id_toko 
                              Inner Join tb_transfer_detail On tb_transfer_detail.id_transfer = tb_transfer.id_transfer 
                              Inner Join tb_gudang On tb_transfer_detail.id_gudang = tb_gudang.id_gudang 
                              SET tb_stok_toko.jumlah = tb_stok_toko.jumlah + '$jumlah[$i]' 
-                             WHERE tb_stok_toko.id_gudang = '$id_gudang[$i]' 
-                             AND tb_stok_toko.id_toko = '$id_toko_tujuan[$i]'");
+                             WHERE id_stok_toko='$data[id_stok_toko]'");
+
+                    $data1 = $con->query("
+                    SELECT
+                    id_stok_toko
+                    FROM tb_stok_toko
+                    WHERE id_toko= '$id_toko_asal[$i]' AND id_gudang= '$id_gudang[$i]' LIMIT 1
+                    ")->fetch(PDO::FETCH_ASSOC);
                 // update stok toko asal (kurang) 
                 $con->query("UPDATE tb_stok_toko 
                              Inner Join tb_transfer On tb_transfer.id_toko = tb_stok_toko.id_toko 
                              Inner Join tb_transfer_detail On tb_transfer_detail.id_transfer = tb_transfer.id_transfer 
                              Inner Join tb_gudang On tb_transfer_detail.id_gudang = tb_gudang.id_gudang 
                              SET tb_stok_toko.jumlah = tb_stok_toko.jumlah - '$jumlah[$i]' 
-                             WHERE tb_stok_toko.id_gudang = '$id_gudang[$i]'
-                             AND tb_stok_toko.id_toko = '$id_toko_asal[$i]'");
+                             WHERE id_stok_toko='$data1[id_stok_toko]'");
             }
             // jika tidak ada maka insert dan update
             else{   
-
+                // cek id toko
+                $data = $con->query("
+                SELECT
+                id_stok_toko
+                FROM tb_stok_toko
+                WHERE id_toko= '$id_toko_asal[$i]' AND id_gudang= '$id_gudang[$i]' LIMIT 1
+                ")->fetch(PDO::FETCH_ASSOC);
                 // insert stok toko tujuan (tambah)
                 $con->query("INSERT INTO tb_stok_toko(id_toko, id_gudang, jumlah, id_ukuran, tanggal) 
                             VALUES ('$id_toko_tujuan[$i]','$id_gudang[$i]','$jumlah[$i]','$id_ukuran[$i]','$tgl')");
                 // update stok toko asal (kurangi)
                 $con->query("UPDATE tb_stok_toko 
-                             Inner Join tb_transfer On tb_transfer.id_toko = tb_stok_toko.id_toko 
                              Inner Join tb_transfer_detail On tb_transfer_detail.id_transfer = tb_transfer.id_transfer 
+                             Inner Join tb_transfer On tb_transfer.id_toko = tb_stok_toko.id_toko 
                              Inner Join tb_gudang On tb_transfer_detail.id_gudang = tb_gudang.id_gudang 
                              SET tb_stok_toko.jumlah = tb_stok_toko.jumlah - '$jumlah[$i]' 
-                             WHERE tb_stok_toko.id_gudang = '$id_gudang[$i]'
-                             AND tb_stok_toko.id_toko = '$id_toko_asal[$i]'");
+                             WHERE id_stok_toko='$data[id_stok_toko]'");
             }
         }
     }
-    exit;
     // echo "<script>
     //     window.location.href = 'terima_transfer.html';
     // </script>";
