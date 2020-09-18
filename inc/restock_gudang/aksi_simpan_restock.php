@@ -10,7 +10,7 @@ $con->insert(
     "tb_restock",
     array(
         "id_detail" => $_POST["id_detail"],
-        "id" => $_POST["artikel"],
+        "id" => $_POST["id_artikel"],
         "restock_tgl" => $tgl,
         "restock_jumlah_awal" => $_POST['jumlah'],
         "restock_jumlah_tambah" => $_POST['jumlah_restock'],

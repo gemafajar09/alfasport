@@ -69,6 +69,7 @@
                                 <label>Artikel</label>
                                 <input type="text" id="artikel" class="form-control" readonly>
                                 <input type="hidden" id="id_detail">
+                                <input type="hidden" id="id_artikel">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -133,11 +134,13 @@
 
     function simpan() {
         var id_detail = $('#id_detail').val()
+        var id_artikel = $('#id_artikel').val()
         var artikel = $('#artikel').val()
         var jumlah_restock = $('#jumlah_restock').val()
         var jumlah = $('#jumlah').val()
         axios.post('inc/restock_gudang/aksi_simpan_restock.php', {
             'id_detail': id_detail,
+            'id_artikel': id_artikel,
             'artikel': artikel,
             'jumlah_restock': jumlah_restock,
             'jumlah': jumlah
@@ -161,6 +164,7 @@
             console.log(res);
             var edit = res.data
             console.log(edit)
+            $('#id_artikel').val(edit.id);
             $('#artikel').val(edit.nama + " - " + edit.artikel + " - " + edit.barcode)
             $('#id_detail').val(edit.id_detail)
             $('#jumlah').val(edit.jumlah)
@@ -172,6 +176,7 @@
 
     function kosong() {
         $('#id_detail').val('')
+        $('#id_artikel').val('')
         $('#artikel').val('')
         $('#jumlah').val('')
         $('#jumlah_restock').val('')

@@ -12,7 +12,8 @@ $data = $con->query("SELECT
                         tb_gudang_detail.barcode,
                         tb_gudang_detail.tanggal,
                         tb_gudang.artikel,
-                        tb_gudang.nama
+                        tb_gudang.nama,
+                        tb_gudang.id
                     From
                         tb_gudang_detail 
                     Inner Join
