@@ -10,13 +10,16 @@ b.id_detail,
 c.ue, 
 c.uk, 
 c.us, 
-c.cm
+c.cm,
+b.barcode
 FROM tb_gudang a
 LEFT JOIN tb_gudang_detail b
 ON a.id=b.id
 LEFT JOIN tb_all_ukuran c
 ON c.id_ukuran=b.id_ukuran
 ");
+
+echo "<option>-Pilih Barang-</option>";
 foreach ($data as $i => $a) {
-    echo "<option value=" . $a['id_detail'] . ">" . $a['artikel'] . " - " . $a['nama'] . " - (" . $a['ue'] . " / " . $a['uk'] . " / " . $a['us'] . " / " . $a['cm']  . ")</option>";
+    echo "<option value=" . $a['id_detail'] . ">" . $a['nama']. "-". $a['barcode'] ." - (" . $a['ue'] . " / " . $a['uk'] . " / " . $a['us'] . " / " . $a['cm']  . ")</option>";
 }
