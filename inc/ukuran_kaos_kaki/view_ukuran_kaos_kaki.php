@@ -239,18 +239,19 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>UE</label>
-                                <input type="text" id="ukuran_kaos_kaki_ue" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label>SIZE</label>
                                 <input type="text" id="ukuran_kaos_kaki_size" class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>EU</label>
+                                <input type="text" id="ukuran_kaos_kaki_ue" class="form-control">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

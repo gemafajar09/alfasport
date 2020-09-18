@@ -38,9 +38,9 @@
                             <input type="checkbox" class="check_all" id="check_all" onchange="cekeditSekaligus()">
                         </th>
                         <th>No</th>
+                        <th>Nama</th>
                         <th>Artikel</th>
                         <th>Barcode</th>
-                        <th>Nama</th>
                         <th>UE</th>
                         <th>UK</th>
                         <th>US</th>
@@ -158,9 +158,10 @@
         axios.post('inc/restock_gudang/aksi_edit_restock.php', {
             'id_detail': id_detail
         }).then(function(res) {
+            console.log(res);
             var edit = res.data
             console.log(edit)
-            $('#artikel').val(edit.id + " - " + edit.nama)
+            $('#artikel').val(edit.nama + " - " + edit.artikel + " - " + edit.barcode)
             $('#id_detail').val(edit.id_detail)
             $('#jumlah').val(edit.jumlah)
             $('#dataStokGudang').modal()

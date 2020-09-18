@@ -118,9 +118,9 @@
                 <tr>
                     <th>No</th>
                     <th>Nama Toko</th>
-                    <th>ID</th>
-                    <th>Artikel</th>
+                    <!-- <th>ID</th> -->
                     <th>Nama</th>
+                    <th>Artikel</th>
                     <th>Barcode</th>
                     <th>Merek</th>
                     <th>Kategori</th>
@@ -175,7 +175,7 @@
                                     $data = $con->query("SELECT a.*, b.*, c.* FROM tb_gudang_detail a JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran JOIN tb_gudang c ON a.id=c.id ")->fetchAll();
                                     foreach ($data as $a) {
                                     ?>
-                                        <option value="<?= $a['id_detail'] ?>"><?= $a['artikel']  ?> - <?= $a['nama']  ?> - <?= $a['barcode']  ?> - (UE:<?= $a['ue'] ?>&nbsp;US:<?= $a['us'] ?>&nbsp;UK:<?= $a['uk'] ?>&nbsp;CM:<?= $a['cm'] ?>)</option>
+                                        <option value="<?= $a['id_detail'] ?>"><?= $a['nama']  ?> - <?= $a['artikel']  ?> - <?= $a['barcode']  ?> - (UE:<?= $a['ue'] ?>&nbsp;US:<?= $a['us'] ?>&nbsp;UK:<?= $a['uk'] ?>&nbsp;CM:<?= $a['cm'] ?>)</option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -293,10 +293,11 @@
     function cekStok(nilai) {
         var jumlah = parseInt(nilai.value)
         var sisa = $('#stoks').val()
-        if (sisa <= jumlah) {
+        if (sisa < jumlah) {
             alert('Stok Tidak Memadai')
             $('#jumlah').val('')
         } else {
+            // alert('Amam')
             console.log('aman')
         }
     }

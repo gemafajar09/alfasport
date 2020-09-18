@@ -25,9 +25,9 @@ foreach ($data as $i => $a) {
             <input type="checkbox" class="chk_boxes1" name="id_detail[]" value="<?= $a['id_detail'] ?>" onchange="cekeditSekaligus()">
         </td>
         <td><?= $i + 1 ?></td>
+        <td><?= $a['nama'] ?></td>
         <td><?= $a['artikel'] ?></td>
         <td><?= $a['barcode'] ?></td>
-        <td><?= $a['nama'] ?></td>
         <td><?= $a['ue'] ?></td>
         <td><?= $a['uk'] ?></td>
         <td><?= $a['us'] ?></td>

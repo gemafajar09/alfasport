@@ -1,6 +1,6 @@
 <div class="page-title">
     <div class="title_left">
-        <h3>Data Distributor</h3>
+        <h3>Data Vendor</h3>
     </div>
 
     <div class="title_right">
@@ -52,7 +52,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Data Distributor</h4>
+                <h4 class="modal-title">Data Vendor</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 

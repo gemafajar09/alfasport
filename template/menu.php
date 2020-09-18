@@ -25,7 +25,7 @@
                                 <li><a href="point_member.html">Point Member</a></li>
                                 <li><a href="data_profesi.html">Data Profesi Member</a></li>
                                 <li><a href="data_supplier.html">Supplier</a></li>
-                                <li><a href="data_distributor.html">Distributor</a></li>
+                                <li><a href="data_vendor.html">Vendor</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-percent"></i> Event <span class="fa fa-chevron-down"></span></a>

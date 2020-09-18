@@ -1,6 +1,6 @@
 <?php
 include "../../../config/koneksi.php";
-$data = $con->query("SELECT * FROM toko");
+$data = $con->query("SELECT * FROM toko WHERE id_toko != 0");
 foreach ($data as $i => $a) {
 ?>
     <tr>

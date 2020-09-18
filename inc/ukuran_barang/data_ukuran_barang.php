@@ -20,7 +20,7 @@ foreach ($data as $i => $a) {
 ?>
     <tr>
         <td><?= $i + 1 ?></td>
-        <td><?= $a['ukuran_barang_nama'] ?></td>
+        <!-- <td><?= $a['ukuran_barang_nama'] ?></td> -->
         <td><?= $a['merk_nama'] ?></td>
         <td><?= $a['kategori_nama'] ?></td>
         <td><?= $a['divisi_nama'] ?></td>

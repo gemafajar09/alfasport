@@ -40,8 +40,8 @@ foreach ($data as $i => $a) {
             ?>
         </td>
         <td><?= $a['ue'] ?></td>
-        <td><?= $a['us'] ?></td>
         <td><?= $a['uk'] ?></td>
+        <td><?= $a['us'] ?></td>
         <td><?= $a['cm'] ?></td>
         <td>
             <button type="button" onclick="edit(<?= $a['id_ukuran'] ?>)" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>

@@ -10,7 +10,7 @@ $_POST = json_decode($json, true);
         <tr>
             <th>No</th>
             <th>Nama Ukuran</th>
-            <th>Jumlah Stok</th>
+            <!-- <th>Jumlah Stok</th> -->
             <th>Action</th>
         </tr>
     </thead>
@@ -23,7 +23,7 @@ $_POST = json_decode($json, true);
             <tr>
                 <td><?= $i + 1 ?></td>
                 <td><?= $data['ukuran_barang_detail_nama'] ?></td>
-                <td><?= $data['ukuran_barang_detail_stok'] ?></td>
+                <!-- <td><?= $data['ukuran_barang_detail_stok'] ?></td> -->
                 <td>
                     <button type="button" onclick="editDetail(<?= $data['ukuran_barang_detail_id'] ?>)" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
                     <button type="button" id="hapus" onclick="hapusDetail('<?= $data['ukuran_barang_detail_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
@@ -48,26 +48,26 @@ $_POST = json_decode($json, true);
             <div class="modal-body">
                 <div class="container">
                     <div class="row" style="font-size:12px">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nama Barang</label>
                                 <input type="text" name="ukuran_barang_detail_nama" id="ukuran_barang_detail_nama" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-group">
-                                <label>Stok</label>
-                                <input type="text" name="ukuran_barang_detail_stok" id="ukuran_barang_detail_stok" class="form-control">
-                                <input type="hidden" id="ukuran_barang_detail_id">
-                            </div>
-                        </div>
+                                <label>Stok</label> -->
+                        <input type="hidden" name="ukuran_barang_detail_stok" id="ukuran_barang_detail_stok" class="form-control">
+                        <input type="hidden" id="ukuran_barang_detail_id">
+                        <!-- </div>
+                        </div> -->
 
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
-                <button type="button" onclick="simpan()" class="btn btn-primary btn-sm">Simpan</button>
+                <button type="button" onclick="simpanD()" class="btn btn-primary btn-sm">Simpan</button>
             </div>
 
         </div>
@@ -89,7 +89,7 @@ $_POST = json_decode($json, true);
         })
     }
 
-    function simpan() {
+    function simpanD() {
         var id = $('#idDetailUkuran').val()
         var ukuran_barang_detail_nama = $('#ukuran_barang_detail_nama').val()
         var ukuran_barang_detail_stok = $('#ukuran_barang_detail_stok').val()
