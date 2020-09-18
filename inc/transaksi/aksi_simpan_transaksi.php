@@ -17,8 +17,12 @@ if ($_POST['transaksi_id'] == NULL) {
         'transaksi_tipe_bayar' => $_POST['transaksi_tipe_bayar'],
         'transaksi_cash' => $_POST['transaksi_cash'],
         'transaksi_debit' => $_POST['transaksi_card'],
+        'transaksi_total_belanja' => $_POST['transaksi_total_belanja'],
+        'transaksi_kembalian' => $_POST['transaksi_kembalian'],
         'transaksi_bank' => $_POST['transaksi_bank'],
-        'transaksi_diskon' => $_POST['transaksi_diskon'],
+        'transaksi_tipe_diskon' => $_POST['tipe_diskon2'],
+        'transaksi_diskon' => $_POST['diskon2'],
+        'transaksi_diskon_bank' => $_POST['diskon_bank'],
         'transaksi_create_at' => $tgl,
         'transaksi_create_by' => $_COOKIE['id_karyawan'],
         'keterangan' => $_POST['keterangan'],
@@ -26,7 +30,7 @@ if ($_POST['transaksi_id'] == NULL) {
     $simpan = $con->insert('tb_transaksi', $data);
     $idtra = $con->id();
 
-    $con->query("INSERT INTO tb_transaksi_detail (transaksi_id, detail_kode, detail_tgl, id_toko,id_gudang,detail_tipe_konsumen, id_konsumen, detail_jumlah_beli, detail_total_harga) 
+    $con->query("INSERT INTO tb_transaksi_detail (transaksi_id, detail_kode, detail_tgl, id_toko,id_gudang,detail_tipe_konsumen, id_konsumen, detail_jumlah_beli, detail_total_harga, detail_potongan, detail_diskon1) 
         Select '$idtra' as transaksi_id,
                 tb_transaksi_tmp.tmp_kode As detail_kode,
                 tb_transaksi_tmp.tmp_tgl As detail_tgl,
@@ -35,7 +39,9 @@ if ($_POST['transaksi_id'] == NULL) {
                 tb_transaksi_tmp.tmp_tipe_konsumen As detail_tipe_konsumen,
                 tb_transaksi_tmp.id_konsumen,
                 tb_transaksi_tmp.tmp_jumlah_beli As detail_jumlah_beli,
-                tb_transaksi_tmp.tmp_total_harga As detail_total_harga
+                tb_transaksi_tmp.tmp_total_harga As detail_total_harga,
+                tb_transaksi_tmp.potongan As detail_potongan,
+                tb_transaksi_tmp.diskon1 As detail_diskon1
         From
             tb_transaksi_tmp
         WHERE
@@ -44,6 +50,7 @@ if ($_POST['transaksi_id'] == NULL) {
     $con->delete("tb_transaksi_tmp", array("tmp_kode" => $_SESSION["auto_kode"]));
     unset($_SESSION['auto_kode']);
 
+    exit;
 
     if ($simpan == TRUE) {
         echo json_encode($simpan);

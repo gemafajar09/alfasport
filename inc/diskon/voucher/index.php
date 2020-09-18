@@ -173,7 +173,7 @@
                                 <select name="id_toko" class="form-control" id="id_toko">
                                     <option value="0">Semua Toko</option>
                                     <?php
-                                    $data = $con->select("toko", "*");
+                                    $data = $con->query("SELECT * FROM toko WHERE id_toko != 0");
                                     foreach ($data as $i => $a) {
                                         echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
                                     }

@@ -18,7 +18,6 @@ if ($_POST['tmp_id'] == NULL) {
             'tmp_total_harga' => $_POST['tmp_total_harga'],
             'potongan' => $_POST['potongan'],
             'diskon1' => $_POST['diskon1'],
-            'diskon2' => $_POST['diskon2'],
             'id_karyawan' => $_COOKIE['id_karyawan']
         );
         $simpan = $con->insert('tb_transaksi_tmp', $data);
@@ -34,7 +33,6 @@ if ($_POST['tmp_id'] == NULL) {
             'tmp_total_harga' => $_POST['tmp_total_harga'],
             'potongan' => $_POST['potongan'],
             'diskon1' => $_POST['diskon1'],
-            'diskon2' => $_POST['diskon2'],
             'id_karyawan' => $_COOKIE['id_karyawan']
         );
         $simpan = $con->insert('tb_transaksi_tmp', $data);
@@ -50,7 +48,6 @@ if ($_POST['tmp_id'] == NULL) {
             'tmp_total_harga' => $_POST['tmp_total_harga'],
             'potongan' => $_POST['potongan'],
             'diskon1' => $_POST['diskon1'],
-            'diskon2' => $_POST['diskon2'],
             'id_karyawan' => $_COOKIE['id_karyawan']
         );
         $simpan = $con->insert('tb_transaksi_tmp', $data);

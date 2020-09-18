@@ -22,11 +22,14 @@
     </style>
 </head>
 <?php
-    include "../../config/koneksi.php";
-    $id = $_GET['invoice'];
-    $data = $con->query("SELECT * FROM tb_transaksi WHERE transaksi_kode = '$id'")->fetch();
-    $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE id_toko = '$data[id_toko]'")->fetch();
+include "../../config/koneksi.php";
+include "../../App/MY_url_helper.php";
+
+$id = $_GET['invoice'];
+$data = $con->query("SELECT * FROM tb_transaksi WHERE transaksi_kode = '$id'")->fetch();
+$toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE id_toko = '$data[id_toko]'")->fetch();
 ?>
+
 <body onload="window.print()">
     <div class="container">
         <div class="row">
@@ -51,9 +54,9 @@
                                 <td><?= $_GET['invoice'] ?></td>
                             </tr>
                             <tr>
-                                <th>Tanggal</th>
+                                <th>Tgl Transaksi</th>
                                 <td>:</td>
-                                <td><?= date('d-m-Y') ?></td>
+                                <td><?= tgl_indo_waktu($data['transaksi_create_at']) ?></td>
                             </tr>
                         </table>
                         <hr style="color:black; border: 1px solid;">
@@ -63,30 +66,88 @@
                             <tr>
                                 <th>Qty</th>
                                 <th>Nama Barang</th>
+                                <th>Merk</th>
+                                <th>Ukuran</th>
                                 <th style="float: right;">Subtotal</th>
                             </tr>
                             <?php
                             $total = 0;
-                                $list = $con->query("SELECT a.*, b.id_merek, c.merk_nama, d.transaksi_diskon FROM tb_transaksi_detail a JOIN tb_gudang b ON a.id_gudang=b.id_gudang JOIN tb_merk c ON b.id_merek=c.merk_id JOIN tb_transaksi d ON d.transaksi_kode=a.detail_kode WHERE a.detail_kode = '$_GET[invoice]'")->fetchAll();
-                                foreach($list as $a){
-                                    $total += $a['detail_total_harga'];
+                            $list = $con->query("SELECT 
+                                        tb_transaksi_detail.detail_jumlah_beli,
+                                        tb_transaksi_detail.detail_total_harga,
+                                        tb_merk.merk_nama,
+                                        tb_gudang.nama,
+                                        tb_gudang.artikel,
+                                        tb_all_ukuran.ue
+                                    FROM tb_transaksi_detail 
+                                    JOIN tb_gudang_detail ON tb_transaksi_detail.id_gudang=tb_gudang_detail.id_detail
+                                    JOIN tb_all_ukuran ON tb_gudang_detail.id_ukuran = tb_all_ukuran.id_ukuran
+                                    JOIN tb_gudang On tb_gudang_detail.id = tb_gudang.id
+                                    JOIN tb_merk On tb_gudang.id_merek = tb_merk.merk_id WHERE tb_transaksi_detail.detail_kode = '$_GET[invoice]'")->fetchAll();
+                            foreach ($list as $a) {
+                                $total += $a['detail_total_harga'];
+                            ?>
+                                <tr>
+                                    <td><?= $a['detail_jumlah_beli'] ?></td>
+                                    <td><?= $a['nama'] ?></td>
+                                    <td><?= $a['merk_nama'] ?></td>
+                                    <td><?= $a['ue'] ?></td>
+                                    <td style="float: right;">Rp.<?= number_format($a['detail_total_harga']) ?></td>
+                                </tr>
+                            <?php } ?>
+                            <?php
+                            $tipe_diskon_manual = $data['transaksi_tipe_diskon'];
+                            $diskon_manual = $data['transaksi_diskon'];
+                            $diskon_bank = $data['transaksi_diskon_bank'];
+                            // cari diskon bank
+                            $dB = ($total * $diskon_bank) / 100;
+                            $dBank = $dB;
+
+                            $hBank = $total - $dBank;
+                            // cari diskon manual
+                            if ($tipe_diskon_manual == 'dis_persen') {
+                                $dM = ($hBank * $diskon_manual) / 100;
+                                $dManual = round($dM);
+                            } elseif ($tipe_diskon_manual == 'dis_harga') {
+                                $dManual = $diskon_manual;
+                            } else {
+                                $dManual = 0;
+                            }
                             ?>
                             <tr>
-                                <td><?= $a['detail_jumlah_beli'] ?></td>
-                                <td><?= $a['merk_nama'] ?></td>
-                                <td style="float: right;">Rp.<?= number_format($a['detail_total_harga']) ?></td>
-                            </tr>
-
-                            <?php } ?>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>Total Diskon</td>
-                                <td style="float: right;">Rp. <?= number_format($a['transaksi_diskon']) ?></td>
+                                <td colspan="5">
+                                    <hr>
+                                </td>
                             </tr>
                             <tr>
-                                <td>&nbsp;</td>
-                                <td>Total Bayar</td>
+                                <td colspan="3">&nbsp;</td>
+                                <td>Sub Total Harga</td>
                                 <td style="float: right;">Rp.<?= number_format($total) ?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">&nbsp;</td>
+                                <td>Total Diskon</td>
+                                <td style="float: right;">Rp. <?= number_format($dB + $dManual) ?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <hr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">&nbsp;</td>
+                                <td>Total Harga</td>
+                                <td style="float: right;">Rp.<?= number_format($total - ($dB + $dManual)) ?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">&nbsp;</td>
+                                <td>Total Bayar</td>
+                                <td style="float: right;">Rp.<?= number_format($data['transaksi_cash'] + $data['transaksi_debit']) ?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">&nbsp;</td>
+                                <td>Kembalian</td>
+                                <td style="float: right;">Rp.<?= number_format($data['transaksi_kembalian']) ?></td>
                             </tr>
                         </table>
                         <hr style="color:black; border: 1px solid;">
@@ -101,9 +162,9 @@
                             <tr>
                                 <td>printed by :</td>
                                 <?php
-                                    $nama = $con->query("SELECT nama FROM tb_karyawan WHERE id_karyawan = '$data[transaksi_create_by]'")->fetch();
+                                $nama = $con->query("SELECT nama FROM tb_karyawan WHERE id_karyawan = '$data[transaksi_create_by]'")->fetch();
                                 ?>
-                                <td>nama - <?= $nama['nama'] ?></td>
+                                <td><?= $nama['nama'] ?></td>
                             </tr>
                         </table>
                     </div>

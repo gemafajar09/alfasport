@@ -34,7 +34,7 @@
                     $artikel = $con->select('tb_gudang', '*');
                     foreach ($artikel as $a) {
                     ?>
-                        <option value="<?= $a['id_gudang'] ?>"><?= $a['artikel'] ?> - <?= $a['nama'] ?></option>
+                        <option value="<?= $a['id_gudang'] ?>"><?= $a['nama'] ?> - <?= $a['artikel'] ?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -45,7 +45,7 @@
                 <select name="toko" id="toko" class="form-control select2">
                     <option value="">-Semua Toko-</option>
                     <?php
-                    $toko = $con->select('toko', '*');
+                    $toko = $con->query('SELECT * FROM toko WHERE id_toko != 0');
                     foreach ($toko as $t) {
                     ?>
                         <option value="<?= $t['id_toko'] ?>"><?= $t['nama_toko'] ?></option>
@@ -132,7 +132,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Artikel</th>
+                        <!-- <th>Barcode</th> -->
                         <th>Nama Toko</th>
                         <th>Jumlah</th>
                         <th>
@@ -236,7 +236,6 @@
                 $('#diskon').text('');
                 $('#hargadiskon').text('');
             }
-
             $('#isi').html(data.table);
         }).catch(function(err) {
             console.log(err)

@@ -50,12 +50,12 @@
                 <tr>
                     <th>No</th>
                     <th>ID</th>
-                    <th>Distributor</th>
+                    <th>Toko</th>
                     <th>Cara Bayar</th>
                     <th colspan="2" class="text-center">Jumlah</th>
+                    <th>Total Belanja</th>
                     <th>Bank</th>
                     <th>Create At</th>
-                    <!-- <th>Create By</th> -->
                     <th>Keterangan</th>
                     <th class="text-center">Action</th>
                 </tr>
@@ -63,7 +63,7 @@
                     <th colspan="4">&nbsp;</th>
                     <th>Cash</th>
                     <th>Debit/Kredit</th>
-                    <th colspan="4">&nbsp;</th>
+                    <th colspan="5">&nbsp;</th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>
@@ -83,7 +83,7 @@
                     <div class="row my-1">
                         <table>
                             <tr>
-                                <td><b>ID Jual</b></td>
+                                <td><b>No Faktur</b></td>
                                 <td>:</td>
                                 <td><b><span id="id_jual"></span></b></td>
                             </tr>
@@ -106,10 +106,9 @@
                                 <th>No</th>
                                 <th>Barang</th>
                                 <th>Jumlah</th>
-                                <th>Harga</th>
-                                <th>Diskon 1</th>
-                                <th>Diskon 2</th>
-                                <th>Tipe Diskon</th>
+                                <th>Harga Jual</th>
+                                <th>Diskon Item</th>
+                                <th>Hasil Per Diskon</th>
                                 <th>Sub Total</th>
                             </tr>
                         </thead>
@@ -126,8 +125,8 @@
                 'transaksi_id': transaksi_id
             }).then(function(res) {
                 var data = res.data
-                $('#id_jual').text(data.detail_kode)
-                $('#tgl_jual').text(data.detail_tgl)
+                $('#id_jual').text(data.transaksi_kode)
+                $('#tgl_jual').text(data.transaksi_tgl)
                 $('#toko_nama').text(data.nama_toko)
 
                 // modal table

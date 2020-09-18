@@ -88,7 +88,7 @@
                                 <select class="form-control select2" style="width: 100%;" name="id_toko" id="id_toko" required>
                                     <option selected disabled>Pilih Toko</option>
                                     <?php
-                                    $data = $con->select("toko", "*");
+                                    $data = $con->query("SELECT * FROM toko WHERE id_toko != '0'");
                                     foreach ($data as $i => $a) {
                                         echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
                                     }
@@ -295,10 +295,16 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th>Nama</th>
                                         <th>Artikel</th>
+                                        <th>Barcode</th>
                                         <th>Stok Awal</th>
                                         <th>Penyesuaian</th>
                                         <th>Stok Akhir</th>
+                                        <th>UE</th>
+                                        <th>UK</th>
+                                        <th>US</th>
+                                        <th>CM</th>
                                     </tr>
                                 </thead>
                                 <tbody id="detailTmp"></tbody>
@@ -330,6 +336,7 @@
         })
     }
 
+    // aksi jika tombol simpan pertama diklik
     function simpan() {
         var penyesuaian_stok_tgl = $('#penyesuaian_stok_tgl').val()
         var penyesuaian_stok_tipe = $('#penyesuaian_stok_tipe').val()
@@ -361,6 +368,7 @@
         })
     }
 
+    // aksi jika tombol simpan kedua diklik
     function simpan2() {
         var penyesuaian_stok_detail_id = $('#penyesuaian_stok_detail_id').val()
         var penyesuaian_stok_id = $('#penyesuaian_stok_id1').val()
@@ -448,12 +456,16 @@
             'id': id
         }).then(function(res) {
             var detail = res.data
-            $('#id_toko2').text(detail.id_toko)
+            $('#id_toko2').text(detail.nama_toko)
             $('#penyesuaian_stok_tgl2').text(detail.penyesuaian_stok_tgl)
             $('#penyesuaian_stok_tipe2').text(detail.penyesuaian_stok_tipe)
-            $('#penyesuaian_stok_create_at2').text(detail.penyesuaian_stok_create_at)
-            $('#penyesuaian_stok_create_by2').text(detail.penyesuaian_stok_create_by)
-            $('#penyesuaian_stok_id3').text(detail.penyesuaian_stok_id)
+
+            // $('#id_toko2').text(detail.id_toko)
+            // $('#penyesuaian_stok_tgl2').text(detail.penyesuaian_stok_tgl)
+            // $('#penyesuaian_stok_tipe2').text(detail.penyesuaian_stok_tipe)
+            // $('#penyesuaian_stok_create_at2').text(detail.penyesuaian_stok_create_at)
+            // $('#penyesuaian_stok_create_by2').text(detail.penyesuaian_stok_create_by)
+            // $('#penyesuaian_stok_id3').text(detail.penyesuaian_stok_id)
             tampiltabel(id)
             $('#dataPenyesuaianStok2').modal()
         }).catch(function(err) {

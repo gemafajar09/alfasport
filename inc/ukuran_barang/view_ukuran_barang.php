@@ -31,7 +31,7 @@
             <thead>
                 <tr>
                     <th class="text-center" style="width:40px">No</th>
-                    <th>Nama Barang</th>
+                    <!-- <th>Nama Barang</th> -->
                     <th>Nama Merk</th>
                     <th>Nama Kategori</th>
                     <th>Nama Divisi</th>
@@ -59,13 +59,13 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row" style="font-size:12px">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Nama Barang</label>
-                                    <input type="text" name="ukuran_barang_nama" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4"> -->
+                            <!-- <div class="form-group"> -->
+                            <!-- <label>Nama Barang</label> -->
+                            <input type="hidden" name="ukuran_barang_nama" class="form-control">
+                            <!-- </div> -->
+                            <!-- </div> -->
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Merk</label>
                                     <select class="form-control select2" style="width: 100%;" name="id_merek" required>
@@ -79,7 +79,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Kategori</label>
                                     <select name="id_kategori" id="id_kategori" class="form-group select2" style="width: 100%;">
@@ -135,18 +135,18 @@
                             <div class="col-md-12">
                                 <div id="formInput">
                                     <div class="row">
-                                        <div class="col-md-5">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Nama Ukuran</label>
                                                 <input class="form-control" type="text" name="ukuran_barang_detail_nama[]">
                                             </div>
                                         </div>
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label>Stok</label>
-                                                <input type="number" name="ukuran_barang_detail_stok[]" class="form-control" placeholder="Stok Baju">
-                                            </div>
-                                        </div>
+                                        <!-- <div class="col-md-5"> -->
+                                        <!-- <div class="form-group"> -->
+                                        <!-- <label>Stok</label> -->
+                                        <input type="hidden" name="ukuran_barang_detail_stok[]" class="form-control" placeholder="Stok Baju">
+                                        <!-- </div> -->
+                                        <!-- </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -180,13 +180,13 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="row" style="font-size:12px">
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <div class="form-group">
-                                <label>Nama Barang</label>
-                                <input type="text" name="ukuran_barang_nama" id="ukuran_barang_nama" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                                <label>Nama Barang</label> -->
+                        <input type="hidden" name="ukuran_barang_nama" id="ukuran_barang_nama" class="form-control">
+                        <!-- </div>
+                        </div> -->
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Merk</label>
                                 <select class="form-control select2" style="width: 100%;" name="id_merek" id="id_merek" required>
@@ -201,7 +201,7 @@
                                 <input type="hidden" id="ukuran_barang_id">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Kategori</label>
                                 <select name="id_kategori" id="id_kategori2" class="form-group select2" style="width: 100%;">
@@ -385,16 +385,10 @@ if (isset($_POST['simpanT'])) {
         var html_row =
             `
             <div class="row" id='baris_${_banyakPilihanBarang}'>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label>Nama Ukuran</label>
                         <input class="form-control" type="text" name="ukuran_barang_detail_nama[]">
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label>Stok</label>
-                        <input type="number" name="ukuran_barang_detail_stok[]" class="form-control" placeholder="Stok Baju">
                     </div>
                 </div>
                 <div class="col-md-1">
@@ -528,3 +522,29 @@ if (isset($_POST['simpanT'])) {
 
     $('#isi').load('inc/ukuran_barang/data_ukuran_barang.php');
 </script>
+
+
+
+<!--         var html_row =
+            `
+            <div class="row" id='baris_${_banyakPilihanBarang}'>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Nama Ukuran</label>
+                        <input class="form-control" type="text" name="ukuran_barang_detail_nama[]">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Stok</label>
+                        <input type="number" name="ukuran_barang_detail_stok[]" class="form-control" placeholder="Stok Baju">
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button class='btn btn-danger form-control' type='button' onclick='hapusBaris(${_banyakPilihanBarang})'><i class='fa fa-trash'></i></button>
+                    </div>
+                </div>
+            </div>
+            `; -->

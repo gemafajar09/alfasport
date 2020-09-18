@@ -8,6 +8,7 @@ SELECT a.transaksi_id,
        e.kategori,
        a.transaksi_cash,
        a.transaksi_debit,
+       a.transaksi_total_belanja,
        d.bank,
        a.transaksi_create_at,
        c.nama,
@@ -25,9 +26,18 @@ foreach ($data as $i => $a) {
         <td><?= $a['transaksi_kode'] ?></td>
         <td><?= $a['nama_toko'] ?></td>
         <td><?= $a['kategori'] ?></td>
-        <td><?= number_format($a['transaksi_cash']) ?></td>
-        <td><?= number_format($a['transaksi_debit']) ?></td>
-        <td><?= $a['bank'] ?></td>
+        <td><?= 'Rp.' . number_format($a['transaksi_cash']) ?></td>
+        <td><?= 'Rp.' . number_format($a['transaksi_debit']) ?></td>
+        <td><?= 'Rp.' . number_format($a['transaksi_total_belanja']) ?></td>
+        <td>
+            <?php
+            if ($a['bank'] == NULL) {
+                echo "-";
+            } else {
+                echo $a['bank'];
+            }
+            ?>
+        </td>
         <td><?= tgl_indo_waktu($a['transaksi_create_at']) ?></td>
         <!-- <td><?= $a['nama'] ?></td> -->
         <td><?= $a['keterangan'] ?></td>

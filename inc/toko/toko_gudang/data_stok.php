@@ -1,6 +1,6 @@
 <?php
 include "../../../config/koneksi.php";
-$data = $con->query("SELECT
+$data = $con->query("SELECT 
                         tb_stok_toko.id_stok_toko,
                         tb_stok_toko.jumlah,
                         toko.nama_toko,
@@ -41,9 +41,9 @@ foreach ($data as $i => $a) {
     <tr>
         <td><?= $i + 1 ?></td>
         <td><?= $a['nama_toko'] ?></td>
-        <td><?= $a['id'] ?></td>
-        <td><?= $a['artikel'] ?></td>
+        <!-- <td><?= $a['id'] ?></td> -->
         <td><?= $a['nama'] ?></td>
+        <td><?= $a['artikel'] ?></td>
         <td><?= $a['barcode'] ?></td>
         <td><?= $a['merk_nama'] ?></td>
         <td><?= $a['kategori_nama'] ?></td>
