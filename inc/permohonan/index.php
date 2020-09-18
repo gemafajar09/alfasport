@@ -41,7 +41,7 @@
             ")->fetchAll();
             foreach ($data as $a) {
             ?>
-                <div class="col-md-4">
+                <div class="col-md-4 py-2">
                     <div class="card">
                         <div class="card-header">
                             <p><i><?= $a['nama_toko'] ?></i></p>
@@ -61,6 +61,8 @@
                                     <button type="button" onclick="tampil('<?= $a['id_transfer'] ?>')" class="btn btn-primary btn-block btn-sm">View</button>
                                 <?php } elseif ($a['acc_owner'] == 1 or $a['acc_owner'] == 3) { ?>
                                     <button type="button" class="btn btn-success btn-block btn-sm">SUCCESS</button>
+                                <?php } elseif ($a['acc_owner'] == 4) { ?>
+                                    <button type="button" onclick="showKomentar('<?= $a['id_transfer'] ?>')" class="btn btn-info btn-block btn-sm">Tidak Cukup</button>
                                 <?php } elseif ($a['acc_owner'] == 2) { ?>
                                     <button type="button" class="btn btn-warning btn-block btn-sm">Ditolak</button>
                                 <?php } ?>
@@ -95,7 +97,32 @@
     </div>
 </div>
 
+<div class="modal" id="Show">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container" id="pesan"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
+    function showKomentar(id)
+    {
+        axios.post('inc/permohonan/cekKomentarTransfer.php',
+        {
+            'id_transfer':id
+        }).then(function(res){
+            var data = res.data
+            $('#pesan').html(data)
+            $('#Show').modal()
+        }).catch(function(err){
+            console.log(err)
+        })
+    }
+
     function tampil(id) {
         axios.post('inc/permohonan/detail.php', {
             'id': id

@@ -79,7 +79,7 @@
 
                                 <div class="form-group">
                                     <label>Nama Toko Asal</label>
-                                    <select class="form-control select2" name="id_toko" id="id_toko" required style="width: 100%;">
+                                    <select class="form-control " name="id_toko" id="id_toko" required style="width: 100%;">
                                         <option selected disabled>Pilih Toko</option>
                                         <option value="gudang">Gudang</option>
                                         <?php
@@ -90,97 +90,10 @@
                                         ?>
                                     </select>
                                 </div>
-                                <script>
-                                    var _dataBarang = "";
-                                    var _banyakPilihanBarang = -1;
-                                    var _pilihanBarangDefault =
-                                        "<div class='row'>" +
-                                        "<div class='col-md-8'>" +
-                                        "<div class='form-group'>" +
-                                        "<label>Nama Barang & Ukuran</label>" +
-                                        "<select class='form-control select2 id_gudang' name='id_gudang[]' required style='width: 100%;'>" +
-                                        "<option selected disabled>Pilih Barang</option>" +
-                                        "</select>" +
-                                        "</div>" +
-                                        "</div>" +
-                                        "<div class='col-md-4'>" +
-                                        "<div class='form-group'>" +
-                                        "<label>Jumlah</label>" +
-                                        "<input type='number' name='jumlah[]' id='jumlah' required='required' placeholder='Jumlah' class='form-control'>" +
-                                        "</div>" +
-                                        "</div>" +
-                                        "</div>";
-
-                                    function hapusBaris(no) {
-                                        document.getElementById("baris_" + no).innerHTML = "";
-                                    }
-
-                                    $("#id_toko").change(function() {
-                                        var id_toko = $('#id_toko option:selected').val();
-                                        if(id_toko == 'gudang')
-                                        {
-                                            $.ajax({
-                                                type: "GET",
-                                                url: "inc/transfer_barang/data_toko.php",
-                                                data: {
-                                                    'id_toko': id_toko
-                                                },
-                                                success: function(response) {
-                                                    $('#id_toko_tujuan').html(response);
-                                                }
-                                            });
-                                        }else{
-                                            $.ajax({
-                                                type: "GET",
-                                                url: "inc/transfer_barang/data_toko.php",
-                                                data: {
-                                                    'id_toko': id_toko
-                                                },
-                                                success: function(response) {
-                                                    $('#id_toko_tujuan').html(response);
-                                                }
-                                            });
-                                        }
-                                    })
-                                    
-                                    $("#id_toko").change(function() {
-                                        $('#formInput').html(_pilihanBarangDefault);
-                                        $('.select2').select2({
-                                            dropdownAutoWidth: true
-                                        });
-
-                                        var id_toko = $('#id_toko option:selected').val();
-                                        if(id_toko == 'gudang')
-                                        {
-                                            $.ajax({
-                                                type: "GET",
-                                                url: "inc/transfer_barang/data_barang_gudang.php",
-                                                data: {
-                                                    'id_toko': id_toko
-                                                },
-                                                success: function(response) {
-                                                    _dataBarang = response;
-                                                    $('[name ="id_gudang[]"]').html(response);
-                                                }
-                                            });
-                                        }else{
-                                            $.ajax({
-                                                type: "GET",
-                                                url: "inc/transfer_barang/data_barang_toko.php",
-                                                data: {
-                                                    'id_toko': id_toko
-                                                },
-                                                success: function(response) {
-                                                    _dataBarang = response;
-                                                    $('[name ="id_gudang[]"]').html(response);
-                                                }
-                                            });
-                                        }
-                                    })
-                                </script>
+                                
                                 <div class="form-group">
                                     <label>Nama Toko Tujuan</label>
-                                    <select class="form-control select2" name="id_toko_tujuan" id="id_toko_tujuan" required style="width: 100%;">
+                                    <select class="form-control " name="id_toko_tujuan" id="id_toko_tujuan" required style="width: 100%;">
                                         <option selected disabled>Pilih Toko</option>
                                     </select>
                                 </div>
@@ -205,14 +118,20 @@
                                     <div class="col-md-12">
                                         <div id="formInput">
                                             <div class="row">
-                                                <div class="col-md-8">
+                                                <div class="col-md-7">
                                                     <div class="form-group">
                                                         <label>Nama Barang & Ukuran</label>
                                                         <select class="form-control select2 id_gudang" name="id_gudang[]" required style="width: 100%;">
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Stok</label>
+                                                        <input type="number" readonly name="stok[]" id="stoks" required="required" placeholder="Stok" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label>Jumlah</label>
                                                         <input type="number" name="jumlah[]" id="jumlah" required="required" placeholder="Jumlah" class="form-control">
@@ -269,12 +188,134 @@ if (isset($_POST['simpanT'])) {
     </script>";
 }
 ?>
+<script>
+    var _dataBarang = "";
+    var _banyakPilihanBarang = 0;
+    var _pilihanBarangDefault =
+        "<div class='row'>" +
+        "<div class='col-md-7'>" +
+        "<div class='form-group'>" +
+        "<label>Nama Barang & Ukuran</label>" +
+        "<select class='form-control id_gudang' name='id_gudang[]' onchange='stokTampil(this,0)' required style='width: 100%;'>" +
+        "<option selected disabled>Pilih Barang</option>" +
+        "</select>" +
+        "</div>" +
+        "</div>" +
+        "<div class='col-md-2'>" +
+        "<div class='form-group'>" +
+        "<label>Stok</label>" +
+        "<input type='number' name='stok[]' id='stoks0' required='required' placeholder='Stok' class='form-control'>" +
+        "</div>" +
+        "</div>" +
+        "<div class='col-md-2'>" +
+        "<div class='form-group'>" +
+        "<label>Jumlah</label>" +
+        "<input type='number' name='jumlah[]' id='jumlah' onkeyup='batasKirim(this,0)' required='required' placeholder='Jumlah' class='form-control'>" +
+        "</div>" +
+        "</div>" +
+        "</div>";
 
+    function hapusBaris(no) {
+        document.getElementById("baris_" + no).innerHTML = "";
+    }
+
+    $("#id_toko").change(function() {
+        var id_toko = $('#id_toko option:selected').val();
+        if(id_toko == 'gudang')
+        {
+            $.ajax({
+                type: "GET",
+                url: "inc/transfer_barang/data_toko.php",
+                data: {
+                    'id_toko': id_toko
+                },
+                success: function(response) {
+                    $('#id_toko_tujuan').html(response);
+                }
+            });
+        }else{
+            $.ajax({
+                type: "GET",
+                url: "inc/transfer_barang/data_toko.php",
+                data: {
+                    'id_toko': id_toko
+                },
+                success: function(response) {
+                    $('#id_toko_tujuan').html(response);
+                }
+            });
+        }
+    })
+    
+    $("#id_toko").change(function() {
+        $('#formInput').html(_pilihanBarangDefault);
+        $('.select2').select2({
+            dropdownAutoWidth: true
+        });
+
+        var id_toko = $('#id_toko option:selected').val();
+        if(id_toko == 'gudang')
+        {
+            $.ajax({
+                type: "GET",
+                url: "inc/transfer_barang/data_barang_gudang.php",
+                data: {
+                    'id_toko': id_toko
+                },
+                success: function(response) {
+                    _dataBarang = response;
+                    $('[name ="id_gudang[]"]').html(response);
+                }
+            });
+        }else{
+            $.ajax({
+                type: "GET",
+                url: "inc/transfer_barang/data_barang_toko.php",
+                data: {
+                    'id_toko': id_toko
+                },
+                success: function(response) {
+                    _dataBarang = response;
+                    $('[name ="id_gudang[]"]').html(response);
+                }
+            });
+        }
+    })
+</script>
 
 <script>
     function tampil() {
         $('#dataTransfer').modal()
     }
+
+    function stokTampil(id, angka)
+    {
+        var id_detail = id.value
+        var id_gudang = $('#id_toko').val()
+        if(id_gudang == 'gudang')
+        {
+            axios.post('inc/transfer_barang/stok_barang_gudang.php',
+            {
+                'id_detail':id_detail
+            }).then(function(res){
+                var data = res.data
+                $('#stoks'+angka).val(data.jumlah)
+            })
+        }else{
+            axios.post('inc/transfer_barang/stok_barang_toko.php',
+            {
+                'id_detail':id_detail
+            }).then(function(res){
+                var data = res.data
+                $('#stoks'+angka).val(data.jumlah)
+            })
+        }
+    }
+
+    $('#stoks10').change(function(){
+        var id_detail = $(this).val()
+        alert(id_detail)
+    })
 
     function simpan() {
         var id_toko = $('#id_toko').val()
@@ -346,19 +387,25 @@ if (isset($_POST['simpanT'])) {
         _banyakPilihanBarang++;
         var html_row =
             "<div class='row' id='baris_" + _banyakPilihanBarang + "'>" +
-            "<div class='col-md-8'>" +
+            "<div class='col-md-7'>" +
             "<div class='form-group'>" +
             "<label>Nama Barang & Ukuran</label>" +
-            "<select class='form-control select2 id_gudang' name='id_gudang[]' required style='width: 100%;'>" +
+            "<select class='form-control id_gudang' name='id_gudang[]' onchange='stokTampil(this,"+_banyakPilihanBarang+")' required style='width: 100%;'>" +
             "<option selected disabled>Pilih Barang</option>" +
             _dataBarang +
             "</select>" +
             "</div>" +
             "</div>" +
-            "<div class='col-md-3'>" +
+            "<div class='col-md-2'>" +
+            "<div class='form-group'>" +
+            "<label>Stok</label>" +
+            "<input type='number' name='stok[]' id='stoks"+ _banyakPilihanBarang +"' required='required' placeholder='Stok' class='form-control'>" +
+            "</div>" +
+            "</div>" +
+            "<div class='col-md-2'>" +
             "<div class='form-group'>" +
             "<label>Jumlah</label>" +
-            "<input type='number' name='jumlah[]' id='jumlah' required='required' placeholder='Jumlah' class='form-control'>" +
+            "<input type='number' name='jumlah[]' onkeyup='batasKirim(this,"+  _banyakPilihanBarang +")' required='required' placeholder='Jumlah' class='form-control'>" +
             "</div>" +
             "</div>" +
             "<div class='col-md-1'>" +
@@ -368,6 +415,7 @@ if (isset($_POST['simpanT'])) {
             "</div>" +
             "</div>"
         "</div>";
+        console.log(_banyakPilihanBarang)
 
         $('#formInput').append(html_row)
         $('.select2').select2({
@@ -400,6 +448,16 @@ if (isset($_POST['simpanT'])) {
             }
         })
     })
+
+    function batasKirim(angka,int)
+    {
+        var jumlah = angka.value
+        var stok = $('#stoks'+int).val();
+        if(parseInt(jumlah) > parseInt(stok))
+        {
+            alert('Maaf Stok Tidak Mencukupi')
+        }
+    }
 
     $('[name ="id_gudang[]"]').change(function() {
         var id_gudang = $(this).val()

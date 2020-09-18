@@ -175,13 +175,17 @@ if (isset($_POST['simpanT'])) {
             }
         }
     }
-    // echo "<script>
-    //     window.location.href = 'terima_transfer.html';
-    // </script>";
+    $cek = $con->query("SELECT * FROM tb_transfer_detail WHERE id_transfer = '$id_transfer'");
+    foreach($cek as $isi)
+    {
+        if($isi['status']==0)
+        {
+            $con->query("UPDATE tb_transfer SET acc_owner='4' WHERE id_transfer='$id_transfer'");
+        }
+
+    }
 }
 ?>
-
-
 
 <script>
     function cekBarang(id_transfer) {
@@ -196,7 +200,6 @@ if (isset($_POST['simpanT'])) {
             console.log(err)
         })
     }
-
 
     $('#isi').load('inc/terima/data_transfer.php');
 </script>

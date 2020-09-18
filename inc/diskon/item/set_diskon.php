@@ -77,12 +77,26 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                 </div>
                 <div class="col-md-10">
                     <table class="table table-striped">
+                                                    
                         <?php
                             $detail = $con->query("SELECT * FROM tb_gudang_detail a LEFT JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran LEFT JOIN tb_gudang c ON a.id=c.id WHERE a.id='$a[artikel]'")->fetchAll(PDO::FETCH_ASSOC);
                             
                             $data_barang[$i]['detail'] = array();
                             foreach($detail as $ii => $isi):
                                 $data_barang[$i]['detail'][] = $isi;
+                                $awal  = date_create($isi['tanggal']);
+                                $akhir = date_create();
+                                $diff  = date_diff($awal, $akhir);
+                            if ($diff->y == 0 && $diff->m == 0) {
+                                $umur = $diff->d;
+                            } elseif ($diff->y == 0 && $diff->m != 0) {
+                                $umur = $diff->m + ($diff->d * 30);
+                            } else if ($diff->y != 0) {
+                                $umur = ($diff->y * 365) + ($diff->m + 30) + $diff->d;
+                            }
+                            $cariUmur = $con->query("SELECT IF(umur<= $umur, diskon, 0) as diskon FROM `tb_diskon_umur`")->fetch(PDO::FETCH_ASSOC);
+                            $hitungSelisih = $isi['jual'] * $cariUmur['diskon'] / 100;
+                            $hitungDiskon  = $isi['jual'] - $hitungSelisih;
                         ?>
                         <tr>
                             <td>
@@ -99,7 +113,7 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                             <td>Rp.<?= number_format($isi['jual']) ?></td>
                             <td style="width: 140px;">
                                 <div class="form-inline">
-                                    <input type="text" name="besar_diskon_<?= $data['id_gudang']?>_<?= $ii?>" onkeyup="hitungDiskon(<?= $i ?>,<?= $ii ?>)" style="width: 70px;" class="form-control">
+                                    <input type="text" name="besar_diskon_<?= $data['id_gudang']?>_<?= $ii?>" onkeyup="hitungDiskon(<?= $i ?>,<?= $ii ?>)" style="width: 70px;" value="<?= $cariUmur['diskon'] ?>"  class="form-control">
                                     <input type="text" value="%" readonly class="form-control" style="width:40px">
                                     <input type="hidden" name="barcode[]" value="<?= $isi['barcode'] ?>">
                                     <input type="hidden" name="artikel[]" value="<?= $isi['artikel'] ?>">

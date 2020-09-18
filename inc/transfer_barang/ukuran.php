@@ -19,7 +19,7 @@ LEFT JOIN tb_gudang_detail c
 ON b.artikel=c.id
 LEFT JOIN tb_all_ukuran d
 ON d.id_ukuran=c.id_ukuran
-WHERE a.id_toko='$cek[id]'")->fetchAll(PDO::FETCH_ASSOC);
+WHERE a.id_toko='$_POST[id]'")->fetchAll(PDO::FETCH_ASSOC);
 foreach ($data as $i => $a) {
     echo "<option value=" . $a['id_detail'] . ">" . $a['ue'] . "-" . $a['uk'] . "-" . $a['us'] . "-" . $a['cm'] . "</option>";
 }

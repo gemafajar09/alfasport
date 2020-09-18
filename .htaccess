@@ -77,6 +77,8 @@ RewriteRule ^permohonan\.html$ index.php?page=inc/permohonan/index [L]
 RewriteRule ^cari_barang\.html$ index.php?page=inc/cari/view_cari [L]
 RewriteRule ^diskon_umur\.html$ index.php?page=inc/diskon_umur/index [L]
 
+RewriteRule ^return\.html$ index.php?page=inc/return/index [L]
+RewriteRule ^buatreturn\.html$ index.php?page=inc/return/buatReturn [L]
 
 RewriteRule ^restock_barang_gudang\.html$ index.php?page=inc/restock_gudang/view_restock [L]
 RewriteRule ^editMultipleRestock\.html$ index.php?page=inc/restock_gudang/edit_multiple_restock [L]

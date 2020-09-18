@@ -30,7 +30,9 @@ foreach ($data as $i => $a) {
             ?>
                 <button class="btn btn-success btn-sm"><i class="fa fa-"> Success</i></button>
             <?php
-            } ?>
+            }else if ($a['acc_owner'] == 4) { ?>
+                <button class="btn btn-info btn-sm"><i class="fa fa-"> Tidak lengkap</i></button>
+            <?php } ?>
         </td>
     </tr>
 <?php } ?>

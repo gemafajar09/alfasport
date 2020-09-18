@@ -41,10 +41,11 @@
                 <?php
                     $data = $con->query("SELECT * FROM tb_diskon_umur")->fetchAll();
                     foreach($data as $i => $a):
+                        $bulan = $a['umur'] / 30;
                 ?>
                 <tr>
                     <td><?= $i+1 ?></td>
-                    <td><?= $a['umur'] ?></td>
+                    <td><?= $bulan ?>&nbsp;Bulan</td>
                     <td><?= $a['diskon'] ?></td>
                     <td class="text-center">
                         <button type="button" onclick="edit('<?= $a['id_umur'] ?>')" class="btn btn-warning"><i class="fa fa-edit"></i></button>
@@ -72,21 +73,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Umur</label>
-                                    <select name="umur" class="select2" style="width: 100%;" id="umur">
-                                        <option value="">-Set Umur-</option>
-                                        <option value="30">1 Bulan</option>
-                                        <option value="60">2 Bulan</option>
-                                        <option value="90">3 Bulan</option>
-                                        <option value="120">4 Bulan</option>
-                                        <option value="150">5 Bulan</option>
-                                        <option value="180">6 Bulan</option>
-                                        <option value="210">7 Bulan</option>
-                                        <option value="240">8 Bulan</option>
-                                        <option value="270">9 Bulan</option>
-                                        <option value="300">10 Bulan</option>
-                                        <option value="330">11 Bulan</option>
-                                        <option value="360">12 Bulan</option>
-                                    </select>
+                                    <input type="number" name="umur" id="umur" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Diskon</label>
