@@ -376,12 +376,32 @@
 						toastr.warning('Stok Tidak Tersedia...');
 						$("#button-cart").prop("disabled", true);
 					} else {
+						cekDiskon(id_stok)
 						$("#button-cart").prop("enabled", false);
 					}
 
 				}
 			})
 		})
+
+		function cekDiskon(id) {
+			axios.post('cariPotonganDiskon.php', {
+				'id_stok': id
+			}).then(function(res) {
+				var data = res.data
+				var harga = $('#hargaasli').val()
+				if (data == false) {
+					var hasil = harga;
+				} else {
+					var hasil = harga - data.potongan
+				}
+
+				document.getElementById('spanPrice').innerHTML = formatRupiah('' + hasil)
+				$('#harga').val(hasil);
+			}).catch(function(err) {
+				console.log(err)
+			})
+		}
 
 		var up = document.getElementById('q_up');
 		if (up) {
@@ -428,7 +448,12 @@
 				'id_stok_toko': id_stok_toko,
 				'quantity_wanted': quantity_wanted,
 			}).then(function(res) {
-				toastr.success('Barang ditambah ke keranjang');
+				var data = res.data
+				if (data.value == 1) {
+					toastr.success(data.pesan);
+				} else {
+					toastr.warning(data.pesan);
+				}
 			}).catch(function(err) {
 				toastr.warning('Gagal tambah ke keranjang');
 			})
@@ -520,16 +545,11 @@
 		}
 
 		function gunakanVoucher(voucher) {
-			var form = new FormData();
-			form.append('voucher', voucher);
-			axios.post("gunakan_voucher.php", form)
+			axios.post("gunakan_voucher.php", {
+					'voucher_detail': voucher,
+				})
 				.then(function(res) {
-					if (res.data.status == true) {
-						document.getElementById("voucher_" + voucher).innerHTML = "Sudah Diclaim";
-						document.getElementById("voucher_" + voucher).disabled = true;
-						alert("Voucher berhasil digunakan!");
-						window.location.reload();
-					}
+					window.location.reload();
 				})
 				.catch(function(err) {
 					alert("Voucher gagal digunakan!");
@@ -538,25 +558,12 @@
 		}
 
 		function claimVoucher(voucher) {
-			var form = new FormData();
-			form.append('voucher', voucher);
-			form.append('error', voucher);
-			axios.post('claim_voucher.php', form).then(function(res) {
-					if (res.data.status == true) {
-						return axios.post("gunakan_voucher.php", form);
-					} else {
-						alert("Voucher gagal diklaim karena " + res.data.error);
-					}
+			axios.post('claim_voucher.php', {
+					'voucher': voucher,
 				})
 				.then(function(res) {
-					if (res.data.status == true) {
-						document.getElementById("voucher_" + voucher).innerHTML = "Sudah Digunakan";
-						document.getElementById("voucher_" + voucher).disabled = true;
-						alert("Voucher berhasil diklaim!");
-						window.location.reload();
-					} else {
-						alert("Voucher gagal diklaim karena " + res.data.error);
-					}
+					alert("Voucher berhasil diclaim!");
+					window.location.reload();
 				})
 				.catch(function(err) {
 					console.log(err);
