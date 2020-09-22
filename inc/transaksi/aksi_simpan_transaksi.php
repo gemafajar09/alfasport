@@ -6,11 +6,11 @@ $_POST = json_decode($json, true);
 
 if ($_POST['transaksi_id'] == NULL) {
 
-    $data_tmp = $con->query("SELECT * FROM tb_transaksi_tmp WHERE tmp_kode = '$_SESSION[auto_kode]'")->fetchAll(PDO::FETCH_ASSOC);
+    $data_tmp = $con->query("SELECT * FROM tb_transaksi_tmp WHERE tmp_kode = '$_SESSION[auto_kodes]'")->fetchAll(PDO::FETCH_ASSOC);
     $tgl = date('Y-m-d H:i:s');
 
     $data = array(
-        'transaksi_kode' => $_SESSION['auto_kode'],
+        'transaksi_kode' => $_SESSION['auto_kodes'],
         'transaksi_tgl' => $data_tmp[0]['tmp_tgl'],
         'id_toko' => $data_tmp[0]['id_toko'],
         'transaksi_jumlah_beli' => $_POST['transaksi_jumlah_beli'],
@@ -27,8 +27,17 @@ if ($_POST['transaksi_id'] == NULL) {
         'transaksi_create_by' => $_COOKIE['id_karyawan'],
         'keterangan' => $_POST['keterangan'],
     );
+
     $simpan = $con->insert('tb_transaksi', $data);
     $idtra = $con->id();
+
+    // cari point
+    $p = $_POST['transaksi_total_belanja'] / 100;
+    $point = round($p);
+    if ($data_tmp[0]['tmp_tipe_konsumen'] == 'Member') {
+        $member_id = $data_tmp[0]['id_konsumen'];
+        $con->query("UPDATE tb_member_point SET point = point + '$point', royalti = royalti + '$point' WHERE member_id = '$member_id'");
+    }
 
     $con->query("INSERT INTO tb_transaksi_detail (transaksi_id, detail_kode, detail_tgl, id_toko,id_gudang,detail_tipe_konsumen, id_konsumen, detail_jumlah_beli, detail_total_harga, detail_potongan, detail_diskon1) 
         Select '$idtra' as transaksi_id,
@@ -45,10 +54,10 @@ if ($_POST['transaksi_id'] == NULL) {
         From
             tb_transaksi_tmp
         WHERE
-            tb_transaksi_tmp.tmp_kode = '$_SESSION[auto_kode]' ");
+            tb_transaksi_tmp.tmp_kode = '$_SESSION[auto_kodes]' ");
 
-    $con->delete("tb_transaksi_tmp", array("tmp_kode" => $_SESSION["auto_kode"]));
-    unset($_SESSION['auto_kode']);
+    $con->delete("tb_transaksi_tmp", array("tmp_kode" => $_SESSION["auto_kodes"]));
+    unset($_SESSION['auto_kodes']);
 
     exit;
 

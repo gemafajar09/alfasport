@@ -172,6 +172,10 @@
     })
 
     $(document).ready(function() {
+        $("#datatable-responsive").DataTable().destroy();
+        // $('#datatable-responsive tbody').empty();
         $('#isi').load('inc/transaksi/data_transaksi.php');
+
+        $("#datatable-responsive").DataTable()
     })
 </script>

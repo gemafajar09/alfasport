@@ -3,6 +3,8 @@ $data_voucher_detail = $con->query("SELECT a.*, b.*
 FROM tb_voucher a 
 LEFT JOIN toko b ON a.id_toko = b.id_toko
 WHERE voucher_id = '$_GET[id_voucher]'")->fetch();
+
+$id = $data_voucher_detail['voucher_id'];
 ?>
 
 <div class="page-title">
@@ -27,6 +29,7 @@ WHERE voucher_id = '$_GET[id_voucher]'")->fetch();
                     </td>
                     <th>
                         <h6><?= $data_voucher_detail['voucher_nama']; ?></h6>
+                        <input type="hidden" id="namaVoucher" value="<?= $data_voucher_detail['voucher_nama']; ?>" style=" position: absolute;left: -9999px;">
                     </th>
                 </tr>
                 <tr>
@@ -82,50 +85,44 @@ WHERE voucher_id = '$_GET[id_voucher]'")->fetch();
                     <th>Kode Token</th>
                     <th>Status</th>
                     <th>Member Pengklaim</th>
+                    <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php
-                $kode = $con->query(
-                    "SELECT
-                        tb_voucher_detail.voucher_id,
-                        tb_voucher_detail.voucher_detail_id,
-                        tb_voucher_detail.voucher_detail_token,
-                        tb_voucher_detail.voucher_detail_status,
-                        tb_member.member_nama
-                    FROM tb_voucher_detail 
-                    LEFT JOIN tb_member On tb_voucher_detail.member_id = tb_member.member_id 
-                    WHERE tb_voucher_detail.voucher_id = :voucher_id",
-                    array("voucher_id" => $data_voucher_detail['voucher_id'])
-                )->fetchAll();
-                foreach ($kode as $i => $data) {
-                ?>
-                    <tr>
-                        <td><?php echo $i + 1 ?></td>
-                        <td><?php echo $data['voucher_detail_token'] ?></td>
-                        <td>
-                            <?php
-                            if ($data['voucher_detail_status'] == 0) {
-                                echo "<p style='color: red'>Belum Dipakai</p>";
-                            } else {
-                                echo "<p style='color: blue'>Sudah Dipakai</p>";
-                            }
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            if ($data['member_nama'] == "") {
-                                echo "-";
-                            } else {
-                                echo $data['member_nama'];
-                            }
-                            ?>
-                        </td>
-                    </tr>
-                <?php
-                }
-                ?>
-            </tbody>
+            <tbody id="isi"></tbody>
         </table>
+        <input type="hidden" value="<?= $id ?>" id="idKo">
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        reload()
+    })
+
+    function copyToClipboard(text) {
+        var dummy = document.createElement("textarea");
+        // to avoid breaking orgain page when copying more words
+        // cant copy when adding below this code
+        // dummy.style.display = 'none'
+        document.body.appendChild(dummy);
+        //Be careful if you use texarea. setAttribute('value', value), which works with "input" does not work with "textarea". – Eduard
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+    }
+
+    function reload() {
+        var id = $('#idKo').val()
+        var nama = $('#namaVoucher').val()
+        axios.post('inc/diskon/voucher/data_detail_voucher.php', {
+            'voucher_id': id,
+            'nama': nama
+        }).then(function(res) {
+            $("#datatable-responsive").DataTable().destroy();
+            $('#isi').html(res.data);
+            $("#datatable-responsive").DataTable();
+        }).catch(function(err) {
+            console.log(err)
+        })
+    }
+</script>
