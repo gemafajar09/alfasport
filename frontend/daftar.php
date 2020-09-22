@@ -59,26 +59,6 @@
 																<input type="text" class="form-control" name="member_notelp" placeholder="Masukkan no telp">
 															</div>
 															<div class="form-group">
-																<label>Tanggal Lahir</label>
-																<input type="date" class="form-control" name="member_tgl_lahir" placeholder="Masukkan Tanggal Lahir">
-															</div>
-															<div class="form-group">
-																<label>Jenis Kelamin</label>
-																<input type="radio" value="Pria" name="member_gender">Pria
-																<input type="radio" value="Wanita" name="member_gender">Wanita
-															</div>
-
-															<div class="form-group">
-																<label>Pilih Profesi</label>
-																<select class="form-control" name="member_profesi">
-																	<option disabled>Pilih Profesi</option>
-																	<option value="Pelajar/Mahasiswa">Pelajar/Mahasiswa</option>
-																	<option value="Karyawan">Karyawan</option>
-																	<option value="Lainnya">Lainnya</option>
-																</select>
-															</div>
-
-															<div class="form-group">
 																<label>Email</label>
 																<input type="email" name="member_email" class="form-control" placeholder="Masukkan email">
 															</div>
@@ -91,31 +71,6 @@
 															<div class="form-group">
 																<label>Ulangi Password</label>
 																<input type="password" name="member_password_repeat" class="form-control" placeholder="Ulangi password">
-															</div>
-
-															<div class="form-group">
-																<label>Pilih Provinsi</label>
-																<select class="form-control" name="id_prov" id="id_prov">
-																	<option>Pilih Provinsi</option>
-																	<?php
-																	$data = $con->query("SELECT * FROM tb_provinsi");
-																	foreach ($data as $i => $a) {
-																		echo "<option value=" . $a['id_prov'] . ">" . $a['nama_prov'] . "</option>";
-																	}
-																	?>
-																</select>
-															</div>
-
-															<div class="form-group">
-																<label>Pilih Kota</label>
-																<select class="form-control" id="id_kota" name="id_kota">
-																	<option>Pilih Kota</option>
-																</select>
-															</div>
-
-															<div class="form-group">
-																<label>Alamat</label>
-																<textarea name="member_alamat" cols="30" rows="5" class="form-control"></textarea>
 															</div>
 
 															<button type="submit" class="btn btn-default" name="regis">daftar</button>
@@ -185,8 +140,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <?php
-if (isset($_COOKIE['error']))
-{
+if (isset($_COOKIE['error'])) {
 ?>
 	<script>
 		Swal.fire({
@@ -195,10 +149,8 @@ if (isset($_COOKIE['error']))
 		})
 	</script>
 <?php
-setCookie('error', '', time()- 3600, '/');
-
-}
-elseif (isset($_COOKIE['success'])) {
+	setCookie('error', '', time() - 3600, '/');
+} elseif (isset($_COOKIE['success'])) {
 ?>
 	<script>
 		Swal.fire({
@@ -208,6 +160,6 @@ elseif (isset($_COOKIE['success'])) {
 	</script>
 
 <?php
-setCookie('success', '', time()- 3600, '/');
+	setCookie('success', '', time() - 3600, '/');
 }
 ?>

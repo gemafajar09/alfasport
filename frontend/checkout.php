@@ -5,7 +5,8 @@ $list_voucher = array();
 if (!empty($_SESSION["voucher_id"])) {
 	$list_voucher = json_decode($_SESSION['voucher_id']);
 }
-$member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHERE member_id='$_COOKIE[member_id]'")->fetch();
+
+$member = $con->query("SELECT id_prov, id_kota, alamat, kode_pos, keterangan, nama_penerima, tb_member.alamat_id FROM tb_member, tb_daftar_alamat WHERE tb_member.alamat_id=tb_daftar_alamat.alamat_id AND tb_member.member_id='$_COOKIE[member_id]'")->fetch();
 ?>
 
 <!-- BREADCRUMB
@@ -45,48 +46,37 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 										<?php
 										$tgl_sekarang = date("Y-m-d");
 
-										$data_voucher = $con->query("SELECT
-									tb_voucher.voucher_id,
-									tb_voucher.voucher_nama,
-									tb_voucher.voucher_harga,
-									tb_voucher.voucher_jenis,
-									IFNULL((SELECT member_id FROM tb_voucher_detail WHERE tb_voucher_detail.voucher_id = tb_voucher.voucher_id AND tb_voucher_detail.member_id = '$_COOKIE[member_id]' LIMIT 1), 0) AS status_klaim 
-									From
-									tb_voucher Inner Join
-									tb_voucher_detail WHERE tb_voucher.voucher_tgl_akhir >= '$tgl_sekarang'
-									AND tb_voucher.voucher_tgl_mulai <= '$tgl_sekarang' AND tb_voucher_detail.voucher_detail_status = 0 GROUP BY tb_voucher.voucher_id;")->fetchAll();
+										$data_voucher = $con->query("SELECT * FROM tb_voucher_detail d LEFT JOIN tb_voucher v ON d.voucher_id=v.voucher_id WHERE d.member_id='$_COOKIE[member_id]'")->fetchAll();
 										foreach ($data_voucher as $i => $a) {
-
+											if ($a['voucher_detail_status'] < 3 && $a['member_id'] == $_COOKIE['member_id']) {
 										?>
-											<div class="col-md-4">
-												<div class="panel panel-default">
-													<div class="panel-body" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); background-color: #00c853">
-														<p style="font-size: 14px; color: #FFF;"><?= $a['voucher_nama'] ?></p>
-														<span style="font-size: 16px; color: #FFF;"><b><?= $a['voucher_jenis'] == 'harga' ? 'Rp. ' : ''; ?><?= number_format($a['voucher_harga'], 0, ',', '.') ?><?= $a['voucher_jenis'] == 'persen' ? '%' : ''; ?></b></span>
-														<br><br>
-														<?php
-														if ($a['status_klaim'] == '0') {
-														?>
-															<button id="voucher_<?= $a['voucher_id'] ?>" type="button" onclick="claimVoucher(<?= $a['voucher_id'] ?>)" style="background-color: #FFF; color: #00c853 !important; cursor: pointer;" class="btn" type="submit">Claim</button>
-															<?php
-														} else {
-															// voucher sudah dipakai dan sudah diklaim
-															if (in_array($a['voucher_id'], $list_voucher)) {
-															?>
-																<button id="voucher_<?= $a['voucher_id'] ?>" style="background-color: #FFF; color: #00c853 !important; cursor: pointer;" class="btn" disabled>Sudah Digunakan </button>
-															<?php
-															} else // voucher sudah diklaim tapi belum digunakan
-															{
-															?>
-																<button type="button" onclick="gunakanVoucher(<?= $a['voucher_id'] ?>)" style="background-color: #FFF; color: #00c853 !important; cursor: pointer;" class="btn" type="submit">Gunakan</button>
-														<?php
-															}
-														}
-														?>
+												<div class="col-md-6">
+													<div class="panel panel-default">
+														<div class="panel-body" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); margin: 0px; padding: 0px; min-height: 140px;">
+															<div class="col-md-5" style="background-color: #00c853; min-height: 140px;">
+
+																<p style="font-size: 16px; color: #FFF; margin-top: 15px;"><b><?= $a['voucher_jenis'] == 'harga' ? 'Rp. ' : ''; ?><?= number_format($a['voucher_harga'], 0, ',', '.') ?><?= $a['voucher_jenis'] == 'persen' ? '%' : ''; ?></b></p>
+															</div>
+															<div class="col-md-7">
+																<p style="font-size: 12px; margin-top: 15px; font-weight: 600;"><?= $a['voucher_nama'] ?></p>
+
+																<?= $a['voucher_detail_token'] ?>
+																<br><br>
+																<?php
+																if ($a['voucher_detail_status'] == 1 && $a['member_id'] == $_COOKIE['member_id']) {
+
+																?>
+																	<button onclick="gunakanVoucher(<?= $a['voucher_detail_id'] ?>)" type="button" style="background-color: #00c853; color: #FFF !important; cursor: pointer;" class="btn" type="submit">Gunakan</button>
+																<?php } else if ($a['voucher_detail_status'] == 2 && $a['member_id'] == $_COOKIE['member_id']) { ?>
+																	Sedang digunakan
+																<?php } ?>
+															</div>
+														</div>
 													</div>
 												</div>
-											</div>
+
 										<?php
+											}
 										} ?>
 									</div>
 								</form>
@@ -97,26 +87,44 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 										</div>
 										<div id="collapseOne" class="panel-collapse collapse in">
 											<div class="panel-body">
-												<form>
+												<form method="POST" action="simpantrans.php">
 													<div class="row">
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>Nama Lengkap</label>
-																<input type="text" class="form-control" placeholder="Masukkan Nama Lengkap">
+														<?php
+														$data = $con->query("SELECT tb_provinsi.nama_prov,
+														tb_kota.nama_kota,
+														tb_daftar_alamat.alamat,
+														tb_daftar_alamat.keterangan,
+														tb_daftar_alamat.alamat_id,
+														tb_daftar_alamat.no_telp_penerima,
+														tb_daftar_alamat.nama_penerima,
+														tb_daftar_alamat.kode_pos
+														tb_daftar_alamat FROM tb_member LEFT JOIN tb_daftar_alamat ON tb_member.alamat_id=tb_daftar_alamat.alamat_id
+														 LEFT JOIN tb_provinsi ON tb_daftar_alamat.id_prov=tb_provinsi.id_prov LEFT JOIN tb_kota ON tb_daftar_alamat.id_kota=tb_kota.id_kota WHERE tb_member.member_id='$_COOKIE[member_id]'")->fetch();
+
+														?>
+														<div class="col-md-12">
+															<p><b>Alamat Pengiriman</b></p>
+															<div class="panel panel-default">
+																<div class="panel-body">
+																	<b><?= $data['nama_penerima'] ?></b> (<span style="color: black;"><?= $data['keterangan'] ?></span>) &nbsp;&nbsp;&nbsp;&nbsp;
+																	<?php
+																	if ($data['alamat_id'] == $member['alamat_id']) {
+																		echo "<small style='background-color: #f2f2f2; padding: 3px;'><b>Alamat Aktif</b></small>";
+																	}
+																	?>
+																	<p style="color: black;"><?= $data['no_telp_penerima'] ?></p>
+																	<?= $data['alamat'] ?> <br>
+																	<?= $data['nama_kota'] ?>, <?= $data['nama_prov'] ?>, <?= $data['kode_pos'] ?>
+																	<hr>
+																	<a href="index.php?page=alamat" class="btn btn-default">Pilih Alamat Lain</a>
+																</div>
 															</div>
 														</div>
 
-														<div class="col-md-6">
-															<div class="form-group">
-																<label>No Telepon</label>
-																<input type="text" class="form-control" placeholder="Masukkan No Telepon">
-															</div>
-														</div>
 
 														<div class="col-md-6">
 															<div class="form-group">
-																<label>Pilih Provinsi</label>
-																<select class="form-control" name="id_prov" id="provinsi">
+																<select class="form-control" name="id_prov" id="provinsi" style="display: none;">
 																	<option>Pilih Provinsi</option>
 																	<?php
 																	$curl = curl_init();
@@ -150,8 +158,7 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 
 														<div class="col-md-6">
 															<div class="form-group">
-																<label>Pilih Kota</label>
-																<select class="form-control" id="kota" name="id_kota">
+																<select class="form-control" id="kota" name="id_kota" style="display: none;">
 																	<option>Pilih Kota</option>
 																	<?php
 																	$data = $con->query("SELECT * FROM tb_kota WHERE id_prov='$member[id_prov]'");
@@ -168,17 +175,28 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 
 														<div class="col-md-6">
 															<div class="form-group">
-																<label>Alamat</label>
-																<textarea name="member_alamat" class="form-control"><?= $member['member_alamat'] ?></textarea>
+																<textarea class="form-control" name="alamat" style="display: none;"><?= $member['alamat'] ?></textarea>
 															</div>
 														</div>
 
 														<div class="col-md-6">
 															<div class="form-group">
-																<label>Kode Pos</label>
-																<input type="text" class="form-control" placeholder="Masukkan Kode Pos">
+																<textarea class="form-control" name="kode_pos" style="display: none;"><?= $member['kode_pos'] ?></textarea>
 															</div>
 														</div>
+
+														<div class="col-md-6">
+															<div class="form-group">
+																<input type="text" class="form-control" name="keterangan" value="<?= $member['keterangan'] ?>" style="display: none;">
+															</div>
+														</div>
+
+														<div class="col-md-6">
+															<div class="form-group">
+																<input type="text" class="form-control" name="namapenerima" value="<?= $member['nama_penerima'] ?>" style="display: none;">
+															</div>
+														</div>
+
 													</div>
 
 													<div class="form-group">
@@ -204,7 +222,7 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 																	foreach ($kurir as $rkurir) {
 																	?>
 																		<label class="radio-inline">
-																			<input type="radio" name="kurir" class="kurir" value="<?php echo $rkurir['value']; ?>" /> <?php echo strtoupper($rkurir['label']); ?>&nbsp;&nbsp;&nbsp;&nbsp;
+																			<input type="radio" name="kurir" class="kurir" value="<?php echo $rkurir['value']; ?>" required /> <?php echo strtoupper($rkurir['label']); ?>&nbsp;&nbsp;&nbsp;&nbsp;
 																		</label>
 																	<?php
 																	}
@@ -224,7 +242,6 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 														</div>
 													</div>
 
-												</form>
 											</div>
 										</div><!-- End .panel-collapse -->
 									</div>
@@ -242,30 +259,45 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 										<table id="isiHeaderCart">
 											<?php
 											$carts = $con->query("
-											SELECT SUM(c.qty) AS jumlah, SUM(c.harga*c.qty) AS total,
-											SUM(g.berat*c.qty) AS jumberat,
+											SELECT
 											c.harga,
 											c.id,
 											g.id_gudang,
+											g.berat,
 											c.qty,
 											g.thumbnail,
 											g.nama,
-											m.merk_nama
+											m.merk_nama,
+											u.ue,
+              				u.uk,
+              				u.us,
+              				u.cm
 								FROM cart c
 								LEFT JOIN tb_gudang g ON c.id=g.id
-								LEFT JOIN tb_merk m ON g.id_merek=m.merk_id WHERE id_user='$_COOKIE[member_id]' GROUP BY g.id")->fetchAll();
+								LEFT JOIN tb_merk m ON g.id_merek=m.merk_id
+								LEFT JOIN tb_stok_toko st ON c.id_stok_toko=st.id_stok_toko
+								LEFT JOIN tb_all_ukuran u ON st.id_ukuran=u.id_ukuran
+								WHERE id_user='$_COOKIE[member_id]'")->fetchAll();
 
 											$subtotal = 0;
 											foreach ($carts as $i => $cart) {
 												$id = $cart['id'];
-												$subtotal += $cart['total'];
-												$berat += $cart['jumberat'];
+												$total = $cart['harga'] * $cart['qty'];
+												$subtotal += $total;
+												$beratsub = $cart['berat'] * $cart['qty'];
+												$berat += $beratsub;
 
 											?>
 												<tr>
 													<td class="image"><a href="index.php?page=product&id=<?= $cart['id_gudang'] ?>"><img src="<?= $cart['thumbnail'] ?>" alt="Product" title="Product" width="50" /></a></td>
 													<td class="name"><a href="index.php?page=product&id=<?= $cart['id_gudang'] ?>"><?= $cart['nama'] ?></a></td>
-													<td class="quantity">x&nbsp;<?= $cart['jumlah'] ?></td>
+													<td class="quantity">x&nbsp;<?= $cart['qty'] ?></td>
+													<td>
+														<b>EU</b> : <?= $cart['ue'] ?><br>
+														<b>UK</b> : <?= $cart['uk'] ?><br>
+														<b>US</b> : <?= $cart['us'] ?><br>
+														<b>CM</b> : <?= $cart['cm'] ?>
+													</td>
 													<td class="total">Rp. <?= number_format($cart['harga'], 0, ",", ".") ?></td>
 												</tr>
 											<?php } ?>
@@ -283,30 +315,26 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 												<td class="text-right right"><?= $berat ?> gram</td>
 											</tr>
 
-											<?php
-											$total_potongan = 0;
-											$besar_potongan = 0;
-											$sub_potongan = 0;
-											foreach ($data_voucher as $i => $potongan) {
-												if ($potongan['status_klaim'] != 0) {
-													if ($potongan['voucher_jenis'] == "harga") {
-														$besar_potongan = $potongan['voucher_harga'];
-														$sub_potongan = $potongan['voucher_harga'];
+											<tr>
+												<td class="right"><b>Potongan:</b></td>
+												<td class="text-right right">
+													<?php
+													$tot = $con->query("SELECT *, c.id_toko AS idtoko FROM cart c LEFT JOIN tb_voucher_detail vd ON c.voucher_detail_id=vd.voucher_detail_id LEFT JOIN tb_voucher v ON vd.voucher_id=v.voucher_id")->fetch();
+
+													if ($tot['voucher_jenis'] == 'harga') {
+														$besar_potongan = $tot['voucher_harga'];
+														$sub_potongan = $tot['voucher_harga'];
 													} else {
-														$besar_potongan = ($subtotal * $potongan['voucher_harga'] / 100);
+														$besar_potongan = ($subtotal * $tot['voucher_harga'] / 100);
 														$sub_potongan = $subtotal - ($subtotal - $besar_potongan);
 													}
 													$subtotal -= $sub_potongan;
 													$total_potongan += $sub_potongan;
-											?>
-													<tr>
-														<td class="right"><b>Potongan Voucher (<?= $potongan['voucher_nama'] ?>):</b></td>
-														<td class="text-right right"><span id="potonganvoucher">Rp. <?= number_format($besar_potongan, '0', ',', '.') ?></span></td>
-													</tr>
-											<?php
-												}
-											}
-											?>
+													?>
+
+													Rp. <?= number_format($besar_potongan, '0', ',', '.') ?>
+												</td>
+											</tr>
 
 											<tr>
 												<td class="right"><b>Ongkos Kirim:</b></td>
@@ -325,12 +353,14 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 													<input type="hidden" name="potongan" id="potongan" value="<?php echo $total_potongan; ?>" />
 													<input type="hidden" name="ongkir" id="ongkir" value="0" />
 													<input type="hidden" name="totalbayar" id="totalbayar" />
+													<input type="hidden" name="id_toko" value="<?= $tot['idtoko'] ?>" />
 												</td>
 											</tr>
 
 											<tr>
-												<td><button class="btn btn-default" id="oksimpan" style="display: none;">checkout</button></td>
+												<td><button type="submit" name="oksimpan" class="btn btn-default" id="oksimpan" style="display: none;">checkout</button></td>
 											</tr>
+											</form>
 
 										</table>
 									</div>
@@ -390,3 +420,7 @@ $member = $con->query("SELECT id_prov, id_kota, member_alamat FROM tb_member WHE
 		</div>
 	</div>
 </div>
+<script>
+	var _list_voucher = <?= json_encode($data_voucher) ?>;
+	var _voucher_terpakai = <?= json_encode($list_voucher) ?>;
+</script>

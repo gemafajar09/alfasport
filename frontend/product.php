@@ -125,12 +125,19 @@ $cek = $con->count("whistlist", "*", [
 													<div class="description">
 														<span>Product ID:</span> <?= $product['id'] ?><br />
 														<input type="hidden" id="product_id" value="<?= $product['id'] ?>">
+														<input type="hidden" id="hargaasli" value="<?= $product['jual'] ?>">
 														<input type="hidden" id="harga" value="<?= $product['jual'] ?>">
 													</div>
 
 													<div class="price">
-														<span class="price-new"><span itemprop="price">Rp. <?= number_format($product['jual']) ?></span></span><br />
+														<span class="price-new"><span itemprop="price">Rp.</span><span id="spanPrice"></span> </span></span><br />
 													</div>
+													<script>
+														$(document).ready(function() {
+															var rupiah = formatRupiah('<?= $product['jual'] ?>')
+															document.getElementById('spanPrice').innerHTML = rupiah
+														})
+													</script>
 
 													<?php
 													if (isset($_COOKIE['member_id'])) {
@@ -140,7 +147,7 @@ $cek = $con->count("whistlist", "*", [
 															<select name="toko" id="toko">
 																<option value="">Pilih Toko</option>
 																<?php
-																$data = $con->select("toko", "*");
+																$data = $con->select("toko", "*", ["id_toko[!]" => 0]);
 																foreach ($data as $i => $a) {
 																?>
 																	<option value="<?= $a['id_toko'] ?>"><?= $a['nama_toko'] ?> </option>
@@ -155,7 +162,7 @@ $cek = $con->count("whistlist", "*", [
 																	<option value=""></option>
 																	<option value="us">US</option>
 																	<option value="uk">UK</option>
-																	<option value="ue">EUROPE</option>
+																	<option value="ue">EU</option>
 																	<option value="cm">CM</option>
 																</select>
 																<span>

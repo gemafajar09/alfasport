@@ -35,6 +35,7 @@
 											<td class="text-center">Gambar</td>
 											<td class="text-center hidden-xs">Nama Produk</td>
 											<td class="text-center hidden-xs">Model</td>
+											<td class="hidden-xs">Ukuran</td>
 											<td class="text-center hidden-xs">Berat</td>
 											<td class="text-center hidden-xs">Nama Toko</td>
 											<td class="text-center">Quantity</td>
@@ -48,47 +49,6 @@
 								</table>
 							</div>
 						</form>
-
-						<!-- <h2>What would you like to do next?</h2>
-						<p style="padding-bottom: 10px">Choose if you have a discount code or reward points you want to use or
-							would like to estimate your delivery cost.</p>
-						<div class="panel-group" id="accordion">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title"><a href="#collapse-coupon" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">Gunakan Kode Voucher <i class="fa fa-caret-down"></i></a></h4>
-								</div>
-
-								<div id="collapse-coupon" class="panel-collapse collapse">
-									<div class="panel-body">
-										<label class="col-sm-2 control-label" for="input-coupon" style="padding-top: 10px;padding-left: 0px">Masukkan Kode Voucher</label>
-										<div class="input-group">
-											<input type="text" name="coupon" value="" placeholder="Enter your coupon here" id="input-coupon" class="form-control" />
-											<span class="input-group-btn">
-												<input type="button" value="Apply Coupon" id="button-coupon" data-loading-text="Loading..." class="btn btn-primary" />
-											</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> -->
-
-						<!-- <div class="cart-total">
-							<table>
-								<tr>
-									<td class="text-right"><strong>Sub-Total:</strong></td>
-									<td class="text-right">$100.00</td>
-								</tr>
-								<tr>
-									<td class="text-right"><strong>VAT (20%):</strong></td>
-									<td class="text-right">$20.00</td>
-								</tr>
-								<tr>
-									<td class="text-right"><strong>Total:</strong></td>
-									<td class="text-right">$122.00</td>
-								</tr>
-							</table>
-						</div> -->
-
 						<div class="buttons">
 							<div class="pull-left"><a href="./" class="btn btn-default">Continue Shopping</a></div>
 							<div class="pull-right"><a href="index.php?page=checkout" class="btn btn-primary">Checkout</a></div>

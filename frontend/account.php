@@ -1,3 +1,9 @@
+<?php
+$account = $con->query("
+	SELECT * FROM tb_member JOIN tb_member_point ON tb_member.member_id=tb_member_point.member_id WHERE tb_member.member_id = '$_COOKIE[member_id]'
+")->fetch();
+?>
+
 <!-- BREADCRUMB
           	================================================== -->
 <div class="breadcrumb full-width">
@@ -9,7 +15,7 @@
 				<div class="clearfix">
 					<ul>
 						<li><a href="#">Home</a></li>
-						<li><a href="#">My Account</a></li>
+						<li><a href="#">Profil Saya</a></li>
 					</ul>
 				</div>
 			</div>
@@ -27,8 +33,95 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-9 center-column">
-						<h1 style="font-size: 35px;">Hallo, <?= $_COOKIE['member_nama'] ?></h1>
-						<p style="font-size: 20px;">Selamat Datang</p>
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="row text-center">
+									<?php
+									if ($account["member_foto"] != "") {
+										$lok = "img/$account[member_foto]";
+									} else {
+										$lok = "img/icon-avatar-default.png";
+									}
+									?>
+									<img src="<?= $base_url ?><?= $lok ?>" alt="..." width="150" class="img-circle">
+								</div>
+
+								<div class="row text-center" style="margin-top: 20px;">
+									<div class="col-md-6" style="background-color: #00c853; border: 3px solid #fff;">
+										<h6 style="font-size: 16px; color: #fff;">Points</h6>
+										<p style="font-size: 18px; color: #fff; font-weight: bold;"><?= $account['point'] ?></p>
+									</div>
+									<div class="col-md-6" style="background-color: #00c853; border: 3px solid #fff;">
+										<h6 style="font-size: 16px; color: #fff;">Royalti</h6>
+										<p style="font-size: 18px; color: #fff; font-weight: bold;"><?= $account['royalti'] ?></p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<form action="aksi_update_account.php" method="POST" enctype="multipart/form-data">
+							<div class="form-group">
+								<label>Member Kode</label>
+								<input type="hidden" class="form-control" name="member_id" value="<?= $account['member_id'] ?>">
+								<input type="text" class="form-control" name="member_kode" value="<?= $account['member_kode'] ?>" readonly>
+							</div>
+							<div class="form-group">
+								<label>Nama</label>
+								<input type="text" class="form-control" name="member_nama" value="<?= $account['member_nama'] ?>">
+							</div>
+							<div class="form-group">
+								<label>No Telp</label>
+								<input type="text" class="form-control" name="member_notelp" value="<?= $account['member_notelp'] ?>">
+							</div>
+							<div class="form-group">
+								<label>Tanggal Lahir</label>
+								<input type="date" class="form-control" name="member_tgl_lahir" value="<?= $account['member_tgl_lahir'] ?>">
+							</div>
+							<div class="form-group">
+								<label>Jenis Kelamin</label>
+								<?php
+								if ($account['member_gender'] == 'Pria') {
+								?>
+									<input type="radio" value="Pria" name="member_gender" checked>Pria
+									<input type="radio" value="Wanita" name="member_gender">Wanita
+								<?php } else { ?>
+									<input type="radio" value="Pria" name="member_gender">Pria
+									<input type="radio" value="Wanita" name="member_gender" checked>Wanita
+								<?php } ?>
+							</div>
+
+							<div class="form-group">
+								<label>Pilih Profesi</label>
+								<select class="form-control" name="member_profesi">
+									<option>Pilih Profesi</option>
+									<?php
+									$data = $con->query("SELECT * FROM tb_data_profesi");
+									foreach ($data as $i => $a) {
+										echo "<option value=" . $a['data_profesi_id'] . ">" . $a['data_profesi_nama'] . "</option>";
+									}
+									?>
+								</select>
+							</div>
+							<script>
+								document.getElementsByName("member_profesi")[0].value = $account['member_profesi'];
+							</script>
+
+							<script>
+								document.getElementsByName('member_profesi')[0].value = "<?= $account['member_profesi'] ?>"
+							</script>
+
+							<div class="form-group">
+								<label>Email</label>
+								<input type="email" name="member_email" class="form-control" value="<?= $account['member_email'] ?>">
+							</div>
+
+							<div class="form-group">
+								<label>Upload Foto</label>
+								<input type="file" name="foto" class="form-control">
+							</div>
+
+							<button type="submit" class="btn btn-default" name="simpan">simpan</button>
+						</form>
 					</div>
 
 					<div class="col-md-3">
