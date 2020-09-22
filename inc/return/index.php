@@ -48,7 +48,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Tanggal</th>
+                    <th>ID</th>
                     <th>Toko</th>
                     <th>Create At</th>
                     <th>Create By</th>
@@ -60,49 +60,41 @@
     </div>
 </div>
 
-<div class="modal" id="dataDetail">
-    <div class="modal-dialog modal-lg">
+<div class="modal" id="viewsReturn">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Detail Pembelian</h2>
-            </div>
-            <div class="modal-body">
-
-                <div class="container">
-                    <div class="row my-1">
-                        <table>
-                            <tr>
-                                <td><b>ID Beli</b></td>
-                                <td>:</td>
-                                <td><b><span id="id_beli"></span></b></td>
-                            </tr>
-                            <tr>
-                                <td><b>Tanggal</b></td>
-                                <td>:</td>
-                                <td><b><span id="tgl_beli"></span></b></td>
-                            </tr>
-                            <tr>
-                                <td><b>Vendor</b></td>
-                                <td>:</td>
-                                <td><b><span id="nama_vendor"></span></b></td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Artikel</th>
-                                <th>Nama</th>
-                                <th>Jumlah</th>
-                                <th>Satuan</th>
-                            </tr>
-                        </thead>
-                        <tbody id="isi2"></tbody>
-                    </table>
-                </div>
+            <div class="modal-body" id="modalIsi">
+                
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $('#isi').load('inc/return/listReturn.php')
+
+    function hapus(id)
+    {
+        axios.post('inc/return/hapusReturn.php',{
+            'id_return':id
+        }).then(function(res){
+            toastr.success('Data Terhapus')
+            $('#isi').load('inc/return/listReturn.php')
+        }).catch(function(err){
+            $('#isi').load('inc/return/listReturn.php')
+        })
+    }
+
+    function views(id)
+    {
+        axios.post('inc/return/viewsReturn.php',{
+            'id_return':id
+        }).then(function(res){
+            var data = res.data
+            $('#modalIsi').html(data)
+            $('#viewsReturn').modal()
+        }).catch(function(err){
+            $('#isi').load('inc/return/listReturn.php')
+        })
+    }
+</script>

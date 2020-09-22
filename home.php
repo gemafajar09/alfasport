@@ -26,7 +26,7 @@ if ($_COOKIE['jabatan_id'] == 3) {
         </div>
         <div class="x_content">
             <div class="row" style="display: inline-block;">
-                <div class="row top_tiles" style="margin: 10px 0;">
+                <!-- <div class="row top_tiles" style="margin: 10px 0;">
                     <div class="col-md-3 tile">
                         <span>Total Sessions</span>
                         <h2>231,809</h2>
@@ -55,7 +55,7 @@ if ($_COOKIE['jabatan_id'] == 3) {
                             <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
                         </span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
