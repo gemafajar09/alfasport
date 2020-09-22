@@ -25,10 +25,10 @@
                             } else {
                                 $auto_kode = "T00001";
                             }
-                            $_SESSION["auto_kode"] = $auto_kode;
+                            $_SESSION["auto_kodes"] = $auto_kode;
                             ?>
                             <label>ID</label>
-                            <input type="text" required name="kode" id="kode" class="form-control" placeholder="ID" value="<?php echo $_SESSION["auto_kode"]; ?>" readonly>
+                            <input type="text" required name="kode" id="kode" class="form-control" placeholder="ID" value="<?php echo $_SESSION["auto_kodes"]; ?>" readonly>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
@@ -228,6 +228,10 @@
                                             <option value="dis_persen">Potongan Persen</option>
                                             <option value="dis_harga">Potongan Harga</option>
                                         </select>
+                                        <form action="voucher.html" method="POST" target="_blank">
+                                            <input type="hidden" name="a" value="profile-tab">
+                                            <button class="btn btn-sm btn-info" type="submit">Punya Voucher ?</button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -368,8 +372,6 @@
             $('#distributor_id').val('')
         }
     })
-
-
 
     // menampilkan harga dari barang yang dipilih
     $('[name="radio"]').on('click', function() {

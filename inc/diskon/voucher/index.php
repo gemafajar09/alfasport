@@ -200,6 +200,8 @@
     </div>
 </div>
 
+
+
 <script>
     function tampil() {
         $('#dataVoucher').modal()
@@ -252,7 +254,19 @@
         $('#voucher_id').val('')
     }
 
+
     $('#isi-akan-datang').load('inc/diskon/voucher/data_voucher_akan_datang.php');
     $('#isi-sedang-berjalan').load('inc/diskon/voucher/data_voucher_sedang_berlaku.php');
     $('#isi-telah-berlalu').load('inc/diskon/voucher/data_voucher_telah_berlalu.php');
+
+    <?php
+    if (!empty($_POST['a'])) {
+    ?>
+        $(document).ready(function() {
+            document.getElementById('<?php echo $_POST['a']; ?>').click();
+        })
+
+    <?php
+    }
+    ?>
 </script>
