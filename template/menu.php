@@ -57,6 +57,7 @@
                                 <li><a href="cari_barang.html">Searching Barang</a></li>
                             </ul>
                         </li>
+                        <li><a href="orderPembelian.html"><i class="fa fa-cart-plus"></i> Orderan <span class="badge badge-warning">0</span></a></li>
                         <li><a href="return.html"><i class="fa fa-cube"></i> Return Barang</a></li>
                         <li><a href="restock_barang_gudang.html"><i class="fa fa-reorder "></i> Restock Barang Gudang</a></li>
                         <!-- hitung jumlah permohonan -->

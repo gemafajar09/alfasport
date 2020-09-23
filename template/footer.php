@@ -21,7 +21,6 @@ if (isset($_COOKIE['success'])) {
 
 <?php } ?>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 <!-- Bootstrap -->
 <script src="<?= $base_url ?>vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="<?= $base_url ?>vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -65,12 +64,60 @@ if (isset($_COOKIE['success'])) {
 <!-- notifikasi -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="<?= $base_url ?>vendors/ckeditor/ckeditor.js"></script>
-
+<script src="https://unpkg.com/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
 <script>
 
   $('.select2').select2({
     dropdownAutoWidth: true
   });
+
+  $(document).ready(function(){
+    var x = document.getElementById('updates')
+    var resi = document.getElementById('resi')
+    var simpanResi = document.getElementById('simpanResi')
+    var sts = $('#statusSekarang').val()
+    if(sts == 'Menunggu Pembayaran')
+    {
+      var value = 0;
+      resi.style.display = "none";
+      simpanResi.style.display = "none";
+    }
+    else if(sts == 'Pesanan Diproses')
+    {
+      var value = 1
+      x.style.display = "none";
+      resi.style.display = "block";
+      simpanResi.style.display = "block";
+    }
+    else if(sts == 'Barang Telah Dikirim')
+    {
+      var value = 2
+      x.style.display = "none";
+      resi.style.display = "none";
+      simpanResi.style.display = "none";
+    }
+    else if(sts == 'Barang Telah Diterima')
+    {
+      var value = 3
+      x.style.display = "none";
+      resi.style.display = "none";
+      simpanResi.style.display = "none";
+    }
+    console.log(value)
+    // SmartWizard initialize
+    $('#smartwizard').smartWizard({
+            selected: value, 
+            theme: 'dots',
+            transitionEffect: 'fade',
+            transitionSpeed: '400',
+            lang: { next: 'Selanjutnya', previous: 'Kembali'},
+            toolbarSettings: {
+                toolbarButtonPosition: 'center',
+                showNextButton: false,
+                showPreviousButton: false
+            }
+        })
+  })
 
 </script>
 <script src="<?= $base_url ?>App/content.js"></script>

@@ -80,6 +80,9 @@ RewriteRule ^diskon_umur\.html$ index.php?page=inc/diskon_umur/index [L]
 RewriteRule ^return\.html$ index.php?page=inc/return/index [L]
 RewriteRule ^buatreturn\.html$ index.php?page=inc/return/buatReturn [L]
 
+RewriteRule ^orderPembelian\.html$ index.php?page=inc/order/index [L]
+RewriteRule ^orderDetail-([0-9]+)\.html$ index.php?page=inc/order/detailOrders&id_order=$1 [L]
+
 RewriteRule ^restock_barang_gudang\.html$ index.php?page=inc/restock_gudang/view_restock [L]
 RewriteRule ^editMultipleRestock\.html$ index.php?page=inc/restock_gudang/edit_multiple_restock [L]
 
