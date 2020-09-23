@@ -1,11 +1,11 @@
 <div class="page-title">
     <div class="title_left">
-        <h3>Data Transaksi Penjualan Online</h3>
+        <h3>Data Transaksi Penjualan</h3>
     </div>
 
     <div class="title_right">
         <div class="col-md-12 col-sm-12 form-group pull-right top_search">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
                     <div class="form-group">
@@ -21,7 +21,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="entry_penjualan_online.html" class="btn btn-success btn-round"><i class="fa fa-plus"></i></a>
-                <a href="cari_penjualan_online.html" class="btn btn-success btn-round"><i class="fa fa-search"> Riwayat Penjualan Online</i></a>
+                <a href="cari_penjualan_online.html" class="btn btn-success btn-round"><i class="fa fa-search"> Riwayat Penjualan</i></a>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -50,18 +50,17 @@
                 <tr>
                     <th>No</th>
                     <th>ID</th>
-                    <th>Distributor</th>
-                    <th>Nama Toko Online</th>
+                    <th>Toko</th>
                     <th>Cara Bayar</th>
                     <th colspan="2" class="text-center">Jumlah</th>
+                    <th>Total Belanja</th>
                     <th>Bank</th>
                     <th>Create At</th>
-                    <th>Create By</th>
                     <th>Keterangan</th>
                     <th class="text-center">Action</th>
                 </tr>
                 <tr>
-                    <th colspan="5">&nbsp;</th>
+                    <th colspan="4">&nbsp;</th>
                     <th>Cash</th>
                     <th>Debit/Kredit</th>
                     <th colspan="5">&nbsp;</th>
@@ -84,7 +83,7 @@
                     <div class="row my-1">
                         <table>
                             <tr>
-                                <td><b>ID Jual</b></td>
+                                <td><b>No Faktur</b></td>
                                 <td>:</td>
                                 <td><b><span id="id_jual"></span></b></td>
                             </tr>
@@ -107,9 +106,9 @@
                                 <th>No</th>
                                 <th>Barang</th>
                                 <th>Jumlah</th>
-                                <th>Harga</th>
-                                <th>Diskon 1</th>
-                                <th>Diskon 2</th>
+                                <th>Harga Jual</th>
+                                <th>Diskon Item</th>
+                                <th>Hasil Per Diskon</th>
                                 <th>Sub Total</th>
                             </tr>
                         </thead>
@@ -120,22 +119,19 @@
         </div>
     </div>
 </div>
-
-
 <script>
-    function show(transol_id) {
+    function show(transaksi_id) {
         axios.post('inc/transaksi_online/show_detail_transaksi_online.php', {
-                'transol_id': transol_id
+                'transaksi_id': transaksi_id
             }).then(function(res) {
                 var data = res.data
-                console.log(data);
-                $('#id_jual').text(data.transol_detail_kode)
-                $('#tgl_jual').text(data.transol_detail_tgl)
+                $('#id_jual').text(data.transol_kode)
+                $('#tgl_jual').text(data.transol_tgl)
                 $('#toko_nama').text(data.nama_toko)
 
                 // modal table
                 return axios.post('inc/transaksi_online/show_detail_transaksi_tabel_online.php', {
-                    'transol_id': transol_id
+                    'transaksi_id': transaksi_id
                 })
 
             }).then(function(res) {
@@ -166,7 +162,7 @@
     $('#toko').change(function(e) {
         e.preventDefault()
         var toko = $(this).val()
-        axios.post('inc/transaksi_online/filter/toko.php', {
+        axios.post('inc/transaksi/filter/toko.php', {
             'toko': toko
         }).then(function(res) {
             $('#isi').html(res.data)
@@ -175,17 +171,10 @@
         })
     })
 
-    function ResfreshDatatable(id_table, id_body, url) {
-        $(id_table).DataTable().destroy();
-        $(id_body).load(url, function() {
-            $(id_table).DataTable();
-        });
-    }
-
     $(document).ready(function() {
         $("#datatable-responsive").DataTable().destroy();
-        $('#isi').load('inc/transaksi_online/data_transaksi_online.php', function() {
-            $("#datatable-responsive").DataTable();
-        });
-    });
+        // $('#datatable-responsive tbody').empty();
+        $('#isi').load('inc/transaksi_online/data_transaksi_online.php');
+        $("#datatable-responsive").DataTable()
+    })
 </script>

@@ -3,7 +3,7 @@
         <form method="POST">
             <div class="card-header">
                 <div class="text-left">
-                    <a href="penjualan_online.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
+                    <a href="penjualan.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
                 </div>
                 <div class="text-center">
                     Entry Penjualan
@@ -15,20 +15,20 @@
                         <div class="form-group">
                             <?php
                             //membaca kode barang terbesar
-                            $kode_faktur = $con->query("SELECT max(transol_kode) FROM tb_transaksi_online")->fetch();
+                            $kode_faktur = $con->query("SELECT max(transaksi_kode) FROM tb_transaksi")->fetch();
                             if ($kode_faktur) {
                                 $nilai = substr($kode_faktur[0], 1);
                                 $kode = (int) $nilai;
                                 //tambahkan sebanyak + 1
                                 $kode = $kode + 1;
-                                $auto_kode = "N" . str_pad($kode, 5, "0",  STR_PAD_LEFT);
+                                $auto_kode = "T" . str_pad($kode, 5, "0",  STR_PAD_LEFT);
                             } else {
-                                $auto_kode = "N00001";
+                                $auto_kode = "T00001";
                             }
-                            $_SESSION["auto_kodes"] = $auto_kode;
+                            $_SESSION["auto_kode"] = $auto_kode;
                             ?>
                             <label>ID</label>
-                            <input type="text" required name="kode" id="kode" class="form-control" placeholder="ID" value="<?php echo $_SESSION["auto_kodes"]; ?>" readonly>
+                            <input type="text" required name="kode" id="kode" class="form-control" placeholder="ID" value="<?php echo $_SESSION["auto_kode"]; ?>" readonly>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
@@ -53,21 +53,19 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
-                            <label>Nama Toko Online</label>
-                            <select name="data_toko_online_id" id="data_toko_online_id" class="form-control select2" required>
-                                <option value="">-Pilih Toko Online-</option>
-                                <?php
-                                $toko = $con->select('tb_data_toko_online', '*');
-                                foreach ($toko as $b) {
-                                ?>
-                                    <option value="<?= $b['data_toko_online_id'] ?>"><?= $b['data_toko_online_nama'] ?></option>
-                                <?php } ?>
+                            <label>Tipe Konsumen</label>
+                            <select name="tipe_konsumen" id="tipe_konsumen" class="form-control select2" required>
+                                <option value="">-SELECT-</option>
+                                <option value="Non Member">Non Member</option>
+                                <option value="Member">Member</option>
+                                <option value="Distributor">Distributor</option>
                             </select>
                         </div>
                     </div>
+                    <div id="customer"></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Nama Barang</label>
                             <select class="form-control select2" name="id_gudang" id="id_gudang" required style="width: 100%;">
@@ -95,15 +93,16 @@
                     <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
                         <div class="form-group">
                             <label>Jumlah</label>
-                            <input type="text" required name="transol_tmp_jumlah_beli" id="transol_tmp_jumlah_beli" class="form-control" onkeyup="dapatHarga(this)">
+                            <input type="text" required name="transaksi_jumlah_beli" id="transaksi_jumlah_beli" class="form-control" onkeyup="dapatHarga(this)">
                         </div>
                     </div>
+
                     <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Harga</label>
                             <input type="text" name="harga" value="" id="harga" class="form-control" readonly>
-                            <input type="hidden" id="harga1">
-                            <input type="hidden" id="hasilDsc">
+                            <input type="text" id="harga1">
+                            <input type="text" id="hasilDsc">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
@@ -112,22 +111,22 @@
                             <input type="text" readonly name="diskon" value="0" id="discItm" class="form-control">
                         </div>
                     </div>
-                    <!-- <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
+                    <div class="col-xs-12 col-sm-4 col-md-1 col-lg-1">
                         <div class="form-group">
                             <label>Diskon</label>
                             <input type="text" name="diskon" value="0" onkeyup="potongan(this)" id="disc" class="form-control">
                             <input type="text" name="diskon1" id="diskon1" class="form-control">
                         </div>
-                    </div> -->
+                    </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <label>Sub Total</label>
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Rp.</div>
                             </div>
-                            <input type="text" required name="transol_tmp_total_harga" id="transol_tmp_total_harga" class="form-control" readonly>
-                            <input type="hidden" id="tmp_id">
-                            <input type="hidden" id="id_gudangs">
+                            <input type="text" required name="transaksi_total_harga" id="transaksi_total_harga" class="form-control" readonly>
+                            <input type="text" id="tmp_id">
+                            <input type="text" id="id_gudangs">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-1 col-lg-1">
@@ -148,12 +147,12 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
-                        <th>Artikel</th>
+                        <th>Barang</th>
                         <th>Jumlah</th>
-                        <th>Harga Jual</th>
-                        <th>Diskon Item</th>
-                        <th>Hasil Per Diskon</th>
+                        <th>Harga</th>
+                        <th>Diskon 1</th>
+                        <th>Diskon 2</th>
+                        <th>Tipe Diskon</th>
                         <th>Sub Total</th>
                         <th>Action</th>
                     </tr>
@@ -208,37 +207,15 @@
                                             <div class="input-group-text">Rp.</div>
                                         </div>
                                         <input type="text" class="form-control" id="subTotalBelanja" readonly>
-                                        <input type="hidden" id="subTotalBelanjaBantuan" readonly>
-                                        <input type="hidden" id="subTotalBelanja1" readonly>
-                                        <input type="hidden" id="jumlahTotal" readonly>
+                                        <input type="hidden" class="form-control" id="subTotalBelanja1" readonly>
+                                        <input type="hidden" class="form-control" id="jumlahTotal" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Diskon Bank</label>
+                                        <label>Diskon</label>
                                         <input type="text" class="form-control" id="diskons" readonly>
                                         <input type="hidden" class="form-control" id="diskonss" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Tipe Diskon</label>
-                                        <select name="tipe_diskon" id="tipe_diskon" class="form-control">
-                                            <option value="">-Pilih-</option>
-                                            <option value="dis_persen">Potongan Persen</option>
-                                            <option value="dis_harga">Potongan Harga</option>
-                                        </select>
-                                        <!-- <form action="voucher.html" method="POST" target="_blank">
-                                            <input type="hidden" name="a" value="profile-tab">
-                                            <button class="btn btn-sm btn-info" type="submit">Punya Voucher ?</button>
-                                        </form> -->
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group" class="form-control">
-                                        <label>Potongan Diskon</label>
-                                        <input type="text" class="form-control" name="diskon_persen" id="diskon_persen" style="display:none;" placeholder="Potongan Persen" onkeyup="potDis(this)">
-                                        <input type="number" class="form-control" name="diskon_harga" id="diskon_harga" style="display: none;" placeholder="Potongan Harga">
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="display: none;" id="bayar_cash">
@@ -266,7 +243,7 @@
                                             <div class="input-group-text">Rp.</div>
                                         </div>
                                         <input type="text" id="kembalian" class="form-control" readonly>
-                                        <input type="hidden" id="transol_id" class="form-control">
+                                        <input type="hidden" id="transaksi_id" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -291,14 +268,14 @@
 </div>
 
 <script>
-    $('#isi').load('inc/transaksi_online/data_keranjang_transaksi_online.php');
+    $('#isi').load('inc/transaksi/data_keranjang_transaksi.php');
     // menampilkan data gudang dari toko yang dipilih
     $("#id_toko").change(function() {
         var id_toko = $('#id_toko option:selected').val();
         console.log(id_toko);
         $.ajax({
             type: "GET",
-            url: "inc/transaksi_online/filter/barang_toko.php",
+            url: "inc/transaksi/filter/barang_toko.php",
             data: {
                 'id_toko': id_toko
             },
@@ -311,28 +288,62 @@
     function potongan(disc) {
         var diskon = disc.value
         var harga = $('#harga1').val()
-        var jumlah = $('#transol_tmp_jumlah_beli').val()
+        var jumlah = $('#transaksi_jumlah_beli').val()
         var hasil = (harga * parseFloat(diskon)) / 100
         var nominal = harga - hasil
         var totalBayar = parseInt(jumlah) * nominal
         console.log(jumlah)
-        $('#transol_tmp_total_harga').val(totalBayar)
+        $('#transaksi_total_harga').val(totalBayar)
         // $('#harga').val(nominal)
+
     }
+
+    // menampilkan tipe konsumen jika salah satu select box dipilih
+    $('#tipe_konsumen').change(function() {
+        var tipe = $(this).val()
+        if (tipe == "Member") {
+            let member = "<div id='tipe_member' class='col-xs-12 col-sm-6 col-md-3 col-lg-3'>" +
+                "<div class='form-group'>" +
+                "<label>Member</label>" +
+                "<input class='form-control' style='width:190px' type='text' name='member_id' id='member_id'>" +
+                "</div>" +
+                "</div>"
+            document.getElementById('customer').innerHTML = member;
+
+        } else if (tipe == "Distributor") {
+            var distributor =
+                "<div id='tipe_distributor' class='col-xs-12 col-sm-6 col-md-3 col-lg-3'>" +
+                "<div class='form-group'>" +
+                "<label>Distributor</label>" +
+                "<select name='distributor_id' style='width:180px' id='distributor_id' class='form-control' style='width: 100%;' required>" +
+                "<option value=''>-Pilih-</option>" +
+                <?php
+                $datag = $con->select('tb_distributor', '*');
+                foreach ($datag as $distributor) {
+                ?> "<option value = '<?= $distributor['distributor_id'] ?>' > <?= $distributor['distributor_nama'] ?></option>" +
+                <?php } ?> "</select>" +
+                "</div>" +
+                "</div>"
+            document.getElementById('customer').innerHTML = distributor;
+            $('.select2').select2({
+                dropdownAutoWidth: true
+            });
+        } else {
+            document.getElementById('customer').innerHTML = '';
+        }
+    })
 
     // menampilkan harga dari barang yang dipilih
     $('[name="radio"]').on('click', function() {
         var id = $('#id_gudang').val();
         var size = $(this).val()
-        var id_toko = $('#id_toko option:selected').val();
-        // console.log(id_gudang);
+        console.log(id_gudang);
         $.ajax({
             type: "POST",
-            url: "inc/transaksi_online/filter/ukuran.php",
+            url: "inc/transaksi/filter/ukuran.php",
             data: {
                 'id': id,
-                'size': size,
-                'id_toko': id_toko
+                'size': size
             },
             dataType: 'HTML',
             success: function(data) {
@@ -344,8 +355,7 @@
     // cek stok dan harga
     $('#ukurans').change(function() {
         var ukuran = $(this).val()
-        console.log(ukuran)
-        axios.post('inc/transaksi_online/filter/stok.php', {
+        axios.post('inc/transaksi/filter/stok.php', {
             'id': ukuran
         }).then(function(res) {
             var data = res.data
@@ -365,49 +375,72 @@
     function dapatHarga(nilai) {
         var stok = parseInt($('#transaksi_stok').val());
         var jumlahBeli = parseInt(nilai.value);
-        if (stok < jumlahBeli) {
-            alert('Maaf Stok Tidak Mencukupi')
-            $('#transol_tmp_jumlah_beli').val('')
-        } else {
+        if (jumlahBeli < stok) {
             console.log('Aman')
+        } else {
+            alert('Maaf Stok Tidak Mencukupi')
         }
-        // dapatkan harga
+        var diskon = $('#disc').val()
         var harga = document.getElementById("harga").value;
-        // cari total harga
-        var total = harga * jumlahBeli;
-        document.getElementById("transol_tmp_total_harga").value = total;
+        var total = (harga * diskon) / 100;
+        var final = (harga - total) * jumlahBeli;
+        document.getElementById("transaksi_total_harga").value = final;
+        document.getElementById("diskon1").value = total;
     }
 
     // proses masuk ke keranjang
     $('#simpans').on('click', function() {
-        var transol_tmp_kode = $('#kode').val()
-        var transol_tmp_tgl = $('#tanggal').val()
-        var id_toko = $('#id_toko').val()
-        var id_gudang = $('#id_gudangs').val()
-        var data_toko_online_id = $('#data_toko_online_id').val()
-        var transol_tmp_jumlah_beli = $('#transol_tmp_jumlah_beli').val()
-        var transol_tmp_total_harga = $('#transol_tmp_total_harga').val()
-        var transol_tmp_potongan = $('#hasilDsc').val()
-        var transol_tmp_diskon1 = $('#discItm').val()
-        var transol_tmp_id = $('#tmp_id').val()
+        // backup lama
+        // var tmp_kode = $('#kode').val()
+        // var tmp_tgl = $('#tanggal').val()
+        // var id_toko = $('#id_toko').val()
+        // var potongan = $('#disc').val()
+        // var diskon1 = $('#hasilDsc').val()
+        // var diskon2 = $('#diskon1').val()
+        // var id_gudang = $('#id_gudangs').val()
+        // var tipe_konsumen = $('#tipe_konsumen').val()
+        // var member_id = $('#member_id').val()
+        // var distributor_id = $('#distributor_id').val()
+        // var tmp_jumlah_beli = $('#transaksi_jumlah_beli').val()
+        // var tmp_total_harga = $('#transaksi_total_harga').val()
+        // var tmp_id = $('#tmp_id').val()
 
-        axios.post('inc/transaksi_online/aksi_simpan_keranjang_transaksi_online.php', {
-            'transol_tmp_kode': transol_tmp_kode,
-            'transol_tmp_tgl': transol_tmp_tgl,
+        var tmp_kode = $('#kode').val()
+        var tmp_tgl = $('#tanggal').val()
+        var id_toko = $('#id_toko').val()
+        var potongan = $('#hasilDsc').val()
+        var diskon1 = $('#discItm').val()
+        var diskon2 = $('#disc').val()
+        var diskon3 = $('#diskon3').val()
+        var id_gudang = $('#id_gudangs').val()
+        var tipe_konsumen = $('#tipe_konsumen').val()
+        var member_id = $('#member_id').val()
+        var distributor_id = $('#distributor_id').val()
+        var tmp_jumlah_beli = $('#transaksi_jumlah_beli').val()
+        var tmp_total_harga = $('#transaksi_total_harga').val()
+        var tmp_id = $('#tmp_id').val()
+
+        axios.post('inc/transaksi/aksi_simpan_keranjang_transaksi.php', {
+            'tmp_kode': tmp_kode,
+            'tmp_tgl': tmp_tgl,
             'id_toko': id_toko,
             'id_gudang': id_gudang,
-            'data_toko_online_id': data_toko_online_id,
-            'transol_tmp_jumlah_beli': transol_tmp_jumlah_beli,
-            'transol_tmp_total_harga': transol_tmp_total_harga,
-            'transol_tmp_potongan': transol_tmp_potongan,
-            'transol_tmp_diskon1': transol_tmp_diskon1,
-            'transol_tmp_id': transol_tmp_id
+            'tipe_konsumen': tipe_konsumen,
+            'member_id': member_id,
+            'distributor_id': distributor_id,
+            'tmp_jumlah_beli': tmp_jumlah_beli,
+            'tmp_total_harga': tmp_total_harga,
+            'diskon1': diskon1,
+            'diskon2': diskon2,
+            'diskon3': diskon3,
+            'potongan': potongan,
+            'tmp_id': tmp_id
         }).then(function(res) {
-            $('#isi').load('inc/transaksi_online/data_keranjang_transaksi_online.php');
+            $('#isi').load('inc/transaksi/data_keranjang_transaksi.php');
             kosong()
         }).catch(function(err) {
             console.log(err)
-            $('#isi').load('inc/transaksi_online/data_keranjang_transaksi_online.php');
+            $('#isi').load('inc/transaksi/data_keranjang_transaksi.php');
             kosong()
         })
     })
@@ -428,7 +461,6 @@
                     var total = (subtotal * disc) / 100
                     var bersih = subtotal - total
                     $('#subTotalBelanja').val(bersih)
-                    $('#subTotalBelanjaBantuan').val(bersih)
                     $('#diskonss').val(total)
                     console.log(data.diskon)
                 }).catch(function(err) {
@@ -454,12 +486,12 @@
         var sub = document.getElementById('subtotal').value;
         var tot = document.getElementById('jmlTot').value;
         document.getElementById('subTotalBelanja').value = sub;
-        document.getElementById('subTotalBelanjaBantuan').value = sub;
         document.getElementById('subTotalBelanja1').value = sub;
         document.getElementById('jumlahTotal').value = tot;
         console.log(sub)
         console.log(tot)
         $('#modalCheckout').modal()
+
     })
 
     // menampilkan pilihan bank
@@ -509,44 +541,30 @@
 
     // proses simpan ke tabel transaksi
     function simpan() {
-        var transol_tipe_bayar = $('#transaksi_tipe_bayar').val()
-        var transol_bank = $('#transaksi_bank').val()
-        var transol_cash = $('#txtBayarCash').val()
-        var transol_card = $('#txtBayarCard').val()
-        var transol_id = $('#transol_id').val()
-        var transol_total_belanja = $('#subTotalBelanja').val()
-        var transol_kembalian = $('#kembalian').val()
-
-        var transol_tipe_diskon = $('#tipe_diskon').val();
-        if (transol_tipe_diskon == 'dis_persen') {
-            var transol_diskon = $('#diskon_persen').val();
-        } else if (transol_tipe_diskon == 'dis_harga') {
-            var transol_diskon = $('#diskon_harga').val();
-        } else {
-            var transol_diskon = 0;
-        }
-
-        var transol_diskon_bank = $('#diskons').val()
-        var transol_jumlah_beli = $('#jumlahTotal').val()
-        var transol_kode = $('#kode').val()
-        var transol_keterangan = $('#keterangan').val()
-        axios.post('inc/transaksi_online/aksi_simpan_transaksi_online.php', {
-            'transol_tipe_bayar': transol_tipe_bayar,
-            'transol_bank': transol_bank,
-            'transol_cash': transol_cash,
-            'transol_card': transol_card,
-            'transol_id': transol_id,
-            'transol_total_belanja': transol_total_belanja,
-            'transol_kembalian': transol_kembalian,
-            'transol_tipe_diskon': transol_tipe_diskon,
-            'transol_diskon': transol_diskon,
-            'transol_diskon_bank': transol_diskon_bank,
-            'transol_jumlah_beli': transol_jumlah_beli,
-            'transol_keterangan': transol_keterangan
+        var transaksi_tipe_bayar = $('#transaksi_tipe_bayar').val()
+        var transaksi_bank = $('#transaksi_bank').val()
+        var transaksi_cash = $('#txtBayarCash').val()
+        var transaksi_card = $('#txtBayarCard').val()
+        var transaksi_id = $('#transaksi_id').val()
+        var transaksi_diskon = $('#diskonss').val()
+        var diskon3 = $('#diskons').val()
+        var transaksi_jumlah_beli = $('#jumlahTotal').val()
+        var kode = $('#kode').val()
+        var keterangan = $('#keterangan').val()
+        axios.post('inc/transaksi/aksi_simpan_transaksi.php', {
+            'transaksi_tipe_bayar': transaksi_tipe_bayar,
+            'transaksi_bank': transaksi_bank,
+            'transaksi_cash': transaksi_cash,
+            'transaksi_card': transaksi_card,
+            'transaksi_id': transaksi_id,
+            'transaksi_diskon': transaksi_diskon,
+            'diskon3': diskon3,
+            'transaksi_jumlah_beli': transaksi_jumlah_beli,
+            'keterangan': keterangan
         }).then(function(res) {
             var simpan = res.data
-            // window.open('inc/struk_online/invo1.php?invoice=' + kode, '_blank');
-            window.location = 'penjualan_online.html';
+            window.open('inc/struk/invo1.php?invoice=' + kode, '_blank');
+            window.location = 'penjualan.html';
             kosong()
         }).catch(function(err) {
             alert(err)
@@ -556,18 +574,18 @@
 
     // untuk menghapus data dari keranjang
     function hapusKeranjang(tmp_id) {
-        axios.post('inc/transaksi_online/aksi_hapus_keranjang_online.php', {
-            'transol_tmp_id': tmp_id
+        axios.post('inc/transaksi/aksi_hapus_keranjang.php', {
+            'tmp_id': tmp_id
         }).then(function(res) {
             var data = res.data
             toastr.info('SUCCESS..')
-            $('#isi').load('inc/transaksi_online/data_keranjang_transaksi_online.php');
+            $('#isi').load('inc/transaksi/data_keranjang_transaksi.php');
         }).catch(function(err) {
             toastr.warning('ERROR..')
         })
     }
 
-    // utk mengosongkan jika selesai pilih barang
+    // utk mengosongkan jisa selesai pilih barang
     function kosong() {
         // $('#id_toko').select2(null).trigger('change')
         // $('#id_gudang').select2(null).trigger('change')
@@ -577,67 +595,12 @@
         $('#transaksi_stok').val(0)
         $('#harga').val(0)
         $('#ukurans').select2(null).trigger('change')
-        // $('#member_id').val(null)
-        // $('#distributor_id').val(null)
-        $('#transol_tmp_jumlah_beli').val(null)
-        $('#transol_total_harga').val(0)
+        $('#member_id').val(null)
+        $('#distributor_id').val(null)
+        $('#transaksi_jumlah_beli').val(null)
+        $('#transaksi_total_harga').val(0)
         $('#tmp_id').val(null)
         $('#disc').val(null)
         document.getElementsByName("radio")[0].checked = false;
     }
-
-    // untuk mengecek apak tipe diskon persen atau potongan harga
-    $('#tipe_diskon').change(function(e) {
-        var tipe = $(this).val()
-        if (tipe == 'dis_persen') {
-            $('#diskon_persen').css('display', "block");
-            $('#diskon_harga').css('display', "none");
-        } else if (tipe == 'dis_harga') {
-            $('#diskon_harga').css('display', "block");
-            $('#diskon_persen').css('display', "none");
-        } else {
-            $('#diskon_harga').css('display', "none");
-            $('#diskon_persen').css('display', "none");
-        }
-    })
-
-    // cari potongan untuk diskon harg
-    $('#diskon_harga').keyup(function(e) {
-        var subHarga = $('#subTotalBelanja').val();
-        var subHargaAwal = $('#subTotalBelanjaBantuan').val();
-        var harga = $(this).val();
-        console.log(harga)
-
-        var total = parseInt(subHargaAwal) - parseInt(harga);
-        if (harga == 0) {
-            $('#subTotalBelanja').val(subHargaAwal);
-        } else {
-            $('#subTotalBelanja').val(total);
-        }
-    });
-    // cari potongan untuk diskon diskon
-    function potDis(dis) {
-        var subHarga = $('#subTotalBelanja').val();
-        var subHargaAwal = $('#subTotalBelanjaBantuan').val();
-        var dis = dis.value;
-        var hasil = (subHargaAwal * dis) / 100;
-        var total = Math.round(hasil);
-        console.log(total)
-        var final = subHargaAwal - total;
-        if (dis == 0) {
-            $('#subTotalBelanja').val(subHargaAwal);
-        } else {
-            $('#subTotalBelanja').val(final);
-        }
-    }
-
-    // bersihkan ukuran jika barang diganti
-    $('#id_gudang').change(function() {
-        $('#ukurans').select2(null).trigger('change')
-        $('#ukurans').val(null).trigger('change');
-        $('#id_gudangs').val(null)
-        $('#harga').val(0)
-        $('#transol_tmp_jumlah_beli').val(0)
-        $('[name="radio"]').prop('checked', false);
-    })
 </script>

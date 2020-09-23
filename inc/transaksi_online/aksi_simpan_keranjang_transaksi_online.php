@@ -15,11 +15,9 @@ if ($_POST['transol_tmp_id'] == NULL) {
         'transol_tmp_total_harga' => $_POST['transol_tmp_total_harga'],
         'transol_tmp_potongan' => $_POST['transol_tmp_potongan'],
         'transol_tmp_diskon1' => $_POST['transol_tmp_diskon1'],
-        'transol_tmp_diskon2' => $_POST['transol_tmp_diskon2'],
         'id_karyawan' => $_COOKIE['id_karyawan']
     );
     $simpan = $con->insert('tb_transaksi_online_tmp', $data);
-
     if ($simpan == TRUE) {
         echo json_encode('SUCCESS');
     } else {

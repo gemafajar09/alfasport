@@ -1,49 +1,45 @@
 <?php
 include "../../config/koneksi.php";
 include "../../App/MY_url_helper.php";
-$data = $con->query("SELECT
-                        tb_transaksi_online.transol_id,
-                        tb_transaksi_online.transol_kode,
-                        tb_transaksi_online.transol_tgl,
-                        tb_transaksi_online.transol_cash,
-                        tb_transaksi_online.transol_debit,
-                        tb_transaksi_online.transol_create_at,
-                        tb_transaksi_online.transol_keterangan,
-                        toko.nama_toko,
-                        tb_transaksi_online.transol_jumlah_beli,
-                        tb_metode.kategori,
-                        tb_bank.bank,
-                        tb_transaksi_online.transol_diskon,
-                        tb_karyawan.nama,
-                        tb_data_toko_online.data_toko_online_nama
-                    From
-                        tb_transaksi_online
-                    LEFT JOIN
-                        tb_transaksi_online_detail ON tb_transaksi_online_detail.transol_id = tb_transaksi_online.transol_id
-                    LEFT JOIN
-                        tb_data_toko_online ON tb_data_toko_online.data_toko_online_id = tb_transaksi_online_detail.data_toko_online_id        
-                    LEFT Join
-                        toko On toko.id_toko = tb_transaksi_online.id_toko     
-                    LEFT Join
-                        tb_metode On tb_transaksi_online.transol_tipe_bayar = tb_metode.id_metode
-                    LEFT Join
-                        tb_bank On tb_bank.id_bank = tb_transaksi_online.transol_bank 
-                    LEFT Join
-                        tb_karyawan On tb_karyawan.id_karyawan = tb_transaksi_online.transol_create_by")->fetchAll();
-
+$data = $con->query("SELECT a.transol_id,
+       a.transol_kode,
+       f.data_toko_online_nama,
+       e.kategori,
+       a.transol_cash,
+       a.transol_debit,
+       a.transol_total_belanja,
+       d.bank,
+       a.transol_create_at,
+       c.nama,
+       a.transol_keterangan
+FROM tb_transaksi_online a
+LEFT JOIN toko b ON a.id_toko=b.id_toko
+LEFT JOIN tb_karyawan c ON a.transol_create_by = c.id_karyawan 
+LEFT JOIN tb_bank d ON a.transol_bank=d.id_bank
+LEFT JOIN tb_metode e ON a.transol_tipe_bayar=e.id_metode
+LEFT JOIN tb_data_toko_online f ON a.data_toko_online_id = f.data_toko_online_id
+")->fetchAll();
 foreach ($data as $i => $a) {
 ?>
     <tr>
         <td><?= $i + 1 ?></td>
         <td><?= $a['transol_kode'] ?></td>
-        <td><?= $a['nama_toko'] ?></td>
         <td><?= $a['data_toko_online_nama'] ?></td>
         <td><?= $a['kategori'] ?></td>
-        <td><?= number_format($a['transol_cash']) ?></td>
-        <td><?= number_format($a['transol_debit']) ?></td>
-        <td><?= $a['bank'] ?></td>
+        <td><?= 'Rp.' . number_format($a['transol_cash']) ?></td>
+        <td><?= 'Rp.' . number_format($a['transol_debit']) ?></td>
+        <td><?= 'Rp.' . number_format($a['transol_total_belanja']) ?></td>
+        <td>
+            <?php
+            if ($a['bank'] == NULL) {
+                echo "-";
+            } else {
+                echo $a['bank'];
+            }
+            ?>
+        </td>
         <td><?= tgl_indo_waktu($a['transol_create_at']) ?></td>
-        <td><?= $a['nama'] ?></td>
+        <!-- <td><?= $a['nama'] ?></td> -->
         <td><?= $a['transol_keterangan'] ?></td>
         <td class="text-center">
             <button type="button" id="hapus" onclick="hapus('<?= $a['transol_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>

@@ -59,8 +59,6 @@ if ($_POST['transaksi_id'] == NULL) {
     $con->delete("tb_transaksi_tmp", array("tmp_kode" => $_SESSION["auto_kodes"]));
     unset($_SESSION['auto_kodes']);
 
-    exit;
-
     if ($simpan == TRUE) {
         echo json_encode($simpan);
     } else {
