@@ -31,30 +31,10 @@
                 <select name="artikel" id="artikel" class="form-control select2">
                     <option value="">-Artikel Barang-</option>
                     <?php
-                    $artikel = $con->query("SELECT
-                                                tb_gudang.id,
-                                                tb_gudang.artikel,
-                                                tb_gudang.nama,
-                                                tb_transaksi_detail.id_toko,
-                                                tb_transaksi.transaksi_id,
-                                                tb_transaksi_detail.detail_tgl,
-                                                tb_transaksi_detail.detail_jumlah_beli,
-                                                tb_stok_toko.id_ukuran,
-                                                tb_all_ukuran.ue,
-                                                tb_all_ukuran.uk,
-                                                tb_all_ukuran.us,
-                                                tb_all_ukuran.cm,
-                                                tb_gudang.id_gudang
-                                            From
-                                                tb_transaksi Inner Join
-                                                tb_transaksi_detail On tb_transaksi_detail.transaksi_id = tb_transaksi.transaksi_id
-                                                Inner Join
-                                                tb_stok_toko On tb_stok_toko.id_toko = tb_transaksi_detail.id_toko Inner Join
-                                                tb_gudang On tb_gudang.id_gudang = tb_stok_toko.id_gudang Inner Join
-                                                tb_all_ukuran On tb_stok_toko.id_ukuran = tb_all_ukuran.id_ukuran");
+                    $artikel = $con->select('tb_gudang', '*');
                     foreach ($artikel as $a) {
                     ?>
-                        <option value="<?= $a['id_gudang'] ?>"><?= $a['artikel'] ?> - <?= $a['nama'] ?></option>
+                        <option value="<?= $a['id_gudang'] ?>"><?= $a['nama'] ?> - <?= $a['artikel'] ?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -63,9 +43,9 @@
             <div class="form-group">
                 <label>Toko</label>
                 <select name="id_toko" id="id_toko" class="form-control select2">
-                    <option value="">-All Toko-</option>
+                    <option value="">-Semua Toko-</option>
                     <?php
-                    $toko = $con->select('toko', '*');
+                    $toko = $con->query('SELECT * FROM toko WHERE id_toko != 0');
                     foreach ($toko as $t) {
                     ?>
                         <option value="<?= $t['id_toko'] ?>"><?= $t['nama_toko'] ?></option>
@@ -106,7 +86,7 @@
         e.preventDefault()
         var id_toko = $(this).val()
         var artikel = $('#artikel').val()
-        axios.post('inc/transaksi/filter/cari_data_penjualan.php', {
+        axios.post('inc/transaksi_online/filter/cari_data_penjualan.php', {
             'id_toko': id_toko,
             'artikel': artikel
         }).then(function(res) {
@@ -122,7 +102,7 @@
         e.preventDefault()
         var artikel = $(this).val()
         var id_toko = $('#id_toko').val()
-        axios.post('inc/transaksi/filter/cari_data_penjualan.php', {
+        axios.post('inc/transaksi_online/filter/cari_data_penjualan.php', {
             'id_toko': id_toko,
             'artikel': artikel
         }).then(function(res) {

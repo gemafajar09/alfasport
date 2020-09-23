@@ -10,59 +10,57 @@ $json = array("table" => null);
 
 if ($_POST['id_toko'] == NULL) {
     $json['table'] = $con->query("SELECT
+                                    tb_transaksi_online_detail.transol_detail_tgl,
+                                    SUM(tb_transaksi_online_detail.transol_detail_jumlah_beli) AS transol_detail_jumlah_beli,
+                                    tb_transaksi_online.transol_id,
+                                    tb_transaksi_online.id_toko,
                                     tb_gudang.id,
                                     tb_gudang.artikel,
                                     tb_gudang.nama,
-                                    tb_transaksi_detail.id_toko,
-                                    tb_transaksi.transaksi_id,
-                                    tb_transaksi_detail.detail_tgl,
-                                    tb_transaksi_detail.detail_jumlah_beli,
-                                    tb_stok_toko.id_ukuran,
+                                    toko.nama_toko,
                                     tb_all_ukuran.ue,
                                     tb_all_ukuran.uk,
                                     tb_all_ukuran.us,
-                                    tb_all_ukuran.cm,
-                                    tb_gudang.id_gudang,
-                                    toko.nama_toko,
-                                    toko.id_toko
+                                    tb_all_ukuran.cm
                                 From
-                                    tb_transaksi Inner Join
-                                    tb_transaksi_detail On tb_transaksi_detail.transaksi_id = tb_transaksi.transaksi_id
+                                    tb_transaksi_online_detail Inner Join
+                                    tb_transaksi_online On tb_transaksi_online.transol_id = tb_transaksi_online_detail.transol_id
                                     Inner Join
-                                    tb_stok_toko On tb_stok_toko.id_toko = tb_transaksi_detail.id_toko Inner Join
-                                    tb_gudang On tb_gudang.id_gudang = tb_stok_toko.id_gudang Inner Join
-                                    tb_all_ukuran On tb_stok_toko.id_ukuran = tb_all_ukuran.id_ukuran Inner Join
-                                    toko On toko.id_toko = tb_transaksi_detail.id_toko
+                                    tb_gudang_detail On tb_gudang_detail.id_detail = tb_transaksi_online_detail.id_gudang
+                                    Inner Join
+                                    tb_all_ukuran On tb_all_ukuran.id_ukuran = tb_gudang_detail.id_ukuran Inner Join
+                                    tb_gudang On tb_gudang.id = tb_gudang_detail.id Inner Join
+                                    toko On toko.id_toko = tb_transaksi_online.id_toko
                                 WHERE tb_gudang.id_gudang = '$_POST[artikel]'
-            ")->fetchAll();
+                                GROUP BY tb_all_ukuran.ue")->fetchAll();
 } else {
     $json['table'] = $con->query("SELECT
+                                    tb_transaksi_online_detail.transol_detail_tgl,
+                                    SUM(tb_transaksi_online_detail.transol_detail_jumlah_beli) AS transol_detail_jumlah_beli,
+                                    tb_transaksi_online.transol_id,
+                                    tb_transaksi_online.id_toko,
                                     tb_gudang.id,
                                     tb_gudang.artikel,
                                     tb_gudang.nama,
-                                    tb_transaksi_detail.id_toko,
-                                    tb_transaksi.transaksi_id,
-                                    tb_transaksi_detail.detail_tgl,
-                                    tb_transaksi_detail.detail_jumlah_beli,
-                                    tb_stok_toko.id_ukuran,
+                                    toko.nama_toko,
                                     tb_all_ukuran.ue,
                                     tb_all_ukuran.uk,
                                     tb_all_ukuran.us,
-                                    tb_all_ukuran.cm,
-                                    tb_gudang.id_gudang,
-                                    toko.nama_toko,
-                                    toko.id_toko
+                                    tb_all_ukuran.cm
                                 From
-                                    tb_transaksi Inner Join
-                                    tb_transaksi_detail On tb_transaksi_detail.transaksi_id = tb_transaksi.transaksi_id
+                                    tb_transaksi_online_detail Inner Join
+                                    tb_transaksi_online On tb_transaksi_online.transol_id = tb_transaksi_online_detail.transol_id
                                     Inner Join
-                                    tb_stok_toko On tb_stok_toko.id_toko = tb_transaksi_detail.id_toko Inner Join
-                                    tb_gudang On tb_gudang.id_gudang = tb_stok_toko.id_gudang Inner Join
-                                    tb_all_ukuran On tb_stok_toko.id_ukuran = tb_all_ukuran.id_ukuran Inner Join
-                                    toko On toko.id_toko = tb_transaksi_detail.id_toko
+                                    tb_gudang_detail On tb_gudang_detail.id_detail = tb_transaksi_online_detail.id_gudang
+                                    Inner Join
+                                    tb_all_ukuran On tb_all_ukuran.id_ukuran = tb_gudang_detail.id_ukuran Inner Join
+                                    tb_gudang On tb_gudang.id = tb_gudang_detail.id Inner Join
+                                    toko On toko.id_toko = tb_transaksi_online.id_toko
                                 WHERE tb_gudang.id_gudang = '$_POST[artikel]'
-                                AND tb_transaksi_detail.id_toko = '$_POST[id_toko]'
-            ")->fetchAll();
+                                AND tb_transaksi_online_detail.id_toko = '$_POST[id_toko]'
+                                GROUP BY tb_all_ukuran.ue")->fetchAll();
+
+    // grup berdasarkan id_toko=> , tb_transaksi_online.id_toko
 }
 // pending hasil sebelum kirim ke window/browser
 ob_start();
@@ -76,8 +74,8 @@ foreach ($json['table'] as $i => $a) {
         <td style="display: none;" class="ukuran_us" id="ukuran_us" name="ukuran_us"><?= $a['us'] ?></td>
         <td style="display: none;" class="ukuran_uk" id="ukuran_uk" name="ukuran_uk"><?= $a['uk'] ?></td>
         <td style="display: none;" class="ukuran_cm" id="ukuran_cm" name="ukuran_cm"><?= $a['cm'] ?></td>
-        <td><?= $a['detail_jumlah_beli'] ?></td>
-        <td><?= tgl_indo($a['detail_tgl']) ?></td>
+        <td><?= $a['transol_detail_jumlah_beli'] ?></td>
+        <td><?= tgl_indo($a['transol_detail_tgl']) ?></td>
     </tr>
 <?php }
 
