@@ -39,9 +39,9 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                         <div class="form-group">
-                            <label>Vendor</label>
+                            <label>Supplier</label>
                             <select name="supplier_id" id="supplier_id" required class="form-control select2">
-                                <option value="">-Vendor-</option>
+                                <option value="">-Supplier-</option>
                                 <?php
                                 $supplier = $con->select('tb_supplier', '*');
                                 foreach ($supplier as $b) {
@@ -91,37 +91,41 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row" style="font-size:12px">
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <div class="form-group">
                                         <label>Artikel</label>
-                                        <select name="id_gudang_detail" id="id_gudang_detail" class="form-control" required>
+                                        <select name="id_gudang_detail" id="id_gudang_detail" class="form-control select2" required style="width: 100%;">
                                             <option value="">-Pilih-</option>
                                             <?php
                                             $gudang = $con->query('SELECT 
                                                                     a.artikel, 
-                                                                    a.nama, 
+                                                                    a.nama,
+                                                                    b.barcode, 
                                                                     a.id, 
                                                                     b.id_ukuran, 
                                                                     b.id_detail, 
-                                                                    c.ue 
+                                                                    c.ue, 
+                                                                    c.uk, 
+                                                                    c.us, 
+                                                                    c.cm 
                                                                     FROM tb_gudang a 
                                                                     JOIN tb_gudang_detail b ON a.id = b.id JOIN tb_all_ukuran c ON b.id_ukuran = c.id_ukuran  
                                             ');
                                             foreach ($gudang as $a) {
                                             ?>
-                                                <option value="<?= $a['id_detail'] ?>"><?= $a['artikel'] ?> - <?= $a['nama'] ?> - (<?= $a['ue'] ?>)</option>
+                                                <option value="<?= $a['id_detail'] ?>"><?= $a['nama'] ?> - <?= $a['artikel'] ?> - <?= $a['barcode'] ?> - (UE:<?= $a['ue'] ?> | UK:<?= $a['uk'] ?> | US:<?= $a['us'] ?> | CM:<?= $a['cm'] ?> )</option>
                                             <?php } ?>
                                         </select>
                                         <input type="hidden" id="tmp_id">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Jumlah</label>
                                         <input type="number" class="form-control" id="jumlah_beli" name="jumlah_beli">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <label>Satuan</label>
                                         <select name="satuan_id" id="satuan_id" class="form-control" required>

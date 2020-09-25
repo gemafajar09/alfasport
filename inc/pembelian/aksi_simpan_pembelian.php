@@ -16,7 +16,6 @@ if ($_POST['transaksi_id'] == NULL) {
         'pembelian_create_at' => $tgl,
         'pembelian_create_by' => $_COOKIE['id_karyawan'],
         'pembelian_nota' => $_POST['pembelian_nota'],
-        'pembelian_nota' => $_POST['pembelian_nota'],
         'pembelian_nota_id' => $_POST['pembelian_nota_id'],
     );
     $simpan = $con->insert('tb_pembelian', $data);
