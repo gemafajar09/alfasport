@@ -84,14 +84,6 @@
 				<div class="container">
 					<div class="line"></div>
 
-					<ul>
-						<li><a href="#"><img src="img/payment-01.png" alt="" /></a></li>
-						<li><a href="#"><img src="img/payment-02.png" alt="" /></a></li>
-						<li><a href="#"><img src="img/payment-03.png" alt="" /></a></li>
-						<li><a href="#"><img src="img/payment-04.png" alt="" /></a></li>
-						<li><a href="#"><img src="img/payment-05.png" alt="" /></a></li>
-					</ul>
-
 					<p>Powered By <a href="#">HTML</a></p>
 				</div><!-- // .container -->
 			</div><!-- // .pattern -->

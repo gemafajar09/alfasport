@@ -1,4 +1,7 @@
 <?php
+if (@$_COOKIE['member_id'] == '') {
+    echo "<script>window.location='index.php?page=login';</script>";
+}
 include "../config/koneksi.php";
 include "../App/MY_url_helper.php";
 

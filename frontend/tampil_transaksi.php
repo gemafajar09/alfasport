@@ -115,9 +115,9 @@ $jam = substr($r['expired'], 11, 8);
     <br>
     <div class="col-lg-8 col-md-offset-2" style="margin-top: 20px;">
       <div style="background-color: #f2f2f2; padding: 10px;">
-        <p>Untuk Melihat Detail Pesanan Anda Bisa di Cek <a href="<?= $base_url ?>detail-order-<?php echo $_GET['id'] ?>" style="color: blue;">Disini</a>
+        <p>Untuk Melihat Detail Pesanan Anda Bisa di Cek <a href="index.php?page=detail_order&id=<?php echo $_GET['id'] ?>" style="color: blue;">Disini</a>
           <b>Pesanan Anda akan dikirim segera setelah kami menerima pembayaran Anda.</b><br>
-          Pastikan Anda Melakukan <a href="<?= $base_url ?>konfirmasi-pembayaran-<?php echo $r['id_order'] ?>" style="color: blue;">Konfirmasi Pembayaran</a> Jika Sudah Melakukan Pembayaran
+          Pastikan Anda Melakukan <a href="index.php?page=konfirmasi_pembayaran&id=<?php echo $r['id_order'] ?>" style="color: blue;">Konfirmasi Pembayaran</a> Jika Sudah Melakukan Pembayaran
         </p>
       </div>
       <br>

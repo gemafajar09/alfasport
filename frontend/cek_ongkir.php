@@ -1,4 +1,8 @@
 <?php
+if (@$_COOKIE['member_id'] == '') {
+	echo "<script>window.location='index.php?page=login';</script>";
+}
+
 $asal = '318';
 $id_kabupaten = $_POST['tujuan'];
 $kurir = $_POST['kurir'];

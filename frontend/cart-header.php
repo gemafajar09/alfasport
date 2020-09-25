@@ -1,3 +1,8 @@
+<?php
+if (@$_COOKIE['member_id'] == '') {
+  echo "<script>window.location='index.php?page=login';</script>";
+}
+?>
 <div class="mini-cart-info">
   <table id="isiHeaderCart">
     <?php

@@ -1,4 +1,8 @@
 <?php
+if (@$_COOKIE['member_id'] == '') {
+	echo "<script>window.location='index.php?page=login';</script>";
+}
+
 $account = $con->query("
 	SELECT * FROM tb_member JOIN tb_member_point ON tb_member.member_id=tb_member_point.member_id WHERE tb_member.member_id = '$_COOKIE[member_id]'
 ")->fetch();
@@ -49,11 +53,11 @@ $account = $con->query("
 								<div class="row text-center" style="margin-top: 20px;">
 									<div class="col-md-6" style="background-color: #00c853; border: 3px solid #fff;">
 										<h6 style="font-size: 16px; color: #fff;">Points</h6>
-										<p style="font-size: 18px; color: #fff; font-weight: bold;"><?= $account['point'] ?></p>
+										<p style="font-size: 18px; color: #fff; font-weight: bold;"><?= number_format($account['point'], 0, '.', '.') ?></p>
 									</div>
 									<div class="col-md-6" style="background-color: #00c853; border: 3px solid #fff;">
 										<h6 style="font-size: 16px; color: #fff;">Royalti</h6>
-										<p style="font-size: 18px; color: #fff; font-weight: bold;"><?= $account['royalti'] ?></p>
+										<p style="font-size: 18px; color: #fff; font-weight: bold;"><?= number_format($account['royalti'], 0, '.', '.') ?></p>
 									</div>
 								</div>
 							</div>
