@@ -31,23 +31,10 @@
                 <select name="artikel" id="artikel" class="form-control select2">
                     <option value="">-Artikel Barang-</option>
                     <?php
-                    $artikel = $con->query("SELECT
-                                                tb_gudang.id,
-                                                tb_gudang.artikel,
-                                                tb_gudang.nama,
-                                                tb_pembelian_detail.id_gudang_detail,
-                                                tb_pembelian_detail.detail_jumlah,
-                                                tb_pembelian.pembelian_tgl_beli,
-                                                tb_supplier.supplier_nama,
-                                                tb_pembelian.pembelian_id
-                                            From tb_gudang 
-                                            Inner Join tb_gudang_detail On tb_gudang.id = tb_gudang_detail.id 
-                                            Inner Join tb_pembelian_detail On tb_gudang_detail.id_detail = tb_pembelian_detail.id_gudang_detail 
-                                            Inner Join tb_pembelian On tb_pembelian_detail.pembelian_id = tb_pembelian.pembelian_id
-                                            Inner Join tb_supplier On tb_supplier.supplier_id = tb_pembelian.supplier_id");
+                    $artikel = $con->query("SELECT * From tb_gudang");
                     foreach ($artikel as $a) {
                     ?>
-                        <option value="<?= $a['id_gudang_detail'] ?>"><?= $a['artikel'] ?> - <?= $a['nama'] ?></option>
+                        <option value="<?= $a['id_gudang'] ?>"><?= $a['nama'] ?> - <?= $a['artikel'] ?></option>
                     <?php } ?>
                 </select>
             </div>
