@@ -40,7 +40,11 @@
             </thead>
             <tbody>
                 <?php 
+                if($_COOKIE['jabatan_id'] == 1 && $_COOKIE['jabatan_id'] == 1){
                     $data = $con->query("SELECT * FROM `tb_orders` a LEFT JOIN tb_member b ON a.member_id=b.member_id LEFT JOIN toko c ON c.id_toko=a.id_toko");
+                }else{
+                    $data = $con->query("SELECT * FROM `tb_orders` a LEFT JOIN tb_member b ON a.member_id=b.member_id LEFT JOIN toko c ON c.id_toko=a.id_toko WHERE a.id_toko='$_COOKIE[id_toko]'");
+                }
                     foreach($data as $i => $a){
                 ?>
                     <tr>
