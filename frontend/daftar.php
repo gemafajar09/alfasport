@@ -1,3 +1,8 @@
+<?php
+if (@$_COOKIE['member_id'] != '') {
+	echo "<script>window.location='index.php';</script>";
+}
+?>
 <!-- BREADCRUMB
           	================================================== -->
 <div class="breadcrumb full-width">

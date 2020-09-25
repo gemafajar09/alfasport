@@ -1,4 +1,8 @@
 <?php
+if (@$_COOKIE['member_id'] == '') {
+	echo "<script>window.location='index.php?page=login';</script>";
+}
+
 if (isset($_GET['id'])) {
 	$r = $con->query("SELECT o.*, m.*,p.*,k.*,t.* FROM tb_orders o LEFT JOIN tb_member m ON o.member_id=m.member_id LEFT JOIN tb_provinsi p ON o.id_prov=p.id_prov LEFT JOIN tb_kota k ON o.id_kota=k.id_kota LEFT JOIN toko t ON o.id_toko=t.id_toko WHERE o.id_order='$_GET[id]'")->fetch();
 }

@@ -1,4 +1,7 @@
 <?php
+if (@$_COOKIE['member_id'] == '') {
+	echo "<script>window.location='index.php?page=login';</script>";
+}
 if (isset($_POST['kirim'])) {
 	$namabank = $_POST['namabank'];
 	$norek = $_POST['norek'];

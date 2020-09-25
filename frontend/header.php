@@ -55,7 +55,10 @@
                     <!-- Header Left -->
                     <div class="col-sm-3" id="header-left">
                       <!-- Logo -->
-                      <div class="logo"><a href="./"><img src="img/logo.png" title="Your Store" alt="Your Store" /></a></div>
+                      <div class="logo"><a href="./" style=" text-align: right;"><img src="../img/a4.png" title="Your Store" alt="Your Store" /></a>
+                        <span>
+                          <h2 style="font-weight: bold; font-size: 18px;">ALFA SPORT</h2>
+                        </span></div>
                     </div>
 
                     <div class="col-sm-9" id="header-right">

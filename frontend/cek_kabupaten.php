@@ -1,4 +1,8 @@
 <?php
+if (@$_COOKIE['member_id'] == '') {
+  echo "<script>window.location='index.php?page=login';</script>";
+}
+
 $provinsi_id = $_GET['prov_id'];
 $curl = curl_init();
 curl_setopt_array($curl, array(
