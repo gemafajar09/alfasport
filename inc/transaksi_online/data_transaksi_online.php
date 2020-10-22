@@ -1,7 +1,8 @@
 <?php
 include "../../config/koneksi.php";
 include "../../App/MY_url_helper.php";
-$data = $con->query("SELECT a.transol_id,
+$data = $con->query("
+SELECT a.transol_id,
        a.transol_kode,
        f.data_toko_online_nama,
        e.kategori,
@@ -11,13 +12,15 @@ $data = $con->query("SELECT a.transol_id,
        d.bank,
        a.transol_create_at,
        c.nama,
-       a.transol_keterangan
+       a.transol_keterangan,
+       g.nama_toko
 FROM tb_transaksi_online a
 LEFT JOIN toko b ON a.id_toko=b.id_toko
 LEFT JOIN tb_karyawan c ON a.transol_create_by = c.id_karyawan 
 LEFT JOIN tb_bank d ON a.transol_bank=d.id_bank
 LEFT JOIN tb_metode e ON a.transol_tipe_bayar=e.id_metode
 LEFT JOIN tb_data_toko_online f ON a.data_toko_online_id = f.data_toko_online_id
+LEFT JOIN toko g ON g.id_toko=a.id_toko
 ")->fetchAll();
 foreach ($data as $i => $a) {
 ?>
@@ -25,7 +28,7 @@ foreach ($data as $i => $a) {
         <td><?= $i + 1 ?></td>
         <td><?= $a['transol_kode'] ?></td>
         <td><?= $a['data_toko_online_nama'] ?></td>
-        <td><?= $a['kategori'] ?></td>
+        <td><?= $a['nama_toko'] ?></td>
         <td><?= 'Rp.' . number_format($a['transol_cash']) ?></td>
         <td><?= 'Rp.' . number_format($a['transol_debit']) ?></td>
         <td><?= 'Rp.' . number_format($a['transol_total_belanja']) ?></td>

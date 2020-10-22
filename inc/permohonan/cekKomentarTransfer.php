@@ -4,6 +4,25 @@ include "../../App/MY_url_helper.php";
 $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 ?>
+<style>
+    input:checked + .slider2 {
+        background-color: green;
+    }
+    .slider2.round2 {
+        border-radius: 34px;
+    }
+    .slider2 {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+</style>
 <table class="table">
     <thead>
         <tr>
@@ -61,12 +80,12 @@ $_POST = json_decode($json, true);
                 <td><?= tgl_indo($data['tanggal']) ?></td>
                 <td>
                     <label class="switch">
-                        <?php if($cek = $data['status'] == 1){ ?>
-                        <input type="checkbox" checked class="cek_status" id="cek_status<?= $data['transfer_detail_id'] ?>" value="<?= $data['transfer_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_detail_id'] ?>, this)" <?php echo ($cek == '1') ? "checked" : "" ?>>
-                        <span class="slider round"></span>
+                        <?php if($cek = $data['status'] == 2){ ?>
+                            <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_detail_id'] ?>" value="<?= $data['transfer_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_detail_id'] ?>, this)" <?php echo ($cek == '2') ? "checked" : "" ?>>
+                            <span class="slider2 round2"></span>
                         <?php }else{ ?>
-                        <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_detail_id'] ?>" value="<?= $data['transfer_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_detail_id'] ?>, this)" <?php echo ($cek == '1') ? "checked" : "" ?>>
-                        <span class="slider round"></span>
+                            <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_detail_id'] ?>" value="<?= $data['transfer_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_detail_id'] ?>, this)" <?php echo ($cek == '1') ? "" : "" ?>>
+                            <span class="slider round"></span>
                         <?php } ?>
                     </label>
                 </td>
@@ -80,4 +99,30 @@ $_POST = json_decode($json, true);
     <label for="">Keterangan</label>
     <input type="hidden" id="id_transfer" name="id_transfer" value="<?php echo $id_transfer ?>">
     <textarea name="transfer_ket" id="transfer_ket" class="form-control" id="" cols="30" rows="2"><?= $data['keterangan'] ?></textarea>
-</div>
+</div> 
+<script>
+    function cekStatus(transfer_detail_id, status_checked) {
+        if (status_checked.checked) {
+            axios.post('inc/permohonan/aksi_update_gudang.php', {
+                'transfer_detail_id': transfer_detail_id
+            }).then(function(res) {
+                var id = res.data
+                toastr.info('Sukses.. ')
+                // $(".cek_menipis").prop("checked", true);
+            }).catch(function(err) {
+                console.log(err)
+                toastr.warning('ERROR..')
+                // $(".cek_menipis").prop("checked", false);
+            })
+        } else {
+            axios.post('inc/permohonan/aksi_update_kembali.php', {
+                'transfer_detail_id': transfer_detail_id
+            }).then(function(res) {
+                var data = res.data
+                toastr.info('Sukses.. ')
+            }).catch(function(err) {
+                toastr.warning('ERROR..')
+            })
+        }
+    }
+</script>

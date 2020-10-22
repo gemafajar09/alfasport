@@ -14,7 +14,8 @@ $data = $con->query("SELECT
                         tb_subdivisi.subdivisi_nama,
                         tb_gender.gender_nama,
                         tb_gudang.modal,
-                        tb_gudang.jual
+                        tb_gudang.jual,
+                        tb_all_ukuran.ue
                     From
                         tb_stok_toko 
                     Inner Join
@@ -33,6 +34,8 @@ $data = $con->query("SELECT
                         tb_subdivisi On tb_gudang.id_sub_divisi = tb_subdivisi.subdivisi_id 
                     Inner Join
                         tb_gender On tb_gudang.id_gender = tb_gender.gender_id
+                    Inner Join
+                        tb_all_ukuran On tb_all_ukuran.id_ukuran = tb_stok_toko.id_ukuran
                     ")->fetchAll();
 
 
@@ -42,10 +45,11 @@ foreach ($data as $i => $a) {
         <td><?= $i + 1 ?></td>
         <td><?= $a['nama_toko'] ?></td>
         <!-- <td><?= $a['id'] ?></td> -->
-        <td><?= $a['nama'] ?></td>
-        <td><?= $a['artikel'] ?></td>
         <td><?= $a['barcode'] ?></td>
+        <td><?= $a['artikel'] ?></td>
+        <td><?= $a['nama'] ?></td>
         <td><?= $a['merk_nama'] ?></td>
+        <td><?= $a['ue'] ?></td>
         <td><?= $a['kategori_nama'] ?></td>
         <td><?= $a['divisi_nama'] ?></td>
         <td><?= $a['subdivisi_nama'] ?></td>

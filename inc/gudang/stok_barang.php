@@ -370,10 +370,10 @@
         $('#upload_excel').modal()
     }
 
-    function size(id) {
-        $('#idgudang').val(id)
-        $('#dataUkuran').modal()
-    }
+    // function size(id) {
+    //     $('#idgudang').val(id)
+    //     $('#dataUkuran').modal()
+    // }
 
     function show(id) {
         axios.post('inc/gudang/show_detail.php', {
@@ -427,7 +427,7 @@
             $('#dataGudangEdit').modal();
         })
 
-    }
+    } 
 
     function simpan() {
         var id = $('#gudang_id').val()
@@ -470,12 +470,13 @@
             'foto5': foto5,
             'berat': berat,
         }).then(function(res) {
-            var id = res.data
-            kosong()
-            size(id.id_gudang)
-            toastr.info('SUCCESS..')
-            $('#dataGudangEdit').modal('hide')
-            $('#isi').load('inc/gudang/data_stok.php');
+            // var id = res.data
+            // kosong()
+            // size(id.id_gudang)
+            // toastr.info('SUCCESS..')
+            // $('#dataGudangEdit').modal('hide')
+            // $('#isi').load('inc/gudang/data_stok.php');
+            window.location='input_stok-'+id+'-'+artikel+'-'+id_merek+'-'+id_kategori+'.html'
         }).catch(function(err) {
             console.log(err)
             kosong()

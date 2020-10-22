@@ -16,6 +16,7 @@
             <div class="col-md-6">
                 <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button>
                 <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Data Ukuran Sepatu" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
+                <a href="format/all_ukuran.csv" data-toggle="tooltip" title="Format Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">

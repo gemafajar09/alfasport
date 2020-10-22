@@ -31,6 +31,7 @@
             <?php
             $data = $con->query("SELECT 
             a.id_transfer,
+            a.kode_transfer,
             a.acc_owner,
             a.tanggal,
             (SELECT nama_toko FROM toko WHERE id_toko= a.id_toko) as nama_toko, 
@@ -44,7 +45,7 @@
                 <div class="col-md-4 py-2">
                     <div class="card">
                         <div class="card-header">
-                            <p><i><?= $a['nama_toko'] ?></i></p>
+                            <p><i><?= $a['nama_toko'] ?>&nbsp;&nbsp;&nbsp;<?= $a['kode_transfer'] ?>&nbsp;&nbsp;&nbsp;<?= tgl_indo($a['tanggal']) ?></i></p>
                         </div>
                         <div class="card-body">
                             <div class="row">
