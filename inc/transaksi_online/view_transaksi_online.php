@@ -51,7 +51,7 @@
                     <th>No</th>
                     <th>ID</th>
                     <th>Toko</th>
-                    <th>Cara Bayar</th>
+                    <th>Toko Asal</th>
                     <th colspan="2" class="text-center">Jumlah</th>
                     <th>Total Belanja</th>
                     <th>Bank</th>

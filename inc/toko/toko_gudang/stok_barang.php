@@ -119,10 +119,11 @@
                     <th>No</th>
                     <th>Nama Toko</th>
                     <!-- <th>ID</th> -->
-                    <th>Nama</th>
-                    <th>Artikel</th>
                     <th>Barcode</th>
+                    <th>Artikel</th>
+                    <th>Nama</th>
                     <th>Merek</th>
+                    <th>Ukuran</th>
                     <th>Kategori</th>
                     <th>Divsi</th>
                     <th>Sub Divisi</th>
@@ -145,7 +146,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h5 class="modal-title">Stok Toko</h5>
+                <h5 class="modal-title">Transfer Ke Toko</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 

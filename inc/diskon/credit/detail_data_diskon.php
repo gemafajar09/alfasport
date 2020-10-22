@@ -17,7 +17,7 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
     <div class="x_title">
         <div class="row">
             <div class="col-md-6">
-                <!-- <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button> -->
+                <button type="button" onclick="tampil1()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -33,7 +33,7 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
     <div class="x_content table-responsive">
         <form action="editMultipleDiskon.html" method="POST">
             <table class="table table-striped" id="datatable-checkbox">
-                <button type="submit" name="submit" class="btn btn-warning btn-md" disabled><i class="fa fa-pencil"> Edit Sekaligus</i></button>
+                <button type="submit" name="submit" class="btn btn-warning btn-md" disabled><i style="color:white" class="fa fa-pencil"> Edit Sekaligus</i></button>
                 <thead>
                     <tr>
                         <th>
@@ -42,6 +42,8 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
                         <th>Metode</th>
                         <th>Bank</th>
                         <th>Diskon</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Habis</th>
                         <th class="text-center" style="width:140px">Action</th>
                     </tr>
                 </thead>
@@ -67,7 +69,7 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nama Bank</label>
-                                <input type="text" name="bank" id="bank" required="required" placeholder="Nama Bank" class="form-control">
+                                <input type="text" id="bank" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -76,6 +78,20 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
                                 <input type="text" name="diskon" id="diskon" required="required" placeholder="Diskon" class="form-control">
                                 <span style="color: red;">*Dalam % (persen)</span>
                                 <input type="hidden" id="id_diskon">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Masa Diskon</label>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <input type="datetime-local" id="tanggal_mulai" class="form-control">
+                                    </div>
+                                    <div class="col-md-2">Sampai</div>
+                                    <div class="col-md-5">
+                                        <input type="datetime-local" id="tanggal_habis" class="form-control">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -91,9 +107,71 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
     </div>
 </div>
 
+<!-- The Modal -->
+<div class="modal" id="dataDiskonDetail1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Set Diskon</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row" style="font-size:12px">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Nama Bank</label>
+                                <select name="bank" style="width: 100%;" id="bank1" class="form-control select2">
+                                    <option value="">-Pilih Bank-</option>
+                                    <?php
+                                        $data = $con->query("SELECT * FROM `tb_bank`")->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach($data as $isi){
+                                    ?>
+                                    <option value="<?= $isi['id_bank'] ?>"><?= $isi['bank'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Diskon</label>
+                                <input type="text" name="diskon" id="diskon1" required="required" placeholder="Diskon" class="form-control">
+                                <span style="color: red;">*Dalam % (persen)</span>
+                                <input type="hidden" id="id_metodes" value="<?= $_GET['id_metode'] ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Masa Diskon</label>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <input type="datetime-local" id="tanggal_mulai1" class="form-control">
+                                    </div>
+                                    <div class="col-md-2">Sampai</div>
+                                    <div class="col-md-5">
+                                        <input type="datetime-local" id="tanggal_habis1" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" onclick="simpan1()" class="btn btn-primary btn-sm">Simpan</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script>
-    function tampil() {
-        $('#dataDiskonDetail').modal()
+    function tampil1() {
+        $('#dataDiskonDetail1').modal()
     }
 
     function editDiskon(id_diskon) {
@@ -104,6 +182,8 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
             $('#bank').val(edit.bank)
             $('#diskon').val(edit.diskon)
             $('#id_diskon').val(edit.id_diskon)
+            $('#tanggal_mulai').val(edit.tanggal_mulai)
+            $('#tanggal_habis').val(edit.tanggal_habis)
             $('#dataDiskonDetail').modal()
         }).catch(function(err) {
             console.log(err)
@@ -124,6 +204,39 @@ $data_diskon = $con->query("SELECT * FROM tb_metode WHERE id_metode = '$_GET[id_
         }).catch(function(err) {
             alert(err)
             $('#dataDiskonDetail').modal('hide')
+            $('#isi').load('inc/diskon/credit/data_credit_detail.php?id_metode=<?= $_GET["id_metode"] ?>');
+        })
+    }
+    
+    function simpan1() {
+        var diskon = $('#diskon1').val()
+        var bank = $('#bank1').val()
+        var id_metodes = $('#id_metodes').val()
+        var tanggal_mulai = $('#tanggal_mulai1').val()
+        var tanggal_habis = $('#tanggal_habis1').val()
+        axios.post('inc/diskon/credit/aksi_simpan_credit_baru.php', {
+            'diskon': diskon,
+            'bank': bank,
+            'id_metodes': id_metodes,
+            'tanggal_mulai': tanggal_mulai,
+            'tanggal_habis': tanggal_habis,
+        }).then(function(res) {
+            var simpan = res.data
+            console.log(simpan)
+            $('#dataDiskonDetail1').modal('hide')
+            $('#isi').load('inc/diskon/credit/data_credit_detail.php?id_metode=<?= $_GET["id_metode"] ?>');
+        }).catch(function(err) {
+            alert(err)
+            $('#dataDiskonDetail1').modal('hide')
+            $('#isi').load('inc/diskon/credit/data_credit_detail.php?id_metode=<?= $_GET["id_metode"] ?>');
+        })
+    }
+
+    function hapus(id)
+    {
+        axios.post('inc/diskon/credit/aksi_hapus_detail_metode.php',{
+            'id':id
+        }).then(function(res){
             $('#isi').load('inc/diskon/credit/data_credit_detail.php?id_metode=<?= $_GET["id_metode"] ?>');
         })
     }

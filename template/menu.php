@@ -51,14 +51,26 @@
                         </li>
                         <li><a><i class="fa fa-cube"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="stok_barang_gudang.html">Barang Gudang</a></li>
-                                <li><a href="stok_barang_toko.html">Barang Toko</a></li>
+                                <li><a >Barang Gudang <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="stok_barang_gudang.html">Sepatu</a></li>
+                                        <li><a href="stok_barang_toko.html">Baju</a></li>
+                                        <li><a href="stok_barang_toko.html">Lainya</a></li>
+                                    </ul>
+                                </li>
+                                <li><a>Barang Toko <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="stok_barang_toko.html">Sepatu</a></li>
+                                        <li><a href="stok_barang_toko.html">Baju</a></li>
+                                        <li><a href="stok_barang_toko.html">Lainya</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="penyesuaian_stok.html">Penyesuaian Barang</a></li>
                                 <li><a href="cari_barang.html">Searching Barang</a></li>
                             </ul>
                         </li>
-                        <li><a href="orderPembelian.html"><i class="fa fa-cart-plus"></i> Orderan <span class="badge badge-warning">0</span></a></li>
-                        <li><a href="return.html"><i class="fa fa-cube"></i> Return Barang</a></li>
+                        <li><a href="orderPembelian.html"><i class="fa fa-cart-plus"></i>Pesanan Website <span class="badge badge-warning">0</span></a></li>
+                        <li><a href="return.html"><i class="fa fa-cube"></i> Customer Return</a></li>
                         <li><a href="restock_barang_gudang.html"><i class="fa fa-reorder "></i> Restock Barang Gudang</a></li>
                         <!-- hitung jumlah permohonan -->
                         <?php

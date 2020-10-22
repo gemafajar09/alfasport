@@ -31,7 +31,7 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                <input type="checkbox" id="SetAll"> Set All
+                                    <input type="checkbox" id="SetAll"> Set All
                                 </div>
                             </div>
                             <input type="text" id="diskon1" class="form-control" placeholder="%">
@@ -119,8 +119,8 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                                     <input type="hidden" name="artikel[]" value="<?= $isi['artikel'] ?>">
                                 </div>    
                             </td>
-                            <td style="width: 80px;"><input type="text" name="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>"  id="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>" readonly style="width: 80px;" class="form-control"></td>
-                            <td style="width: 80px;"><input type="text" name="harga_diskon_<?= $data['id_gudang']?>_<?= $ii?>" id="harga_diskon_<?= $data['id_gudang']?>_<?= $ii?>" style="width: 80px;" class="form-control"></td>
+                            <td style="width: 80px;"><input type="text" name="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>"  id="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>" value="<?= number_format($hitungSelisih) ?>" readonly style="width: 80px;" class="form-control"></td>
+                            <td style="width: 80px;"><input type="text" name="harga_diskon_<?= $data['id_gudang']?>_<?= $ii?>" id="harga_diskon_<?= $data['id_gudang']?>_<?= $ii?>" value="<?= number_format($hitungDiskon) ?>" style="width: 80px;" class="form-control"></td>
                         </tr>
                         <?php endforeach ?>
                     </table>
@@ -137,7 +137,7 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
 </form>
 
 <script>
-    var data_barang = <?=json_encode($data_barang)?>;
+    var data_barang = <?= json_encode($data_barang)?>;
     var banyak_barang = data_barang.length;
     
     function centangSemuaUkuran()

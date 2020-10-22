@@ -10,18 +10,27 @@ tb_transaksi_online_detail.transol_detail_total_harga,
 tb_transaksi_online_detail.transol_detail_diskon1,
 tb_transaksi_online_detail.transol_detail_potongan,
 tb_gudang.nama,
+tb_gudang.artikel,
 tb_transaksi_online.transol_cash,
 tb_transaksi_online.transol_debit,
 tb_transaksi_online.transol_tipe_diskon,
 tb_transaksi_online.transol_diskon,
 tb_transaksi_online.transol_diskon_bank,
-tb_gudang.jual
+tb_gudang.jual,
+tb_all_ukuran.ue
 From
-tb_transaksi_online_detail Inner Join
+tb_transaksi_online_detail 
+Inner Join
 tb_gudang_detail On tb_gudang_detail.id_detail = tb_transaksi_online_detail.id_gudang
 Inner Join
-tb_gudang On tb_gudang.id = tb_gudang_detail.id Inner Join
-tb_transaksi_online On tb_transaksi_online.transol_id = tb_transaksi_online_detail.transol_id WHERE tb_transaksi_online_detail.transol_id = '$_POST[transaksi_id]'")->fetchAll();
+tb_gudang On tb_gudang.id = tb_gudang_detail.id 
+Inner Join
+tb_transaksi_online On tb_transaksi_online.transol_id = tb_transaksi_online_detail.transol_id 
+Inner Join
+tb_all_ukuran On tb_all_ukuran.id_ukuran = tb_gudang_detail.id_ukuran 
+WHERE 
+tb_transaksi_online_detail.transol_id = '$_POST[transaksi_id]'
+")->fetchAll();
 
 $jumlah = 0;
 $subtotal = 0;
@@ -31,7 +40,7 @@ foreach ($data as $i => $a) {
 ?>
         <tr>
                 <td><?= $i + 1 ?></td>
-                <td><?= $a['nama'] ?></td>
+                <td><?= $a['artikel'] ?>/<?= $a['nama'] ?>/<?= $a['ue'] ?></td>
                 <td><?= $a['transol_detail_jumlah_beli'] ?></td>
                 <td><?= 'Rp.' . number_format($a['jual']) ?></td>
                 <td><?= $a['transol_detail_diskon1'] . '%' ?></td>

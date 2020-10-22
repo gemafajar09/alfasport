@@ -51,18 +51,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
-                        <div class="form-group">
-                            <label>Tipe Konsumen</label>
-                            <select name="tipe_konsumen" id="tipe_konsumen" class="form-control" required>
-                                <option value="">-SELECT-</option>
-                                <option value="Non Member">Non Member</option>
-                                <option value="Member">Member</option>
-                                <option value="Distributor">Distributor</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="customer" class="col-xs-12 col-sm-6 col-md-3 col-lg-3"></div>
+                    
                     <input type="hidden" name="namaPelanggan" id="member_id">
                     <input type="hidden" name="namaPelanggan" id="distributor_id">
                 </div>
@@ -136,6 +125,18 @@
                             <button type="button" id="simpans" class="btn btn-info form-control"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label>Tipe Konsumen</label>
+                            <select name="tipe_konsumen" id="tipe_konsumen" class="form-control select2" required>
+                                <option value="">-SELECT-</option>
+                                <option value="Non Member">Non Member</option>
+                                <option value="Member">Member</option>
+                                <option value="Distributor">Distributor</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="customer" class="col-xs-12 col-sm-6 col-md-3 col-lg-3"></div>
                 </div>
             </div>
         </form>
@@ -331,7 +332,7 @@
                 <?php
                 $datag = $con->select('tb_member', '*');
                 foreach ($datag as $member) {
-                ?> "<option value = '<?= $member['member_id'] ?>' > <?= $member['member_nama'] ?></option>" +
+                ?> "<option value = '<?= $member['member_id'] ?>' > <?= $member['member_notelp'] ?></option>" +
                 <?php } ?> "</select>" +
                 "</div>";
             document.getElementById('customer').innerHTML = member;
@@ -480,7 +481,7 @@
 
     $('#transaksi_tipe_bayar').change(function(e) {
         var id = $(this).val()
-        if (id != 3) {
+        if (id != 1) {
             $('#transaksi_bank').change(function(e) {
                 var bank = $(this).val()
                 var subtotal = $('#subTotalBelanja1').val()
@@ -530,19 +531,19 @@
 
     // menampilkan pilihan bank
     document.getElementById("transaksi_tipe_bayar").addEventListener("change", function() {
-        if (this.value == 1 || this.value == 2 || this.value == 4) {
+        if (this.value == 2 || this.value == 3 ) {
             document.getElementById("tipe_bayar").style.display = "block";
             document.getElementById("bayar_card").style.display = "block";
             document.getElementById("bayar_cash").style.display = "none";
             document.getElementById("txtBayarCash").value = 0;
             document.getElementById("txtBayarCard").value = 0;
-        } else if (this.value == 5) {
+        } else if (this.value == 4 || this.value == 5) {
             document.getElementById("tipe_bayar").style.display = "block";
             document.getElementById("bayar_cash").style.display = "block";
             document.getElementById("bayar_card").style.display = "block";
             document.getElementById("txtBayarCash").value = 0;
             document.getElementById("txtBayarCard").value = 0;
-        } else if (this.value == 3) {
+        } else if (this.value == 1) {
             document.getElementById("tipe_bayar").style.display = "none";
             document.getElementById("bayar_cash").style.display = "block";
             document.getElementById("bayar_card").style.display = "none";

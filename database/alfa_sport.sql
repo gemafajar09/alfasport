@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2020 at 03:55 AM
+-- Generation Time: Oct 22, 2020 at 05:35 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.3.19
 
@@ -34,16 +34,9 @@ CREATE TABLE `cart` (
   `id_toko` int(11) NOT NULL,
   `id_stok_toko` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL
+  `id_user` int(11) NOT NULL,
+  `voucher_detail_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`id_cart`, `id`, `harga`, `id_toko`, `id_stok_toko`, `qty`, `id_user`) VALUES
-(1, 'AS-94351720', 60000, 22, 14, 1, 8),
-(2, 'AS-94351720', 60000, 22, 14, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -125,21 +118,23 @@ INSERT INTO `tb_all_ukuran` (`id_ukuran`, `id_merek`, `id_kategori`, `id_divisi`
 
 CREATE TABLE `tb_bank` (
   `id_bank` int(11) NOT NULL,
-  `bank` varchar(20) NOT NULL
+  `bank` varchar(20) NOT NULL,
+  `no_rek` varchar(255) NOT NULL,
+  `atas_nama` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_bank`
 --
 
-INSERT INTO `tb_bank` (`id_bank`, `bank`) VALUES
-(1, 'Nagari'),
-(2, 'Mandiri'),
-(3, 'BNI'),
-(4, 'BCA'),
-(5, 'BRI'),
-(6, 'Bukopin'),
-(7, 'Danamon');
+INSERT INTO `tb_bank` (`id_bank`, `bank`, `no_rek`, `atas_nama`) VALUES
+(1, 'Nagari', '12345', 'anu'),
+(2, 'Mandiri', '12345', 'anu'),
+(3, 'BNI', '12345', 'anu'),
+(4, 'BCA', '12345', 'anu'),
+(5, 'BRI', '12345', 'anu'),
+(6, 'Bukopin', '12345', 'anu'),
+(7, 'Danamon', '12345', 'anu');
 
 -- --------------------------------------------------------
 
@@ -163,7 +158,8 @@ INSERT INTO `tb_cek_stok_menipis` (`menipis_id`, `id_gudang`, `id`, `menipis_sta
 (2, 2, '6950728413', 0),
 (3, 3, '0675289314', 0),
 (4, 4, '0896415273', 0),
-(5, 5, '3627849510', 0);
+(5, 5, '3627849510', 0),
+(6, 6, '5672438019', 0);
 
 -- --------------------------------------------------------
 
@@ -182,6 +178,15 @@ CREATE TABLE `tb_daftar_alamat` (
   `kode_pos` varchar(255) NOT NULL,
   `keterangan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_daftar_alamat`
+--
+
+INSERT INTO `tb_daftar_alamat` (`alamat_id`, `member_id`, `nama_penerima`, `no_telp_penerima`, `id_prov`, `id_kota`, `alamat`, `kode_pos`, `keterangan`) VALUES
+(2, 1, 'sahrul gunawan', '081234567890', 32, 318, 'Padang', '12345', 'alamat rumah'),
+(3, 1, 'ASJL', 'ASDDA', 16, 450, 'HDASDASJK', '46283', 'alamat kantor'),
+(4, 3, 'Syahroel', '081234345434', 32, 318, 'Padang', '344343', 'alamat rumah');
 
 -- --------------------------------------------------------
 
@@ -248,43 +253,17 @@ CREATE TABLE `tb_diskon` (
   `id_diskon` int(11) NOT NULL,
   `id_metode` int(11) NOT NULL,
   `id_bank` int(11) DEFAULT NULL,
-  `diskon` float NOT NULL
+  `diskon` float NOT NULL,
+  `tanggal_mulai` datetime DEFAULT NULL,
+  `tanggal_habis` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_diskon`
 --
 
-INSERT INTO `tb_diskon` (`id_diskon`, `id_metode`, `id_bank`, `diskon`) VALUES
-(1, 3, 0, 0),
-(2, 1, 1, 0.5),
-(3, 1, 2, 0),
-(4, 1, 3, 0),
-(5, 1, 4, 0),
-(6, 1, 5, 0),
-(7, 1, 6, 0),
-(8, 1, 7, 0),
-(9, 2, 1, 0),
-(10, 2, 2, 0.5),
-(11, 2, 3, 0),
-(12, 2, 4, 0),
-(13, 2, 5, 0),
-(14, 2, 6, 0),
-(15, 2, 7, 0),
-(16, 4, 1, 0),
-(17, 4, 2, 0),
-(18, 4, 3, 0),
-(19, 4, 4, 0),
-(20, 4, 5, 0),
-(21, 4, 6, 0),
-(22, 4, 7, 0),
-(23, 5, 1, 0),
-(24, 5, 2, 0),
-(25, 5, 3, 0),
-(26, 5, 4, 0),
-(27, 5, 5, 0),
-(28, 5, 6, 0),
-(29, 5, 7, 0);
+INSERT INTO `tb_diskon` (`id_diskon`, `id_metode`, `id_bank`, `diskon`, `tanggal_mulai`, `tanggal_habis`) VALUES
+(33, 1, 1, 0.1, '2020-10-19 10:14:00', '2020-10-24 10:14:00');
 
 -- --------------------------------------------------------
 
@@ -320,7 +299,8 @@ CREATE TABLE `tb_diskon_umur` (
 --
 
 INSERT INTO `tb_diskon_umur` (`id_umur`, `umur`, `diskon`) VALUES
-(4, '90', '0.9');
+(4, '90', '0.9'),
+(5, '90', '8');
 
 -- --------------------------------------------------------
 
@@ -342,7 +322,8 @@ CREATE TABLE `tb_distributor` (
 --
 
 INSERT INTO `tb_distributor` (`distributor_id`, `distributor_nama`, `distributor_perusahaan`, `distributor_notelp`, `distributor_email`, `distributor_alamat`) VALUES
-(1, 'q', 'q', '123', 'q', 'q');
+(1, 'q', 'q', '123', 'q', 'q'),
+(2, '12345', '123456', '23456', 'qwert', 'q335');
 
 -- --------------------------------------------------------
 
@@ -403,7 +384,10 @@ CREATE TABLE `tb_flash_diskon` (
 --
 
 INSERT INTO `tb_flash_diskon` (`id_diskon`, `judul`, `kategori`, `tgl_mulai`, `tgl_berakhir`, `status`) VALUES
-(1, 'testing', 'All', '2020-09-10 06:27:27', '2020-09-24 00:00:00', 0);
+(1, 'testing', 'All', '2020-09-10 06:27:27', '2020-09-24 00:00:00', 0),
+(2, 'testing', 'All', '2020-10-17 11:59:00', '2020-10-25 11:59:00', 0),
+(3, 'testing', 'All', '2020-10-17 12:21:00', '2020-10-27 12:21:00', 0),
+(4, 'testing', 'All', '2020-10-19 09:36:00', '2020-10-31 09:36:00', 0);
 
 -- --------------------------------------------------------
 
@@ -422,7 +406,13 @@ CREATE TABLE `tb_flash_diskon_detail` (
 --
 
 INSERT INTO `tb_flash_diskon_detail` (`id_diskon_detail`, `id_diskon`, `artikel`) VALUES
-(1, 1, '1098275436');
+(1, 1, '1098275436'),
+(2, 2, '1098275436'),
+(3, 2, '3627849510'),
+(4, 3, '1098275436'),
+(5, 3, '3627849510'),
+(6, 4, '1098275436'),
+(7, 4, '3627849510');
 
 -- --------------------------------------------------------
 
@@ -502,7 +492,8 @@ CREATE TABLE `tb_gudang` (
 
 INSERT INTO `tb_gudang` (`id_gudang`, `id`, `artikel`, `nama`, `id_merek`, `modal`, `jual`, `id_gender`, `id_kategori`, `id_divisi`, `id_sub_divisi`, `tanggal`, `thumbnail`, `foto1`, `foto2`, `foto3`, `foto4`, `foto5`, `berat`) VALUES
 (1, '1098275436', 'G0001', 'G-Adidas-90', '1', '50000', '60000', '1', '1', '1', '3', '2020-09-07', 'a', 'a', 'a', 'a', 'a', 'a', 200),
-(5, '3627849510', 'G0002', 'G-Nike-87', '2', '5000', '60000', '1', '1', '1', '3', '2020-09-11', 'a', 'a', 'a', 'a', 'a', 'a', 400);
+(5, '3627849510', 'G0002', 'G-Nike-87', '2', '5000', '60000', '1', '1', '1', '3', '2020-09-11', 'a', 'a', 'a', 'a', 'a', 'a', 400),
+(6, '5672438019', 'As2123456', 'NIKE', '2', '50000', '60000', '1', '1', '1', '3', '2020-10-20', 'a', 'a', 'a', 'a', 'a', 'a', 3);
 
 -- --------------------------------------------------------
 
@@ -524,12 +515,13 @@ CREATE TABLE `tb_gudang_detail` (
 --
 
 INSERT INTO `tb_gudang_detail` (`id_detail`, `id`, `id_ukuran`, `jumlah`, `barcode`, `tanggal`) VALUES
-(1, '1098275436', 3, 127, 'GD0001', '2020-09-07'),
+(1, '1098275436', 3, 145, 'GD0001', '2020-09-07'),
 (2, '1098275436', 1, 124, 'GD0002', '2020-09-07'),
 (3, '1098275436', 2, 60, 'GD0003', '2020-09-07'),
 (4, '3627849510', 1, 100, 'GD0004', '2020-09-11'),
 (5, '3627849510', 2, 90, 'GD0005', '2020-09-11'),
-(6, '3627849510', 3, 90, 'GD0006', '2020-09-11');
+(6, '3627849510', 3, 90, 'GD0006', '2020-09-11'),
+(7, '1098275436', 8, 50, '13246', '2020-10-20');
 
 -- --------------------------------------------------------
 
@@ -580,7 +572,7 @@ CREATE TABLE `tb_karyawan` (
 --
 
 INSERT INTO `tb_karyawan` (`id_karyawan`, `id`, `nik`, `nama`, `alamat`, `no_telpon`, `email_karyawan`, `username`, `password`, `password_repeat`, `foto`, `foto_ktp`, `jabatan_id`, `id_toko`) VALUES
-(1, '238157', '123456789', 'adminowner', 'padang', '123456789', 'admin@gmail.com', 'adminowner', '$2y$10$ifIlX28K/sSWkmTqTUkMl.k3GM5hu49xZk4wo3ynBqeyKoR448JBq', 'terbukalah', '1-11425.png', '2-15205.png', 1, 1);
+(1, '238157', '123456789', 'adminowner', 'padang', '123456789', 'admin@gmail.com', 'adminowner', '$2y$10$ifIlX28K/sSWkmTqTUkMl.k3GM5hu49xZk4wo3ynBqeyKoR448JBq', 'terbukalah', '1-11425.png', '2-15205.png', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -601,6 +593,32 @@ INSERT INTO `tb_kategori` (`kategori_id`, `kategori_nama`) VALUES
 (1, 'Footwear'),
 (2, 'Apparel'),
 (3, 'Hardware');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_konfirmasi_bayar`
+--
+
+CREATE TABLE `tb_konfirmasi_bayar` (
+  `id_konfirmasi` int(11) NOT NULL,
+  `id_order` varchar(20) NOT NULL,
+  `id_bank` int(11) NOT NULL,
+  `namabanks` varchar(50) NOT NULL,
+  `noreks` varchar(50) NOT NULL,
+  `atasnamas` varchar(50) NOT NULL,
+  `total_bayars` int(11) NOT NULL,
+  `bukti` text NOT NULL,
+  `tgl_bayar` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_konfirmasi_bayar`
+--
+
+INSERT INTO `tb_konfirmasi_bayar` (`id_konfirmasi`, `id_order`, `id_bank`, `namabanks`, `noreks`, `atasnamas`, `total_bayars`, `bukti`, `tgl_bayar`) VALUES
+(1, '3320922102744', 1, 'bang gem', '123123', 'bo', 1231231231, '20200922103017jas.png', '2020-09-22 10:30:17'),
+(2, '3830922143946', 1, 'BRI', '12312312312321', 'gema fajar', 100000, '20200923143158noimage.png', '2020-09-23 14:31:58');
 
 -- --------------------------------------------------------
 
@@ -1138,15 +1156,36 @@ CREATE TABLE `tb_member` (
   `member_tgl_lahir` date NOT NULL,
   `member_gender` varchar(255) NOT NULL,
   `member_profesi` varchar(255) NOT NULL,
-  `alamat_id` int(11) NOT NULL
+  `alamat_id` int(11) NOT NULL,
+  `member_foto` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_member`
 --
 
-INSERT INTO `tb_member` (`member_id`, `member_kode`, `member_nama`, `member_email`, `member_password`, `member_password_repeat`, `member_notelp`, `member_tgl_lahir`, `member_gender`, `member_profesi`, `alamat_id`) VALUES
-(1, 'qw', 'qw', 'qw', 'qw', 'qw', 'qw', '2020-09-07', 'qw', 'wqw', 1);
+INSERT INTO `tb_member` (`member_id`, `member_kode`, `member_nama`, `member_email`, `member_password`, `member_password_repeat`, `member_notelp`, `member_tgl_lahir`, `member_gender`, `member_profesi`, `alamat_id`, `member_foto`) VALUES
+(3, '200918103856', 'Sahrul', 'sahrul@gmail.com', '$2y$10$bbAO0Rib4Sgy2W/qRWt7kuA0RNAlV/K1vKDvSDEv26184ZKyb0NcW', '12345', '081234567890', '0000-00-00', '', '', 4, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_member_point`
+--
+
+CREATE TABLE `tb_member_point` (
+  `id_point` int(11) NOT NULL,
+  `member_id` int(11) NOT NULL,
+  `point` int(11) NOT NULL,
+  `royalti` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_member_point`
+--
+
+INSERT INTO `tb_member_point` (`id_point`, `member_id`, `point`, `royalti`) VALUES
+(2, 3, 5282, 5282);
 
 -- --------------------------------------------------------
 
@@ -1208,11 +1247,69 @@ CREATE TABLE `tb_metode` (
 --
 
 INSERT INTO `tb_metode` (`id_metode`, `kategori`) VALUES
-(1, 'Credit'),
-(2, 'Debit'),
-(3, 'Cash'),
-(4, 'Card'),
-(5, 'Cash+Card');
+(1, 'Cash'),
+(2, 'Debit Card'),
+(3, 'Credit Card'),
+(4, 'Cash + Debit Card'),
+(5, 'Cash + Credit Card'),
+(6, 'Point');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_orders`
+--
+
+CREATE TABLE `tb_orders` (
+  `id_order` varchar(20) NOT NULL,
+  `status_order` varchar(20) NOT NULL,
+  `tgl_order` date NOT NULL,
+  `jam_order` time NOT NULL,
+  `member_id` int(11) NOT NULL,
+  `kurir` varchar(100) NOT NULL,
+  `service` varchar(100) NOT NULL,
+  `ongkir` int(11) NOT NULL,
+  `potongan` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `id_prov` int(11) NOT NULL,
+  `id_kota` int(11) NOT NULL,
+  `alamat` text NOT NULL,
+  `kode_pos` varchar(20) NOT NULL,
+  `nama_penerima` varchar(20) NOT NULL,
+  `jmlberat` int(11) NOT NULL,
+  `id_toko` int(11) NOT NULL,
+  `resi` varchar(191) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_orders`
+--
+
+INSERT INTO `tb_orders` (`id_order`, `status_order`, `tgl_order`, `jam_order`, `member_id`, `kurir`, `service`, `ongkir`, `potongan`, `total`, `keterangan`, `id_prov`, `id_kota`, `alamat`, `kode_pos`, `nama_penerima`, `jmlberat`, `id_toko`, `resi`) VALUES
+('3830922143946', 'Barang Telah Dikirim', '2020-09-22', '14:39:46', 3, 'jne', 'REG', 22000, 0, 79600, 'alamat rumah', 32, 318, 'Padang', '344343', 'Syahroel', 200, 1, '123123wasd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_orders_detail`
+--
+
+CREATE TABLE `tb_orders_detail` (
+  `id_detail_orders` int(11) NOT NULL,
+  `id_order` varchar(20) NOT NULL,
+  `id` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
+  `id_stok_toko` int(11) NOT NULL,
+  `qty` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_orders_detail`
+--
+
+INSERT INTO `tb_orders_detail` (`id_detail_orders`, `id_order`, `id`, `harga`, `id_stok_toko`, `qty`) VALUES
+(2, '3830922143946', 1098275436, 57600, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -1309,7 +1406,11 @@ CREATE TABLE `tb_penyesuaian_stok` (
 INSERT INTO `tb_penyesuaian_stok` (`penyesuaian_stok_id`, `id_toko`, `penyesuaian_stok_tgl`, `penyesuaian_stok_tipe`, `id_karyawan`, `penyesuaian_stok_create_at`, `penyesuaian_stok_create_by`) VALUES
 (1, 1, '2020-09-14', 'stock opname', 0, '2020-09-14 04:29:42', '1'),
 (6, 1, '2020-09-01', 'barang rusak', 0, '2020-09-14 10:39:11', '1'),
-(7, 1, '2020-09-17', 'dipakai sendiri', 1, '2020-09-17 04:24:06', '1');
+(7, 1, '2020-09-17', 'dipakai sendiri', 1, '2020-09-17 04:24:06', '1'),
+(8, 1, '2020-09-24', 'stock opname', 0, '2020-09-24 02:53:14', '1'),
+(9, 1, '2020-10-17', 'stock opname', 0, '2020-10-17 09:09:52', '1'),
+(10, 1, '2020-10-17', 'stock opname', 0, '2020-10-17 09:20:51', '1'),
+(11, 1, '2020-10-17', 'stock opname', 0, '2020-10-17 09:21:37', '1');
 
 -- --------------------------------------------------------
 
@@ -1336,7 +1437,8 @@ INSERT INTO `tb_penyesuaian_stok_detail` (`penyesuaian_stok_detail_id`, `penyesu
 (7, 6, 4, 10, 0, 10),
 (8, 6, 9, 20, 0, 20),
 (9, 7, 2, 90, 0, 90),
-(10, 7, 3, 11, 0, 11);
+(10, 7, 3, 11, 0, 11),
+(11, 8, 2, 137, 0, 137);
 
 -- --------------------------------------------------------
 
@@ -1419,7 +1521,9 @@ INSERT INTO `tb_restock` (`restock_id`, `id_detail`, `id`, `restock_tgl`, `resto
 (8, 2, '1098275436', '2020-09-18 10:32:32', 110, 12),
 (9, 4, '3627849510', '2020-09-18 10:32:52', 90, 10),
 (10, 1, '1098275436', '2020-09-18 10:39:41', 125, 2),
-(11, 2, '1098275436', '2020-09-18 10:39:41', 122, 2);
+(11, 2, '1098275436', '2020-09-18 10:39:41', 122, 2),
+(12, 1, '1098275436', '2020-09-24 09:54:09', 120, 10),
+(13, 1, '1098275436', '2020-09-24 09:54:24', 130, 10);
 
 -- --------------------------------------------------------
 
@@ -1455,6 +1559,27 @@ INSERT INTO `tb_satuan` (`satuan_id`, `satuan_nama`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tb_status_orders`
+--
+
+CREATE TABLE `tb_status_orders` (
+  `id_status` int(11) NOT NULL,
+  `id_order` varchar(20) NOT NULL,
+  `status_order` varchar(50) NOT NULL,
+  `tgl_status` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_status_orders`
+--
+
+INSERT INTO `tb_status_orders` (`id_status`, `id_order`, `status_order`, `tgl_status`) VALUES
+(1, '3320922102744', 'Menunggu Pembayaran', '2020-09-22 10:27:44'),
+(2, '3830922143946', 'Menunggu Pembayaran', '2020-09-22 14:39:46');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tb_stok_toko`
 --
 
@@ -1472,8 +1597,8 @@ CREATE TABLE `tb_stok_toko` (
 --
 
 INSERT INTO `tb_stok_toko` (`id_stok_toko`, `id_toko`, `id_gudang`, `jumlah`, `id_ukuran`, `tanggal`) VALUES
-(2, 1, 1, 131, 3, '2020-09-11'),
-(3, 1, 2, 19, 1, '2020-09-11'),
+(2, 1, 1, 132, 3, '2020-09-11'),
+(3, 1, 2, 17, 1, '2020-09-11'),
 (4, 1, 4, 2, 1, '2020-09-11'),
 (5, 1, 5, 3, 2, '2020-09-11'),
 (6, 2, 4, 10, 1, '2020-09-11'),
@@ -1530,6 +1655,13 @@ CREATE TABLE `tb_supplier` (
   `supplier_alamat` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_supplier`
+--
+
+INSERT INTO `tb_supplier` (`supplier_id`, `supplier_nama`, `supplier_perusahaan`, `supplier_notelp`, `supplier_email`, `supplier_alamat`) VALUES
+(2, 'q', 'q', 'q', 'q', 'q');
+
 -- --------------------------------------------------------
 
 --
@@ -1561,8 +1693,9 @@ CREATE TABLE `tb_transaksi` (
 --
 
 INSERT INTO `tb_transaksi` (`transaksi_id`, `transaksi_kode`, `transaksi_tgl`, `id_toko`, `transaksi_jumlah_beli`, `transaksi_tipe_bayar`, `transaksi_cash`, `transaksi_debit`, `transaksi_total_belanja`, `transaksi_kembalian`, `transaksi_bank`, `transaksi_tipe_diskon`, `transaksi_diskon`, `transaksi_diskon_bank`, `transaksi_create_at`, `transaksi_create_by`, `keterangan`) VALUES
-(1, 'T00001', '2020-09-18', 1, 4, '2', 0, 300000, '222323', '77677', '2', 'dis_persen', '5', '0.5', '2020-09-18 09:06:59', 1, 'ok'),
-(2, 'T00002', '2020-09-18', 0, 1, '3', 60000, 0, '57600', '2400', '', 'dis_persen', '0', '0', '2020-09-18 10:07:22', 1, 'okj');
+(2, 'T00002', '2020-09-21', 1, 1, '4', 0, 58000, '57600', '400', '2', 'dis_persen', '0', '0', '2020-09-21 08:54:27', 1, 'ok'),
+(4, 'T00003', '2020-09-21', 1, 1, '3', 58000, 0, '57600', '400', '', 'dis_persen', '0', '0', '2020-09-21 09:39:38', 1, 'ok'),
+(5, 'T00004', '2020-09-23', 2, 4, '1', 0, 230000, '225792', '4208', '5', 'dis_persen', '4', '0', '2020-09-23 15:02:28', 1, 'ok');
 
 -- --------------------------------------------------------
 
@@ -1590,12 +1723,10 @@ CREATE TABLE `tb_transaksi_detail` (
 --
 
 INSERT INTO `tb_transaksi_detail` (`detail_id`, `transaksi_id`, `detail_kode`, `detail_tgl`, `id_toko`, `id_gudang`, `detail_tipe_konsumen`, `id_konsumen`, `detail_jumlah_beli`, `detail_total_harga`, `detail_potongan`, `detail_diskon1`) VALUES
-(1, 1, 'T00001', '2020-09-18', 1, 1, 'Member', '1', 1, 57600, '57600', '4'),
-(2, 1, 'T00001', '2020-09-18', 1, 4, 'Member', '1', 1, 60000, '60000', '0'),
-(3, 1, 'T00001', '2020-09-18', 1, 4, 'Member', '1', 1, 60000, '60000', '0'),
-(4, 1, 'T00001', '2020-09-18', 1, 3, 'Member', '1', 1, 57600, '57600', '4'),
-(8, 2, 'T00002', '2020-09-18', 0, 0, '', '0', 0, 0, '', ''),
-(9, 2, 'T00002', '2020-09-18', 1, 1, 'Non Member', '0', 1, 57600, '57600', '4');
+(4, 2, 'T00002', '2020-09-21', 1, 1, 'Non Member', '0', 1, 57600, '57600', '4'),
+(6, 4, 'T00003', '2020-09-21', 1, 1, 'Non Member', '0', 1, 57600, '57600', '4'),
+(7, 5, 'T00004', '2020-09-23', 2, 3, 'Member', '1', 2, 115200, '57600', '4'),
+(8, 5, 'T00004', '2020-09-23', 2, 4, 'Member', '1', 2, 120000, '60000', '0');
 
 --
 -- Triggers `tb_transaksi_detail`
@@ -1617,13 +1748,18 @@ CREATE TABLE `tb_transaksi_online` (
   `transol_id` int(11) NOT NULL,
   `transol_kode` varchar(255) NOT NULL,
   `transol_tgl` date NOT NULL,
-  `id_toko` int(11) NOT NULL,
+  `id_toko` int(11) NOT NULL COMMENT 'dari toko',
+  `data_toko_online_id` int(11) NOT NULL COMMENT 'dati tb_data_toko_online',
   `transol_jumlah_beli` int(11) NOT NULL,
   `transol_tipe_bayar` varchar(255) NOT NULL,
   `transol_cash` int(11) NOT NULL,
   `transol_debit` int(11) NOT NULL,
+  `transol_total_belanja` varchar(255) NOT NULL,
+  `transol_kembalian` varchar(255) NOT NULL,
   `transol_bank` varchar(255) NOT NULL,
+  `transol_tipe_diskon` varchar(255) NOT NULL,
   `transol_diskon` int(11) DEFAULT NULL,
+  `transol_diskon_bank` varchar(255) NOT NULL,
   `transol_create_at` datetime NOT NULL,
   `transol_create_by` int(11) NOT NULL,
   `transol_keterangan` text NOT NULL
@@ -1633,8 +1769,11 @@ CREATE TABLE `tb_transaksi_online` (
 -- Dumping data for table `tb_transaksi_online`
 --
 
-INSERT INTO `tb_transaksi_online` (`transol_id`, `transol_kode`, `transol_tgl`, `id_toko`, `transol_jumlah_beli`, `transol_tipe_bayar`, `transol_cash`, `transol_debit`, `transol_bank`, `transol_diskon`, `transol_create_at`, `transol_create_by`, `transol_keterangan`) VALUES
-(1, 'N00001', '2020-09-09', 1, 1, '3', 57000, 0, '1', 0, '2020-09-09 10:04:17', 1, 'ok');
+INSERT INTO `tb_transaksi_online` (`transol_id`, `transol_kode`, `transol_tgl`, `id_toko`, `data_toko_online_id`, `transol_jumlah_beli`, `transol_tipe_bayar`, `transol_cash`, `transol_debit`, `transol_total_belanja`, `transol_kembalian`, `transol_bank`, `transol_tipe_diskon`, `transol_diskon`, `transol_diskon_bank`, `transol_create_at`, `transol_create_by`, `transol_keterangan`) VALUES
+(2, 'N00001', '2020-09-23', 1, 1, 2, '2', 0, 110000, '108893', '1107', '2', 'dis_persen', 5, '0.5', '2020-09-23 09:16:41', 1, 'ok'),
+(3, 'N00002', '2020-09-23', 1, 1, 5, '2', 0, 260000, '257904', '2096', '2', 'dis_persen', 10, '0.5', '2020-09-23 09:19:55', 1, 'ok'),
+(4, 'N00003', '2020-09-23', 1, 2, 4, '2', 0, 230000, '222323', '7677', '2', 'dis_persen', 5, '0.5', '2020-09-23 14:51:26', 1, 'ok'),
+(5, 'N00004', '2020-09-23', 2, 3, 4, '2', 0, 235000, '222323', '12677', '2', 'dis_persen', 5, '0.5', '2020-09-23 15:00:00', 1, 'ok');
 
 -- --------------------------------------------------------
 
@@ -1648,22 +1787,36 @@ CREATE TABLE `tb_transaksi_online_detail` (
   `transol_detail_kode` varchar(255) NOT NULL,
   `transol_detail_tgl` date NOT NULL,
   `id_toko` int(11) NOT NULL,
-  `id_gudang` int(11) NOT NULL,
+  `id_gudang` int(11) NOT NULL COMMENT 'Sebenarnya id_detail dari tb_gudang_detail ',
   `data_toko_online_id` int(11) NOT NULL,
   `transol_detail_jumlah_beli` int(11) NOT NULL,
   `transol_detail_total_harga` int(11) NOT NULL,
   `transol_detail_potongan` varchar(255) DEFAULT NULL,
-  `transol_detail_diskon1` varchar(255) DEFAULT NULL,
-  `transol_detail_diskon2` varchar(255) DEFAULT NULL,
-  `id_karyawan` int(11) NOT NULL
+  `transol_detail_diskon1` varchar(255) DEFAULT NULL COMMENT 'dari diskon item '
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_transaksi_online_detail`
 --
 
-INSERT INTO `tb_transaksi_online_detail` (`transol_detail_id`, `transol_id`, `transol_detail_kode`, `transol_detail_tgl`, `id_toko`, `id_gudang`, `data_toko_online_id`, `transol_detail_jumlah_beli`, `transol_detail_total_harga`, `transol_detail_potongan`, `transol_detail_diskon1`, `transol_detail_diskon2`, `id_karyawan`) VALUES
-(1, 1, 'N00001', '2020-09-09', 1, 1, 1, 1, 57000, '5', '60000', '0', 1);
+INSERT INTO `tb_transaksi_online_detail` (`transol_detail_id`, `transol_id`, `transol_detail_kode`, `transol_detail_tgl`, `id_toko`, `id_gudang`, `data_toko_online_id`, `transol_detail_jumlah_beli`, `transol_detail_total_harga`, `transol_detail_potongan`, `transol_detail_diskon1`) VALUES
+(3, 2, 'N00001', '2020-09-23', 1, 1, 1, 2, 115200, '57600', '4'),
+(4, 3, 'N00002', '2020-09-23', 1, 1, 1, 2, 115200, '57600', '4'),
+(5, 3, 'N00002', '2020-09-23', 1, 2, 1, 3, 172800, '57600', '4'),
+(7, 4, 'N00003', '2020-09-23', 1, 3, 2, 2, 115200, '57600', '4'),
+(8, 4, 'N00003', '2020-09-23', 1, 6, 2, 2, 120000, '60000', '0'),
+(10, 5, 'N00004', '2020-09-23', 2, 3, 3, 2, 115200, '57600', '4'),
+(11, 5, 'N00004', '2020-09-23', 2, 4, 3, 2, 120000, '60000', '0');
+
+--
+-- Triggers `tb_transaksi_online_detail`
+--
+DELIMITER $$
+CREATE TRIGGER `kurang_online` AFTER INSERT ON `tb_transaksi_online_detail` FOR EACH ROW BEGIN
+UPDATE tb_stok_toko SET jumlah = jumlah - NEW.transol_detail_jumlah_beli WHERE id_toko = NEW.id_toko AND id_gudang = NEW.id_gudang;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -1676,13 +1829,12 @@ CREATE TABLE `tb_transaksi_online_tmp` (
   `transol_tmp_kode` varchar(255) NOT NULL,
   `transol_tmp_tgl` date NOT NULL,
   `id_toko` int(11) NOT NULL,
-  `id_gudang` int(11) NOT NULL,
+  `id_gudang` int(11) NOT NULL COMMENT ' 	Sebenarnya id_detail dari tb_gudang_detail ',
   `data_toko_online_id` int(11) NOT NULL,
   `transol_tmp_jumlah_beli` int(11) NOT NULL,
   `transol_tmp_total_harga` int(11) NOT NULL,
   `transol_tmp_potongan` varchar(255) DEFAULT NULL,
   `transol_tmp_diskon1` varchar(255) DEFAULT NULL,
-  `transol_tmp_diskon2` varchar(255) DEFAULT NULL,
   `id_karyawan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1707,6 +1859,14 @@ CREATE TABLE `tb_transaksi_tmp` (
   `id_karyawan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_transaksi_tmp`
+--
+
+INSERT INTO `tb_transaksi_tmp` (`tmp_id`, `tmp_kode`, `tmp_tgl`, `id_toko`, `id_gudang`, `tmp_tipe_konsumen`, `id_konsumen`, `tmp_jumlah_beli`, `tmp_total_harga`, `potongan`, `diskon1`, `id_karyawan`) VALUES
+(9, 'T00005', '2020-10-19', 2, 3, 'Non Member', 0, 1, 57600, '57600', '4', 1),
+(10, 'T00005', '2020-10-19', 1, 1, 'Non Member', 0, 4, 230400, '57600', '4', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -1723,6 +1883,13 @@ CREATE TABLE `tb_transfer` (
   `transfer_ket` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_transfer`
+--
+
+INSERT INTO `tb_transfer` (`id_transfer`, `kode_transfer`, `id_toko`, `id_toko_tujuan`, `tanggal`, `acc_owner`, `transfer_ket`) VALUES
+(1, 'K00001', 1, 0, '2020-10-19', 4, 'kuarng 2');
+
 -- --------------------------------------------------------
 
 --
@@ -1737,6 +1904,13 @@ CREATE TABLE `tb_transfer_detail` (
   `jumlah` int(11) NOT NULL,
   `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_transfer_detail`
+--
+
+INSERT INTO `tb_transfer_detail` (`transfer_detail_id`, `id_transfer`, `id_gudang`, `id_ukuran`, `jumlah`, `status`) VALUES
+(1, 1, 1, 3, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -1801,7 +1975,7 @@ CREATE TABLE `tb_ukuran_barang_detail` (
 --
 
 INSERT INTO `tb_ukuran_barang_detail` (`ukuran_barang_detail_id`, `ukuran_barang_id`, `ukuran_barang_detail_nama`, `ukuran_barang_detail_stok`) VALUES
-(1, 1, 'S', 0),
+(1, 1, 'Sa', 0),
 (4, 2, 'S', 0);
 
 -- --------------------------------------------------------
@@ -1827,7 +2001,9 @@ CREATE TABLE `tb_ukuran_kaos_kaki` (
 
 INSERT INTO `tb_ukuran_kaos_kaki` (`ukuran_kaos_kaki_id`, `id_merek`, `id_kategori`, `id_divisi`, `id_subdivisi`, `id_gender`, `ukuran_kaos_kaki_ue`, `ukuran_kaos_kaki_size`) VALUES
 (1, 1, 1, 1, 3, '1', '1233', 'S3'),
-(2, 1, 1, 1, 3, '1', '12334', 's');
+(2, 1, 1, 1, 3, '1', '12334', 's'),
+(3, 2, 1, 0, 3, '1,2', '122', 'ss'),
+(4, 2, 1, 1, 3, '1,2', '3', 'l');
 
 -- --------------------------------------------------------
 
@@ -1851,7 +2027,8 @@ CREATE TABLE `tb_voucher` (
 --
 
 INSERT INTO `tb_voucher` (`voucher_id`, `voucher_kode`, `voucher_nama`, `voucher_jenis`, `voucher_harga`, `voucher_tgl_mulai`, `voucher_tgl_akhir`, `id_toko`) VALUES
-(1, 'V00001', '12', 'harga', 4, '2020-09-17', '2020-09-30', 0);
+(1, 'V00001', '12', 'harga', 4, '2020-09-17', '2020-09-30', 0),
+(2, 'V00002', '1233', 'harga', 5000, '2020-09-24', '2020-09-30', 1);
 
 -- --------------------------------------------------------
 
@@ -1872,8 +2049,10 @@ CREATE TABLE `tb_voucher_detail` (
 --
 
 INSERT INTO `tb_voucher_detail` (`voucher_detail_id`, `voucher_id`, `voucher_detail_token`, `voucher_detail_status`, `member_id`) VALUES
-(1, 1, 'CiAjRYaG', 0, 0),
-(2, 1, '3LBowh8n', 0, 0);
+(1, 1, 'CiAjRYaG', 3, 3),
+(2, 1, '3LBowh8n', 0, 0),
+(3, 2, 'AMzUu8Hk', 0, 0),
+(4, 2, 'yVnRUIbw', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -2075,6 +2254,12 @@ ALTER TABLE `tb_kategori`
   ADD PRIMARY KEY (`kategori_id`);
 
 --
+-- Indexes for table `tb_konfirmasi_bayar`
+--
+ALTER TABLE `tb_konfirmasi_bayar`
+  ADD PRIMARY KEY (`id_konfirmasi`);
+
+--
 -- Indexes for table `tb_kota`
 --
 ALTER TABLE `tb_kota`
@@ -2087,6 +2272,12 @@ ALTER TABLE `tb_member`
   ADD PRIMARY KEY (`member_id`);
 
 --
+-- Indexes for table `tb_member_point`
+--
+ALTER TABLE `tb_member_point`
+  ADD PRIMARY KEY (`id_point`);
+
+--
 -- Indexes for table `tb_merk`
 --
 ALTER TABLE `tb_merk`
@@ -2097,6 +2288,12 @@ ALTER TABLE `tb_merk`
 --
 ALTER TABLE `tb_metode`
   ADD PRIMARY KEY (`id_metode`);
+
+--
+-- Indexes for table `tb_orders_detail`
+--
+ALTER TABLE `tb_orders_detail`
+  ADD PRIMARY KEY (`id_detail_orders`);
 
 --
 -- Indexes for table `tb_pakai_sendiri`
@@ -2152,6 +2349,12 @@ ALTER TABLE `tb_restock`
 --
 ALTER TABLE `tb_satuan`
   ADD PRIMARY KEY (`satuan_id`);
+
+--
+-- Indexes for table `tb_status_orders`
+--
+ALTER TABLE `tb_status_orders`
+  ADD PRIMARY KEY (`id_status`);
 
 --
 -- Indexes for table `tb_stok_toko`
@@ -2305,37 +2508,37 @@ ALTER TABLE `tb_bank`
 -- AUTO_INCREMENT for table `tb_cek_stok_menipis`
 --
 ALTER TABLE `tb_cek_stok_menipis`
-  MODIFY `menipis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `menipis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_daftar_alamat`
 --
 ALTER TABLE `tb_daftar_alamat`
-  MODIFY `alamat_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `alamat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_data_profesi`
 --
 ALTER TABLE `tb_data_profesi`
-  MODIFY `data_profesi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `data_profesi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_data_toko_online`
 --
 ALTER TABLE `tb_data_toko_online`
-  MODIFY `data_toko_online_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `data_toko_online_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_detail_return`
 --
 ALTER TABLE `tb_detail_return`
-  MODIFY `id_detail_return` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_detail_return` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tb_diskon`
 --
 ALTER TABLE `tb_diskon`
-  MODIFY `id_diskon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_diskon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `tb_diskon_detail`
@@ -2347,13 +2550,13 @@ ALTER TABLE `tb_diskon_detail`
 -- AUTO_INCREMENT for table `tb_diskon_umur`
 --
 ALTER TABLE `tb_diskon_umur`
-  MODIFY `id_umur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_umur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_distributor`
 --
 ALTER TABLE `tb_distributor`
-  MODIFY `distributor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `distributor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_divisi`
@@ -2365,13 +2568,13 @@ ALTER TABLE `tb_divisi`
 -- AUTO_INCREMENT for table `tb_flash_diskon`
 --
 ALTER TABLE `tb_flash_diskon`
-  MODIFY `id_diskon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_diskon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_flash_diskon_detail`
 --
 ALTER TABLE `tb_flash_diskon_detail`
-  MODIFY `id_diskon_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_diskon_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_flash_diskon_persen`
@@ -2389,31 +2592,37 @@ ALTER TABLE `tb_gender`
 -- AUTO_INCREMENT for table `tb_gudang`
 --
 ALTER TABLE `tb_gudang`
-  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_gudang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_gudang_detail`
 --
 ALTER TABLE `tb_gudang_detail`
-  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_jabatan`
 --
 ALTER TABLE `tb_jabatan`
-  MODIFY `jabatan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `jabatan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_karyawan`
 --
 ALTER TABLE `tb_karyawan`
-  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tb_kategori`
 --
 ALTER TABLE `tb_kategori`
   MODIFY `kategori_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_konfirmasi_bayar`
+--
+ALTER TABLE `tb_konfirmasi_bayar`
+  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_kota`
@@ -2425,7 +2634,13 @@ ALTER TABLE `tb_kota`
 -- AUTO_INCREMENT for table `tb_member`
 --
 ALTER TABLE `tb_member`
-  MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_member_point`
+--
+ALTER TABLE `tb_member_point`
+  MODIFY `id_point` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_merk`
@@ -2437,7 +2652,13 @@ ALTER TABLE `tb_merk`
 -- AUTO_INCREMENT for table `tb_metode`
 --
 ALTER TABLE `tb_metode`
-  MODIFY `id_metode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_metode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `tb_orders_detail`
+--
+ALTER TABLE `tb_orders_detail`
+  MODIFY `id_detail_orders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_pakai_sendiri`
@@ -2467,13 +2688,13 @@ ALTER TABLE `tb_pembelian_tmp`
 -- AUTO_INCREMENT for table `tb_penyesuaian_stok`
 --
 ALTER TABLE `tb_penyesuaian_stok`
-  MODIFY `penyesuaian_stok_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `penyesuaian_stok_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tb_penyesuaian_stok_detail`
 --
 ALTER TABLE `tb_penyesuaian_stok_detail`
-  MODIFY `penyesuaian_stok_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `penyesuaian_stok_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tb_provinsi`
@@ -2485,13 +2706,19 @@ ALTER TABLE `tb_provinsi`
 -- AUTO_INCREMENT for table `tb_restock`
 --
 ALTER TABLE `tb_restock`
-  MODIFY `restock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `restock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tb_satuan`
 --
 ALTER TABLE `tb_satuan`
   MODIFY `satuan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tb_status_orders`
+--
+ALTER TABLE `tb_status_orders`
+  MODIFY `id_status` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_stok_toko`
@@ -2509,55 +2736,55 @@ ALTER TABLE `tb_subdivisi`
 -- AUTO_INCREMENT for table `tb_supplier`
 --
 ALTER TABLE `tb_supplier`
-  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_transaksi`
 --
 ALTER TABLE `tb_transaksi`
-  MODIFY `transaksi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `transaksi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_transaksi_detail`
 --
 ALTER TABLE `tb_transaksi_detail`
-  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_transaksi_online`
 --
 ALTER TABLE `tb_transaksi_online`
-  MODIFY `transol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `transol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_transaksi_online_detail`
 --
 ALTER TABLE `tb_transaksi_online_detail`
-  MODIFY `transol_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `transol_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tb_transaksi_online_tmp`
 --
 ALTER TABLE `tb_transaksi_online_tmp`
-  MODIFY `transol_tmp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `transol_tmp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_transaksi_tmp`
 --
 ALTER TABLE `tb_transaksi_tmp`
-  MODIFY `tmp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `tmp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tb_transfer`
 --
 ALTER TABLE `tb_transfer`
-  MODIFY `id_transfer` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_transfer` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_transfer_detail`
 --
 ALTER TABLE `tb_transfer_detail`
-  MODIFY `transfer_detail_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `transfer_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_ukuran`
@@ -2581,19 +2808,19 @@ ALTER TABLE `tb_ukuran_barang_detail`
 -- AUTO_INCREMENT for table `tb_ukuran_kaos_kaki`
 --
 ALTER TABLE `tb_ukuran_kaos_kaki`
-  MODIFY `ukuran_kaos_kaki_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ukuran_kaos_kaki_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tb_voucher`
 --
 ALTER TABLE `tb_voucher`
-  MODIFY `voucher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `voucher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_voucher_detail`
 --
 ALTER TABLE `tb_voucher_detail`
-  MODIFY `voucher_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `voucher_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `template_excel`
@@ -2605,7 +2832,7 @@ ALTER TABLE `template_excel`
 -- AUTO_INCREMENT for table `toko`
 --
 ALTER TABLE `toko`
-  MODIFY `id_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `whistlist`

@@ -57,6 +57,7 @@ $edit = $con->query("SELECT a.id, a.artikel, a.nama, a.id_gudang, a.modal, a.jua
                 <tr>
                     <th>No</th>
                     <th>ID</th>
+                    <th>Nama Barang</th>
                     <th>Barcode</th>
                     <th class="text-center" colspan="4">Ukuran</th>
                     <th>Jumlah</th>
@@ -68,18 +69,19 @@ $edit = $con->query("SELECT a.id, a.artikel, a.nama, a.id_gudang, a.modal, a.jua
                     <th>Uk</th>
                     <th>Us</th>
                     <th>Cm</th>
-                    <th colspan="2"></th>
+                    <th colspan="3"></th>
                 </tr>
             </thead>
             <tbody>
 
                 <?php
-                $isi = $con->query("SELECT a.id, a.jumlah, a.tanggal,a.barcode, b.ue, b.uk, b.us, b.cm FROM tb_gudang_detail a JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran WHERE a.id='$edit[id]'")->fetchAll();
+                $isi = $con->query("SELECT a.id, a.jumlah, a.tanggal,a.barcode, b.ue, b.uk, b.us, b.cm, c.nama FROM tb_gudang_detail a JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran LEFT JOIN tb_gudang c ON c.id=a.id WHERE a.id='$edit[id]'")->fetchAll();
                 foreach ($isi as $i => $a) {
                 ?>
                     <tr>
                         <td><?= $i + 1 ?></td>
                         <td><?= $a['id'] ?></td>
+                        <td><?= $a['nama'] ?></td>
                         <td><?= $a['barcode'] ?></td>
                         <td><?= $a['ue'] ?></td>
                         <td><?= $a['uk'] ?></td>
