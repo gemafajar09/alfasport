@@ -31,7 +31,7 @@ if (isset($_POST['update'])) {
 
     echo "
     <script>
-    window.location='restock_barang_gudang.html';
+    window.location='restock_barang_gudang_sepatu.html';
     </script>
     ";
     exit;

@@ -52,27 +52,40 @@
                         </li>
                         <li><a><i class="fa fa-cube"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a >Barang Gudang <span class="fa fa-chevron-down"></span></a>
+                                <li><a>Barang Gudang <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="stok_barang_gudang.html">Sepatu</a></li>
-                                        <li><a href="stok_barang_toko.html">Baju</a></li>
-                                        <li><a href="stok_barang_toko.html">Lainya</a></li>
+                                        <li><a href="stok_barang_gudang_kaos_kaki.html">Kaos Kaki</a></li>
+                                        <li><a href="stok_barang_gudang_lainnya.html">Lainnya</a></li>
                                     </ul>
                                 </li>
                                 <li><a>Barang Toko <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="stok_barang_toko.html">Sepatu</a></li>
-                                        <li><a href="stok_barang_toko.html">Baju</a></li>
-                                        <li><a href="stok_barang_toko.html">Lainya</a></li>
+                                        <li><a href="stok_barang_toko_kaos_kaki.html">Kaos Kaki</a></li>
+                                        <li><a href="stok_barang_toko_lainnya.html">Lainnya</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="penyesuaian_stok.html">Penyesuaian Barang</a></li>
-                                <li><a href="cari_barang.html">Searching Barang</a></li>
+                                <li><a href="penyesuaian_stok.html">Penyesuaian Stok</a></li>
+                                <li><a>Searching Barang<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="cari_barang.html">Sepatu</a></li>
+                                        <li><a href="cari_kaos_kaki.html">Kaos Kaki</a></li>
+                                        <li><a href="cari_barang_lainnya.html">Lainnya</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                         <li><a href="orderPembelian.html"><i class="fa fa-cart-plus"></i>Pesanan Website <span class="badge badge-warning">0</span></a></li>
                         <li><a href="return.html"><i class="fa fa-cube"></i> Customer Return</a></li>
-                        <li><a href="restock_barang_gudang.html"><i class="fa fa-reorder "></i> Restock Barang Gudang</a></li>
+                        <li>
+                            <a><i class="fa fa-reorder "></i><span class="fa fa-chevron-down"></span> Restock Gudang</a>
+                            <ul class="nav child_menu">
+                                <li><a href="restock_barang_gudang_sepatu.html">Sepatu</a></li>
+                                <li><a href="restock_barang_gudang_kaos_kaki.html">Kaos Kaki</a></li>
+                                <li><a href="restock_barang_gudang_lainnya.html">Lainnya</a></li>
+                            </ul>
+                        </li>
                         <!-- hitung jumlah permohonan -->
                         <?php
                         $acc = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 0")->fetch();

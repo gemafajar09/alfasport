@@ -1,6 +1,6 @@
 <div class="page-title">
     <div class="title_left">
-        <h3>Restock Barang Gudang Sepatu</h3>
+        <h3>Restock Barang Gudang Kaos Kaki</h3>
     </div>
 
     <div class="title_right">
@@ -29,7 +29,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-        <form action="editMultipleRestock.html" method="POST">
+        <form action="editMultipleRestockKaosKaki.html" method="POST">
             <table class="table table-striped" id="datatable-checkbox" style="font-size:11px;font: italic small-caps bold;">
                 <button type="submit" name="submit" class="btn btn-warning btn-md" disabled><i class="fa fa-plus"> Restock Sekaligus</i></button>
                 <thead>
@@ -41,10 +41,8 @@
                         <th>Nama</th>
                         <th>Artikel</th>
                         <th>Barcode</th>
-                        <th>UE</th>
-                        <th>UK</th>
-                        <th>US</th>
-                        <th>CM</th>
+                        <th>EU</th>
+                        <th>Size</th>
                         <th>Jumlah</th>
                         <th>Tanggal</th>
                         <th>Action</th>
@@ -119,9 +117,9 @@
 </div>
 
 <script>
-    function detail(id_detail) {
-        axios.post('inc/restock_gudang/aksi_detail_restock.php', {
-            'id_detail': id_detail
+    function detail(gudang_kaos_kaki_detail_id) {
+        axios.post('inc/restock_gudang_kaos_kaki/aksi_detail_restock.php', {
+            'gudang_kaos_kaki_detail_id': gudang_kaos_kaki_detail_id
         }).then(function(res) {
             var data = res.data
             $('#tampilkan').html(data)
@@ -131,24 +129,23 @@
         })
     }
 
-
     function simpan() {
-        var id_detail = $('#id_detail').val()
-        var id_artikel = $('#id_artikel').val()
-        var artikel = $('#artikel').val()
+        var gudang_kaos_kaki_detail_id = $('#id_detail').val()
+        var gudang_kaos_kaki_kode = $('#id_artikel').val()
+        var gudang_kaos_kaki_artikel = $('#artikel').val()
         var jumlah_restock = $('#jumlah_restock').val()
-        var jumlah = $('#jumlah').val()
-        axios.post('inc/restock_gudang/aksi_simpan_restock.php', {
-            'id_detail': id_detail,
-            'id_artikel': id_artikel,
-            'artikel': artikel,
+        var gudang_kaos_kaki_detail_jumlah = $('#jumlah').val()
+        axios.post('inc/restock_gudang_kaos_kaki/aksi_simpan_restock.php', {
+            'gudang_kaos_kaki_detail_id': gudang_kaos_kaki_detail_id,
+            'gudang_kaos_kaki_kode': gudang_kaos_kaki_kode,
+            'gudang_kaos_kaki_artikel': gudang_kaos_kaki_artikel,
             'jumlah_restock': jumlah_restock,
-            'jumlah': jumlah
+            'gudang_kaos_kaki_detail_jumlah': gudang_kaos_kaki_detail_jumlah
         }).then(function(res) {
             toastr.info('SUCCESS..')
             kosong()
             $('#dataStokGudang').modal('hide')
-            $('#isi').load('inc/restock_gudang/data_restock.php');
+            $('#isi').load('inc/restock_gudang_kaos_kaki/data_restock.php');
         }).catch(function(err) {
             console.log(err)
             toastr.warning('ERROR..')
@@ -157,17 +154,15 @@
         })
     }
 
-    function edit(id_detail) {
-        axios.post('inc/restock_gudang/aksi_edit_restock.php', {
-            'id_detail': id_detail
+    function edit(gudang_kaos_kaki_detail_id) {
+        axios.post('inc/restock_gudang_kaos_kaki/aksi_edit_restock.php', {
+            'gudang_kaos_kaki_detail_id': gudang_kaos_kaki_detail_id
         }).then(function(res) {
-            console.log(res);
             var edit = res.data
-            console.log(edit)
-            $('#id_artikel').val(edit.id);
-            $('#artikel').val(edit.nama + " - " + edit.artikel + " - " + edit.barcode)
-            $('#id_detail').val(edit.id_detail)
-            $('#jumlah').val(edit.jumlah)
+            $('#id_artikel').val(edit.gudang_kaos_kaki_kode);
+            $('#artikel').val(edit.gudang_kaos_kaki_nama + " - " + edit.gudang_kaos_kaki_artikel + " - " + edit.gudang_kaos_kaki_detail_barcode)
+            $('#id_detail').val(edit.gudang_kaos_kaki_detail_id)
+            $('#jumlah').val(edit.gudang_kaos_kaki_detail_jumlah)
             $('#dataStokGudang').modal()
         }).catch(function(err) {
             console.log(err)
@@ -183,7 +178,7 @@
     }
 
     function cekeditSekaligus() {
-        var ceklist = document.getElementsByName("id_detail[]");
+        var ceklist = document.getElementsByName("gudang_kaos_kaki_detail_id[]");
         var banyak_ceklist = ceklist.length;
         var banyak_dicek = 0;
         for (var x = 0; x < banyak_ceklist; x++) {
@@ -205,6 +200,6 @@
     });
 
     $(document).ready(function() {
-        $('#isi').load('inc/restock_gudang/data_restock.php');
+        $('#isi').load('inc/restock_gudang_kaos_kaki/data_restock.php');
     })
 </script>

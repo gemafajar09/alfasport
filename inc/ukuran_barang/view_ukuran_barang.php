@@ -307,7 +307,7 @@ if (isset($_POST['simpanT'])) {
     $last_id = $con->id();
 
     foreach ($ukuran_barang_detail_nama as $i => $a) {
-        $con->query("INSERT INTO tb_ukuran_barang_detail(ukuran_barang_id, ukuran_barang_detail_nama, ukuran_barang_detail_stok) VALUES ('$last_id','$ukuran_barang_detail_nama[$i]','$ukuran_barang_detail_stok[$i]')");
+        $con->query("INSERT INTO tb_ukuran_barang_detail(ukuran_barang_id, ukuran_barang_detail_nama, ukuran_barang_detail_stok) VALUES ('$last_id','$ukuran_barang_detail_nama[$i]','0')");
     }
     echo "<script>
         window.location.href = 'ukuran_barang.html';
@@ -522,29 +522,3 @@ if (isset($_POST['simpanT'])) {
 
     $('#isi').load('inc/ukuran_barang/data_ukuran_barang.php');
 </script>
-
-
-
-<!--         var html_row =
-            `
-            <div class="row" id='baris_${_banyakPilihanBarang}'>
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label>Nama Ukuran</label>
-                        <input class="form-control" type="text" name="ukuran_barang_detail_nama[]">
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label>Stok</label>
-                        <input type="number" name="ukuran_barang_detail_stok[]" class="form-control" placeholder="Stok Baju">
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="form-group">
-                        <label>&nbsp;</label>
-                        <button class='btn btn-danger form-control' type='button' onclick='hapusBaris(${_banyakPilihanBarang})'><i class='fa fa-trash'></i></button>
-                    </div>
-                </div>
-            </div>
-            `; -->
