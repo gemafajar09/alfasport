@@ -6,7 +6,8 @@ if (isset($_POST['upload'])) {
     $no = 0;
     while (!feof($file)) {
         $isi_baris = fgetcsv($file);
-        // var_dump($isi_baris); exit;
+        // var_dump($isi_baris);
+        // exit;
         if ($no > 0) {
             if (!empty($isi_baris[2])) {
                 $merek = $con->query("SELECT merk_id FROM `tb_merk` WHERE merk_nama='$isi_baris[2]'")->fetch();
@@ -70,10 +71,10 @@ if (isset($_POST['upload'])) {
                 //     'berat' => $isi_baris[15]
                 // );
                 $tanggal = date('Y-m-d');
-                $query = "INSERT INTO tb_gudang VALUES ('','$shuffle','$isi_baris[0]','$isi_baris[1]','$mer','$isi_baris[7]','$isi_baris[8]','$gender[gender_id]','$kate','$div','$sub', '$tanggal','$isi_baris[9]','$isi_baris[10]','$isi_baris[11]','$isi_baris[12]','$isi_baris[13]','$isi_baris[14]','$isi_baris[15]' )";
+                $query = "INSERT INTO tb_gudang_lainnya VALUES ('','$shuffle','$isi_baris[0]','$isi_baris[1]','$mer','$isi_baris[7]','$isi_baris[8]','$gender[gender_id]','$kate','$div','$sub', '$tanggal','$isi_baris[9]','$isi_baris[10]','$isi_baris[11]','$isi_baris[12]','$isi_baris[13]','$isi_baris[14]','$isi_baris[15]' )";
                 $simpan = $con->query($query);
                 $idBaru = $con->id();
-                $con->query("INSERT `tb_cek_stok_menipis` VALUES ('','$idBaru','$shuffle','0')");
+                // $con->query("INSERT `tb_cek_stok_menipis` VALUES ('','$idBaru','$shuffle','0')");
                 // var_dump($data); exit;
                 // $simpan = $con->insert('tb_gudang',$data);
             }
@@ -81,5 +82,5 @@ if (isset($_POST['upload'])) {
         $no++;
     }
     fclose($file);
-    header('location:../../stok_barang_gudang.html');
+    header('location:../../stok_barang_gudang_lainnya.html');
 }

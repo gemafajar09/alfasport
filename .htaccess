@@ -41,6 +41,32 @@ RewriteRule ^stok_barang_gudang\.html$ index.php?page=inc/gudang/stok_barang [L]
 RewriteRule ^entry_gudang\.html$ index.php?page=inc/gudang/input_stok_gudang [L]
 RewriteRule ^update-gudang-([0-9]+)\.html$ index.php?page=inc/gudang/aksi_edit_gudang&id=$1 [L]
 
+#gudang_kaos_kaki
+RewriteRule ^stok_barang_gudang_kaos_kaki\.html$ index.php?page=inc/gudang_kaos_kaki/stok_barang_kaos_kaki [L]
+RewriteRule ^entry_gudang_kaos_kaki\.html$ index.php?page=inc/gudang_kaos_kaki/input_stok_gudang_kaos_kaki [L]
+RewriteRule ^simpan_gudang_kaos_kaki\.html$ index.php?page=inc/gudang_kaos_kaki/aksi_simpan_gudang_kaos_kaki [L]
+RewriteRule ^input-stok-kaos-kaki-([a-zA-Z0-9\-]{0,20})-([a-zA-Z0-9\-]{0,20})-([0-9]+)-([0-9]+)\.html$ index.php?page=inc/gudang_kaos_kaki/input_stok_kaos_kaki&id=$1&artikel=$2&merek=$3&kategori=$4 [L]
+
+#gudang_lainnya
+RewriteRule ^stok_barang_gudang_lainnya\.html$ index.php?page=inc/gudang_lainnya/stok_barang_lainnya [L]
+RewriteRule ^entry_gudang_lainnya\.html$ index.php?page=inc/gudang_lainnya/input_stok_gudang_lainnya [L]
+RewriteRule ^simpan_gudang_lainnya\.html$ index.php?page=inc/gudang_lainnya/aksi_simpan_gudang_lainnya [L]
+RewriteRule ^input-stok-lainnya-([a-zA-Z0-9\-]{0,20})-([a-zA-Z0-9\-]{0,20})-([0-9]+)-([0-9]+)\.html$ index.php?page=inc/gudang_lainnya/input_stok_lainnya&id=$1&artikel=$2&merek=$3&kategori=$4 [L]
+
+
+#toko_kaos_kaki
+RewriteRule ^stok_barang_toko_kaos_kaki\.html$ index.php?page=inc/toko/toko_gudang_kaos_kaki/stok_barang_kaos_kaki [L]
+
+#toko_lainnya
+RewriteRule ^stok_barang_toko_lainnya\.html$ index.php?page=inc/toko/toko_gudang_lainnya/stok_barang_lainnya [L]
+
+#cari_kaos_kaki
+RewriteRule ^cari_kaos_kaki\.html$ index.php?page=inc/cari_kaos_kaki/view_cari_kaos_kaki [L]
+
+#cari_barang_lainnya
+RewriteRule ^cari_barang_lainnya\.html$ index.php?page=inc/cari_lainnya/view_cari_lainnya [L]
+
+
 RewriteRule ^penjualan\.html$ index.php?page=inc/transaksi/view_transaksi [L]
 RewriteRule ^entry_penjualan\.html$ index.php?page=inc/transaksi/input_transaksi [L]
 RewriteRule ^cari_penjualan\.html$ index.php?page=inc/transaksi/cari_penjualan [L]
@@ -83,7 +109,16 @@ RewriteRule ^buatreturn\.html$ index.php?page=inc/return/buatReturn [L]
 RewriteRule ^orderPembelian\.html$ index.php?page=inc/order/index [L]
 RewriteRule ^orderDetail-([0-9]+)\.html$ index.php?page=inc/order/detailOrders&id_order=$1 [L]
 
-RewriteRule ^restock_barang_gudang\.html$ index.php?page=inc/restock_gudang/view_restock [L]
+# restock_barang_gudang_sepatu
+RewriteRule ^restock_barang_gudang_sepatu\.html$ index.php?page=inc/restock_gudang/view_restock [L]
 RewriteRule ^editMultipleRestock\.html$ index.php?page=inc/restock_gudang/edit_multiple_restock [L]
+
+# restock_barang_kaos_kaki
+RewriteRule ^restock_barang_gudang_kaos_kaki\.html$ index.php?page=inc/restock_gudang_kaos_kaki/view_restock [L]
+RewriteRule ^editMultipleRestockKaosKaki\.html$ index.php?page=inc/restock_gudang_kaos_kaki/edit_multiple_restock [L]
+
+# restock_barang_lainnya
+RewriteRule ^restock_barang_gudang_lainnya\.html$ index.php?page=inc/restock_gudang_lainnya/view_restock [L]
+RewriteRule ^editMultipleRestockLainnya\.html$ index.php?page=inc/restock_gudang_lainnya/edit_multiple_restock [L]
 
 RewriteRule ^detail-voucher-([0-9]+)\.html$ index.php?page=inc/diskon/voucher/detail_voucher&id_voucher=$1 [L]
