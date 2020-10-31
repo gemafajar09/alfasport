@@ -7,8 +7,9 @@ $_POST = json_decode($json, true);
 if ($_POST['voucher_id'] == NULL) {
 
     $simpan = $con->insert(
-        "tb_voucher",
+        "tb_voucher_ongkir",
         array(
+            'voucher_area' => $_POST['areapengiriman'],
             'voucher_kode' => $_POST['voucher_kode'],
             'voucher_nama' => $_POST['voucher_nama'],
             'voucher_jenis' => $_POST['voucher_jenis'],
@@ -19,6 +20,7 @@ if ($_POST['voucher_id'] == NULL) {
             "minimum_belanja" => $_POST['minimum']
         )
     );
+    // exit;
     $last_id = $con->id();
 
     for ($i = 0; $i < $_POST['voucher_jumlah']; $i++) {
@@ -26,12 +28,13 @@ if ($_POST['voucher_id'] == NULL) {
         $voucher_generate =  substr(str_shuffle($karakter), 0, 8);
 
         $save = $con->insert(
-            "tb_voucher_detail",
+            "tb_voucher_detail_ongkir",
             array(
-                'voucher_id' => $last_id,
+                'voucher_id_ongkir' => $last_id,
                 'voucher_detail_token' => $voucher_generate,
                 'voucher_detail_status' => 0,
-                'member_id' => 0
+                'member_id' => 0,
+                "minimum_belanja" => $_POST['minimum']
             )
         );
     }

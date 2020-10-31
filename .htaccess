@@ -91,13 +91,13 @@ RewriteRule ^terima_transfer\.html$ index.php?page=inc/terima/view_transfer [L]
 
 RewriteRule ^credit\.html$ index.php?page=inc/diskon/credit/index [L]
 RewriteRule ^voucher\.html$ index.php?page=inc/diskon/voucher/index [L]
+RewriteRule ^ongkir\.html$ index.php?page=inc/diskon/ongkir/index [L]
 RewriteRule ^item\.html$ index.php?page=inc/diskon/item/index [L]
 RewriteRule ^item_diskon\.html$ index.php?page=inc/diskon/item/buat_diskon [L]
 RewriteRule ^item_diskon_set\.html$ index.php?page=inc/diskon/item/set_diskon [L]
 RewriteRule ^simpans\.html$ index.php?page=inc/diskon/item/simpan_tabel [L]
 RewriteRule ^detail-data-diskon-([0-9]+)\.html$ index.php?page=inc/diskon/credit/detail_data_diskon&id_metode=$1 [L]
 RewriteRule ^editMultipleDiskon\.html$ index.php?page=inc/diskon/credit/edit_multiple_diskon [L]
-
 
 RewriteRule ^permohonan\.html$ index.php?page=inc/permohonan/index [L]
 RewriteRule ^cari_barang\.html$ index.php?page=inc/cari/view_cari [L]
@@ -113,6 +113,7 @@ RewriteRule ^orderDetail-([0-9]+)\.html$ index.php?page=inc/order/detailOrders&i
 RewriteRule ^restock_barang_gudang_sepatu\.html$ index.php?page=inc/restock_gudang/view_restock [L]
 RewriteRule ^editMultipleRestock\.html$ index.php?page=inc/restock_gudang/edit_multiple_restock [L]
 
+
 # restock_barang_kaos_kaki
 RewriteRule ^restock_barang_gudang_kaos_kaki\.html$ index.php?page=inc/restock_gudang_kaos_kaki/view_restock [L]
 RewriteRule ^editMultipleRestockKaosKaki\.html$ index.php?page=inc/restock_gudang_kaos_kaki/edit_multiple_restock [L]
@@ -122,3 +123,7 @@ RewriteRule ^restock_barang_gudang_lainnya\.html$ index.php?page=inc/restock_gud
 RewriteRule ^editMultipleRestockLainnya\.html$ index.php?page=inc/restock_gudang_lainnya/edit_multiple_restock [L]
 
 RewriteRule ^detail-voucher-([0-9]+)\.html$ index.php?page=inc/diskon/voucher/detail_voucher&id_voucher=$1 [L]
+
+RewriteRule ^detail-voucher-([0-9]+)\.html$ index.php?page=inc/diskon/voucher/detail_voucher&id_voucher=$1 [L]
+RewriteRule ^detail-ongkir-([0-9]+)\.html$ index.php?page=inc/diskon/ongkir/detail_voucher&id_voucher=$1 [L]
+

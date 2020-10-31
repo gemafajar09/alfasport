@@ -1,6 +1,6 @@
 <div class="page-title">
     <div class="title_left">
-        <h3>Data Voucher</h3>
+        <h3>Data Voucher Ongkir</h3>
     </div>
 
     <div class="title_right">
@@ -119,7 +119,7 @@
                                 <label>Kode Voucher</label>
                                 <?php
                                 //membaca kode barang terbesar
-                                $kode_faktur = $con->query("SELECT max(voucher_kode) FROM tb_voucher")->fetch();
+                                $kode_faktur = $con->query("SELECT max(voucher_kode) FROM tb_voucher_ongkir")->fetch();
                                 if ($kode_faktur) {
                                     $nilai = substr($kode_faktur[0], 1);
                                     $kode = (int) $nilai;
@@ -142,8 +142,24 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label>Area Pengiriman</label>
+                                <select name="areapengiriman" id="areapengiriman" class="form-control select2" style="width:100%">
+                                    <option value="">Set Area Pengiriman</option>
+                                    <?php
+                                        $data = $con->query("SELECT * FROM `tb_kota` ")->fetchAll();
+                                        foreach($data as $a){
+                                    ?>
+                                    <option value="<?= $a['id_kota'] ?>"><?= $a['nama_kota'] ?></option>
+                                    <?php
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label>Jenis</label>
-                                <select name="voucher_jenis" id="voucher_jenis" class="form-control">
+                                <select name="voucher_jenis" id="voucher_jenis" class="form-control select2" style="width: 100%;">
                                     <option value="harga">Potongan Harga</option>
                                     <option value="persen">Potongan Persen</option>
                                 </select>
@@ -176,7 +192,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Toko</label>
-                                <select name="id_toko" class="form-control" id="id_toko">
+                                <select name="id_toko" class="form-control select2" style="width: 100%;" id="id_toko">
                                     <option value="0">Semua Toko</option>
                                     <?php
                                     $data = $con->query("SELECT * FROM toko WHERE id_toko != 0");
@@ -215,6 +231,7 @@
 
     function simpan() {
         var voucher_nama = $('#voucher_nama').val()
+        var areapengiriman = $('#areapengiriman').val()
         var voucher_tgl_mulai = $('#voucher_tgl_mulai').val()
         var voucher_tgl_akhir = $('#voucher_tgl_akhir').val()
         var voucher_harga = $('#voucher_harga').val()
@@ -225,8 +242,9 @@
         var minimum = $('#minimum').val()
         var voucher_id = $('#voucher_id').val()
 
-        axios.post('inc/diskon/voucher/aksi_simpan_voucher.php', {
+        axios.post('inc/diskon/ongkir/aksi_simpan_voucher.php', {
             'voucher_nama': voucher_nama,
+            'areapengiriman': areapengiriman,
             'voucher_harga': voucher_harga,
             'voucher_tgl_mulai': voucher_tgl_mulai,
             'voucher_tgl_akhir': voucher_tgl_akhir,
@@ -238,21 +256,22 @@
             'voucher_id': voucher_id
         }).then(function(res) {
             $('#dataVoucher').modal('hide')
-            $('#isi-akan-datang').load('inc/diskon/voucher/data_voucher_akan_datang.php');
-            $('#isi-sedang-berjalan').load('inc/diskon/voucher/data_voucher_sedang_berlaku.php');
-            $('#isi-telah-berlalu').load('inc/diskon/voucher/data_voucher_telah_berlalu.php');
+            $('#isi-akan-datang').load('inc/diskon/ongkir/data_voucher_akan_datang.php');
+            $('#isi-sedang-berjalan').load('inc/diskon/ongkir/data_voucher_sedang_berlaku.php');
+            $('#isi-telah-berlalu').load('inc/diskon/ongkir/data_voucher_telah_berlalu.php');
         }).catch(function(err) {
             console.log(err)
             kosong()
             $('#dataVoucher').modal('hide')
-            $('#isi-akan-datang').load('inc/diskon/voucher/data_voucher_akan_datang.php');
-            $('#isi-sedang-berjalan').load('inc/diskon/voucher/data_voucher_sedang_berlaku.php');
-            $('#isi-telah-berlalu').load('inc/diskon/voucher/data_voucher_telah_berlalu.php');
+            $('#isi-akan-datang').load('inc/diskon/ongkir/data_voucher_akan_datang.php');
+            $('#isi-sedang-berjalan').load('inc/diskon/ongkir/data_voucher_sedang_berlaku.php');
+            $('#isi-telah-berlalu').load('inc/diskon/ongkir/data_voucher_telah_berlalu.php');
         })
     }
 
     function kosong() {
         $('#voucher_nama').val('')
+        $('#areapengiriman').val('')
         $('#voucher_tgl_mulai').val('')
         $('#voucher_tgl_akhir').val('')
         $('#voucher_harga').val('')
@@ -264,9 +283,9 @@
     }
 
 
-    $('#isi-akan-datang').load('inc/diskon/voucher/data_voucher_akan_datang.php');
-    $('#isi-sedang-berjalan').load('inc/diskon/voucher/data_voucher_sedang_berlaku.php');
-    $('#isi-telah-berlalu').load('inc/diskon/voucher/data_voucher_telah_berlalu.php');
+    $('#isi-akan-datang').load('inc/diskon/ongkir/data_voucher_akan_datang.php');
+    $('#isi-sedang-berjalan').load('inc/diskon/ongkir/data_voucher_sedang_berlaku.php');
+    $('#isi-telah-berlalu').load('inc/diskon/ongkir/data_voucher_telah_berlalu.php');
 
     <?php
     if (!empty($_POST['a'])) {
