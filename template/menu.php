@@ -33,6 +33,7 @@
                                 <li><a href="credit.html">Diskon Debit / Kredit</a></li>
                                 <li><a href="item.html">Diskon Item</a></li>
                                 <li><a href="voucher.html">Diskon Voucher</a></li>
+                                <li><a href="ongkir.html">Diskon Voucher Ongkir</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
