@@ -41,6 +41,24 @@ RewriteRule ^stok_barang_gudang\.html$ index.php?page=inc/gudang/stok_barang [L]
 RewriteRule ^entry_gudang\.html$ index.php?page=inc/gudang/input_stok_gudang [L]
 RewriteRule ^update-gudang-([0-9]+)\.html$ index.php?page=inc/gudang/aksi_edit_gudang&id=$1 [L]
 
+
+# data_semua_ukuran
+RewriteRule ^data_ukuran_sepatu\.html$ index.php?page=inc/data_ukuran_sepatu/view_ukuran_sepatu [L]
+RewriteRule ^data_ukuran_kaos_kaki\.html$ index.php?page=inc/data_ukuran_kaos_kaki/view_ukuran_kaos_kaki [L]
+RewriteRule ^data_ukuran_barang_lainnya\.html$ index.php?page=inc/data_ukuran_barang_lainnya/view_ukuran_barang_lainnya [L]
+
+
+#barang_gudang
+RewriteRule ^barang_gudang\.html$ index.php?page=inc/barang_gudang/view_barang_gudang [L]
+RewriteRule ^entry_barang_gudang\.html$ index.php?page=inc/barang_gudang/input_barang_gudang [L]
+RewriteRule ^simpan_barang_gudang\.html$ index.php?page=inc/barang_gudang/aksi_simpan_barang_gudang [L]
+RewriteRule ^entry-stok-barang-gudang-([a-zA-Z0-9\-]{0,20})-([0-9]+)-([0-9]+)\.html$ index.php?page=inc/barang_gudang/input_stok_barang_gudang&kode=$1&merek=$2&subdivisi=$3 [L]
+
+#barang_toko
+RewriteRule ^barang_toko\.html$ index.php?page=inc/toko/barang_toko/view_barang_toko [L]
+
+
+
 #gudang_kaos_kaki
 RewriteRule ^stok_barang_gudang_kaos_kaki\.html$ index.php?page=inc/gudang_kaos_kaki/stok_barang_kaos_kaki [L]
 RewriteRule ^entry_gudang_kaos_kaki\.html$ index.php?page=inc/gudang_kaos_kaki/input_stok_gudang_kaos_kaki [L]

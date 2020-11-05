@@ -2,36 +2,36 @@
 
 if (isset($_POST['update'])) {
 
-    $id_detail = $_POST['gudang_kaos_kaki_detail_id'];
+    $id_detail = $_POST['gudang_lainnya_detail_id'];
 
     $tgl = date('Y-m-d H:i:s');
 
     foreach ($id_detail as $i => $id) {
         $jumlah = $_POST['jumlah'][$i];
         $jumlah_restock = $_POST['jumlah_restock'][$i];
-        $gudang_kaos_kaki_kode = $_POST['gudang_kaos_kaki_kode'][$i];
+        $gudang_lainnya_kode = $_POST['gudang_lainnya_kode'][$i];
 
         $con->insert(
-            "tb_restock_kaos_kaki",
+            "tb_restock_lainnya",
             array(
-                "gudang_kaos_kaki_detail_id" => $id,
-                "gudang_kaos_kaki_kode" => $gudang_kaos_kaki_kode,
-                "restock_kaos_kaki_tgl" => $tgl,
-                "restock_kaos_kaki_jml_awal" => $jumlah,
-                "restock_kaos_kaki_jml_tambah" => $jumlah_restock,
+                "gudang_lainnya_detail_id" => $id,
+                "gudang_lainnya_kode" => $gudang_lainnya_kode,
+                "restock_lainnya_tgl" => $tgl,
+                "restock_lainnya_jml_awal" => $jumlah,
+                "restock_lainnya_jml_tambah" => $jumlah_restock,
             )
         );
 
         $con->update(
-            'tb_gudang_kaos_kaki_detail',
-            array('gudang_kaos_kaki_detail_jumlah' => $jumlah + $jumlah_restock),
-            array('gudang_kaos_kaki_detail_id' => $id)
+            'tb_gudang_lainnya_detail',
+            array('gudang_lainnya_detail_jumlah' => $jumlah + $jumlah_restock),
+            array('gudang_lainnya_detail_id' => $id)
         );
     }
 
     echo "
     <script>
-    window.location='restock_barang_gudang_kaos_kaki.html';
+    window.location='restock_barang_gudang_lainnya.html';
     </script>
     ";
     exit;
@@ -68,22 +68,19 @@ if (isset($_POST['update'])) {
         <form method="POST">
 
             <?php
-
             $ambil = $con->query("SELECT
-                                    tb_gudang_kaos_kaki.gudang_kaos_kaki_kode,
-                                    tb_gudang_kaos_kaki.gudang_kaos_kaki_artikel,
-                                    tb_gudang_kaos_kaki.gudang_kaos_kaki_nama,
-                                    tb_ukuran_kaos_kaki.ukuran_kaos_kaki_ue,
-                                    tb_ukuran_kaos_kaki.ukuran_kaos_kaki_size,
-                                    tb_gudang_kaos_kaki_detail.gudang_kaos_kaki_detail_jumlah,
-                                    tb_gudang_kaos_kaki_detail.gudang_kaos_kaki_detail_id
-                                From
-                                    tb_gudang_kaos_kaki Inner Join
-                                    tb_gudang_kaos_kaki_detail On tb_gudang_kaos_kaki_detail.gudang_kaos_kaki_kode =
-                                            tb_gudang_kaos_kaki.gudang_kaos_kaki_kode Inner Join
-                                    tb_ukuran_kaos_kaki On tb_ukuran_kaos_kaki.ukuran_kaos_kaki_id =
-                                    tb_gudang_kaos_kaki_detail.ukuran_kaos_kaki_id 
-                                WHERE tb_gudang_kaos_kaki_detail.gudang_kaos_kaki_detail_id IN (" . implode(",", $_POST['gudang_kaos_kaki_detail_id']) . ")")->fetchAll();
+                                    tb_gudang_lainnya.gudang_lainnya_kode,
+                                    tb_gudang_lainnya.gudang_lainnya_artikel,
+                                    tb_gudang_lainnya.gudang_lainnya_nama,
+                                    tb_ukuran_barang_detail.ukuran_barang_detail_nama,
+                                    tb_gudang_lainnya_detail.gudang_lainnya_detail_jumlah,
+                                    tb_gudang_lainnya_detail.gudang_lainnya_detail_id
+                                FROM
+                                    tb_gudang_lainnya
+                                INNER JOIN tb_gudang_lainnya_detail ON tb_gudang_lainnya_detail.gudang_lainnya_kode = tb_gudang_lainnya.gudang_lainnya_kode
+                                INNER JOIN tb_ukuran_barang_detail ON tb_ukuran_barang_detail.ukuran_barang_detail_id = tb_gudang_lainnya_detail.ukuran_barang_detail_id
+                                WHERE
+                                    tb_gudang_lainnya_detail.gudang_lainnya_detail_id IN (" . implode(",", $_POST['gudang_lainnya_detail_id']) . ")")->fetchAll();
 
             foreach ($ambil as $i => $data) {
             ?>
@@ -91,21 +88,21 @@ if (isset($_POST['update'])) {
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Artikel</label>
-                            <input type="text" value="<?php echo $data['gudang_kaos_kaki_kode'] . " - " . $data['gudang_kaos_kaki_nama'] . " - " . "(" . $data['ukuran_kaos_kaki_ue'] . "/" . $data['ukuran_kaos_kaki_size'] . ")" ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
-                            <input type="hidden" name="gudang_kaos_kaki_kode[]" id="gudang_kaos_kaki_kode" value="<?php echo $data['gudang_kaos_kaki_kode'] ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
+                            <input type="text" value="<?php echo $data['gudang_lainnya_kode'] . " - " . $data['gudang_lainnya_nama'] . " - " . "(" . $data['ukuran_barang_detail_nama'] . ")" ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
+                            <input type="hidden" name="gudang_lainnya_kode[]" id="gudang_lainnya_kode" value="<?php echo $data['gudang_lainnya_kode'] ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Stok Awal</label>
-                            <input type="text" name="jumlah[]" id="jumlah" value="<?php echo $data['gudang_kaos_kaki_detail_jumlah'] ?>" required="required" placeholder="Diskon" readonly class="form-control">
+                            <input type="text" name="jumlah[]" id="jumlah" value="<?php echo $data['gudang_lainnya_detail_jumlah'] ?>" required="required" placeholder="Diskon" readonly class="form-control">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Restock Barang</label>
                             <input type="number" name="jumlah_restock[]" id="jumlah_restock" required="required" placeholder="" class="form-control">
-                            <input type="hidden" name="gudang_kaos_kaki_detail_id[]" value="<?php echo $data['gudang_kaos_kaki_detail_id'] ?>">
+                            <input type="hidden" name="gudang_lainnya_detail_id[]" value="<?php echo $data['gudang_lainnya_detail_id'] ?>">
                         </div>
                     </div>
                 </div>

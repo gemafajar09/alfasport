@@ -41,8 +41,7 @@
                         <th>Nama</th>
                         <th>Artikel</th>
                         <th>Barcode</th>
-                        <th>EU</th>
-                        <th>Size</th>
+                        <th>Nama Ukuran</th>
                         <th>Jumlah</th>
                         <th>Tanggal</th>
                         <th>Action</th>
