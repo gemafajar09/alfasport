@@ -39,9 +39,16 @@
                         <li><a><i class="fa fa-archive"></i> Master Barang <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="data_satuan.html">Satuan</a></li>
-                                <li><a href="ukuran.html">Ukuran Sepatu</a></li>
+                                <li><a>Ukuran Barang <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="data_ukuran_sepatu.html">Sepatu</a></li>
+                                        <li><a href="data_ukuran_kaos_kaki.html">Kaos Kaki</a></li>
+                                        <li><a href="data_ukuran_barang_lainnya.html">Lainnya</a></li>
+                                    </ul>
+                                </li>
+                                <!-- <li><a href="ukuran.html">Ukuran Sepatu</a></li>
                                 <li><a href="ukuran_kaos_kaki.html">Ukuran Kaos Kaki</a></li>
-                                <li><a href="ukuran_barang.html">Ukuran Semua Barang</a></li>
+                                <li><a href="ukuran_barang.html">Ukuran Semua Barang</a></li> -->
                                 <li><a href="data_kategori.html">Kategori</a></li>
                                 <li><a href="data_divisi.html">Divisi</a></li>
                                 <li><a href="data_subdivisi.html">Sub Divisi</a></li>
@@ -52,20 +59,22 @@
                         </li>
                         <li><a><i class="fa fa-cube"></i> Stok Barang <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a>Barang Gudang <span class="fa fa-chevron-down"></span></a>
+                                <li><a href="barang_gudang.html">All Barang Gudang</a></li>
+                                <li><a href="barang_toko.html">All Barang Toko</a></li>
+                                <!-- <li><a>Barang Gudang <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="stok_barang_gudang.html">Sepatu</a></li>
                                         <li><a href="stok_barang_gudang_kaos_kaki.html">Kaos Kaki</a></li>
                                         <li><a href="stok_barang_gudang_lainnya.html">Lainnya</a></li>
                                     </ul>
-                                </li>
-                                <li><a>Barang Toko <span class="fa fa-chevron-down"></span></a>
+                                </li> -->
+                                <!-- <li><a>Barang Toko <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="stok_barang_toko.html">Sepatu</a></li>
                                         <li><a href="stok_barang_toko_kaos_kaki.html">Kaos Kaki</a></li>
                                         <li><a href="stok_barang_toko_lainnya.html">Lainnya</a></li>
                                     </ul>
-                                </li>
+                                </li> -->
                                 <li><a href="penyesuaian_stok.html">Penyesuaian Stok</a></li>
                                 <li><a>Searching Barang<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
