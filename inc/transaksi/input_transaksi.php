@@ -65,12 +65,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
-                            <label>
-                                <input type="radio" name="radio" id="radio" value="ue">ue&nbsp;&nbsp;
-                                <input type="radio" name="radio" id="radio" value="uk">uk&nbsp;&nbsp;
-                                <input type="radio" name="radio" id="radio" value="us">us&nbsp;&nbsp;
-                                <input type="radio" name="radio" id="radio" value="cm">cm
-                            </label>
+                            <label id="sizes">Ukuran</label>
                             <select class="form-control select2" name="ukurans" id="ukurans" required style="width: 100%;">
                             </select>
                         </div>
@@ -137,6 +132,10 @@
                         </div>
                     </div>
                     <div id="customer" class="col-xs-12 col-sm-6 col-md-3 col-lg-3"></div>
+                    <div id="pts" class="col-xs-8 col-sm-6 col-md-3 col-lg-2">
+                        <label for="">Point</label>
+                        <input type="text" readonly id="points" class="form-control">
+                    </div>
                 </div>
             </div>
         </form>
@@ -296,7 +295,6 @@
     // menampilkan data gudang dari toko yang dipilih
     $("#id_toko").change(function() {
         var id_toko = $('#id_toko option:selected').val();
-        console.log(id_toko);
         $.ajax({
             type: "GET",
             url: "inc/transaksi/filter/barang_toko.php",
@@ -342,8 +340,17 @@
             $('#member_ids').change(function(e) {
                 e.preventDefault()
                 var id_member = $(this).select2().val();
-                $('#member_id').val(id_member)
-                $('#distributor_id').val('')
+                axios.post('inc/transaksi/filter/tampilpoint.php',{
+                    'id_member':id_member
+                }).then(function(res){
+                    var data = res.data
+                    $('#pts').show()
+                    $('#points').val(data.point)
+                    $('#member_id').val(id_member)
+                    $('#distributor_id').val('')
+                }).catch(function(err){
+                    console.log(err)
+                })
             })
         } else if (tipe == "Distributor") {
             var distributor =
@@ -374,25 +381,19 @@
         }
     })
 
-    // menampilkan harga dari barang yang dipilih
-    $('[name="radio"]').on('click', function() {
-        var id = $('#id_gudang').val();
-        var size = $(this).val()
-        var id_toko = $('#id_toko option:selected').val();
-        // console.log(id_gudang);
-        $.ajax({
-            type: "POST",
-            url: "inc/transaksi/filter/ukuran.php",
-            data: {
-                'id': id,
-                'size': size,
-                'id_toko': id_toko
-            },
-            dataType: 'HTML',
-            success: function(data) {
-                $('#ukurans').html(data);
-            }
-        });
+    $('#id_gudang').change(function(e){
+        e.preventDefault()
+        var barang_id = $(this).val()
+        var id_toko = $('#id_toko').val()
+        axios.post('inc/transaksi/filter/ukuran.php',{
+            'id_toko':id_toko,
+            'id':barang_id
+        }).then(function(res){
+            var data = res.data
+            $('#ukurans').html(data)
+        }).catch(function(err){
+            console.log(err)
+        })
     })
 
     // cek stok dan harga
@@ -403,15 +404,15 @@
             'id': ukuran
         }).then(function(res) {
             var data = res.data
-            var hasil = data.jual - data.potongan
+            var hasil = data.barang_jual - data.potongan
             console.log(hasil)
             var pengurangan = hasil
-            $('#transaksi_stok').val(data.jumlah)
+            $('#transaksi_stok').val(data.barang_toko_jml)
             $('#harga').val(pengurangan)
             $('#discItm').val(data.persen)
             $('#hasilDsc').val(hasil)
             $('#harga1').val(pengurangan)
-            $('#id_gudangs').val(data.id_gudang)
+            $('#id_gudangs').val(data.barang_detail_id)
         })
     })
 
@@ -431,13 +432,6 @@
         var total = harga * jumlahBeli;
         document.getElementById("transaksi_total_harga").value = total;
 
-        // backup lama
-        // var diskon = $('#disc').val()
-        // var harga = document.getElementById("harga").value;
-        // var total = (harga * diskon) / 100;
-        // var final = (harga - total) * jumlahBeli;
-        // document.getElementById("transaksi_total_harga").value = final;
-        // document.getElementById("diskon1").value = total;
     }
 
     // proses masuk ke keranjang
@@ -554,7 +548,6 @@
 
     // menampilkan kembalian
     function dapatKembalian() {
-
         var bayar_cash = parseInt(document.getElementById("txtBayarCash").value);
         var bayar_card = parseInt(document.getElementById("txtBayarCard").value);
         var subTotalHarga = parseInt(document.getElementById("subTotalBelanja").value);
@@ -615,7 +608,7 @@
         }).then(function(res) {
             var simpan = res.data
             window.open('inc/struk/invo1.php?invoice=' + kode, '_blank');
-            window.location = 'penjualan.html';
+            // window.location = 'penjualan.html';
             kosong()
         }).catch(function(err) {
             alert(err)
@@ -638,16 +631,12 @@
 
     // utk mengosongkan jika selesai pilih barang
     function kosong() {
-        // $('#id_toko').select2(null).trigger('change')
-        // $('#id_gudang').select2(null).trigger('change')
         $('#ukurans').val(null).trigger('change');
         $('#id_gudang').val(null).trigger('change');
         $('#id_gudangs').val(null)
         $('#transaksi_stok').val(0)
         $('#harga').val(0)
         $('#ukurans').select2(null).trigger('change')
-        // $('#member_id').val(null)
-        // $('#distributor_id').val(null)
         $('#transaksi_jumlah_beli').val(null)
         $('#transaksi_total_harga').val(0)
         $('#tmp_id').val(null)
@@ -684,6 +673,7 @@
             $('#subTotalBelanja').val(total);
         }
     });
+    
     // cari potongan untuk diskon diskon
     function potDis(dis) {
         var subHarga = $('#subTotalBelanja').val();
@@ -709,4 +699,6 @@
         $('#transaksi_jumlah_beli').val(0)
         $('[name="radio"]').prop('checked', false);
     })
+
+    $('#pts').hide()
 </script>

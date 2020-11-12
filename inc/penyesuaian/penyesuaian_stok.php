@@ -554,8 +554,8 @@
             'id_stok': id_stok
         }).then(function(res) {
             var data = res.data
-            $('#stok_awal').val(data.jumlah)
-            $('#id_stok_tokos').val(data.id_stok_toko)
+            $('#stok_awal').val(data.barang_toko_jml)
+            $('#id_stok_tokos').val(data.barang_toko_id)
         }).catch(function(err) {
             console.log(err)
         })

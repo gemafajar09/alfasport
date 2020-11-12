@@ -7,12 +7,12 @@ if(isset($_POST['simpan']))
     {
         foreach($barang->detail as $x => $detail)
         {
-            if(!empty($_POST['ukuran_barang_'.$detail->id_gudang.'_'.$x]))
+            if(!empty($_POST['ukuran_barang_'.$detail->barang_id.'_'.$x]))
             {
                 // LAKUKAN INSERT
-                $besar_diskon = $_POST['besar_diskon_'.$detail->id_gudang.'_'.$x];
-                $harga_selisih = $_POST['harga_selisih_'.$detail->id_gudang.'_'.$x];
-                $harga_diskon = $_POST['harga_diskon_'.$detail->id_gudang.'_'.$x];
+                $besar_diskon = $_POST['besar_diskon_'.$detail->barang_id.'_'.$x];
+                $harga_selisih = $_POST['harga_selisih_'.$detail->barang_id.'_'.$x];
+                $harga_diskon = $_POST['harga_diskon_'.$detail->barang_id.'_'.$x];
                 $data = array(
                     'id_diskon' => $_POST['id_diskons'],
                     'artikel' => $_POST['artikel'][$x],
@@ -21,6 +21,7 @@ if(isset($_POST['simpan']))
                     'potongan' => $harga_selisih
                 );
                 $con->insert('tb_flash_diskon_persen',$data);
+                // var_dump($data); exit;
             }
         }
     }

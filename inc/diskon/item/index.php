@@ -6,7 +6,7 @@
     <div class="title_right">
         <div class="col-md-12 col-sm-12 form-group pull-right top_search">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                <!-- <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                     <div class="form-group">
                         <label>Merek</label>
                         <select name="merek" id="merek" class="form-control select2">
@@ -75,7 +75,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -270,20 +270,20 @@
                         </thead>
                         <tbody>
                             <?php
-                            $data = $con->query("SELECT tb_gudang.*, (SELECT SUM(jumlah) FROM tb_gudang_detail WHERE id = tb_gudang.id) as stok FROM tb_gudang")->fetchAll();
+                            $data = $con->query("SELECT tb_barang.*, (SELECT SUM(barang_detail_jml) FROM tb_barang_detail WHERE barang_id = tb_barang.barang_id) as stok FROM tb_barang")->fetchAll();
                             foreach ($data as $a) {
                             ?>
                                 <tr>
                                     <td>
-                                        <input type="checkbox" class="chk_boxes1" name="id_item[]" value="<?= $a['id'] ?>">
+                                        <input type="checkbox" class="chk_boxes1" name="id_item[]" value="<?= $a['barang_id'] ?>">
                                     </td>
                                     <td>
                                         <div class="form-inline">
-                                            <img src="<?= $a['thumbnail'] ?>" style="width:40px" alt="">
-                                            <?= $a['nama'] ?>
+                                            <img src="<?= $a['barang_thumbnail'] ?>" style="width:40px" alt="">
+                                            <?= $a['barang_nama'] ?>
                                         </div>
                                     </td>
-                                    <td>Rp.<?= number_format($a['jual']) ?></td>
+                                    <td>Rp.<?= number_format($a['barang_jual']) ?></td>
                                     <td><?= $a['stok'] ?></td>
                                 </tr>
                             <?php } ?>
