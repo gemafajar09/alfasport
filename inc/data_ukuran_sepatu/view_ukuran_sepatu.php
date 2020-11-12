@@ -15,8 +15,8 @@
         <div class="row">
             <div class="col-md-6">
                 <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button>
-                <!-- <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Data Ukuran Sepatu" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
-                <a href="format/all_ukuran.csv" data-toggle="tooltip" title="Format Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-download"></i></a> -->
+                <a href="format/Ukuran_Sepatu.csv" data-toggle="tooltip" title="Format Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
+                <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Data Ukuran Sepatu" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -36,7 +36,8 @@
                     <th class="text-center" style="width:40px">No</th>
                     <th>Nama Merk</th>
                     <th>Gender</th>
-                    <th>UE</th>
+                    <th>Kategori/Divisi/Subdivisi</th>
+                    <th>EU</th>
                     <th>UK</th>
                     <th>US</th>
                     <th>CM</th>
@@ -135,7 +136,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>UE</label>
+                                                <label>EU</label>
                                                 <input type="text" name="ue[]" class="form-control">
                                             </div>
                                         </div>
@@ -262,7 +263,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>UE</label>
+                                <label>EU</label>
                                 <input type="text" name="ue" id="ue" class="form-control">
                             </div>
                         </div>
@@ -411,7 +412,7 @@ if (isset($_POST['simpanT'])) {
             <div class="row" id='baris_${_banyakPilihanBarang}'>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>UE</label>
+                        <label>EU</label>
                         <input type="text" name="ue[]" id="ue" class="form-control">
                     </div>
                 </div>

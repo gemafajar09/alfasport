@@ -14,6 +14,8 @@
         <div class="row">
             <div class="col-md-6">
                 <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button>
+                <a href="format/Ukuran_Kaos_Kaki.csv" data-toggle="tooltip" title="Format Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
+                <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Data Ukuran Sepatu" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -33,6 +35,7 @@
                     <th class="text-center" style="width:40px">No</th>
                     <th>Nama Merk</th>
                     <th>Gender</th>
+                    <th>Kategori/Divisi/Subdivisi</th>
                     <th>EU</th>
                     <th>Size</th>
                     <th>Action</th>
@@ -265,6 +268,23 @@
     </div>
 </div>
 
+<!-- modal export csv ukuran -->
+<div class="modal" id="uploadCsv">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="inc/data_ukuran_kaos_kaki/upload_csv.php" method="POST" enctype="multipart/form-data">
+                    <label for="my-input">Upload Data Ukuran Kaos Kaki</label>
+                    <div class="form-inline">
+                        <input id="my-input" class="form-inline" type="file" name="upload_barang">
+                        <button type="submit" name="upload" class="btn btn-primary btn-round">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 if (isset($_POST['simpanT'])) {
     // var_dump($_POST);
@@ -483,6 +503,10 @@ if (isset($_POST['simpanT'])) {
         $('#uk').val('')
         $('#us').val('')
         $('#cm').val('')
+    }
+
+    function shows() {
+        $('#uploadCsv').modal()
     }
 
     $('#isi').load('inc/data_ukuran_kaos_kaki/data_ukuran_kaos_kaki.php');

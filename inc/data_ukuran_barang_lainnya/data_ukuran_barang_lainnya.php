@@ -38,6 +38,11 @@ foreach ($data as $i => $a) {
             }
             ?>
         </td>
+        <td>
+            <?php
+            echo $a['kategori_nama'] . "<br>" . "<i><b>" . $a['divisi_nama'] . "</b></i>" . "<br>" . $a['subdivisi_nama'];
+            ?>
+        </td>
         <td><?= $a['barang_lainnya_nama_ukuran'] ?></td>
         <td>
             <button type="button" onclick="edit(<?= $a['ukuran_id'] ?>)" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>

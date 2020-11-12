@@ -1,3 +1,3 @@
-Artikel,Barcode,Merek,Gender,EU,Size,Jumlah
-GKK0002,1990,ZOOM ASSERSION,Men,3,s,10
-GKK0002,1991,ZOOM ASSERSION,Women,3,s,210
+Gender,Merk,Kategori,Divisi,Subdivisi,EU,Size
+Men,Adidas,Apparel,Outdoor,Mount Outdoor,36,3.5
+"Men,Women",Nike,Hardware,Running,Running Beach,12,13

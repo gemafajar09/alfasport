@@ -78,23 +78,39 @@
                                 <li><a href="penyesuaian_stok.html">Penyesuaian Stok</a></li>
                                 <li><a>Searching Barang<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
+                                        <li><a href="search_sepatu.html">Sepatu</a></li>
+                                        <li><a href="search_kaos_kaki.html">Kaos Kaki</a></li>
+                                        <li><a href="search_barang_lainnya.html">Lainnya</a></li>
+                                    </ul>
+                                </li>
+                                <!-- <li><a>Searching Barang<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
                                         <li><a href="cari_barang.html">Sepatu</a></li>
                                         <li><a href="cari_kaos_kaki.html">Kaos Kaki</a></li>
                                         <li><a href="cari_barang_lainnya.html">Lainnya</a></li>
                                     </ul>
-                                </li>
+                                </li> -->
                             </ul>
                         </li>
                         <li><a href="orderPembelian.html"><i class="fa fa-cart-plus"></i>Pesanan Website <span class="badge badge-warning">0</span></a></li>
-                        <li><a href="return.html"><i class="fa fa-cube"></i> Customer Return</a></li>
+                        <li><a href="return_barang.html"><i class="fa fa-cube"></i> Customer Return</a></li>
+                        <!-- <li><a href="return.html"><i class="fa fa-cube"></i> Customer Return</a></li> -->
                         <li>
+                            <a><i class="fa fa-reorder "></i><span class="fa fa-chevron-down"></span> Restock Gudang</a>
+                            <ul class="nav child_menu">
+                                <li><a href="restock_sepatu.html">Sepatu</a></li>
+                                <li><a href="restock_kaos_kaki.html">Kaos Kaki</a></li>
+                                <li><a href="restock_barang_lainnya.html">Lainnya</a></li>
+                            </ul>
+                        </li>
+                        <!-- <li>
                             <a><i class="fa fa-reorder "></i><span class="fa fa-chevron-down"></span> Restock Gudang</a>
                             <ul class="nav child_menu">
                                 <li><a href="restock_barang_gudang_sepatu.html">Sepatu</a></li>
                                 <li><a href="restock_barang_gudang_kaos_kaki.html">Kaos Kaki</a></li>
                                 <li><a href="restock_barang_gudang_lainnya.html">Lainnya</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                         <!-- hitung jumlah permohonan -->
                         <?php
                         $acc = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 0")->fetch();
@@ -108,7 +124,8 @@
                                 <li><a href="permohonan.html">Permohonan Transfer&nbsp;<span class="badge badge-info"><?= $acc['jumlah'] ?></span></a></li>
                             </ul>
                         </li>
-                        <li><a href="pembelian.html"><i class="fa fa-shopping-bag "></i> Pembelian</a></li>
+                        <li><a href="pembelian_barang.html"><i class="fa fa-shopping-bag "></i> Pembelian</a></li>
+                        <!-- <li><a href="pembelian.html"><i class="fa fa-shopping-bag "></i> Pembelian</a></li> -->
                         <li><a href="penjualan.html"><i class="fa fa-shopping-cart "></i> Penjualan Offline</a></li>
                         <li><a href="penjualan_online.html"><i class="fa fa-shopping-cart "></i> Penjualan Online</a></li>
                     </ul>

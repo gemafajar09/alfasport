@@ -2,7 +2,6 @@
     <div class="title_left">
         <h3>Data All Barang Gudang</h3>
     </div>
-
     <div class="title_right">
         <div class="col-md-12 col-sm-12 form-group pull-right top_search">
             <div class="row">
@@ -86,18 +85,30 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="entry_barang_gudang.html" class="btn btn-success btn-round"><i class="fa fa-plus"></i></a>
-                <a href="format/data_barang.csv" data-toggle="tooltip" title="Format Stok Barang" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
-                <a href="format/ukuran_kaos_kaki.csv" data-toggle="tooltip" title="Format Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
-                <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Stok Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
-                <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
+                <!-- <a href="format/data_barang.csv" data-toggle="tooltip" title="Format Stok Barang" class="btn btn-success btn-round"><i class="fa fa-download"></i></a>
+                <a href="format/ukuran_kaos_kaki.csv" data-toggle="tooltip" title="Format Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-download"></i></a> -->
+                <!-- <button type="button" onclick="shows()" data-toggle="tooltip" title="Upload Stok Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button> -->
+                <!-- <button type="button" onclick="showss()" data-toggle="tooltip" title="Upload Stok Ukuran" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button> -->
+
+
+                <button type="button" onclick="format_excel_barang()" data-toggle="tooltip" title="Format Excel Barang" class="btn btn-success btn-round"><i class="fa fa-download"></i></button>
+
+                <button type="button" onclick="format_excel_barang_detail()" data-toggle="tooltip" title="Format Excel Barang Detail" class="btn btn-success btn-round"><i class="fa fa-download"></i></button>
+
+                <button type="button" onclick="upload_excel_barang()" data-toggle="tooltip" title="Upload Excel Barang" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
+
+                <button type="button" onclick="upload_excel_barang_detail()" data-toggle="tooltip" title="Upload Excel Barang Detail" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
+
+                </ul>
+
             </div>
             <div class="col-md-6">
-                <ul class="nav navbar-right panel_toolbox">
+                <!-- <ul class="nav navbar-right panel_toolbox">
                     <li><button type="button" onclick="format_excel()" data-toggle="tooltip" title="Upload Format Excel" class="btn btn-success btn-round"><i class="fa fa-upload"></i></button>
                     </li>
                     <li><a class="close-link"><i class="fa fa-close"></i></a>
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </div>
         <div class="clearfix"></div>
@@ -125,21 +136,6 @@
     </div>
 </div>
 
-<div class="modal" id="uploadCsv">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-body">
-                <form action="inc/barang_gudang/upload_csv_kaos_kaki.php" method="POST" enctype="multipart/form-data">
-                    <label for="my-input">Upload File Barang</label>
-                    <div class="form-inline">
-                        <input id="my-input" class="form-inline" type="file" name="upload_barang">
-                        <button type="submit" name="upload" class="btn btn-primary btn-round">Upload</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal" id="uploadCsvUkuran">
     <div class="modal-dialog modal-md">
@@ -157,27 +153,165 @@
     </div>
 </div>
 
-<div class="modal" id="upload_excel">
-    <div class="modal-dialog modal-md">
+
+<!-- untuk download format excel -->
+<div class="modal" id="download_format_excel_barang">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <form action="inc/barang_gudang/upload_template.php" method="POST" enctype="multipart/form-data">
-                    <label for="my-input">Upload File Excel</label>
-                    <select name="kategoti" class="select2" style="width: 100%;" id="">
-                        <option value="">SELECT</option>
-                        <option value="1">Upload Nama Produk</option>
-                        <option value="2">Upload Ukuran</option>
-                    </select>
-                    <div class="form-inline">
-                        <input id="my-input" class="form-inline" type="file" name="template">
-                        <button type="submit" name="upload" class="btn btn-primary btn-round">Upload</button>
-                    </div>
-                </form>
+                <h4 class="text-center">Download Format Excel Barang</h4>
+                <a href="format/Gudang_Sepatu.csv" data-toggle="tooltip" title="Format Barang Sepatu" class="btn btn-info btn-round btn-block"><i class="fa fa-download"> Sepatu</i></a>
+                <a href="format/Gudang_Kaos_Kaki.csv" data-toggle="tooltip" title="Format Barang Kaos Kaki" class="btn btn-primary btn-round btn-block"><i class="fa fa-download"> Kaos Kaki</i></a>
+                <a href="format/Gudang_Barang_Lainnya.csv" data-toggle="tooltip" title="Format Barang Kaos Kaki" class="btn btn-success btn-round btn-block"><i class="fa fa-download"> Barang Lainnya</i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- untuk download format excel barang detail-->
+<div class="modal" id="download_format_excel_barang_detail">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="text-center">Download Format Excel Barang Detail</h4>
+                <a href="format/Gudang_Sepatu_Detail.csv" data-toggle="tooltip" title="Format Barang Sepatu Detail" class="btn btn-info btn-round btn-block"><i class="fa fa-download"> Sepatu</i></a>
+                <a href="format/Gudang_Kaos_Kaki_Detail.csv" data-toggle="tooltip" title="Format Barang Kaos Kaki Detail" class="btn btn-primary btn-round btn-block"><i class="fa fa-download"> Kaos Kaki</i></a>
+                <a href="format/Gudang_Barang_Lainnya_Detail.csv" data-toggle="tooltip" title="Format Barang Kaos Kaki Detail" class="btn btn-success btn-round btn-block"><i class="fa fa-download"> Barang Lainnya</i></a>
             </div>
         </div>
     </div>
 </div>
 
+
+
+<!-- untuk upload format excel -->
+<div class="modal" id="upload_format_excel_barang">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="text-center">Upload Format Excel Barang</h4>
+                <button type="button" onclick="upload_sepatu()" data-toggle="tooltip" title="" class="btn btn-info btn-round btn-block"><i class="fa fa-upload"> Sepatu</i></button>
+                <button type="button" onclick="upload_kaos_kaki()" data-toggle="tooltip" title="" class="btn btn-primary btn-round btn-block"><i class="fa fa-upload"> Kaos Kaki</i></button>
+                <button type="button" onclick="upload_barang_lainnya()" data-toggle="tooltip" title="" class="btn btn-success btn-round btn-block"><i class="fa fa-upload"> Barang Lainnya</i></button>
+            </div>
+
+
+            <!-- upload sepatu -->
+            <div class="modal" id="upload_sepatu">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="inc/barang_gudang/upload_excel/upload_sepatu.php" method="POST" enctype="multipart/form-data">
+                                <label for="my-input">Upload Sepatu</label>
+                                <div class="form-inline">
+                                    <input id="my-input" class="form-inline" type="file" name="upload_sepatu">
+                                    <button type="submit" name="csv_sepatu" class="btn btn-primary btn-round">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- upload kaos kaki -->
+            <div class="modal" id="upload_kaos_kaki">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="inc/barang_gudang/upload_excel/upload_kaos_kaki.php" method="POST" enctype="multipart/form-data">
+                                <label for="my-input">Upload Kaos Kaki</label>
+                                <div class="form-inline">
+                                    <input id="my-input" class="form-inline" type="file" name="upload_kaos_kaki">
+                                    <button type="submit" name="csv_kaos_kaki" class="btn btn-primary btn-round">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- upload barang lainnya -->
+            <div class="modal" id="upload_barang_lainnya">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="inc/barang_gudang/upload_excel/upload_barang_lainnya.php" method="POST" enctype="multipart/form-data">
+                                <label for="my-input">Upload Barang Lainnya</label>
+                                <div class="form-inline">
+                                    <input id="my-input" class="form-inline" type="file" name="upload_barang_lainnya">
+                                    <button type="submit" name="csv_barang_lainnya" class="btn btn-primary btn-round">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- untuk upload format excel barang detail-->
+<div class="modal" id="upload_format_excel_barang_detail">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="text-center">Upload Format Excel Barang Detail</h4>
+                <button type="button" onclick="upload_sepatu_detail()" data-toggle="tooltip" title="" class="btn btn-info btn-round btn-block"><i class="fa fa-upload"> Sepatu</i></button>
+                <button type="button" onclick="upload_kaos_kaki_detail()" data-toggle="tooltip" title="" class="btn btn-primary btn-round btn-block"><i class="fa fa-upload"> Kaos Kaki</i></button>
+                <button type="button" onclick="upload_barang_lainnya_detail()" data-toggle="tooltip" title="" class="btn btn-success btn-round btn-block"><i class="fa fa-upload"> Barang Lainnya</i></button>
+            </div>
+
+
+            <!-- upload sepatu -->
+            <div class="modal" id="upload_sepatu_detail">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="inc/barang_gudang/upload_excel/upload_sepatu_detail.php" method="POST" enctype="multipart/form-data">
+                                <label for="my-input">Upload Sepatu Detail</label>
+                                <div class="form-inline">
+                                    <input id="my-input" class="form-inline" type="file" name="upload_sepatu_detail">
+                                    <button type="submit" name="csv_sepatu_detail" class="btn btn-primary btn-round">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- upload kaos kaki -->
+            <div class="modal" id="upload_kaos_kaki_detail">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="inc/barang_gudang/upload_excel/upload_kaos_kaki_detail.php" method="POST" enctype="multipart/form-data">
+                                <label for="my-input">Upload Kaos Kaki Detail</label>
+                                <div class="form-inline">
+                                    <input id="my-input" class="form-inline" type="file" name="upload_kaos_kaki_detail">
+                                    <button type="submit" name="csv_kaos_kaki_detail" class="btn btn-primary btn-round">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- upload barang lainnya -->
+            <div class="modal" id="upload_barang_lainnya_detail">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form action="inc/barang_gudang/upload_excel/upload_barang_lainnya_detail.php" method="POST" enctype="multipart/form-data">
+                                <label for="my-input">Upload Barang Lainnya Detail</label>
+                                <div class="form-inline">
+                                    <input id="my-input" class="form-inline" type="file" name="upload_barang_lainnya_detail">
+                                    <button type="submit" name="csv_barang_lainnya_detail" class="btn btn-primary btn-round">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- modal detail -->
 <div class="modal" id="dataDetail">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -190,8 +324,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!-- modal edit -->
 <div class="modal" id="dataGudangEdit">
@@ -358,17 +490,56 @@
         });
     })
 
-    function shows() {
-        $('#uploadCsv').modal()
-    }
-
     function showss() {
         $('#uploadCsvUkuran').modal()
     }
 
-    function format_excel() {
-        $('#upload_excel').modal()
+    // utk download format excel
+    function format_excel_barang() {
+        $('#download_format_excel_barang').modal()
     }
+
+    // utk download format excel
+    function format_excel_barang_detail() {
+        $('#download_format_excel_barang_detail').modal()
+    }
+
+
+    // untk upload excel
+    function upload_excel_barang() {
+        $('#upload_format_excel_barang').modal()
+    }
+
+    // untk upload excel detail
+    function upload_excel_barang_detail() {
+        $('#upload_format_excel_barang_detail').modal()
+    }
+
+    // modal upload excel sepatu
+    function upload_sepatu() {
+        $('#upload_sepatu').modal()
+    }
+    // modal upload excel sepatu detail
+    function upload_sepatu_detail() {
+        $('#upload_sepatu_detail').modal()
+    }
+    // modal upload excel kaos kaki
+    function upload_kaos_kaki() {
+        $('#upload_kaos_kaki').modal()
+    }
+    // modal upload excel kaos kaki detail
+    function upload_kaos_kaki_detail() {
+        $('#upload_kaos_kaki_detail').modal()
+    }
+    // modal upload excel barang
+    function upload_barang_lainnya() {
+        $('#upload_barang_lainnya').modal()
+    }
+    // modal upload excel barang detail
+    function upload_barang_lainnya_detail() {
+        $('#upload_barang_lainnya_detail').modal()
+    }
+
 
     function detail(barang_id) {
         axios.post('inc/barang_gudang/show_detail_barang_gudang.php', {
@@ -520,8 +691,16 @@
     $('#merek').change(function(e) {
         e.preventDefault()
         var merek = $(this).val()
-        axios.post('inc/barang_gudang/filter/merek.php', {
-            'merek': merek
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/barang_gudang/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)
         }).catch(function(err) {
@@ -532,8 +711,16 @@
     $('#kategori').change(function(e) {
         e.preventDefault()
         var kategori = $(this).val()
-        axios.post('inc/barang_gudang/filter/kategori.php', {
-            'kategori': kategori
+        var merek = $("#merek").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/barang_gudang/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)
         }).catch(function(err) {
@@ -544,8 +731,16 @@
     $('#divisi').change(function(e) {
         e.preventDefault()
         var divisi = $(this).val()
-        axios.post('inc/barang_gudang/filter/divisi.php', {
-            'divisi': divisi
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/barang_gudang/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)
         }).catch(function(err) {
@@ -556,8 +751,16 @@
     $('#subdivisi').change(function(e) {
         e.preventDefault()
         var subdivisi = $(this).val()
-        axios.post('inc/barang_gudang/filter/subdivisi.php', {
-            'subdivisi': subdivisi
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/barang_gudang/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)
         }).catch(function(err) {
@@ -568,7 +771,15 @@
     $('#gender').change(function(e) {
         e.preventDefault()
         var gender = $(this).val()
-        axios.post('inc/barang_gudang/filter/gender.php', {
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        axios.post('inc/barang_gudang/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
             'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)

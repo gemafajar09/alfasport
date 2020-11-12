@@ -119,7 +119,7 @@ $data = $con->query(
                     </tr>
                     <tr>
                         <th colspan="4"></th>
-                        <th>UE</th>
+                        <th>EU</th>
                         <th>UK</th>
                         <th>US</th>
                         <th>CM</th>
