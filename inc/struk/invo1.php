@@ -76,22 +76,22 @@ $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE 
                                         tb_transaksi_detail.detail_jumlah_beli,
                                         tb_transaksi_detail.detail_total_harga,
                                         tb_merk.merk_nama,
-                                        tb_gudang.nama,
-                                        tb_gudang.artikel,
-                                        tb_all_ukuran.ue
+                                        tb_barang.barang_nama,
+                                        tb_barang.barang_artikel,
+                                        tb_ukuran.sepatu_ue
                                     FROM tb_transaksi_detail 
-                                    JOIN tb_gudang_detail ON tb_transaksi_detail.id_gudang=tb_gudang_detail.id_detail
-                                    JOIN tb_all_ukuran ON tb_gudang_detail.id_ukuran = tb_all_ukuran.id_ukuran
-                                    JOIN tb_gudang On tb_gudang_detail.id = tb_gudang.id
-                                    JOIN tb_merk On tb_gudang.id_merek = tb_merk.merk_id WHERE tb_transaksi_detail.detail_kode = '$_GET[invoice]'")->fetchAll();
+                                    JOIN tb_barang_detail ON tb_transaksi_detail.id_gudang=tb_barang_detail.barang_detail_id
+                                    JOIN tb_ukuran ON tb_barang_detail.ukuran_id = tb_ukuran.ukuran_id
+                                    JOIN tb_barang On tb_barang_detail.barang_id = tb_barang.barang_id
+                                    JOIN tb_merk On tb_barang.merk_id = tb_merk.merk_id WHERE tb_transaksi_detail.detail_kode = '$_GET[invoice]'")->fetchAll();
                             foreach ($list as $a) {
                                 $total += $a['detail_total_harga'];
                             ?>
                                 <tr>
                                     <td><?= $a['detail_jumlah_beli'] ?></td>
-                                    <td><?= $a['nama'] ?></td>
+                                    <td><?= $a['barang_nama'] ?></td>
                                     <td><?= $a['merk_nama'] ?></td>
-                                    <td><?= $a['ue'] ?></td>
+                                    <td><?= $a['sepatu_ue'] ?></td>
                                     <td style="float: right;">Rp.<?= number_format($a['detail_total_harga']) ?></td>
                                 </tr>
                             <?php } ?>

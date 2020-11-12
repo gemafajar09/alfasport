@@ -57,8 +57,6 @@ RewriteRule ^entry-stok-barang-gudang-([a-zA-Z0-9\-]{0,20})-([0-9]+)-([0-9]+)\.h
 #barang_toko
 RewriteRule ^barang_toko\.html$ index.php?page=inc/toko/barang_toko/view_barang_toko [L]
 
-
-
 #gudang_kaos_kaki
 RewriteRule ^stok_barang_gudang_kaos_kaki\.html$ index.php?page=inc/gudang_kaos_kaki/stok_barang_kaos_kaki [L]
 RewriteRule ^entry_gudang_kaos_kaki\.html$ index.php?page=inc/gudang_kaos_kaki/input_stok_gudang_kaos_kaki [L]
@@ -71,7 +69,6 @@ RewriteRule ^entry_gudang_lainnya\.html$ index.php?page=inc/gudang_lainnya/input
 RewriteRule ^simpan_gudang_lainnya\.html$ index.php?page=inc/gudang_lainnya/aksi_simpan_gudang_lainnya [L]
 RewriteRule ^input-stok-lainnya-([a-zA-Z0-9\-]{0,20})-([a-zA-Z0-9\-]{0,20})-([0-9]+)-([0-9]+)\.html$ index.php?page=inc/gudang_lainnya/input_stok_lainnya&id=$1&artikel=$2&merek=$3&kategori=$4 [L]
 
-
 #toko_kaos_kaki
 RewriteRule ^stok_barang_toko_kaos_kaki\.html$ index.php?page=inc/toko/toko_gudang_kaos_kaki/stok_barang_kaos_kaki [L]
 
@@ -83,7 +80,6 @@ RewriteRule ^cari_kaos_kaki\.html$ index.php?page=inc/cari_kaos_kaki/view_cari_k
 
 #cari_barang_lainnya
 RewriteRule ^cari_barang_lainnya\.html$ index.php?page=inc/cari_lainnya/view_cari_lainnya [L]
-
 
 RewriteRule ^penjualan\.html$ index.php?page=inc/transaksi/view_transaksi [L]
 RewriteRule ^entry_penjualan\.html$ index.php?page=inc/transaksi/input_transaksi [L]

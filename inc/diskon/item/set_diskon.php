@@ -46,10 +46,10 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                                 <select name="" style="width: 80%;" class="select2" id="artikelBarangGudang">
                                     <option value="">Cari</option>
                                     <?php
-                                        $gudangCari = $con->query("SELECT * FROM tb_gudang")->fetchAll(PDO::FETCH_ASSOC);
+                                        $gudangCari = $con->query("SELECT * FROM tb_barang")->fetchAll(PDO::FETCH_ASSOC);
                                         foreach($gudangCari as $dataGudang):
                                     ?>
-                                        <option value="<?= $dataGudang['id'] ?>"><?= $dataGudang['nama'] ?> - <?= $dataGudang['artikel'] ?></option>
+                                        <option value="<?= $dataGudang['barang_id'] ?>"><?= $dataGudang['barang_nama'] ?> - <?= $dataGudang['barang_artikel'] ?></option>
                                     <?php endforeach ?>
                                 </select>
                                 <div class="input-group-append">
@@ -67,24 +67,24 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
             $isi_disc = $con->query("SELECT * FROM tb_flash_diskon_detail WHERE id_diskon = '$session'")->fetchAll(PDO::FETCH_ASSOC);
                 foreach($isi_disc as $i => $a): 
                     $data_barang[] = $a;
-                    $data = $con->query("SELECT * FROM tb_gudang WHERE id = '$a[artikel]'")->fetch();
+                    $data = $con->query("SELECT * FROM tb_barang WHERE barang_id = '$a[artikel]'")->fetch();
             ?>
             <div class="row">
                 <div class="col-md-2">
-                    <input type="checkbox" name="nama_barang[]" value="<?= $data['id_gudang']?>" class="nama_barang_<?= $data['id_gudang']?>" onclick="centangSemuaUkuran()">
-                    <img src="<?= $data['thumbnail'] ?>" width="80px" alt="">
-                    <i><?= $data['nama'] ?></i>
+                    <input type="checkbox" name="nama_barang[]" value="<?= $data['barang_id']?>" class="nama_barang_<?= $data['barang_id']?>" onclick="centangSemuaUkuran()">
+                    <img src="<?= $data['barang_thumbnail'] ?>" width="80px" alt="">
+                    <i><?= $data['barang_nama'] ?></i>
                 </div>
                 <div class="col-md-10">
                     <table class="table table-striped">
                                                     
                         <?php
-                            $detail = $con->query("SELECT * FROM tb_gudang_detail a LEFT JOIN tb_all_ukuran b ON a.id_ukuran=b.id_ukuran LEFT JOIN tb_gudang c ON a.id=c.id WHERE a.id='$a[artikel]'")->fetchAll(PDO::FETCH_ASSOC);
+                            $detail = $con->query("SELECT * FROM tb_barang_detail a LEFT JOIN tb_ukuran b ON a.ukuran_id=b.ukuran_id LEFT JOIN tb_barang c ON a.barang_id=c.barang_id WHERE a.barang_id='$a[artikel]'")->fetchAll(PDO::FETCH_ASSOC);
                             
                             $data_barang[$i]['detail'] = array();
                             foreach($detail as $ii => $isi):
                                 $data_barang[$i]['detail'][] = $isi;
-                                $awal  = date_create($isi['tanggal']);
+                                $awal  = date_create($isi['barang_tgl']);
                                 $akhir = date_create();
                                 $diff  = date_diff($awal, $akhir);
                             if ($diff->y == 0 && $diff->m == 0) {
@@ -95,32 +95,32 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                                 $umur = ($diff->y * 365) + ($diff->m + 30) + $diff->d;
                             }
                             $cariUmur = $con->query("SELECT IF(umur<= $umur, diskon, 0) as diskon FROM `tb_diskon_umur`")->fetch(PDO::FETCH_ASSOC);
-                            $hitungSelisih = $isi['jual'] * $cariUmur['diskon'] / 100;
-                            $hitungDiskon  = $isi['jual'] - $hitungSelisih;
+                            $hitungSelisih = $isi['barang_jual'] * $cariUmur['diskon'] / 100;
+                            $hitungDiskon  = $isi['barang_jual'] - $hitungSelisih;
                         ?>
                         <tr>
                             <td>
                             <label class="switch">
-                                <input type="checkbox" name="ukuran_barang_<?= $data['id_gudang']?>_<?= $ii?>">
+                                <input type="checkbox" name="ukuran_barang_<?= $data['barang_id']?>_<?= $ii?>">
                                 <span class="slider round"></span>
                             </label>
-                                <?= $isi['ue'] ?>
+                                <!-- <?= $isi['sepatu_ue'] ?> -->
                             </td>
                             <td>
-                                Rp.<?= number_format($isi['modal']) ?>
-                                <input type="hidden" value="<?= $isi['jual'] ?>" id="jual<?= $data['id_gudang']?>_<?= $ii?>">
+                                Rp.<?= number_format($isi['barang_modal']) ?>
+                                <input type="hidden" value="<?= $isi['barang_jual'] ?>" id="jual<?= $data['barang_id']?>_<?= $ii?>">
                             </td>
-                            <td>Rp.<?= number_format($isi['jual']) ?></td>
+                            <td>Rp.<?= number_format($isi['barang_jual']) ?></td>
                             <td style="width: 140px;">
                                 <div class="form-inline">
-                                    <input type="text" name="besar_diskon_<?= $data['id_gudang']?>_<?= $ii?>" onkeyup="hitungDiskon(<?= $i ?>,<?= $ii ?>)" style="width: 70px;" value="<?= $cariUmur['diskon'] ?>"  class="form-control">
+                                    <input type="text" name="besar_diskon_<?= $data['barang_id']?>_<?= $ii?>" onkeyup="hitungDiskon(<?= $i ?>,<?= $ii ?>)" style="width: 70px;" value="<?= $cariUmur['diskon'] ?>"  class="form-control">
                                     <input type="text" value="%" readonly class="form-control" style="width:40px">
-                                    <input type="hidden" name="barcode[]" value="<?= $isi['barcode'] ?>">
-                                    <input type="hidden" name="artikel[]" value="<?= $isi['artikel'] ?>">
+                                    <input type="hidden" name="barcode[]" value="<?= $isi['barang_detail_barcode'] ?>">
+                                    <input type="hidden" name="artikel[]" value="<?= $isi['barang_artikel'] ?>">
                                 </div>    
                             </td>
-                            <td style="width: 80px;"><input type="text" name="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>"  id="harga_selisih_<?= $data['id_gudang']?>_<?= $ii?>" value="<?= number_format($hitungSelisih) ?>" readonly style="width: 80px;" class="form-control"></td>
-                            <td style="width: 80px;"><input type="text" name="harga_diskon_<?= $data['id_gudang']?>_<?= $ii?>" id="harga_diskon_<?= $data['id_gudang']?>_<?= $ii?>" value="<?= number_format($hitungDiskon) ?>" style="width: 80px;" class="form-control"></td>
+                            <td style="width: 80px;"><input type="text" name="harga_selisih_<?= $data['barang_id']?>_<?= $ii?>"  id="harga_selisih_<?= $data['barang_id']?>_<?= $ii?>" value="<?= number_format($hitungSelisih) ?>" readonly style="width: 80px;" class="form-control"></td>
+                            <td style="width: 80px;"><input type="text" name="harga_diskon_<?= $data['barang_id']?>_<?= $ii?>" id="harga_diskon_<?= $data['barang_id']?>_<?= $ii?>" value="<?= number_format($hitungDiskon) ?>" style="width: 80px;" class="form-control"></td>
                         </tr>
                         <?php endforeach ?>
                     </table>
@@ -150,7 +150,7 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                 var data_detail = data_barang[x].detail;
                 for(var y = 0; y < data_detail.length; y++)
                 {
-                    document.getElementsByName("ukuran_barang_" + data_detail[y].id_gudang + "_" + y)[0].checked = true;
+                    document.getElementsByName("ukuran_barang_" + data_detail[y].barang_id + "_" + y)[0].checked = true;
                 }
             }
         }
@@ -168,17 +168,17 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                 var banyak_detail_barang = detail_barang.length;
                 for(var y = 0; y < banyak_detail_barang; y++)
                 {
-                    var detail = document.getElementsByName("ukuran_barang_" + data_barang[x].detail[y].id_gudang + "_" + y)[0];
+                    var detail = document.getElementsByName("ukuran_barang_" + data_barang[x].detail[y].barang_id + "_" + y)[0];
                     if(detail.checked)
                     {
-                        console.log("besar_diskon_"  + data_barang[x].detail[y].id_gudang + "_" + y);
-                        var jual = $('#jual'  + data_barang[x].detail[y].id_gudang + "_" + y).val()
-                        document.getElementsByName("besar_diskon_"  + data_barang[x].detail[y].id_gudang + "_" + y)[0].value = diskon;
+                        console.log("besar_diskon_"  + data_barang[x].detail[y].barang_id + "_" + y);
+                        var jual = $('#jual'  + data_barang[x].detail[y].barang_id + "_" + y).val()
+                        document.getElementsByName("besar_diskon_"  + data_barang[x].detail[y].barang_id + "_" + y)[0].value = diskon;
                             var potongan = (parseInt(jual) * parseFloat(diskon)) / 100
-                            $('#harga_selisih_' + data_barang[x].detail[y].id_gudang + "_" + y).val(potongan)
+                            $('#harga_selisih_' + data_barang[x].detail[y].barang_id + "_" + y).val(potongan)
 
                             var totals = parseInt(jual) - potongan
-                            $('#harga_diskon_' + data_barang[x].detail[y].id_gudang + "_" + y).val(totals)
+                            $('#harga_diskon_' + data_barang[x].detail[y].barang_id + "_" + y).val(totals)
                     }
                 }
             }
@@ -188,12 +188,12 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
     function hitungDiskon(row1 , row2)
     {        
         var barang = data_barang[row1];
-        var diskon = parseFloat(document.getElementsByName("besar_diskon_" + barang.detail[row2].id_gudang + "_" + row2)[0].value);
-        var harga_barang = barang.detail[row2].jual;
+        var diskon = parseFloat(document.getElementsByName("besar_diskon_" + barang.detail[row2].barang_id + "_" + row2)[0].value);
+        var harga_barang = barang.detail[row2].barang_jual;
         var harga_diskon = harga_barang - (harga_barang * diskon / 100);
         var selisih_harga = harga_barang - harga_diskon;
-        document.getElementsByName("harga_diskon_" + barang.detail[row2].id_gudang + "_" + row2)[0].value = harga_diskon;
-        document.getElementsByName("harga_selisih_" + barang.detail[row2].id_gudang + "_" + row2)[0].value = selisih_harga;
+        document.getElementsByName("harga_diskon_" + barang.detail[row2].barang_id + "_" + row2)[0].value = harga_diskon;
+        document.getElementsByName("harga_selisih_" + barang.detail[row2].barang_id + "_" + row2)[0].value = selisih_harga;
     
     }
 

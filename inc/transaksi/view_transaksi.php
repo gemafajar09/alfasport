@@ -155,7 +155,7 @@
             toastr.info('SUCCESS..')
             $('#isi').load('inc/transaksi/data_transaksi.php');
         }).catch(function(err) {
-            toastr.warning('ERROR..')
+            toastr.error('ERROR..')
         })
     }
 

@@ -13,7 +13,7 @@ $data = $con->query("SELECT
                         tb_penyesuaian_stok Inner Join
                         tb_penyesuaian_stok_detail On tb_penyesuaian_stok_detail.penyesuaian_stok_id =
                                 tb_penyesuaian_stok.penyesuaian_stok_id Inner Join
-                        tb_stok_toko On tb_stok_toko.id_stok_toko = tb_penyesuaian_stok_detail.id_toko
+                        tb_barang_toko On tb_barang_toko.barang_toko_id = tb_penyesuaian_stok_detail.id_toko
                         Inner Join
                         toko On toko.id_toko = tb_penyesuaian_stok.id_toko
                     WHERE tb_penyesuaian_stok.penyesuaian_stok_id = '$_POST[id]'     
