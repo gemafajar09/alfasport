@@ -39,6 +39,11 @@ foreach ($data as $i => $a) {
             }
             ?>
         </td>
+        <td>
+            <?php
+            echo $a['kategori_nama'] . "<br>" . "<i><b>" . $a['divisi_nama'] . "</b></i>" . "<br>" . $a['subdivisi_nama'];
+            ?>
+        </td>
         <td><?= $a['kaos_kaki_eu'] ?></td>
         <td><?= $a['kaos_kaki_size'] ?></td>
         <td>

@@ -441,7 +441,8 @@ function fileUpload($files, $lokasi)
       // exit;
       return false;
     } else {
-      $nama_file = str_replace(" ", "-", $file_name[0]) . "-" . substr(uniqid('', true), -5) . "." . $file_ext;
+      // $nama_file = str_replace(" ", "-", $file_name[0]) . "-" . substr(uniqid('', true), -5) . "." . $file_ext;
+      $nama_file = date('YmdHis') . "-" . substr(uniqid('', true), -5) . "." . $file_ext;
       $lokasi_file = $lokasi . $nama_file;
       move_uploaded_file($file_tmp, $lokasi_file);
       return $nama_file;

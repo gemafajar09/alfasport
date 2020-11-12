@@ -42,20 +42,62 @@ RewriteRule ^entry_gudang\.html$ index.php?page=inc/gudang/input_stok_gudang [L]
 RewriteRule ^update-gudang-([0-9]+)\.html$ index.php?page=inc/gudang/aksi_edit_gudang&id=$1 [L]
 
 
+#======================================
 # data_semua_ukuran
 RewriteRule ^data_ukuran_sepatu\.html$ index.php?page=inc/data_ukuran_sepatu/view_ukuran_sepatu [L]
 RewriteRule ^data_ukuran_kaos_kaki\.html$ index.php?page=inc/data_ukuran_kaos_kaki/view_ukuran_kaos_kaki [L]
 RewriteRule ^data_ukuran_barang_lainnya\.html$ index.php?page=inc/data_ukuran_barang_lainnya/view_ukuran_barang_lainnya [L]
 
-
+#======================================
 #barang_gudang
 RewriteRule ^barang_gudang\.html$ index.php?page=inc/barang_gudang/view_barang_gudang [L]
 RewriteRule ^entry_barang_gudang\.html$ index.php?page=inc/barang_gudang/input_barang_gudang [L]
 RewriteRule ^simpan_barang_gudang\.html$ index.php?page=inc/barang_gudang/aksi_simpan_barang_gudang [L]
 RewriteRule ^entry-stok-barang-gudang-([a-zA-Z0-9\-]{0,20})-([0-9]+)-([0-9]+)\.html$ index.php?page=inc/barang_gudang/input_stok_barang_gudang&kode=$1&merek=$2&subdivisi=$3 [L]
 
+#======================================
 #barang_toko
 RewriteRule ^barang_toko\.html$ index.php?page=inc/toko/barang_toko/view_barang_toko [L]
+
+#======================================
+#searching sepatu, kaos kaki dan barang lainnya
+RewriteRule ^search_sepatu\.html$ index.php?page=inc/searching/cari_sepatu/view_cari_sepatu [L]
+RewriteRule ^search_kaos_kaki\.html$ index.php?page=inc/searching/cari_kaos_kaki/view_cari_kaos_kaki [L]
+RewriteRule ^search_barang_lainnya\.html$ index.php?page=inc/searching/cari_barang_lainnya/view_cari_barang_lainnya [L]
+
+#======================================
+#restock barang gudang
+RewriteRule ^restock_sepatu\.html$ index.php?page=inc/restock/restock_sepatu/view_restock_sepatu [L]
+RewriteRule ^edit_multiple_restock_sepatu\.html$ index.php?page=inc/restock/restock_sepatu/edit_multiple_restock [L]
+
+RewriteRule ^restock_kaos_kaki\.html$ index.php?page=inc/restock/restock_kaos_kaki/view_restock_kaos_kaki [L]
+RewriteRule ^edit_multiple_restock_kaos_kaki\.html$ index.php?page=inc/restock/restock_kaos_kaki/edit_multiple_restock [L]
+
+RewriteRule ^restock_barang_lainnya\.html$ index.php?page=inc/restock/restock_barang_lainnya/view_restock_barang_lainnya [L]
+RewriteRule ^edit_multiple_restock_barang_lainnya\.html$ index.php?page=inc/restock/restock_barang_lainnya/edit_multiple_restock [L]
+
+#======================================
+#pembelian barang
+
+RewriteRule ^pembelian_barang\.html$ index.php?page=inc/pembelian_barang/view_pembelian [L]
+RewriteRule ^input_pembelian_barang\.html$ index.php?page=inc/pembelian_barang/input_pembelian [L]
+RewriteRule ^cari_pembelian_sepatu\.html$ index.php?page=inc/pembelian_barang/cari_pembelian_sepatu [L]
+RewriteRule ^cari_pembelian_kaos_kaki\.html$ index.php?page=inc/pembelian_barang/cari_pembelian_kaos_kaki [L]
+RewriteRule ^cari_pembelian_barang_lainnya\.html$ index.php?page=inc/pembelian_barang/cari_pembelian_barang_lainnya [L]
+
+#======================================
+#return_barang
+RewriteRule ^return_barang\.html$ index.php?page=inc/return_barang/index [L]
+RewriteRule ^buat_return_barang\.html$ index.php?page=inc/return_barang/buatReturn [L]
+
+
+
+
+
+
+
+
+
 
 
 

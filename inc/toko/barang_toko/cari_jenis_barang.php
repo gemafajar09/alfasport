@@ -36,7 +36,7 @@ echo "<option>-Pilih Barang-</option>";
 
 if ($_POST['barang_kategori'] == 'Sepatu') {
     foreach ($data as $i => $a) {
-        echo "<option value=" . $a['barang_detail_id'] . ">" . $a['barang_nama'] . " - " . $a['barang_artikel'] . " - " . $a['barang_detail_barcode'] .  " - (UE : " . $a['sepatu_ue'] . " | UK : " . $a['sepatu_uk'] . " | US : " . $a['sepatu_us'] . " | CM : " . $a['sepatu_cm'] . ")</option>";
+        echo "<option value=" . $a['barang_detail_id'] . ">" . $a['barang_nama'] . " - " . $a['barang_artikel'] . " - " . $a['barang_detail_barcode'] .  " - (EU : " . $a['sepatu_ue'] . " | UK : " . $a['sepatu_uk'] . " | US : " . $a['sepatu_us'] . " | CM : " . $a['sepatu_cm'] . ")</option>";
     }
 } elseif ($_POST['barang_kategori'] == 'Kaos Kaki') {
     foreach ($data as $i => $a) {

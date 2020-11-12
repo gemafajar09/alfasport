@@ -45,7 +45,7 @@ $data = $con->query("SELECT
 
 ?>
 
-<b>Tanggal Masuk : <i id="tanggal1"></i></b>
+<b>Tanggal Masuk : <?php echo $data['barang_toko_tgl'] ?></i></b>
 <table class="table table-striped">
         <thead>
                 <tr>
@@ -59,7 +59,7 @@ $data = $con->query("SELECT
                         <th>Sub Divisi</th>
                         <th>Gender</th>
                         <th>Jumlah</th>
-                        <th colspan=2>
+                        <th colspan="2">
                                 <center>Harga</center>
                         </th>
                 </tr>
@@ -71,37 +71,90 @@ $data = $con->query("SELECT
         </thead>
         <tbody>
                 <tr>
-                        <td><b id="id1"></b></td>
-                        <td><b id="nama_toko1"></b></td>
-                        <td><b id="artikel1"></b></td>
-                        <td><b id="nama1"></b></td>
-                        <td><b id="merek1"></b></td>
-                        <td><b id="kategori1"></b></td>
-                        <td><b id="divisi1"></b></td>
-                        <td><b id="subdivisi1"></b></td>
-                        <td><b id="gender1"></b></td>
-                        <td><b id="jumlah1"></b></td>
-                        <td><b id="modal1"></b></td>
-                        <td><b id="jual1"></b></td>
+                        <td><?php echo $data['barang_kode'] ?></td>
+                        <td><?php echo $data['nama_toko'] ?></td>
+                        <td><?php echo $data['barang_artikel'] ?></td>
+                        <td><?php echo $data['barang_nama'] ?></td>
+                        <td><?php echo $data['merk_nama'] ?></td>
+                        <td><?php echo $data['kategori_nama'] ?></td>
+                        <td><?php echo $data['divisi_nama'] ?></td>
+                        <td><?php echo $data['subdivisi_nama'] ?></td>
+                        <td><?php echo $data['gender_nama'] ?></td>
+                        <td><?php echo $data['barang_toko_jml'] ?></td>
+                        <td><?php echo $data['barang_modal'] ?></td>
+                        <td><?php echo $data['barang_jual'] ?></td>
                 </tr>
         </tbody>
 </table>
-<div class="row">
-        <div class="col-md-4 mx-auto">
-                <center>Ukuran</center>
-                <table class="table">
-                        <thead>
-                                <tr>
-                                        <th>EU</th>
-                                        <th>SIZE</th>
-                                </tr>
-                        </thead>
-                        <tbody>
-                                <tr>
-                                        <td><b id="ues"></b></td>
-                                        <td><b id="sizes"></b></td>
-                                </tr>
-                        </tbody>
-                </table>
+
+<?php
+if ($data['barang_kategori'] == 'Sepatu') {
+?>
+        <div class="row">
+                <div class="col-md-4 mx-auto">
+                        <center>Ukuran</center>
+                        <table class="table">
+                                <thead>
+                                        <tr>
+                                                <th>EU</th>
+                                                <th>UK</th>
+                                                <th>US</th>
+                                                <th>CM</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                                <td><?php echo $data['sepatu_ue'] ?></td>
+                                                <td><?php echo $data['sepatu_uk'] ?></td>
+                                                <td><?php echo $data['sepatu_us'] ?></td>
+                                                <td><?php echo $data['sepatu_cm'] ?></td>
+                                        </tr>
+                                </tbody>
+                        </table>
+                </div>
         </div>
-</div>
+<?php
+} elseif ($data['barang_kategori'] == 'Kaos Kaki') {
+?>
+        <div class="row">
+                <div class="col-md-4 mx-auto">
+                        <center>Ukuran</center>
+                        <table class="table">
+                                <thead>
+                                        <tr>
+                                                <th>EU</th>
+                                                <th>SIZE</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                                <td><?php echo $data['kaos_kaki_eu'] ?></td>
+                                                <td><?php echo $data['kaos_kaki_size'] ?></td>
+                                        </tr>
+                                </tbody>
+                        </table>
+                </div>
+        </div>
+<?php
+} elseif ($data['barang_kategori'] == 'Barang Lainnya') {
+?>
+        <div class="row">
+                <div class="col-md-2 mx-auto">
+                        <center>Ukuran</center>
+                        <table class="table text-center">
+                                <thead>
+                                        <tr>
+                                                <th>Nama Ukuran</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                                <td><?php echo $data['barang_lainnya_nama_ukuran'] ?></td>
+                                        </tr>
+                                </tbody>
+                        </table>
+                </div>
+        </div>
+<?php
+}
+?>

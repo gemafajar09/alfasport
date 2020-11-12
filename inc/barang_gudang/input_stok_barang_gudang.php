@@ -5,7 +5,7 @@ $ambil = $con->get('tb_barang', '*', array('barang_kode' => $_GET['kode']));
     <div class="card">
         <div class="card-header">
             <div class="text-left">
-                <a href="stok_barang_barang_detail.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
+                <a href="barang_gudang.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
             </div>
             <div class="text-center">
                 Input Stok Barang Gudang
@@ -45,7 +45,7 @@ $ambil = $con->get('tb_barang', '*', array('barang_kode' => $_GET['kode']));
                                         if ($ambil['barang_kategori'] == 'Sepatu') {
                                             foreach ($data as $a) {
                                         ?>
-                                                <option value="<?= $a['ukuran_id'] ?>">UE:<?= $a['sepatu_ue'] ?> | UK:<?= $a['sepatu_uk'] ?> | US:<?= $a['sepatu_us'] ?> | CM:<?= $a['sepatu_cm'] ?> </option>
+                                                <option value="<?= $a['ukuran_id'] ?>">EU:<?= $a['sepatu_ue'] ?> | UK:<?= $a['sepatu_uk'] ?> | US:<?= $a['sepatu_us'] ?> | CM:<?= $a['sepatu_cm'] ?> </option>
                                             <?php
                                             }
                                         } else if ($ambil['barang_kategori'] == 'Kaos Kaki') {
@@ -110,7 +110,7 @@ $ambil = $con->get('tb_barang', '*', array('barang_kode' => $_GET['kode']));
                 if ($ambil['barang_kategori'] == 'Sepatu') {
                     foreach ($data as $a) {
                 ?>" +
-            "<option value='<?= $a['ukuran_id'] ?>'> UE: <?= $a['sepatu_ue'] ?> | UK: <?= $a['sepatu_uk'] ?> | US: <?= $a['sepatu_us'] ?> | CM: <?= $a['sepatu_cm'] ?>" +
+            "<option value='<?= $a['ukuran_id'] ?>'> EU: <?= $a['sepatu_ue'] ?> | UK: <?= $a['sepatu_uk'] ?> | US: <?= $a['sepatu_us'] ?> | CM: <?= $a['sepatu_cm'] ?>" +
             "</option>" +
             "<?php
                     }

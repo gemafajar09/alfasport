@@ -341,8 +341,16 @@
     $('#merek').change(function(e) {
         e.preventDefault()
         var merek = $(this).val()
-        axios.post('inc/toko/toko_gudang/filter/merek.php', {
-            'merek': merek
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/toko/barang_toko/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)
         }).catch(function(err) {
@@ -353,8 +361,16 @@
     $('#kategori').change(function(e) {
         e.preventDefault()
         var kategori = $(this).val()
-        axios.post('inc/toko/toko_gudang/filter/kategori.php', {
-            'kategori': kategori
+        var merek = $("#merek").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/toko/barang_toko/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)
         }).catch(function(err) {
@@ -365,8 +381,16 @@
     $('#divisi').change(function(e) {
         e.preventDefault()
         var divisi = $(this).val()
-        axios.post('inc/toko/toko_gudang/filter/divisi.php', {
-            'divisi': divisi
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/toko/barang_toko/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)
         }).catch(function(err) {
@@ -377,8 +401,16 @@
     $('#subdivisi').change(function(e) {
         e.preventDefault()
         var subdivisi = $(this).val()
-        axios.post('inc/toko/toko_gudang/filter/subdivisi.php', {
-            'subdivisi': subdivisi
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/toko/barang_toko/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)
         }).catch(function(err) {
@@ -389,7 +421,15 @@
     $('#gender').change(function(e) {
         e.preventDefault()
         var gender = $(this).val()
-        axios.post('inc/toko/toko_gudang/filter/gender.php', {
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        axios.post('inc/toko/barang_toko/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
             'gender': gender
         }).then(function(res) {
             $('#isi').html(res.data)

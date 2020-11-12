@@ -41,6 +41,11 @@ foreach ($data as $i => $a) {
             }
             ?>
         </td>
+        <td>
+            <?php
+            echo $a['kategori_nama'] . "<br>" . "<i><b>" . $a['divisi_nama'] . "</b></i>" . "<br>" . $a['subdivisi_nama'];
+            ?>
+        </td>
         <td><?= $a['sepatu_ue'] ?></td>
         <td><?= $a['sepatu_uk'] ?></td>
         <td><?= $a['sepatu_us'] ?></td>
