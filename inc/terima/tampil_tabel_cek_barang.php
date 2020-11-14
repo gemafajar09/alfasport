@@ -10,6 +10,7 @@ $_POST = json_decode($json, true);
             <th>ID</th>
             <th>Artikel</th>
             <th>Nama Barang</th>
+            <th>Barcode</th>
             <th>Jumlah</th>
             <th>Ukuran</th>
             <th>Tanggal</th>
@@ -19,49 +20,72 @@ $_POST = json_decode($json, true);
     <tbody>
 
         <?php
-        $id_transfer = $_POST['id_transfer'];
-        $data_table = $con->query("
-            SELECT
-            a.tanggal,
-            a.id_toko,
-            a.id_toko_tujuan,
-            b.status,
-            b.transfer_detail_id,
-            e.nama,
-            e.id,
-            e.artikel,
-            b.jumlah,
-            d.id_ukuran,
-            d.ue,
-            d.uk,
-            d.us,
-            d.cm,
-            c.id_detail as id_gudang
-            FROM tb_transfer a 
-            JOIN tb_transfer_detail b ON a.id_transfer = b.id_transfer 
-            JOIN tb_gudang_detail c ON c.id_detail = b.id_gudang 
-            JOIN tb_all_ukuran d ON d.id_ukuran = c.id_ukuran
-            JOIN tb_gudang e ON e.id=c.id
-            WHERE a.id_transfer='$_POST[id_transfer]'
+        $data_table = $con->query("SELECT
+                                    tb_transfer_barang.transfer_barang_tgl,
+                                    tb_transfer_barang.id_toko,
+                                    tb_transfer_barang.id_toko_tujuan,
+                                    tb_transfer_barang_detail.transfer_barang_detail_status,
+                                    tb_transfer_barang_detail.transfer_barang_detail_id,
+                                    tb_transfer_barang_detail.transfer_barang_detail_jml,
+                                    tb_barang_detail.barang_detail_id,
+                                    tb_barang_detail.barang_detail_barcode,
+                                    tb_barang_detail.ukuran_id,
+                                    tb_ukuran.sepatu_ue,
+                                    tb_ukuran.sepatu_uk,
+                                    tb_ukuran.sepatu_us,
+                                    tb_ukuran.sepatu_cm,
+                                    tb_ukuran.kaos_kaki_eu,
+                                    tb_ukuran.kaos_kaki_size,
+                                    tb_ukuran.barang_lainnya_nama_ukuran,
+                                    tb_barang.barang_kode,
+                                    tb_barang.barang_kategori,
+                                    tb_barang.barang_artikel,
+                                    tb_barang.barang_nama
+                                FROM
+                                    tb_transfer_barang
+                                INNER JOIN tb_transfer_barang_detail ON
+                                    tb_transfer_barang_detail.transfer_barang_id = tb_transfer_barang.transfer_barang_id
+                                INNER JOIN tb_barang_detail ON
+                                    tb_barang_detail.barang_detail_id = tb_transfer_barang_detail.barang_detail_id
+                                INNER JOIN tb_ukuran ON
+                                    tb_ukuran.ukuran_id = tb_barang_detail.ukuran_id
+                                INNER JOIN tb_barang ON
+                                    tb_barang.barang_id = tb_barang_detail.barang_id
+                                WHERE tb_transfer_barang.transfer_barang_id='$_POST[transfer_barang_id]'
         ")->fetchAll();
         foreach ($data_table as $i => $data) {
         ?>
             <tr>
-                <td><?= $data['id'] ?></td>
-                <td><?= $data['artikel'] ?></td>
-                <td><?= $data['nama'] ?></td>
-                <td><?= $data['jumlah'] ?></td>
-                <input type="hidden" name="jumlah[]" value="<?= $data['jumlah'] ?>">
+                <td><?= $data['barang_kode'] ?></td>
+                <td><?= $data['barang_artikel'] ?></td>
+                <td><?= $data['barang_nama'] ?></td>
+                <td><?= $data['barang_detail_barcode'] ?></td>
+                <td><?= $data['transfer_barang_detail_jml'] ?></td>
+                <input type="hidden" name="transfer_barang_detail_jml[]" value="<?= $data['transfer_barang_detail_jml'] ?>">
                 <input type="hidden" name="id_toko_asal[]" value="<?= $data['id_toko'] ?>">
                 <input type="hidden" name="id_toko_tujuan[]" value="<?= $data['id_toko_tujuan'] ?>">
-                <input type="hidden" name="id_gudang[]" value="<?= $data['id_gudang'] ?>">
-                <input type="hidden" name="id_ukuran[]" value="<?= $data['id_ukuran'] ?>">
-                <td><?= $data['ue'] . "-" . $data['uk'] . "-" . $data['us'] . "-" . $data['cm']; ?></td>
-                <td><?= tgl_indo($data['tanggal']) ?></td>
+                <input type="hidden" name="barang_detail_id[]" value="<?= $data['barang_detail_id'] ?>">
+                <input type="hidden" name="ukuran_id[]" value="<?= $data['ukuran_id'] ?>">
+                <?php
+                if ($data['barang_kategori'] == 'Sepatu') {
+                ?>
+                    <td><?= "EU : " . $data['sepatu_ue'] . " / UK : " . $data['sepatu_uk'] . " / US : " . $data['sepatu_us'] . " / CM : " . $data['sepatu_cm']; ?></td>
+                <?php
+                } elseif ($data['barang_kategori'] == 'Kaos Kaki') {
+                ?>
+                    <td><?= "EU : " . $data['kaos_kaki_eu'] . " / Size : " . $data['kaos_kaki_size'] ?></td>
+                <?php
+                } elseif ($data['barang_kategori'] == 'Barang Lainnya') {
+                ?>
+                    <td><?= "Ukuran : " . $data['barang_lainnya_nama_ukuran']  ?></td>
+                <?php
+                }
+                ?>
+                <td><?= tgl_indo($data['transfer_barang_tgl']) ?></td>
                 <td>
                     <label class="switch">
-                        <?php $cek = $data['status'] ?>
-                        <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_detail_id'] ?>" value="<?= $data['transfer_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_detail_id'] ?>, this)" <?php echo ($cek == '1') ? "checked" : "" ?>>
+                        <?php $cek = $data['transfer_barang_detail_status'] ?>
+                        <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_barang_detail_id'] ?>, this)" <?php echo ($cek == '1') ? "checked" : "" ?>>
                         <span class="slider round"></span>
                     </label>
                 </td>
@@ -73,18 +97,18 @@ $_POST = json_decode($json, true);
 </table>
 <div class="form-group">
     <label for="">Keterangan</label>
-    <input type="hidden" id="id_transfer" name="id_transfer" value="<?php echo $id_transfer ?>">
+    <input type="hidden" id="transfer_barang_id" name="transfer_barang_id" value="<?php echo $_POST['transfer_barang_id'] ?>">
     <textarea name="transfer_ket" id="transfer_ket" class="form-control" id="" cols="30" rows="2"></textarea>
 </div>
 
 <script>
-    function cekStatus(transfer_detail_id, status_checked) {
+    function cekStatus(transfer_barang_detail_id, status_checked) {
         if (status_checked.checked) {
             axios.post('inc/terima/aksi_update_status_barang_benar.php', {
-                'transfer_detail_id': transfer_detail_id
+                'transfer_barang_detail_id': transfer_barang_detail_id
             }).then(function(res) {
                 var id = res.data
-                toastr.info('Sukses.. ')
+                toastr.info('Lengkap.. ')
                 // $(".cek_menipis").prop("checked", true);
             }).catch(function(err) {
                 console.log(err)
@@ -93,10 +117,10 @@ $_POST = json_decode($json, true);
             })
         } else {
             axios.post('inc/terima/aksi_update_status_barang_salah.php', {
-                'transfer_detail_id': transfer_detail_id
+                'transfer_barang_detail_id': transfer_barang_detail_id
             }).then(function(res) {
                 var data = res.data
-                toastr.info('Sukses.. ')
+                toastr.warning('Tidak Lengkap.. ')
             }).catch(function(err) {
                 toastr.warning('ERROR..')
             })

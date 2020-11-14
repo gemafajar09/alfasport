@@ -4,44 +4,6 @@ include "../../App/MY_url_helper.php";
 $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 ?>
-<style>
-    input:checked + .slider2 {
-        background-color: green;
-    }
-    .slider2.round2 {
-        border-radius: 34px;
-    }
-    .slider2 {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: green;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    input:checked + .slider3 {
-        background-color: red;
-    }
-    .slider3.round3 {
-        border-radius: 34px;
-    }
-    .slider3 {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: red;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-</style>
 <table class="table">
     <thead>
         <tr>
@@ -91,9 +53,9 @@ $_POST = json_decode($json, true);
                                 INNER JOIN tb_barang ON
                                     tb_barang.barang_id = tb_barang_detail.barang_id
                                 WHERE tb_transfer_barang.transfer_barang_id='$_POST[transfer_barang_id]'
-                            ")->fetchAll();
+        ")->fetchAll();
         foreach ($data_table as $i => $data) {
-            $keterangan = $data['transfer_barang_ket'];
+        $ket = $data['transfer_barang_ket'];
         ?>
             <tr>
                 <td><?= $data['barang_kode'] ?></td>
@@ -124,15 +86,9 @@ $_POST = json_decode($json, true);
                 <td><?= tgl_indo($data['transfer_barang_tgl']) ?></td>
                 <td>
                     <label class="switch">
-                        <?php
-                        $cek = $data['transfer_barang_detail_status']; 
-                        if($cek == 1){ ?>
-                            <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_barang_detail_id'] ?>, this)" <?php echo ($cek == '1') ? "checked" : "" ?>>
-                            <span class="slider2 round2"></span>
-                        <?php }else{ ?>
-                            <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_barang_detail_id'] ?>, this)" <?php echo ($cek == '0') ? "" : "" ?>>
-                            <span class="slider3 round3"></span>
-                        <?php } ?>
+                        <?php $cek = $data['transfer_barang_detail_status'] ?>
+                        <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" <?php echo ($cek == '1') ? "checked" : "" ?> readonly disabled>
+                        <span class="slider round"></span>
                     </label>
                 </td>
             </tr>
@@ -144,31 +100,32 @@ $_POST = json_decode($json, true);
 <div class="form-group">
     <label for="">Keterangan</label>
     <input type="hidden" id="transfer_barang_id" name="transfer_barang_id" value="<?php echo $_POST['transfer_barang_id'] ?>">
-    <textarea name="transfer_ket" id="transfer_ket" class="form-control" id="" cols="30" rows="2"><?= $keterangan ?></textarea>
-</div> 
+    <textarea name="transfer_ket" id="transfer_ket" class="form-control" id="" cols="30" rows="2" readonly disabled><?php echo $ket ?></textarea>
+</div>
+
 <script>
-    function cekStatus(transfer_detail_id, status_checked) {
-        // if (status_checked.checked) {
-        //     axios.post('inc/permohonan/aksi_update_gudang.php', {
-        //         'transfer_detail_id': transfer_detail_id
-        //     }).then(function(res) {
-        //         var id = res.data
-        //         toastr.info('Sukses.. ')
-        //         // $(".cek_menipis").prop("checked", true);
-        //     }).catch(function(err) {
-        //         console.log(err)
-        //         toastr.warning('ERROR..')
-        //         // $(".cek_menipis").prop("checked", false);
-        //     })
-        // } else {
-        //     axios.post('inc/permohonan/aksi_update_kembali.php', {
-        //         'transfer_detail_id': transfer_detail_id
-        //     }).then(function(res) {
-        //         var data = res.data
-        //         toastr.info('Sukses.. ')
-        //     }).catch(function(err) {
-        //         toastr.warning('ERROR..')
-        //     })
-        // }
+    function cekStatus(transfer_barang_detail_id, status_checked) {
+        if (status_checked.checked) {
+            axios.post('inc/terima/aksi_update_status_barang_benar.php', {
+                'transfer_barang_detail_id': transfer_barang_detail_id
+            }).then(function(res) {
+                var id = res.data
+                toastr.info('Lengkap.. ')
+                // $(".cek_menipis").prop("checked", true);
+            }).catch(function(err) {
+                console.log(err)
+                toastr.warning('ERROR..')
+                // $(".cek_menipis").prop("checked", false);
+            })
+        } else {
+            axios.post('inc/terima/aksi_update_status_barang_salah.php', {
+                'transfer_barang_detail_id': transfer_barang_detail_id
+            }).then(function(res) {
+                var data = res.data
+                toastr.warning('Tidak Lengkap.. ')
+            }).catch(function(err) {
+                toastr.warning('ERROR..')
+            })
+        }
     }
 </script>

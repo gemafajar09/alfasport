@@ -3,6 +3,6 @@ include "../../config/koneksi.php";
 
 $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
-$id = $_POST['id_detail'];
-$data = $con->query("SELECT jumlah FROM tb_stok_toko WHERE id_gudang = '$id'")->fetch(PDO::FETCH_ASSOC);
+$barang_detail_id = $_POST['barang_detail_id'];
+$data = $con->query("SELECT barang_toko_jml FROM tb_barang_toko WHERE barang_detail_id = '$barang_detail_id'")->fetch(PDO::FETCH_ASSOC);
 echo json_encode($data);

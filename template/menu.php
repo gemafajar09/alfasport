@@ -113,8 +113,8 @@
                         </li> -->
                         <!-- hitung jumlah permohonan -->
                         <?php
-                        $acc = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 0")->fetch();
-                        $terima = $con->query("SELECT COUNT(id_transfer) AS jumlah FROM tb_transfer WHERE acc_owner = 1 AND id_toko_tujuan='$_COOKIE[id_toko]'")->fetch();
+                        $acc = $con->query("SELECT COUNT(transfer_barang_id) AS jumlah FROM tb_transfer_barang WHERE transfer_barang_acc_owner = 0")->fetch();
+                        $terima = $con->query("SELECT COUNT(transfer_barang_id) AS jumlah FROM tb_transfer_barang WHERE transfer_barang_acc_owner = 1 AND id_toko_tujuan='$_COOKIE[id_toko]'")->fetch();
                         ?>
                         <!-- tutup -->
                         <li><a><i class="fa fa-cubes"></i> Transfer Barang <span class="fa fa-chevron-down"></span></a>

@@ -32,11 +32,11 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nama Toko</th>
-                    <th>Nama Toko Tujuan</th>
+                    <th>Kode Transfer</th>
+                    <th>Pengirim</th>
+                    <th>Penerima</th>
                     <th>Tanggal</th>
                     <th>Status</th>
-                    <!-- <th>Action</th> -->
                 </tr>
             </thead>
             <tbody id="isi"></tbody>
@@ -61,7 +61,7 @@
                                 <div class="form-group" style="display: none;">
                                     <?php
                                     //membaca kode barang terbesar
-                                    $kode_faktur = $con->query("SELECT max(kode_transfer) FROM tb_transfer")->fetch();
+                                    $kode_faktur = $con->query("SELECT max(transfer_barang_kode) FROM tb_transfer_barang")->fetch();
                                     if ($kode_faktur) {
                                         $nilai = substr($kode_faktur[0], 1);
                                         $kode = (int) $nilai;
@@ -74,7 +74,7 @@
                                     $_SESSION["auto_kode"] = $auto_kode;
                                     ?>
                                     <label>ID</label>
-                                    <input type="text" required name="transfer_kode" id="transfer_kode" class="form-control" placeholder="ID" value="<?php echo $_SESSION["auto_kode"]; ?>" readonly>
+                                    <input type="text" required name="transfer_barang_kode" id="transfer_barang_kode" class="form-control" placeholder="ID" value="<?php echo $_SESSION["auto_kode"]; ?>" readonly>
                                 </div>
 
                                 <div class="form-group">
@@ -90,7 +90,7 @@
                                         ?>
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label>Nama Toko Tujuan</label>
                                     <select class="form-control " name="id_toko_tujuan" id="id_toko_tujuan" required style="width: 100%;">
@@ -102,8 +102,7 @@
                                     <?php
                                     $tgl = date('Y-m-d');
                                     ?>
-                                    <input type="date" name="tanggal" id="tanggal" value="<?php echo $tgl; ?>" required="required" placeholder="Tanggal" class="form-control">
-                                    <input type="hidden" id="divisi_id">
+                                    <input type="date" name="transfer_barang_tgl" id="transfer_barang_tgl" value="<?php echo $tgl; ?>" required="required" placeholder="Tanggal" class="form-control">
                                 </div>
                             </div>
                             <div class="card col-md-12">
@@ -121,7 +120,7 @@
                                                 <div class="col-md-7">
                                                     <div class="form-group">
                                                         <label>Nama Barang & Ukuran</label>
-                                                        <select class="form-control select2 id_gudang" name="id_gudang[]" required style="width: 100%;">
+                                                        <select class="form-control select2 barang_detail_id" name="barang_detail_id[]" required style="width: 100%;">
                                                         </select>
                                                     </div>
                                                 </div>
@@ -134,8 +133,7 @@
                                                 <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label>Jumlah</label>
-                                                        <input type="number" name="jumlah[]" id="jumlah" required="required" placeholder="Jumlah" class="form-control">
-                                                        <input type="hidden" id="id_transfer">
+                                                        <input type="number" name="transfer_barang_detail_jml[]" id="jumlah" required="required" placeholder="Jumlah" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,27 +156,73 @@
         </div>
     </div>
 </div>
+
+
+<!-- modal detail -->
+<div class="modal" id="cekBarang">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Data Transfer Barang</h4>
+            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <div class="container" id="tampilkan">
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <?php
 
 if (isset($_POST['simpanT'])) {
+    $transfer_barang_kode = $_POST['transfer_barang_kode'];
     $id_toko = $_POST['id_toko'];
-    $transfer_kode = $_POST['transfer_kode'];
     $id_toko_tujuan = $_POST['id_toko_tujuan'];
-    $tanggal = $_POST['tanggal'];
-    $id_gudang = $_POST['id_gudang'];
-    $jumlah = $_POST['jumlah'];
+    $transfer_barang_tgl = $_POST['transfer_barang_tgl'];
+    $barang_detail_id = $_POST['barang_detail_id'];
+    $transfer_barang_detail_jml = $_POST['transfer_barang_detail_jml'];
 
-    $con->query("INSERT INTO `tb_transfer`(`kode_transfer`, `id_toko`, `id_toko_tujuan`,`tanggal`, `acc_owner`) VALUES ('$_POST[transfer_kode]','$_POST[id_toko]','$_POST[id_toko_tujuan]','$_POST[tanggal]','0')");
+    // insert ke table tb_transfer_barang
+    $con->insert(
+        "tb_transfer_barang",
+        array(
+            'transfer_barang_kode' => $transfer_barang_kode,
+            'id_toko' => $id_toko,
+            'id_toko_tujuan' => $id_toko_tujuan,
+            'transfer_barang_tgl' => $transfer_barang_tgl,
+            'transfer_barang_acc_owner' => 0
+        )
+    );
+    // ambil transfer_barang_id
+    $transfer_barang_id = $con->id();
 
-    $id_transfer = $con->id();
+    // insert ke tabel tb_transfer_barang_detail
+    foreach ($barang_detail_id as $i => $a) {
+        // cari ukuran_id terlebih dahulu
+        $data = $con->query("SELECT ukuran_id FROM tb_barang_detail WHERE barang_detail_id = '$barang_detail_id[$i]'")->fetch();
 
-    foreach ($id_gudang as $i => $a) {
-        $data = $con->query("SELECT a.*, b.*, c.* FROM tb_gudang a LEFT JOIN tb_gudang_detail b ON a.id = b.id LEFT JOIN tb_all_ukuran c ON b.id_ukuran = c.id_ukuran WHERE a.id_gudang = '$id_gudang[$i]' ")->fetch();
+        $ukuran_id = $data['ukuran_id'];
 
-        $id_ukuran = $data['id_ukuran'];
-
-        $con->query("INSERT INTO `tb_transfer_detail`(`id_transfer`,`id_gudang`, `id_ukuran`, `jumlah`, `status`) VALUES ('$id_transfer','$id_gudang[$i]','$id_ukuran','$jumlah[$i]','0')");
+        // insert ke tb_transfer_barang_detail;
+        $con->insert(
+            "tb_transfer_barang_detail",
+            array(
+                'transfer_barang_id' => $transfer_barang_id,
+                'barang_detail_id' => $barang_detail_id[$i],
+                'ukuran_id' => $ukuran_id,
+                'transfer_barang_detail_jml' => $transfer_barang_detail_jml[$i],
+                'transfer_barang_detail_status' => 0,
+            )
+        );
     }
 
     unset($_SESSION['auto_kode']);
@@ -196,7 +240,7 @@ if (isset($_POST['simpanT'])) {
         "<div class='col-md-7'>" +
         "<div class='form-group'>" +
         "<label>Nama Barang & Ukuran</label>" +
-        "<select class='form-control id_gudang' name='id_gudang[]' onchange='stokTampil(this,0)' required style='width: 100%;'>" +
+        "<select class='form-control barang_detail_id select2' name='barang_detail_id[]' onchange='tampilkanStok(this,0)' required style='width: 100%;'>" +
         "<option selected disabled>Pilih Barang</option>" +
         "</select>" +
         "</div>" +
@@ -204,25 +248,67 @@ if (isset($_POST['simpanT'])) {
         "<div class='col-md-2'>" +
         "<div class='form-group'>" +
         "<label>Stok</label>" +
-        "<input type='number' name='stok[]' id='stoks0' required='required' placeholder='Stok' class='form-control'>" +
+        "<input type='number' name='stok[]' id='stoks0' required='required' placeholder='Stok' class='form-control' readonly>" +
         "</div>" +
         "</div>" +
         "<div class='col-md-2'>" +
         "<div class='form-group'>" +
         "<label>Jumlah</label>" +
-        "<input type='number' name='jumlah[]' id='jumlah' onkeyup='batasKirim(this,0)' required='required' placeholder='Jumlah' class='form-control'>" +
+        "<input type='number' name='transfer_barang_detail_jml[]' id='jumlah0' onkeyup='batasKirim(this,0)' required='required' placeholder='Jumlah' class='form-control'>" +
         "</div>" +
         "</div>" +
         "</div>";
 
+
+    // untuk add row
+    $('#addRow').on('click', function() {
+        _banyakPilihanBarang++;
+        var html_row =
+            "<div class='row' id='baris_" + _banyakPilihanBarang + "'>" +
+            "<div class='col-md-7'>" +
+            "<div class='form-group'>" +
+            "<label>Nama Barang & Ukuran</label>" +
+            "<select class='form-control barang_detail_id select2' name='barang_detail_id[]' onchange='tampilkanStok(this," + _banyakPilihanBarang + ")' required style='width: 100%;'>" +
+            "<option selected disabled>Pilih Barang</option>" +
+            _dataBarang +
+            "</select>" +
+            "</div>" +
+            "</div>" +
+            "<div class='col-md-2'>" +
+            "<div class='form-group'>" +
+            "<label>Stok</label>" +
+            "<input type='number' name='stok[]' id='stoks" + _banyakPilihanBarang + "' required='required' placeholder='Stok' class='form-control' readonly>" +
+            "</div>" +
+            "</div>" +
+            "<div class='col-md-2'>" +
+            "<div class='form-group'>" +
+            "<label>Jumlah</label>" +
+            "<input type='number' name='transfer_barang_detail_jml[]' id='jumlah" + _banyakPilihanBarang + "' onkeyup='batasKirim(this," + _banyakPilihanBarang + ")' required='required' placeholder='Jumlah' class='form-control'>" +
+            "</div>" +
+            "</div>" +
+            "<div class='col-md-1'>" +
+            "<div class='form-group'>" +
+            "<label>&nbsp;</label>" +
+            "<button class='btn btn-danger' type='button' onclick='hapusBaris(" + _banyakPilihanBarang + ")'><i class='fa fa-trash'></i></button>" +
+            "</div>" +
+            "</div>"
+        "</div>";
+        console.log(_banyakPilihanBarang)
+
+        $('#formInput').append(html_row)
+        $('.select2').select2({
+            dropdownAutoWidth: true
+        });
+    })
+    // utk hapus baris add row
     function hapusBaris(no) {
         document.getElementById("baris_" + no).innerHTML = "";
     }
 
+    // cari toko tujuan dan barang dari toko tsb
     $("#id_toko").change(function() {
         var id_toko = $('#id_toko option:selected').val();
-        if(id_toko == 'gudang')
-        {
+        if (id_toko == 'gudang') {
             $.ajax({
                 type: "GET",
                 url: "inc/transfer_barang/data_toko.php",
@@ -233,7 +319,7 @@ if (isset($_POST['simpanT'])) {
                     $('#id_toko_tujuan').html(response);
                 }
             });
-        }else{
+        } else {
             $.ajax({
                 type: "GET",
                 url: "inc/transfer_barang/data_toko.php",
@@ -246,16 +332,15 @@ if (isset($_POST['simpanT'])) {
             });
         }
     })
-    
+    // cari barangnya
     $("#id_toko").change(function() {
         $('#formInput').html(_pilihanBarangDefault);
         $('.select2').select2({
             dropdownAutoWidth: true
         });
-
         var id_toko = $('#id_toko option:selected').val();
-        if(id_toko == 'gudang')
-        {
+        // jika dari gudang maka tampilkan data barang gudang
+        if (id_toko == 'gudang') {
             $.ajax({
                 type: "GET",
                 url: "inc/transfer_barang/data_barang_gudang.php",
@@ -264,10 +349,12 @@ if (isset($_POST['simpanT'])) {
                 },
                 success: function(response) {
                     _dataBarang = response;
-                    $('[name ="id_gudang[]"]').html(response);
+                    $('[name ="barang_detail_id[]"]').html(response);
                 }
             });
-        }else{
+        }
+        // jika dari toko maka tampilkan brang dari toko
+        else {
             $.ajax({
                 type: "GET",
                 url: "inc/transfer_barang/data_barang_toko.php",
@@ -276,43 +363,62 @@ if (isset($_POST['simpanT'])) {
                 },
                 success: function(response) {
                     _dataBarang = response;
-                    $('[name ="id_gudang[]"]').html(response);
+                    $('[name ="barang_detail_id[]"]').html(response);
                 }
             });
         }
     })
-</script>
 
-<script>
+    // cari jumlah stoknya
+    function tampilkanStok(id, angka) {
+        var barang_detail_id = id.value
+        var id_toko = $('#id_toko').val()
+        if (id_toko == 'gudang') {
+            axios.post('inc/transfer_barang/stok_barang_gudang.php', {
+                'barang_detail_id': barang_detail_id
+            }).then(function(res) {
+                var data = res.data
+                $('#stoks' + angka).val(data.barang_detail_jml)
+            })
+        } else {
+            axios.post('inc/transfer_barang/stok_barang_toko.php', {
+                'barang_detail_id': barang_detail_id
+            }).then(function(res) {
+                var data = res.data
+                $('#stoks' + angka).val(data.barang_toko_jml)
+            })
+        }
+    }
+    // cek batas jumlah transfer/pengiriman
+    function batasKirim(angka, int) {
+        var jumlah = angka.value
+        var stok = $('#stoks' + int).val();
+        if (parseInt(jumlah) > parseInt(stok)) {
+            alert('Maaf Stok Tidak Mencukupi')
+            $('#jumlah' + int).val('');
+        }
+    }
+
     function tampil() {
         $('#dataTransfer').modal()
     }
 
-    function stokTampil(id, angka)
-    {
-        var id_detail = id.value
-        var id_gudang = $('#id_toko').val()
-        if(id_gudang == 'gudang')
-        {
-            axios.post('inc/transfer_barang/stok_barang_gudang.php',
-            {
-                'id_detail':id_detail
-            }).then(function(res){
-                var data = res.data
-                $('#stoks'+angka).val(data.jumlah)
-            })
-        }else{
-            axios.post('inc/transfer_barang/stok_barang_toko.php',
-            {
-                'id_detail':id_detail
-            }).then(function(res){
-                var data = res.data
-                $('#stoks'+angka).val(data.jumlah)
-            })
-        }
+    function dataBarang(transfer_barang_id) {
+        var transfer_barang_id = transfer_barang_id;
+        axios.post('inc/transfer_barang/tampil_tabel_data_barang.php', {
+            'transfer_barang_id': transfer_barang_id,
+        }).then(function(res) {
+            var data = res.data
+            $('#tampilkan').html(data)
+            $('#cekBarang').modal();
+        }).catch(function(err) {
+            console.log(err)
+        })
     }
+</script>
 
-    $('#stoks10').change(function(){
+<script>
+    $('#stoks10').change(function() {
         var id_detail = $(this).val()
         alert(id_detail)
     })
@@ -381,109 +487,6 @@ if (isset($_POST['simpanT'])) {
         $('#tanggal').val('')
         $('#id_transfer').val('')
     }
-
-
-    $('#addRow').on('click', function() {
-        _banyakPilihanBarang++;
-        var html_row =
-            "<div class='row' id='baris_" + _banyakPilihanBarang + "'>" +
-            "<div class='col-md-7'>" +
-            "<div class='form-group'>" +
-            "<label>Nama Barang & Ukuran</label>" +
-            "<select class='form-control id_gudang' name='id_gudang[]' onchange='stokTampil(this,"+_banyakPilihanBarang+")' required style='width: 100%;'>" +
-            "<option selected disabled>Pilih Barang</option>" +
-            _dataBarang +
-            "</select>" +
-            "</div>" +
-            "</div>" +
-            "<div class='col-md-2'>" +
-            "<div class='form-group'>" +
-            "<label>Stok</label>" +
-            "<input type='number' name='stok[]' id='stoks"+ _banyakPilihanBarang +"' required='required' placeholder='Stok' class='form-control'>" +
-            "</div>" +
-            "</div>" +
-            "<div class='col-md-2'>" +
-            "<div class='form-group'>" +
-            "<label>Jumlah</label>" +
-            "<input type='number' name='jumlah[]' onkeyup='batasKirim(this,"+  _banyakPilihanBarang +")' required='required' placeholder='Jumlah' class='form-control'>" +
-            "</div>" +
-            "</div>" +
-            "<div class='col-md-1'>" +
-            "<div class='form-group'>" +
-            "<label>&nbsp;</label>" +
-            "<button class='btn btn-danger' type='button' onclick='hapusBaris(" + _banyakPilihanBarang + ")'><i class='fa fa-trash'></i></button>" +
-            "</div>" +
-            "</div>"
-        "</div>";
-        console.log(_banyakPilihanBarang)
-
-        $('#formInput').append(html_row)
-        $('.select2').select2({
-            dropdownAutoWidth: true
-        });
-
-        $('[name ="id_gudang[]"]').change(function() {
-            var id_gudang = $(this).val()
-            if(id_gudang == 'gudang')
-            {
-                axios.post('inc/transfer_barang/ukuran_gudang.php', {
-                    'id': id_gudang
-                }).then(function(res) {
-                    var data = res.data
-                    console.log(data)
-                    $('[name ="ukuran[]"]').html(data)
-                }).catch(function(err) {
-                    console.log(err)
-                })
-            }else{
-                axios.post('inc/transfer_barang/ukuran.php', {
-                    'id': id_gudang
-                }).then(function(res) {
-                    var data = res.data
-                    console.log(data)
-                    $('[name ="ukuran[]"]').html(data)
-                }).catch(function(err) {
-                    console.log(err)
-                })
-            }
-        })
-    })
-
-    function batasKirim(angka,int)
-    {
-        var jumlah = angka.value
-        var stok = $('#stoks'+int).val();
-        if(parseInt(jumlah) > parseInt(stok))
-        {
-            alert('Maaf Stok Tidak Mencukupi')
-        }
-    }
-
-    $('[name ="id_gudang[]"]').change(function() {
-        var id_gudang = $(this).val()
-        if(id_gudang == 'gudang')
-            {
-                axios.post('inc/transfer_barang/ukuran_gudang.php', {
-                    'id': id_gudang
-                }).then(function(res) {
-                    var data = res.data
-                    console.log(data)
-                    $('[name ="ukuran[]"]').html(data)
-                }).catch(function(err) {
-                    console.log(err)
-                })
-            }else{
-                axios.post('inc/transfer_barang/ukuran.php', {
-                    'id': id_gudang
-                }).then(function(res) {
-                    var data = res.data
-                    console.log(data)
-                    $('[name ="ukuran[]"]').html(data)
-                }).catch(function(err) {
-                    console.log(err)
-                })
-            }
-    })
 
     $('#isi').load('inc/transfer_barang/data_transfer.php');
 </script>
