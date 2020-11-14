@@ -169,6 +169,8 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Checkout</h4>
+                        <br>
+                        <i style="color:red" id="pesan"></i>
                     </div>
                     <div class="modal-body">
                         <div class="container">
@@ -213,7 +215,7 @@
                                         <input type="hidden" id="jumlahTotal" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" style="display: none;" id="diskonBank">
                                     <div class="form-group">
                                         <label>Diskon Bank</label>
                                         <input type="text" class="form-control" id="diskons" readonly>
@@ -248,6 +250,12 @@
                                             <div class="input-group-text">Rp.</div>
                                         </div>
                                         <input type="text" class="form-control" id="txtBayarCash" onkeyup="dapatKembalian()">
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="display: none;" id="bayar_point">
+                                    <label>Point</label>
+                                    <div class="input-group mb-2">
+                                        <input type="text" readonly class="form-control" id="txtBayarPoint" onkeyup="dapatKembalian()">
                                     </div>
                                 </div>
                                 <div class="col-md-12" style="display: none;" id="bayar_card">
@@ -436,7 +444,6 @@
 
     // proses masuk ke keranjang
     $('#simpans').on('click', function() {
-
         var tmp_kode = $('#kode').val()
         var tmp_tgl = $('#tanggal').val()
         var id_toko = $('#id_toko').val()
@@ -473,25 +480,45 @@
         })
     })
 
+    // proses checkout
+    $('#checkout').on('click', function() {
+        var sub = document.getElementById('subtotal').value;
+        var tot = document.getElementById('jmlTot').value;
+        document.getElementById('subTotalBelanja').value = sub;
+        document.getElementById('subTotalBelanjaBantuan').value = sub;
+        document.getElementById('subTotalBelanja1').value = sub;
+        document.getElementById('jumlahTotal').value = tot;
+        console.log(sub)
+        console.log(tot)
+        $('#modalCheckout').modal()
+    })
+
+    // type bayar
     $('#transaksi_tipe_bayar').change(function(e) {
         var id = $(this).val()
         if (id != 1) {
             $('#transaksi_bank').change(function(e) {
                 var bank = $(this).val()
-                var subtotal = $('#subTotalBelanja1').val()
+                var subtotal = $('#subTotalBelanja').val()
                 axios.post('inc/transaksi/diskon.php', {
                     'id': id,
                     'bank': bank
                 }).then(function(res) {
                     var data = res.data
-                    $('#diskons').val(data.diskon)
-                    var disc = data.diskon
+                    if(data == false)
+                    {
+                        var nilaidiskon = 0
+
+                    }else{
+                        var nilaidiskon = data.diskon
+                    }
+                    $('#diskons').val(nilaidiskon)
+                    var disc = nilaidiskon
                     var total = (subtotal * disc) / 100
                     var bersih = subtotal - total
                     $('#subTotalBelanja').val(bersih)
                     $('#subTotalBelanjaBantuan').val(bersih)
                     $('#diskonss').val(total)
-                    console.log(data.diskon)
                 }).catch(function(err) {
                     console.log(err)
                 })
@@ -510,48 +537,82 @@
         }
     })
 
-    // proses checkout
-    $('#checkout').on('click', function() {
-        var sub = document.getElementById('subtotal').value;
-        var tot = document.getElementById('jmlTot').value;
-        document.getElementById('subTotalBelanja').value = sub;
-        document.getElementById('subTotalBelanjaBantuan').value = sub;
-        document.getElementById('subTotalBelanja1').value = sub;
-        document.getElementById('jumlahTotal').value = tot;
-        console.log(sub)
-        console.log(tot)
-        $('#modalCheckout').modal()
-    })
-
     // menampilkan pilihan bank
     document.getElementById("transaksi_tipe_bayar").addEventListener("change", function() {
+        var poin = parseInt($('#points').val())
+        var tot = parseInt($('#subTotalBelanjaBantuan').val())
         if (this.value == 2 || this.value == 3 ) {
             document.getElementById("tipe_bayar").style.display = "block";
             document.getElementById("bayar_card").style.display = "block";
+            document.getElementById("diskonBank").style.display = "block";
             document.getElementById("bayar_cash").style.display = "none";
+            document.getElementById("bayar_point").style.display = "none";
             document.getElementById("txtBayarCash").value = 0;
             document.getElementById("txtBayarCard").value = 0;
+            $('#pesan').html('')
         } else if (this.value == 4 || this.value == 5) {
+            
             document.getElementById("tipe_bayar").style.display = "block";
             document.getElementById("bayar_cash").style.display = "block";
             document.getElementById("bayar_card").style.display = "block";
+            document.getElementById("bayar_point").style.display = "none";
+            document.getElementById("diskonBank").style.display = "block";
             document.getElementById("txtBayarCash").value = 0;
             document.getElementById("txtBayarCard").value = 0;
+            $('#pesan').html('')
+        } else if (this.value == 9) {
+            var penguranganpoint = tot - poin
+            $('#subTotalBelanja').val(penguranganpoint)
+            document.getElementById("tipe_bayar").style.display = "none";
+            document.getElementById("bayar_cash").style.display = "block";
+            document.getElementById("bayar_point").style.display = "block";
+            document.getElementById("diskonBank").style.display = "none";
+            document.getElementById("bayar_card").style.display = "none";
+            document.getElementById("txtBayarCash").value = 0;
+            document.getElementById("txtBayarPoint").value = poin;
+            $('#pesan').html('')
+        } else if (this.value == 7 || this.value == 8) {
+            var penguranganpoint = tot - poin
+            $('#subTotalBelanja').val(penguranganpoint)
+            document.getElementById("tipe_bayar").style.display = "block";
+            document.getElementById("bayar_point").style.display = "block";
+            document.getElementById("bayar_card").style.display = "block";
+            document.getElementById("diskonBank").style.display = "block";
+            document.getElementById("txtBayarPoint").value = poin;
+            document.getElementById("txtBayarCard").value = 0;
+            $('#pesan').html('')
         } else if (this.value == 1) {
             document.getElementById("tipe_bayar").style.display = "none";
             document.getElementById("bayar_cash").style.display = "block";
+            document.getElementById("bayar_point").style.display = "none";
             document.getElementById("bayar_card").style.display = "none";
+            document.getElementById("diskonBank").style.display = "none";
             document.getElementById("txtBayarCash").value = 0;
             document.getElementById("txtBayarCard").value = 0;
+            $('#pesan').html('')
+        } else if (this.value == 6) {
+            if(tot > poin)
+            {
+                $('#pesan').html('* Maaf Point Anda Tidak Mencukupi')
+            }
+            document.getElementById("tipe_bayar").style.display = "none";
+            document.getElementById("bayar_cash").style.display = "none";
+            document.getElementById("bayar_point").style.display = "block";
+            document.getElementById("bayar_card").style.display = "none";
+            document.getElementById("diskonBank").style.display = "none";
+            document.getElementById("txtBayarPoint").value = poin;
+            document.getElementById("txtBayarCard").value = 0;
         }
+        
     })
 
     // menampilkan kembalian
     function dapatKembalian() {
-        var bayar_cash = parseInt(document.getElementById("txtBayarCash").value);
-        var bayar_card = parseInt(document.getElementById("txtBayarCard").value);
-        var subTotalHarga = parseInt(document.getElementById("subTotalBelanja").value);
-
+        var bayar_cash = parseInt($('#txtBayarCash').val());
+        var bayar_card = parseInt($('#txtBayarCard').val());
+        var bayar_poin = parseInt($('#txtBayarPoint').val());
+        var subTotalHarga = parseInt($('#subTotalBelanja').val());
+        var tipetras = $('#transaksi_tipe_bayar').val()
         if (bayar_cash != 0 && bayar_card == 0) {
             bayar_card = 0;
             total = bayar_cash + bayar_card - subTotalHarga;
@@ -562,6 +623,17 @@
         } else if (bayar_cash == 0 && bayar_card != 0) {
             bayar_cash = 0;
             total = bayar_card + bayar_cash - subTotalHarga;
+            document.getElementById("kembalian").value = total;
+        } else if (tipetras == 7) {
+            var subtot = parseInt($('#subTotalBelanja').val());
+            var bayarcard = parseInt($('#txtBayarCard').val());
+            total = bayarcard - subtot;
+            console.log(total)
+            document.getElementById("kembalian").value = total;
+        } else if (tipetras == 8) {
+            console.log(bayar_card)
+            console.log(subTotalHarga)
+            total = bayar_card - subTotalHarga;
             document.getElementById("kembalian").value = total;
         }
         // $('#transaksi_total_harga').val(total);
