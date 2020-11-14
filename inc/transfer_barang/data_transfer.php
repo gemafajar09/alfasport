@@ -1,36 +1,39 @@
 <?php
 include "../../config/koneksi.php";
 include "../../App/MY_url_helper.php";
-$data = $con->query("
-SELECT 
-tb_transfer.id_transfer, 
-toko.nama_toko AS asal, 
-toko1.nama_toko As tujuan, 
-tb_transfer.tanggal, 
-tb_transfer.acc_owner 
-FROM tb_transfer 
-JOIN toko ON toko.id_toko = tb_transfer.id_toko 
-JOIN toko toko1 ON toko1.id_toko = tb_transfer.id_toko_tujuan 
-GROUP BY tb_transfer.kode_transfer 
-")->fetchAll();
+$data = $con->query("SELECT
+                        tb_transfer_barang.transfer_barang_id,
+                        tb_transfer_barang.transfer_barang_kode,
+                        tb_transfer_barang.transfer_barang_tgl,
+                        tb_transfer_barang.transfer_barang_acc_owner,
+                        toko.nama_toko as nama_toko_asal,
+                        toko1.nama_toko As nama_toko_tujuan
+                    From
+                        tb_transfer_barang Inner Join
+                        toko On toko.id_toko = tb_transfer_barang.id_toko Inner Join
+                        toko toko1 On toko1.id_toko = tb_transfer_barang.id_toko_tujuan
+                    GROUP BY tb_transfer_barang.transfer_barang_kode 
+                    ")->fetchAll();
 foreach ($data as $i => $a) {
 ?>
     <tr>
         <td><?= $i + 1 ?></td>
-        <td><?= $a['asal'] ?></td>
-        <td><?= $a['tujuan'] ?></td>
-        <td><?= tgl_indo($a['tanggal'])  ?></td>
+        <td><?= $a['transfer_barang_kode'] ?></td>
+        <td><?= $a['nama_toko_asal'] ?></td>
+        <td><?= $a['nama_toko_tujuan'] ?></td>
+        <td><?= tgl_indo($a['transfer_barang_tgl'])  ?></td>
         <td>
-            <?php if ($a['acc_owner'] == 0) {
-                echo "<span style='color:red;'>Belum Di Acc</span>";
+            <?php if ($a['transfer_barang_acc_owner'] == 0) {
+            ?>
+                <button class="btn btn-danger btn-sm" onclick="dataBarang('<?= $a['transfer_barang_id'] ?>')"> Belum Di ACC</button>
+            <?php    
             } else {
-                echo "Sudah Di Acc";
-            } ?>
+            ?>
+                <button class="btn btn-info btn-sm" onclick="dataBarang('<?= $a['transfer_barang_id'] ?>')"> Sudah Di ACC</button>
+            <?php    
+            } 
+            ?>
         </td>
-
-        <!-- <td>
-            <button type="button" onclick="edit('<?= $a['id_transfer'] ?>')" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
-            <button type="button" id="hapus" onclick="hapus('<?= $a['id_transfer'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-        </td> -->
     </tr>
 <?php } ?>
+

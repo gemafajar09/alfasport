@@ -4,9 +4,9 @@ include "../../config/koneksi.php";
 $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 if ($_POST['cek'] == 1) {
-    $update = $con->update('tb_transfer', ['acc_owner' => $_POST['cek']], ['id_transfer' => $_POST['id_transfer']]);
+    $update = $con->update('tb_transfer_barang', ['transfer_barang_acc_owner' => $_POST['cek']], ['transfer_barang_id' => $_POST['transfer_barang_id']]);
 } else {
-    $update = $con->update('tb_transfer', ['acc_owner' => $_POST['cek']], ['id_transfer' => $_POST['id_transfer']]);
+    $update = $con->update('tb_transfer_barang', ['transfer_barang_acc_owner' => $_POST['cek']], ['transfer_barang_id' => $_POST['transfer_barang_id']]);
 }
 
 if ($update == TRUE) {
