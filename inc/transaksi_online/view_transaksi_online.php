@@ -52,19 +52,18 @@
                     <th>ID</th>
                     <th>Toko</th>
                     <th>Toko Asal</th>
-                    <th colspan="2" class="text-center">Jumlah</th>
+                    <!-- <th>Jumlah</th> -->
                     <th>Total Belanja</th>
-                    <th>Bank</th>
                     <th>Create At</th>
                     <th>Keterangan</th>
                     <th class="text-center">Action</th>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th colspan="4">&nbsp;</th>
                     <th>Cash</th>
                     <th>Debit/Kredit</th>
                     <th colspan="5">&nbsp;</th>
-                </tr>
+                </tr> -->
             </thead>
             <tbody id="isi"></tbody>
         </table>
@@ -93,9 +92,14 @@
                                 <td><b><span id="tgl_jual"></span></b></td>
                             </tr>
                             <tr>
-                                <td><b>Toko</b></td>
+                                <td><b>Toko Asal</b></td>
                                 <td>:</td>
                                 <td><b><span id="toko_nama"></span></b></td>
+                            </tr>
+                            <tr>
+                                <td><b>Toko Online</b></td>
+                                <td>:</td>
+                                <td><b><span id="data_toko_online_nama"></span></b></td>
                             </tr>
                         </table>
                     </div>
@@ -128,6 +132,7 @@
                 $('#id_jual').text(data.transol_kode)
                 $('#tgl_jual').text(data.transol_tgl)
                 $('#toko_nama').text(data.nama_toko)
+                $('#data_toko_online_nama').text(data.data_toko_online_nama)
 
                 // modal table
                 return axios.post('inc/transaksi_online/show_detail_transaksi_tabel_online.php', {
@@ -148,15 +153,18 @@
     }
 
     function hapus(transol_id) {
-        axios.post('inc/transaksi_online/aksi_hapus_transaksi_online.php', {
-            'transol_id': transol_id
-        }).then(function(res) {
-            var data = res.data
-            toastr.info('SUCCESS..')
-            $('#isi').load('inc/transaksi_online/data_transaksi_online.php');
-        }).catch(function(err) {
-            toastr.warning('ERROR..')
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/transaksi_online/aksi_hapus_transaksi_online.php', {
+                'transol_id': transol_id
+            }).then(function(res) {
+                var data = res.data
+                toastr.info('SUCCESS..')
+                $('#isi').load('inc/transaksi_online/data_transaksi_online.php');
+            }).catch(function(err) {
+                toastr.warning('ERROR..')
+            })
+        }
     }
 
     $('#toko').change(function(e) {
@@ -171,10 +179,11 @@
         })
     })
 
-    $(document).ready(function() {
-        $("#datatable-responsive").DataTable().destroy();
-        // $('#datatable-responsive tbody').empty();
-        $('#isi').load('inc/transaksi_online/data_transaksi_online.php');
-        $("#datatable-responsive").DataTable()
-    })
+    $('#isi').load('inc/transaksi_online/data_transaksi_online.php');
+    // $(document).ready(function() {
+    //     $("#datatable-responsive").DataTable().destroy();
+    //     // $('#datatable-responsive tbody').empty();
+    //     $('#isi').load('inc/transaksi_online/data_transaksi_online.php');
+    //     $("#datatable-responsive").DataTable()
+    // })
 </script>

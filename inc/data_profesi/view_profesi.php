@@ -113,14 +113,17 @@
     }
 
     function hapus(id) {
-        axios.post('inc/data_profesi/aksi_hapus_profesi.php', {
-            'data_profesi_id': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/data_profesi/data_profesi.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/data_profesi/aksi_hapus_profesi.php', {
+                'data_profesi_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/data_profesi/data_profesi.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

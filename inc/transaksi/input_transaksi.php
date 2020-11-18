@@ -6,7 +6,7 @@
                     <a href="penjualan.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
                 </div>
                 <div class="text-center">
-                    Entry Penjualan
+                    Entry Penjualan Offline
                 </div>
             </div>
             <div class="card-body">
@@ -114,12 +114,7 @@
                             <input type="hidden" id="id_gudangs">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-1 col-lg-1">
-                        <div class="form-group">
-                            <label>&nbsp;</label>
-                            <button type="button" id="simpans" class="btn btn-info form-control"><i class="fa fa-plus"></i></button>
-                        </div>
-                    </div>
+                    
                     <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>Tipe Konsumen</label>
@@ -136,10 +131,18 @@
                         <label for="">Point</label>
                         <input type="text" readonly id="points" class="form-control">
                     </div>
+                    <br>
+                    <br>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="button" id="simpans" class="btn btn-info form-control"><i class="fa fa-plus"> Tambah ke Keranjang</i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
-        <hr style="border: 10px solid; border-radius: 5px;">
+        <hr style="border: 3px solid; border-radius: 5px;">
 
         <!-- tabel keranjang -->
         <div class="x_content">
@@ -179,7 +182,7 @@
                                     <div class="form-group">
                                         <label>Cara Bayar</label>
                                         <select name="transaksi_tipe_bayar" id="transaksi_tipe_bayar" class="form-control" required>
-                                            <option value="">-Pilih-</option>
+                                            <option value="0">-Pilih-</option>
                                             <?php
                                             $diskon = $con->select('tb_metode', '*');
                                             foreach ($diskon as $a) {
@@ -251,13 +254,7 @@
                                         </div>
                                         <input type="text" class="form-control" id="txtBayarCash" onkeyup="dapatKembalian()">
                                     </div>
-                                </div>
-                                <div class="col-md-12" style="display: none;" id="bayar_point">
-                                    <label>Point</label>
-                                    <div class="input-group mb-2">
-                                        <input type="text" readonly class="form-control" id="txtBayarPoint" onkeyup="dapatKembalian()">
-                                    </div>
-                                </div>
+                                </div>                               
                                 <div class="col-md-12" style="display: none;" id="bayar_card">
                                     <label>Bayar Card</label>
                                     <div class="input-group mb-2">
@@ -267,13 +264,19 @@
                                         <input type="text" class="form-control" id="txtBayarCard" onkeyup="dapatKembalian()">
                                     </div>
                                 </div>
+                                <div class="col-md-12" style="display: none;" id="bayar_point">
+                                    <label>Point</label>
+                                    <div class="input-group mb-2">
+                                        <input type="text" readonly class="form-control" id="txtBayarPoint" onkeyup="dapatKembalian()">
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <label>Kembalian</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">Rp.</div>
                                         </div>
-                                        <input type="text" id="kembalian" class="form-control" readonly>
+                                        <input type="text" id="kembalian" class="form-control" value="0" readonly>
                                         <input type="hidden" id="transaksi_id" class="form-control">
                                     </div>
                                 </div>
@@ -287,7 +290,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" onclick="simpan()" class="btn btn-primary btn-sm">Simpan</button>
+                        <button type="button" id="btnCheckoutPoint" onclick="simpan()" class="btn btn-primary btn-sm">Simpan</button>
                         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -333,7 +336,7 @@
         if (tipe == "Member") {
             let member = "<div id='tipe_member' class='form-group'>" +
                 "<label>Member</label>" +
-                "<select name='member_id'  id='member_ids' class='form-control select2' style='width: 100%;' required>" +
+                "<select name='member_id'  id='member_ids' class='form-control select3' style='width: 100%;' required>" +
                 "<option value=''>-Pilih-</option>" +
                 <?php
                 $datag = $con->select('tb_member', '*');
@@ -342,7 +345,7 @@
                 <?php } ?> "</select>" +
                 "</div>";
             document.getElementById('customer').innerHTML = member;
-            $('.select2').select2({
+            $('.select3').select2({
                 dropdownAutoWidth: true
             });
             $('#member_ids').change(function(e) {
@@ -360,11 +363,13 @@
                     console.log(err)
                 })
             })
+
+
         } else if (tipe == "Distributor") {
             var distributor =
                 "<div class='form-group' id='tipe_distributor'>" +
                 "<label>Distributor</label>" +
-                "<select name='distributor_id' id='distributor_ids' class='form-control' style='width: 100%;' required>" +
+                "<select name='distributor_id' id='distributor_ids' class='form-control select3' style='width: 100%;' required>" +
                 "<option value=''>-Pilih-</option>" +
                 <?php
                 $datag = $con->select('tb_distributor', '*');
@@ -373,7 +378,7 @@
                 <?php } ?> "</select>" +
                 "</div>";
             document.getElementById('customer').innerHTML = distributor;
-            $('.select2').select2({
+            $('.select3').select2({
                 dropdownAutoWidth: true
             });
             $('#distributor_ids').change(function(e) {
@@ -382,10 +387,15 @@
                 $('#distributor_id').val(id_member)
                 $('#member_id').val('')
             })
+            $('#pts').hide()
+            $('#points').val(0)
         } else {
             document.getElementById('customer').innerHTML = '';
             $('#member_id').val('')
             $('#distributor_id').val('')
+            $('#pts').hide()
+            $('#points').val(0)
+
         }
     })
 
@@ -431,14 +441,15 @@
         if (stok < jumlahBeli) {
             alert('Maaf Stok Tidak Mencukupi')
             $('#transaksi_jumlah_beli').val('')
+            $('#transaksi_total_harga').val(0)
         } else {
             console.log('Aman')
+            // dapatkan harga
+            var harga = document.getElementById("harga").value;
+            // cari total harga
+            var total = harga * jumlahBeli;
+            document.getElementById("transaksi_total_harga").value = total;
         }
-        // dapatkan harga
-        var harga = document.getElementById("harga").value;
-        // cari total harga
-        var total = harga * jumlahBeli;
-        document.getElementById("transaksi_total_harga").value = total;
 
     }
 
@@ -490,17 +501,20 @@
         document.getElementById('jumlahTotal').value = tot;
         console.log(sub)
         console.log(tot)
-        $('#modalCheckout').modal()
+        var tipe_konsumen = $('#tipe_konsumen').val()
+        if (tipe_konsumen == '') {
+            toastr.warning('Silahkan Pilih Tipe Konsumen');
+        }else{
+            $('#modalCheckout').modal()
+        }
     })
 
-    // type bayar
-    $('#transaksi_tipe_bayar').change(function(e) {
-        var id = $(this).val()
+    $('#transaksi_bank').change(function (e) { 
+        var bank = $(this).val()
+        var subtotal = $('#subTotalBelanja1').val()
+        var id = $('#transaksi_tipe_bayar').val()
         if (id != 1) {
-            $('#transaksi_bank').change(function(e) {
-                var bank = $(this).val()
-                var subtotal = $('#subTotalBelanja').val()
-                axios.post('inc/transaksi/diskon.php', {
+            axios.post('inc/transaksi/diskon.php', {
                     'id': id,
                     'bank': bank
                 }).then(function(res) {
@@ -522,8 +536,7 @@
                 }).catch(function(err) {
                     console.log(err)
                 })
-            })
-        } else {
+        }else{
             axios.post('inc/transaksi/diskon.php', {
                 'id': id,
                 'bank': 0
@@ -537,51 +550,31 @@
         }
     })
 
-    // menampilkan pilihan bank
+
     document.getElementById("transaksi_tipe_bayar").addEventListener("change", function() {
         var poin = parseInt($('#points').val())
         var tot = parseInt($('#subTotalBelanjaBantuan').val())
-        if (this.value == 2 || this.value == 3 ) {
-            document.getElementById("tipe_bayar").style.display = "block";
-            document.getElementById("bayar_card").style.display = "block";
-            document.getElementById("diskonBank").style.display = "block";
+        var hrgAwal = parseInt($('#subTotalBelanja1').val())
+        // jika tipe null
+        // alert(this.value)
+        if (this.value == 0) {
+            $('#kembalian').val(0);
+            $("#subTotalBelanja").val(hrgAwal);
+            $("#subTotalBelanjaBantuan").val(hrgAwal);
+            document.getElementById("tipe_bayar").style.display = "none";
             document.getElementById("bayar_cash").style.display = "none";
             document.getElementById("bayar_point").style.display = "none";
+            document.getElementById("bayar_card").style.display = "none";
+            document.getElementById("diskonBank").style.display = "none";
             document.getElementById("txtBayarCash").value = 0;
             document.getElementById("txtBayarCard").value = 0;
-            $('#pesan').html('')
-        } else if (this.value == 4 || this.value == 5) {
             
-            document.getElementById("tipe_bayar").style.display = "block";
-            document.getElementById("bayar_cash").style.display = "block";
-            document.getElementById("bayar_card").style.display = "block";
-            document.getElementById("bayar_point").style.display = "none";
-            document.getElementById("diskonBank").style.display = "block";
-            document.getElementById("txtBayarCash").value = 0;
-            document.getElementById("txtBayarCard").value = 0;
-            $('#pesan').html('')
-        } else if (this.value == 9) {
-            var penguranganpoint = tot - poin
-            $('#subTotalBelanja').val(penguranganpoint)
-            document.getElementById("tipe_bayar").style.display = "none";
-            document.getElementById("bayar_cash").style.display = "block";
-            document.getElementById("bayar_point").style.display = "block";
-            document.getElementById("diskonBank").style.display = "none";
-            document.getElementById("bayar_card").style.display = "none";
-            document.getElementById("txtBayarCash").value = 0;
-            document.getElementById("txtBayarPoint").value = poin;
-            $('#pesan').html('')
-        } else if (this.value == 7 || this.value == 8) {
-            var penguranganpoint = tot - poin
-            $('#subTotalBelanja').val(penguranganpoint)
-            document.getElementById("tipe_bayar").style.display = "block";
-            document.getElementById("bayar_point").style.display = "block";
-            document.getElementById("bayar_card").style.display = "block";
-            document.getElementById("diskonBank").style.display = "block";
-            document.getElementById("txtBayarPoint").value = poin;
-            document.getElementById("txtBayarCard").value = 0;
-            $('#pesan').html('')
-        } else if (this.value == 1) {
+        }
+        // jika tipe cash
+        else if (this.value == 1) {
+            $('#kembalian').val(0);
+            $("#subTotalBelanja").val(hrgAwal);
+            $("#subTotalBelanjaBantuan").val(hrgAwal);
             document.getElementById("tipe_bayar").style.display = "none";
             document.getElementById("bayar_cash").style.display = "block";
             document.getElementById("bayar_point").style.display = "none";
@@ -590,10 +583,54 @@
             document.getElementById("txtBayarCash").value = 0;
             document.getElementById("txtBayarCard").value = 0;
             $('#pesan').html('')
-        } else if (this.value == 6) {
+            document.getElementById("btnCheckoutPoint").style.display = "block";
+        }
+        // jika tipe debit / credit 
+        else if (this.value == 2 || this.value == 3 ) {
+            $('#kembalian').val(0);
+            $("#subTotalBelanja").val(hrgAwal);
+            $("#subTotalBelanjaBantuan").val(hrgAwal);
+            $('#transaksi_bank').val('').change();
+            document.getElementById("tipe_bayar").style.display = "block";
+            document.getElementById("bayar_card").style.display = "block";
+            document.getElementById("bayar_cash").style.display = "none";
+            document.getElementById("diskonBank").style.display = "block";
+            document.getElementById("bayar_point").style.display = "none";
+            document.getElementById("txtBayarCash").value = 0;
+            document.getElementById("txtBayarCard").value = 0;
+            $('#pesan').html('')
+            document.getElementById("btnCheckoutPoint").style.display = "block";
+        } 
+        // jika tipe cash + debit / cash + credit
+        else if (this.value == 4 || this.value == 5) {    
+            $('#kembalian').val(0);
+            $("#subTotalBelanja").val(hrgAwal);
+            $("#subTotalBelanjaBantuan").val(hrgAwal);
+            $('#transaksi_bank').val('').change();
+
+            document.getElementById("tipe_bayar").style.display = "block";
+            document.getElementById("bayar_cash").style.display = "block";
+            document.getElementById("bayar_card").style.display = "block";
+            document.getElementById("diskonBank").style.display = "block";
+            document.getElementById("bayar_point").style.display = "none";
+            document.getElementById("txtBayarCash").value = 0;
+            document.getElementById("txtBayarCard").value = 0;
+            $('#pesan').html('')
+            document.getElementById("btnCheckoutPoint").style.display = "block";
+        }
+        // jika tipe point 
+        else if (this.value == 6) {
+            $('#kembalian').val(0);
+            $('#transaksi_bank').val('').change();
+            $("#subTotalBelanja").val(hrgAwal);
+            $("#subTotalBelanjaBantuan").val(hrgAwal);
             if(tot > poin)
             {
-                $('#pesan').html('* Maaf Point Anda Tidak Mencukupi')
+                // $('#btnCheckoutPoint').prop('display', 'none')
+                document.getElementById("btnCheckoutPoint").style.display = "none";
+                $('#pesan').html('* Maaf Point Anda Tidak Mencukupi');
+            }else{
+                document.getElementById("btnCheckoutPoint").style.display = "block";
             }
             document.getElementById("tipe_bayar").style.display = "none";
             document.getElementById("bayar_cash").style.display = "none";
@@ -603,7 +640,45 @@
             document.getElementById("txtBayarPoint").value = poin;
             document.getElementById("txtBayarCard").value = 0;
         }
-        
+        // jika point + credit/debit
+        else if (this.value == 7 || this.value == 8) {
+            $('#kembalian').val(0);
+            $("#subTotalBelanja").val(hrgAwal);
+            $("#subTotalBelanjaBantuan").val(hrgAwal);
+            $('#transaksi_bank').val('').change();
+            var penguranganpoint = tot - poin
+            // alert(penguranganpoint)
+            // $('#subTotalBelanja').val(penguranganpoint)
+            document.getElementById("tipe_bayar").style.display = "block";
+            document.getElementById("bayar_cash").style.display = "none";
+            document.getElementById("bayar_card").style.display = "block";
+            document.getElementById("diskonBank").style.display = "block";
+            document.getElementById("bayar_point").style.display = "block";
+            document.getElementById("txtBayarPoint").value = poin;
+            document.getElementById("txtBayarCard").value = 0;
+            $('#pesan').html('')
+            document.getElementById("btnCheckoutPoint").style.display = "block";
+        }
+        // jika point + cash
+        else if (this.value == 9) {
+            $('#kembalian').val(0);
+            $("#subTotalBelanja").val(hrgAwal);
+            $("#subTotalBelanjaBantuan").val(hrgAwal);
+            $('#transaksi_bank').val('').change();
+
+            var penguranganpoint = tot - poin
+            
+            // $('#subTotalBelanja').val(penguranganpoint)
+            document.getElementById("tipe_bayar").style.display = "none";
+            document.getElementById("bayar_cash").style.display = "block";
+            document.getElementById("bayar_card").style.display = "none";
+            document.getElementById("diskonBank").style.display = "none";
+            document.getElementById("bayar_point").style.display = "block";
+            document.getElementById("txtBayarCash").value = 0;
+            document.getElementById("txtBayarPoint").value = poin;
+            $('#pesan').html('')
+            document.getElementById("btnCheckoutPoint").style.display = "block";
+        }
     })
 
     // menampilkan kembalian
@@ -613,27 +688,33 @@
         var bayar_poin = parseInt($('#txtBayarPoint').val());
         var subTotalHarga = parseInt($('#subTotalBelanja').val());
         var tipetras = $('#transaksi_tipe_bayar').val()
-        if (bayar_cash != 0 && bayar_card == 0) {
+        console.log(tipetras);
+        if (tipetras == 1) {
+            $('#kembalian').val(0);
             bayar_card = 0;
             total = bayar_cash + bayar_card - subTotalHarga;
             document.getElementById("kembalian").value = total;
-        } else if (bayar_cash != 0 && bayar_card != 0) {
+        } else if (tipetras == 4 || tipetras == 5) {
+            $('#kembalian').val(0);
             total = bayar_cash + bayar_card - subTotalHarga;
             document.getElementById("kembalian").value = total;
-        } else if (bayar_cash == 0 && bayar_card != 0) {
+        } else if (tipetras == 2 || tipetras == 3) {
+            $('#kembalian').val(0);
             bayar_cash = 0;
             total = bayar_card + bayar_cash - subTotalHarga;
             document.getElementById("kembalian").value = total;
-        } else if (tipetras == 7) {
+        } else if (tipetras == 7 || tipetras == 8) {
+            $('#kembalian').val(0);
             var subtot = parseInt($('#subTotalBelanja').val());
             var bayarcard = parseInt($('#txtBayarCard').val());
-            total = bayarcard - subtot;
+            total = (bayarcard + bayar_poin) - subtot;
             console.log(total)
             document.getElementById("kembalian").value = total;
-        } else if (tipetras == 8) {
-            console.log(bayar_card)
-            console.log(subTotalHarga)
-            total = bayar_card - subTotalHarga;
+        } else if (tipetras == 9){
+            $('#kembalian').val(0);
+            var subTotalHarga = parseInt($('#subTotalBelanja').val());
+            var bayar_cash = parseInt($('#txtBayarCash').val());
+            total = (bayar_cash + bayar_poin) - subTotalHarga;
             document.getElementById("kembalian").value = total;
         }
         // $('#transaksi_total_harga').val(total);
@@ -649,7 +730,8 @@
         var transaksi_diskon = $('#diskonss').val()
         var transaksi_total_belanja = $('#subTotalBelanja').val()
         var transaksi_kembalian = $('#kembalian').val()
-
+        var tipe_konsumen = $('#tipe_konsumen').val()
+        var member_id = $('#member_ids').val()
         var tipe_diskon2 = $('#tipe_diskon').val();
         if (tipe_diskon2 == 'dis_persen') {
             var diskon2 = $('#diskon_persen').val();
@@ -658,10 +740,10 @@
         } else {
             var diskon2 = 0;
         }
-
         var diskon_bank = $('#diskons').val()
         var transaksi_jumlah_beli = $('#jumlahTotal').val()
         var kode = $('#kode').val()
+        var points = $('#points').val()
         var keterangan = $('#keterangan').val()
         axios.post('inc/transaksi/aksi_simpan_transaksi.php', {
             'transaksi_tipe_bayar': transaksi_tipe_bayar,
@@ -676,11 +758,15 @@
             'diskon2': diskon2,
             'diskon_bank': diskon_bank,
             'transaksi_jumlah_beli': transaksi_jumlah_beli,
-            'keterangan': keterangan
+            'tipe_konsumen': tipe_konsumen,
+            'member_id': member_id,
+            'points': points,
+            'keterangan': keterangan,
+            'kode': kode, 
         }).then(function(res) {
             var simpan = res.data
             window.open('inc/struk/invo1.php?invoice=' + kode, '_blank');
-            // window.location = 'penjualan.html';
+            window.location = 'penjualan.html';
             kosong()
         }).catch(function(err) {
             alert(err)
@@ -713,7 +799,7 @@
         $('#transaksi_total_harga').val(0)
         $('#tmp_id').val(null)
         $('#disc').val(null)
-        document.getElementsByName("radio")[0].checked = false;
+        // document.getElementsByName("radio")[0].checked = false;
     }
 
     // untuk mengecek apak tipe diskon persen atau potongan harga
@@ -769,8 +855,53 @@
         $('#id_gudangs').val(null)
         $('#harga').val(0)
         $('#transaksi_jumlah_beli').val(0)
-        $('[name="radio"]').prop('checked', false);
+        // $('[name="radio"]').prop('checked', false);
     })
 
     $('#pts').hide()
+    
+    // // type bayar
+    // $('#transaksi_tipe_bayar').change(function(e) {
+    //     var id = $(this).val()
+    //     if (id != 1) {
+    //         $('#transaksi_bank').change(function(e) {
+    //             var bank = $(this).val()
+    //             var subtotal = $('#subTotalBelanja').val()
+    //             axios.post('inc/transaksi/diskon.php', {
+    //                 'id': id,
+    //                 'bank': bank
+    //             }).then(function(res) {
+    //                 var data = res.data
+    //                 if(data == false)
+    //                 {
+    //                     var nilaidiskon = 0
+
+    //                 }else{
+    //                     var nilaidiskon = data.diskon
+    //                 }
+    //                 $('#diskons').val(nilaidiskon)
+    //                 var disc = nilaidiskon
+    //                 var total = (subtotal * disc) / 100
+    //                 var bersih = subtotal - total
+    //                 $('#subTotalBelanja').val(bersih)
+    //                 $('#subTotalBelanjaBantuan').val(bersih)
+    //                 $('#diskonss').val(total)
+    //             }).catch(function(err) {
+    //                 console.log(err)
+    //             })
+    //         })
+    //     } else {
+    //         axios.post('inc/transaksi/diskon.php', {
+    //             'id': id,
+    //             'bank': 0
+    //         }).then(function(res) {
+    //             var data = res.data
+    //             $('#diskons').val(data.diskon)
+    //             console.log(data.diskon)
+    //         }).catch(function(err) {
+    //             console.log(err)
+    //         })
+    //     }
+    // })
 </script>
+

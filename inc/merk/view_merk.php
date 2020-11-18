@@ -33,7 +33,9 @@
                 <tr>
                     <th>No</th>
                     <th>Merk</th>
-                    <th><center>Action</center></th>
+                    <th>
+                        <center>Action</center>
+                    </th>
                 </tr>
             </thead>
             <tbody id="isi"></tbody>
@@ -113,14 +115,17 @@
     }
 
     function hapus(id) {
-        axios.post('inc/merk/aksi_hapus_merk.php', {
-            'merk_id': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/merk/data_merk.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/merk/aksi_hapus_merk.php', {
+                'merk_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/merk/data_merk.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

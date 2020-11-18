@@ -151,14 +151,17 @@
     }
 
     function hapus(id) {
-        axios.post('inc/subdivisi/aksi_hapus_subdivisi.php', {
-            'subdivisi_id': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/subdivisi/data_subdivisi.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/subdivisi/aksi_hapus_subdivisi.php', {
+                'subdivisi_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/subdivisi/data_subdivisi.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

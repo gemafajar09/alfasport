@@ -52,7 +52,7 @@
                     <th>ID</th>
                     <th>Toko</th>
                     <th>Cara Bayar</th>
-                    <th colspan="2" class="text-center">Jumlah</th>
+                    <th colspan="3" class="text-center">Jumlah</th>
                     <th>Total Belanja</th>
                     <th>Bank</th>
                     <th>Create At</th>
@@ -63,6 +63,7 @@
                     <th colspan="4">&nbsp;</th>
                     <th>Cash</th>
                     <th>Debit/Kredit</th>
+                    <th>Point</th>
                     <th colspan="5">&nbsp;</th>
                 </tr>
             </thead>
@@ -133,7 +134,6 @@
                 return axios.post('inc/transaksi/show_detail_transaksi_tabel.php', {
                     'transaksi_id': transaksi_id
                 })
-
             }).then(function(res) {
                 $('#isi2').html(res.data);
             })
@@ -148,15 +148,18 @@
     }
 
     function hapus(transaksi_id) {
-        axios.post('inc/transaksi/aksi_hapus_transaksi.php', {
-            'transaksi_id': transaksi_id
-        }).then(function(res) {
-            var data = res.data
-            toastr.info('SUCCESS..')
-            $('#isi').load('inc/transaksi/data_transaksi.php');
-        }).catch(function(err) {
-            toastr.error('ERROR..')
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/transaksi/aksi_hapus_transaksi.php', {
+                'transaksi_id': transaksi_id
+            }).then(function(res) {
+                var data = res.data
+                toastr.info('SUCCESS..')
+                $('#isi').load('inc/transaksi/data_transaksi.php');
+            }).catch(function(err) {
+                toastr.error('ERROR..')
+            })
+        }
     }
 
     $('#toko').change(function(e) {
@@ -171,11 +174,12 @@
         })
     })
 
-    $(document).ready(function() {
-        $("#datatable-responsive").DataTable().destroy();
-        // $('#datatable-responsive tbody').empty();
-        $('#isi').load('inc/transaksi/data_transaksi.php');
+    $('#isi').load('inc/transaksi/data_transaksi.php');
+    // $(document).ready(function() {
+    //     $("#datatable-responsive").DataTable().destroy();
+    //     // $('#datatable-responsive tbody').empty();
+    //     $('#isi').load('inc/transaksi/data_transaksi.php');
 
-        $("#datatable-responsive").DataTable()
-    })
+    //     $("#datatable-responsive").DataTable()
+    // })
 </script>

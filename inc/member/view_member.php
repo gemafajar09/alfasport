@@ -203,12 +203,15 @@
     }
 
     function hapus(id) {
-        axios.post('inc/member/aksi_hapus_member.php', {
-            'member_id': id
-        }).then(function(res) {
-            var data = res.data
-            $('#isi').load('inc/member/data_member.php');
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/member/aksi_hapus_member.php', {
+                'member_id': id
+            }).then(function(res) {
+                var data = res.data
+                $('#isi').load('inc/member/data_member.php');
+            })
+        }
     }
 
     function kosong() {

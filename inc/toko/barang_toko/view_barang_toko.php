@@ -321,12 +321,15 @@
     }
 
     function hapus(barang_toko_id) {
-        axios.post('inc/toko/barang_toko/hapus_stok_barang_toko.php', {
-            'barang_toko_id': barang_toko_id
-        }).then(function(res) {
-            var data = res.data
-            $('#isi').load('inc/toko/barang_toko/data_stok_barang_toko.php');
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/toko/barang_toko/hapus_stok_barang_toko.php', {
+                'barang_toko_id': barang_toko_id
+            }).then(function(res) {
+                var data = res.data
+                $('#isi').load('inc/toko/barang_toko/data_stok_barang_toko.php');
+            })
+        }
     }
 
     function kosong() {

@@ -6,7 +6,7 @@
                     <a href="penjualan_online.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
                 </div>
                 <div class="text-center">
-                    Entry Penjualan
+                    Entry Penjualan Online
                 </div>
             </div>
             <div class="card-body">
@@ -74,7 +74,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <!-- <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
                         <div class="form-group">
                             <label>
                                 <input type="radio" name="radio" id="radio" value="ue">ue&nbsp;&nbsp;
@@ -82,6 +82,13 @@
                                 <input type="radio" name="radio" id="radio" value="us">us&nbsp;&nbsp;
                                 <input type="radio" name="radio" id="radio" value="cm">cm
                             </label>
+                            <select class="form-control select2" name="ukurans" id="ukurans" required style="width: 100%;">
+                            </select>
+                        </div>
+                    </div> -->
+                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                        <div class="form-group">
+                            <label id="sizes">Ukuran</label>
                             <select class="form-control select2" name="ukurans" id="ukurans" required style="width: 100%;">
                             </select>
                         </div>
@@ -173,17 +180,16 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row" style="font-size:12px">
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Cara Bayar</label>
                                         <select name="transaksi_tipe_bayar" id="transaksi_tipe_bayar" class="form-control" required>
                                             <option value="">-Pilih-</option>
-                                            <?php
-                                            $diskon = $con->select('tb_metode', '*');
-                                            foreach ($diskon as $a) {
-                                            ?>
-                                                <option value="<?= $a['id_metode'] ?>"><?= $a['kategori'] ?></option>
-                                            <?php } ?>
+                                            <option value="1">Cash</option>
+                                            <option value="2">Debit Card</option>
+                                            <option value="3">Credit Card</option>
+                                            <option value="4">Cash + Debit Card</option>
+                                            <option value="5">Cash + Credit Card</option>
                                         </select>
                                     </div>
                                 </div>
@@ -200,7 +206,7 @@
                                             <?php } ?>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-12">
                                     <label>Total</label>
                                     <div class="input-group mb-2">
@@ -213,14 +219,14 @@
                                         <input type="hidden" id="jumlahTotal" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <!-- <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Diskon Bank</label>
                                         <input type="text" class="form-control" id="diskons" readonly>
                                         <input type="hidden" class="form-control" id="diskonss" readonly>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div> -->
+                                <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tipe Diskon</label>
                                         <select name="tipe_diskon" id="tipe_diskon" class="form-control">
@@ -228,10 +234,10 @@
                                             <option value="dis_persen">Potongan Persen</option>
                                             <option value="dis_harga">Potongan Harga</option>
                                         </select>
-                                        <!-- <form action="voucher.html" method="POST" target="_blank">
+                                        <form action="voucher.html" method="POST" target="_blank">
                                             <input type="hidden" name="a" value="profile-tab">
                                             <button class="btn btn-sm btn-info" type="submit">Punya Voucher ?</button>
-                                        </form> -->
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -240,8 +246,8 @@
                                         <input type="text" class="form-control" name="diskon_persen" id="diskon_persen" style="display:none;" placeholder="Potongan Persen" onkeyup="potDis(this)">
                                         <input type="number" class="form-control" name="diskon_harga" id="diskon_harga" style="display: none;" placeholder="Potongan Harga">
                                     </div>
-                                </div>
-                                <div class="col-md-12" style="display: none;" id="bayar_cash">
+                                </div> -->
+                                <div class="col-md-12" style="display: block;" id="bayar_cash">
                                     <label>Bayar Cash</label>
                                     <div class="input-group mb-2">
                                         <div class="input-group-prepend">
@@ -292,6 +298,7 @@
 
 <script>
     $('#isi').load('inc/transaksi_online/data_keranjang_transaksi_online.php');
+    
     // menampilkan data gudang dari toko yang dipilih
     $("#id_toko").change(function() {
         var id_toko = $('#id_toko option:selected').val();
@@ -307,6 +314,41 @@
             }
         });
     })
+    // cari ukuran
+    $('#id_gudang').change(function(e){
+        e.preventDefault()
+        var barang_id = $(this).val()
+        var id_toko = $('#id_toko').val()
+        axios.post('inc/transaksi_online/filter/ukuran.php',{
+            'id_toko':id_toko,
+            'id':barang_id
+        }).then(function(res){
+            var data = res.data
+            $('#ukurans').html(data)
+        }).catch(function(err){
+            console.log(err)
+        })
+    })
+    // cek stok dan harga
+    $('#ukurans').change(function() {
+        var ukuran = $(this).val()
+        console.log(ukuran)
+        axios.post('inc/transaksi_online/filter/stok.php', {
+            'id': ukuran
+        }).then(function(res) {
+            var data = res.data
+            var hasil = data.barang_jual - data.potongan
+            console.log(hasil)
+            var pengurangan = hasil
+            $('#transaksi_stok').val(data.barang_toko_jml)
+            $('#harga').val(pengurangan)
+            $('#discItm').val(data.persen)
+            $('#hasilDsc').val(hasil)
+            $('#harga1').val(pengurangan)
+            $('#id_gudangs').val(data.barang_detail_id)
+        })
+    })
+
 
     function potongan(disc) {
         var diskon = disc.value
@@ -321,45 +363,27 @@
     }
 
     // menampilkan harga dari barang yang dipilih
-    $('[name="radio"]').on('click', function() {
-        var id = $('#id_gudang').val();
-        var size = $(this).val()
-        var id_toko = $('#id_toko option:selected').val();
-        // console.log(id_gudang);
-        $.ajax({
-            type: "POST",
-            url: "inc/transaksi_online/filter/ukuran.php",
-            data: {
-                'id': id,
-                'size': size,
-                'id_toko': id_toko
-            },
-            dataType: 'HTML',
-            success: function(data) {
-                $('#ukurans').html(data);
-            }
-        });
-    })
+    // $('[name="radio"]').on('click', function() {
+    //     var id = $('#id_gudang').val();
+    //     var size = $(this).val()
+    //     var id_toko = $('#id_toko option:selected').val();
+    //     // console.log(id_gudang);
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "inc/transaksi_online/filter/ukuran.php",
+    //         data: {
+    //             'id': id,
+    //             'size': size,
+    //             'id_toko': id_toko
+    //         },
+    //         dataType: 'HTML',
+    //         success: function(data) {
+    //             $('#ukurans').html(data);
+    //         }
+    //     });
+    // })
 
-    // cek stok dan harga
-    $('#ukurans').change(function() {
-        var ukuran = $(this).val()
-        console.log(ukuran)
-        axios.post('inc/transaksi_online/filter/stok.php', {
-            'id': ukuran
-        }).then(function(res) {
-            var data = res.data
-            var hasil = data.jual - data.potongan
-            console.log(hasil)
-            var pengurangan = hasil
-            $('#transaksi_stok').val(data.jumlah)
-            $('#harga').val(pengurangan)
-            $('#discItm').val(data.persen)
-            $('#hasilDsc').val(hasil)
-            $('#harga1').val(pengurangan)
-            $('#id_gudangs').val(data.id_gudang)
-        })
-    })
+    
 
     // mendapatkan total harga dari jumlah beli kali dengan total harga
     function dapatHarga(nilai) {
@@ -368,14 +392,15 @@
         if (stok < jumlahBeli) {
             alert('Maaf Stok Tidak Mencukupi')
             $('#transol_tmp_jumlah_beli').val('')
+            $('#transol_tmp_total_harga').val(0)
         } else {
             console.log('Aman')
+            // dapatkan harga
+            var harga = document.getElementById("harga").value;
+            // cari total harga
+            var total = harga * jumlahBeli;
+            document.getElementById("transol_tmp_total_harga").value = total;
         }
-        // dapatkan harga
-        var harga = document.getElementById("harga").value;
-        // cari total harga
-        var total = harga * jumlahBeli;
-        document.getElementById("transol_tmp_total_harga").value = total;
     }
 
     // proses masuk ke keranjang
@@ -412,6 +437,7 @@
         })
     })
 
+    // menampilkan pilihan bank
     $('#transaksi_tipe_bayar').change(function(e) {
         var id = $(this).val()
         if (id != 3) {
@@ -462,21 +488,30 @@
         $('#modalCheckout').modal()
     })
 
-    // menampilkan pilihan bank
     document.getElementById("transaksi_tipe_bayar").addEventListener("change", function() {
-        if (this.value == 1 || this.value == 2 || this.value == 4) {
+        if (this.value == 0) {
+            $('#kembalian').val(0);
+            $("#subTotalBelanja").val(hrgAwal);
+            $("#subTotalBelanjaBantuan").val(hrgAwal);
+            document.getElementById("tipe_bayar").style.display = "none";
+            document.getElementById("bayar_cash").style.display = "none";
+            document.getElementById("bayar_card").style.display = "none";
+            document.getElementById("diskonBank").style.display = "none";
+            document.getElementById("txtBayarCash").value = 0;
+            document.getElementById("txtBayarCard").value = 0;            
+        } else if (this.value == 2 || this.value == 3) {
             document.getElementById("tipe_bayar").style.display = "block";
             document.getElementById("bayar_card").style.display = "block";
             document.getElementById("bayar_cash").style.display = "none";
             document.getElementById("txtBayarCash").value = 0;
             document.getElementById("txtBayarCard").value = 0;
-        } else if (this.value == 5) {
+        } else if (this.value == 4 || this.value == 5) {
             document.getElementById("tipe_bayar").style.display = "block";
             document.getElementById("bayar_cash").style.display = "block";
             document.getElementById("bayar_card").style.display = "block";
             document.getElementById("txtBayarCash").value = 0;
             document.getElementById("txtBayarCard").value = 0;
-        } else if (this.value == 3) {
+        } else if (this.value == 1) {
             document.getElementById("tipe_bayar").style.display = "none";
             document.getElementById("bayar_cash").style.display = "block";
             document.getElementById("bayar_card").style.display = "none";
@@ -492,18 +527,20 @@
         var bayar_card = parseInt(document.getElementById("txtBayarCard").value);
         var subTotalHarga = parseInt(document.getElementById("subTotalBelanja").value);
 
-        if (bayar_cash != 0 && bayar_card == 0) {
-            bayar_card = 0;
-            total = bayar_cash + bayar_card - subTotalHarga;
-            document.getElementById("kembalian").value = total;
-        } else if (bayar_cash != 0 && bayar_card != 0) {
-            total = bayar_cash + bayar_card - subTotalHarga;
-            document.getElementById("kembalian").value = total;
-        } else if (bayar_cash == 0 && bayar_card != 0) {
-            bayar_cash = 0;
-            total = bayar_card + bayar_cash - subTotalHarga;
-            document.getElementById("kembalian").value = total;
-        }
+        var total = bayar_cash - subTotalHarga;
+        $('#kembalian').val(total)
+        // if (bayar_cash != 0 && bayar_card == 0) {
+        //     bayar_card = 0;
+        //     total = bayar_cash + bayar_card - subTotalHarga;
+        //     document.getElementById("kembalian").value = total;
+        // } else if (bayar_cash != 0 && bayar_card != 0) {
+        //     total = bayar_cash + bayar_card - subTotalHarga;
+        //     document.getElementById("kembalian").value = total;
+        // } else if (bayar_cash == 0 && bayar_card != 0) {
+        //     bayar_cash = 0;
+        //     total = bayar_card + bayar_cash - subTotalHarga;
+        //     document.getElementById("kembalian").value = total;
+        // }
         // $('#transaksi_total_harga').val(total);
     }
 
@@ -536,6 +573,7 @@
             'transol_cash': transol_cash,
             'transol_card': transol_card,
             'transol_id': transol_id,
+            'transol_kode': transol_kode,
             'transol_total_belanja': transol_total_belanja,
             'transol_kembalian': transol_kembalian,
             'transol_tipe_diskon': transol_tipe_diskon,

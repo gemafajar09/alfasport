@@ -2,9 +2,8 @@
     <div class="title_left">
         <h3>Cari Penjualan Barang</h3>
     </div>
-
     <div class="title_right">
-        <div class="col-md-5 col-sm-5   form-group pull-right top_search">
+        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
         </div>
     </div>
 </div>
@@ -12,6 +11,7 @@
     <div class="x_title">
         <div class="row">
             <div class="col-md-6">
+                <div></div>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -31,10 +31,13 @@
                 <select name="artikel" id="artikel" class="form-control select2">
                     <option value="">-Artikel Barang-</option>
                     <?php
-                    $artikel = $con->select('tb_gudang', '*');
+                    $artikel = $con->select('tb_barang', '*');
                     foreach ($artikel as $a) {
                     ?>
-                        <option value="<?= $a['id_gudang'] ?>"><?= $a['nama'] ?> - <?= $a['artikel'] ?></option>
+                        <option value="<?= $a['barang_id'] ?>">
+                            <?= $a['barang_nama'] ?> -
+                            <?= $a['barang_artikel'] ?>
+                        </option>
                     <?php } ?>
                 </select>
             </div>
@@ -48,7 +51,9 @@
                     $toko = $con->query('SELECT * FROM toko WHERE id_toko != 0');
                     foreach ($toko as $t) {
                     ?>
-                        <option value="<?= $t['id_toko'] ?>"><?= $t['nama_toko'] ?></option>
+                        <option value="<?= $t['id_toko'] ?>">
+                            <?= $t['nama_toko'] ?>
+                        </option>
                     <?php } ?>
                 </select>
             </div>
@@ -63,14 +68,7 @@
                         <th>No</th>
                         <th>Artikel</th>
                         <th>Nama</th>
-                        <th>
-                            <select name="ukuran_nama" id="ukuran_nama" class="form-control" width="100%">
-                                <option value="ue">UE</option>
-                                <option value="uk">UK</option>
-                                <option value="us">US</option>
-                                <option value="cm">CM</option>
-                            </select>
-                        </th>
+                        <th>Ukuran</th>
                         <th>Jumlah Penjualan</th>
                         <th>Tanggal Jual</th>
                     </tr>

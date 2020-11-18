@@ -196,7 +196,5 @@
         });
     });
 
-    $(document).ready(function() {
-        $('#isi').load('inc/restock/restock_kaos_kaki/data_restock.php');
-    })
+    $('#isi').load('inc/restock/restock_kaos_kaki/data_restock.php');
 </script>

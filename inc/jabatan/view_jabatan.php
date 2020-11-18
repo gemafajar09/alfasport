@@ -121,14 +121,17 @@
     }
 
     function hapus(id) {
-        axios.post('inc/jabatan/aksi_hapus_jabatan.php', {
-            'jabatan_id': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/jabatan/data_jabatan.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/jabatan/aksi_hapus_jabatan.php', {
+                'jabatan_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/jabatan/data_jabatan.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

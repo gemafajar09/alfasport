@@ -140,15 +140,18 @@
     }
 
     function hapus(beli_id) {
-        axios.post('inc/pembelian_barang/aksi_hapus_pembelian.php', {
-            'beli_id': beli_id
-        }).then(function(res) {
-            var data = res.data
-            toastr.info('SUCCESS..')
-            $('#isi').load('inc/pembelian_barang/data_pembelian.php');
-        }).catch(function(err) {
-            toastr.warning('ERROR..')
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/pembelian_barang/aksi_hapus_pembelian.php', {
+                'beli_id': beli_id
+            }).then(function(res) {
+                var data = res.data
+                toastr.info('SUCCESS..')
+                $('#isi').load('inc/pembelian_barang/data_pembelian.php');
+            }).catch(function(err) {
+                toastr.warning('ERROR..')
+            })
+        }
     }
 
     $('#toko').change(function(e) {
@@ -163,7 +166,5 @@
         })
     })
 
-    $(document).ready(function() {
-        $('#isi').load('inc/pembelian_barang/data_pembelian.php');
-    })
+    $('#isi').load('inc/pembelian_barang/data_pembelian.php');
 </script>

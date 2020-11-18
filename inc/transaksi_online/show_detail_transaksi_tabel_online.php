@@ -5,32 +5,38 @@ $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 
 $data = $con->query("SELECT
-tb_transaksi_online_detail.transol_detail_jumlah_beli,
-tb_transaksi_online_detail.transol_detail_total_harga,
-tb_transaksi_online_detail.transol_detail_diskon1,
-tb_transaksi_online_detail.transol_detail_potongan,
-tb_gudang.nama,
-tb_gudang.artikel,
-tb_transaksi_online.transol_cash,
-tb_transaksi_online.transol_debit,
-tb_transaksi_online.transol_tipe_diskon,
-tb_transaksi_online.transol_diskon,
-tb_transaksi_online.transol_diskon_bank,
-tb_gudang.jual,
-tb_all_ukuran.ue
-From
-tb_transaksi_online_detail 
-Inner Join
-tb_gudang_detail On tb_gudang_detail.id_detail = tb_transaksi_online_detail.id_gudang
-Inner Join
-tb_gudang On tb_gudang.id = tb_gudang_detail.id 
-Inner Join
-tb_transaksi_online On tb_transaksi_online.transol_id = tb_transaksi_online_detail.transol_id 
-Inner Join
-tb_all_ukuran On tb_all_ukuran.id_ukuran = tb_gudang_detail.id_ukuran 
-WHERE 
-tb_transaksi_online_detail.transol_id = '$_POST[transaksi_id]'
-")->fetchAll();
+                                tb_transaksi_online_detail.transol_detail_jumlah_beli,
+                                tb_transaksi_online_detail.transol_detail_total_harga,
+                                tb_transaksi_online_detail.transol_detail_diskon1,
+                                tb_transaksi_online_detail.transol_detail_potongan,
+                                tb_barang.barang_nama,
+                                tb_barang.barang_jual,
+                                tb_barang.barang_artikel,
+                                tb_transaksi_online.transol_cash,
+                                tb_transaksi_online.transol_debit,
+                                tb_transaksi_online.transol_tipe_diskon,
+                                tb_transaksi_online.transol_diskon,
+                                tb_transaksi_online.transol_diskon_bank,
+                                tb_ukuran.sepatu_ue,
+                                tb_ukuran.sepatu_uk,
+                                tb_ukuran.sepatu_us,
+                                tb_ukuran.sepatu_cm,
+                                tb_ukuran.kaos_kaki_eu,
+                                tb_ukuran.kaos_kaki_size,
+                                tb_ukuran.barang_lainnya_nama_ukuran
+                        From
+                        tb_transaksi_online_detail 
+                        Inner Join
+                        tb_barang_detail On tb_barang_detail.barang_detail_id = tb_transaksi_online_detail.id_gudang
+                        Inner Join
+                        tb_barang On tb_barang.barang_id = tb_barang_detail.barang_id
+                        Inner Join
+                        tb_transaksi_online On tb_transaksi_online.transol_id = tb_transaksi_online_detail.transol_id 
+                        Inner Join
+                        tb_ukuran On tb_ukuran.ukuran_id = tb_barang_detail.ukuran_id 
+                        WHERE 
+                        tb_transaksi_online_detail.transol_id = '$_POST[transaksi_id]'
+                        ")->fetchAll();
 
 $jumlah = 0;
 $subtotal = 0;
@@ -40,9 +46,9 @@ foreach ($data as $i => $a) {
 ?>
         <tr>
                 <td><?= $i + 1 ?></td>
-                <td><?= $a['artikel'] ?>/<?= $a['nama'] ?>/<?= $a['ue'] ?></td>
+                <td><?= $a['barang_nama'] ?>/<?= $a['barang_artikel'] ?></td>
                 <td><?= $a['transol_detail_jumlah_beli'] ?></td>
-                <td><?= 'Rp.' . number_format($a['jual']) ?></td>
+                <td><?= 'Rp.' . number_format($a['barang_jual']) ?></td>
                 <td><?= $a['transol_detail_diskon1'] . '%' ?></td>
                 <td><?= 'Rp.' . number_format($a['transol_detail_potongan']) ?></td>
                 <td><?= 'Rp.' . number_format($a['transol_detail_total_harga']) ?></td>
@@ -53,7 +59,7 @@ foreach ($data as $i => $a) {
         <th colspan="2">Jumlah</th>
         <th><?= $jumlah ?></th>
         <th colspan="2">&nbsp;</th>
-        <th>Subtotal</th>
+        <th>Total</th>
         <th><b><?= 'Rp.' . number_format($subtotal) ?></b>
                 <input type="hidden" id="subtotal" value="<?= $subtotal ?>">
                 <input type="hidden" id="jmlTot" value="<?= $jumlah ?>">
@@ -66,17 +72,17 @@ $dt = $con->query("SELECT
         tb_transaksi_online_detail.transol_detail_diskon1,
         tb_transaksi_online_detail.transol_detail_potongan,
         tb_gudang.nama,
+        tb_gudang.jual,
         tb_transaksi_online.transol_cash,
         tb_transaksi_online.transol_debit,
         tb_transaksi_online.transol_tipe_diskon,
         tb_transaksi_online.transol_diskon,
-        tb_transaksi_online.transol_diskon_bank,
-        tb_gudang.jual
+        tb_transaksi_online.transol_diskon_bank
         From
         tb_transaksi_online_detail Inner Join
-        tb_gudang_detail On tb_gudang_detail.id_detail = tb_transaksi_online_detail.id_gudang
+        tb_barang_detail On tb_barang_detail.barang_detail_id = tb_transaksi_online_detail.id_gudang
         Inner Join
-        tb_gudang On tb_gudang.id = tb_gudang_detail.id Inner Join
+        tb_barang On tb_barang_detail.barang_id = tb_barang.barang_id Inner Join
         tb_transaksi_online On tb_transaksi_online.transol_id = tb_transaksi_online_detail.transol_id WHERE tb_transaksi_online_detail.transol_id = '$_POST[transaksi_id]' LIMIT 1")->fetch();
 
 $tipe_diskon_manual = $dt['transol_tipe_diskon'];
@@ -96,13 +102,13 @@ if ($tipe_diskon_manual == 'dis_persen') {
         $dManual = 0;
 }
 ?>
-<tr>
+<!-- <tr>
         <th colspan="5">&nbsp;</th>
         <th>Diskon Bank + Diskon Manual</th>
         <th style="float: right;">Rp. <?= number_format($dB + $dManual) ?></th>
-</tr>
-<tr>
+</tr> -->
+<!-- <tr>
         <th colspan="5">&nbsp;</th>
         <th>Total</th>
         <th style="float: right;">Rp.<?= number_format($subtotal - ($dB + $dManual)) ?></th>
-</tr>
+</tr> -->

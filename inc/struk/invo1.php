@@ -100,7 +100,7 @@ $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE 
                             $diskon_manual = $data['transaksi_diskon'];
                             $diskon_bank = $data['transaksi_diskon_bank'];
                             // cari diskon bank
-                            $dB = ($total * $diskon_bank) / 100;
+                            $dB = ((int)$total * (int)$diskon_bank) / 100;
                             $dBank = $dB;
 
                             $hBank = $total - $dBank;
@@ -142,7 +142,7 @@ $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE 
                             <tr>
                                 <td colspan="3">&nbsp;</td>
                                 <td>Total Bayar</td>
-                                <td style="float: right;">Rp.<?= number_format($data['transaksi_cash'] + $data['transaksi_debit']) ?></td>
+                                <td style="float: right;">Rp.<?= number_format($data['transaksi_cash'] + $data['transaksi_debit'] + $data['transaksi_point']) ?></td>
                             </tr>
                             <tr>
                                 <td colspan="3">&nbsp;</td>

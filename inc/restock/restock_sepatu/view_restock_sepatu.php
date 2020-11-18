@@ -200,7 +200,5 @@
         });
     });
 
-    $(document).ready(function() {
-        $('#isi').load('inc/restock/restock_sepatu/data_restock.php');
-    })
+    $('#isi').load('inc/restock/restock_sepatu/data_restock.php');
 </script>

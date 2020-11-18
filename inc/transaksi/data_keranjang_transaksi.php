@@ -2,23 +2,23 @@
 include "../../config/koneksi.php";
 session_start();
 $data = $con->query("SELECT
-tb_transaksi_tmp.tmp_id,
-tb_transaksi_tmp.tmp_kode,
-tb_transaksi_tmp.diskon1,
-tb_transaksi_tmp.potongan,
-tb_barang.barang_nama,
-tb_barang.barang_artikel,
-tb_barang_detail.barang_detail_barcode,
-tb_barang.barang_jual,
-tb_transaksi_tmp.tmp_total_harga,
-tb_transaksi_tmp.tmp_jumlah_beli,
-tb_transaksi_tmp.id_karyawan
-From
-tb_transaksi_tmp Inner Join
-tb_barang_detail On tb_barang_detail.barang_detail_id = tb_transaksi_tmp.id_gudang
-Inner Join
-tb_barang On tb_barang_detail.barang_id = tb_barang.barang_id WHERE tb_transaksi_tmp.id_karyawan = '$_COOKIE[id_karyawan]'
-")->fetchAll();
+                    tb_transaksi_tmp.tmp_id,
+                    tb_transaksi_tmp.tmp_kode,
+                    tb_transaksi_tmp.diskon1,
+                    tb_transaksi_tmp.potongan,
+                    tb_barang.barang_nama,
+                    tb_barang.barang_artikel,
+                    tb_barang_detail.barang_detail_barcode,
+                    tb_barang.barang_jual,
+                    tb_transaksi_tmp.tmp_total_harga,
+                    tb_transaksi_tmp.tmp_jumlah_beli,
+                    tb_transaksi_tmp.id_karyawan
+                    From
+                    tb_transaksi_tmp Inner Join
+                    tb_barang_detail On tb_barang_detail.barang_detail_id = tb_transaksi_tmp.id_gudang
+                    Inner Join
+                    tb_barang On tb_barang_detail.barang_id = tb_barang.barang_id WHERE tb_transaksi_tmp.id_karyawan = '$_COOKIE[id_karyawan]'
+                    ")->fetchAll();
 
 $jumlah = 0;
 $subtotal = 0;

@@ -113,14 +113,17 @@
     }
 
     function hapus(id) {
-        axios.post('inc/kategori/aksi_hapus_kategori.php', {
-            'kategori_id': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/kategori/data_kategori.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/kategori/aksi_hapus_kategori.php', {
+                'kategori_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/kategori/data_kategori.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

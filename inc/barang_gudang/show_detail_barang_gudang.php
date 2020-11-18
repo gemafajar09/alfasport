@@ -325,16 +325,19 @@ $data = $con->query(
 
     function hapusSepatu(barang_detail_id) {
         var id_dari_tb_barang = $('#id_dari_tb_barang').val()
-        axios.post('inc/barang_gudang/aksi_hapus_barang_gudang_detail.php', {
-            'barang_detail_id': barang_detail_id
-        }).then(function(res) {
-            var hapus = res.data
-            toastr.info('Data ukuran dihapus')
-            detail(id_dari_tb_barang)
-            $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/barang_gudang/aksi_hapus_barang_gudang_detail.php', {
+                'barang_detail_id': barang_detail_id
+            }).then(function(res) {
+                var hapus = res.data
+                toastr.info('Data ukuran dihapus')
+                detail(id_dari_tb_barang)
+                $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 </script>
 
@@ -425,16 +428,19 @@ $data = $con->query(
 
     function hapusKaosKaki(barang_detail_id) {
         var id_dari_tb_barang = $('#id_dari_tb_barang').val()
-        axios.post('inc/barang_gudang/aksi_hapus_barang_gudang_detail.php', {
-            'barang_detail_id': barang_detail_id
-        }).then(function(res) {
-            var hapus = res.data
-            toastr.info('Data ukuran dihapus')
-            detail(id_dari_tb_barang)
-            $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/barang_gudang/aksi_hapus_barang_gudang_detail.php', {
+                'barang_detail_id': barang_detail_id
+            }).then(function(res) {
+                var hapus = res.data
+                toastr.info('Data ukuran dihapus')
+                detail(id_dari_tb_barang)
+                $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 </script>
 
@@ -525,15 +531,18 @@ $data = $con->query(
 
     function hapusBaranglainnya(barang_detail_id) {
         var id_dari_tb_barang = $('#id_dari_tb_barang').val()
-        axios.post('inc/barang_gudang/aksi_hapus_barang_gudang_detail.php', {
-            'barang_detail_id': barang_detail_id
-        }).then(function(res) {
-            var hapus = res.data
-            toastr.info('Data ukuran dihapus')
-            detail(id_dari_tb_barang)
-            $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/barang_gudang/aksi_hapus_barang_gudang_detail.php', {
+                'barang_detail_id': barang_detail_id
+            }).then(function(res) {
+                var hapus = res.data
+                toastr.info('Data ukuran dihapus')
+                detail(id_dari_tb_barang)
+                $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 </script>

@@ -120,14 +120,17 @@
     }
 
     function hapus(id) {
-        axios.post('inc/data_toko_online/aksi_hapus_data_toko_online.php', {
-            'data_toko_online_id': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/data_toko_online/data_toko_online.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/data_toko_online/aksi_hapus_data_toko_online.php', {
+                'data_toko_online_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/data_toko_online/data_toko_online.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

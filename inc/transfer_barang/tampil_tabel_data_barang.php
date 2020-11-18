@@ -55,7 +55,7 @@ $_POST = json_decode($json, true);
                                 WHERE tb_transfer_barang.transfer_barang_id='$_POST[transfer_barang_id]'
         ")->fetchAll();
         foreach ($data_table as $i => $data) {
-        $ket = $data['transfer_barang_ket'];
+            $ket = $data['transfer_barang_ket'];
         ?>
             <tr>
                 <td><?= $data['barang_kode'] ?></td>
@@ -87,8 +87,24 @@ $_POST = json_decode($json, true);
                 <td>
                     <label class="switch">
                         <?php $cek = $data['transfer_barang_detail_status'] ?>
-                        <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" <?php echo ($cek == '1') ? "checked" : "" ?> readonly disabled>
-                        <span class="slider round"></span>
+                        <!-- <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" <?php echo ($cek == '1') ? "checked" : "" ?> readonly disabled>
+                        <span class="slider round"></span> -->
+                        <?php
+                        if ($cek == 1) {
+                        ?>
+                            <div class="col-sm-1" style="background-color:green;padding:15px;border-radius:15px;"></div>
+
+                        <?php
+                        } else if ($cek ==  2) {
+                        ?>
+                            <div class="col-sm-1" style="background-color:yellow;padding:15px;border-radius:15px;"></div>
+                        <?php
+                        } else if ($cek == 0) {
+                        ?>
+                            <div class="col-sm-1" style="background-color:red;padding:15px;border-radius:15px;"></div>
+                        <?php
+                        }
+                        ?>
                     </label>
                 </td>
             </tr>
@@ -101,6 +117,16 @@ $_POST = json_decode($json, true);
     <label for="">Keterangan</label>
     <input type="hidden" id="transfer_barang_id" name="transfer_barang_id" value="<?php echo $_POST['transfer_barang_id'] ?>">
     <textarea name="transfer_ket" id="transfer_ket" class="form-control" id="" cols="30" rows="2" readonly disabled><?php echo $ket ?></textarea>
+</div>
+<div class="col-md-12">
+    <div class="row">
+        <p style="background-color:green;padding:19px;border-radius:25px;margin: 0px;"></p>
+        <div class="col-sm-1"><b>Acc Dari Toko</b></div>
+        <p style="background-color:yellow;padding:19px;border-radius:25px;margin: 0px;"></p>
+        <div class="col-sm-1"><b>Acc Dari Admin</b></div>
+        <p style="background-color:red;padding:19px;border-radius:25px;margin: 0px;"></p>
+        <div class="col-sm-1"><b>Tidak Lengkap</b></div>
+    </div>
 </div>
 
 <script>

@@ -391,12 +391,15 @@ if (isset($_POST['simpan'])) {
     }
 
     function hapus(id) {
-        axios.post('inc/karyawan/aksi_hapus_karyawan.php', {
-            'id_karyawan': id
-        }).then(function(res) {
-            var data = res.data
-            $('#isi').load('inc/karyawan/data_karyawan.php');
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/karyawan/aksi_hapus_karyawan.php', {
+                'id_karyawan': id
+            }).then(function(res) {
+                var data = res.data
+                $('#isi').load('inc/karyawan/data_karyawan.php');
+            })
+        }
     }
 
     function kosong() {
