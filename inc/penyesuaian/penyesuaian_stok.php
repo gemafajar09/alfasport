@@ -499,18 +499,21 @@
     }
 
     function hapus(id) {
-        axios.post('inc/penyesuaian/aksi_hapus_penyesuaian_stok.php', {
-            'penyesuaian_stok_id': id
-        }).then(function(res) {
-            var hapus = res.data;
-            ResfreshDatatable("#datable-responsive", "#isi", 'inc/penyesuaian/data_stok.php');
-            $("#datatable-responsive").DataTable().destroy();
-            $('#isi').load('inc/penyesuaian/data_stok.php', function() {
-                $("#datatable-responsive").DataTable();
-            });
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/penyesuaian/aksi_hapus_penyesuaian_stok.php', {
+                'penyesuaian_stok_id': id
+            }).then(function(res) {
+                var hapus = res.data;
+                ResfreshDatatable("#datable-responsive", "#isi", 'inc/penyesuaian/data_stok.php');
+                $("#datatable-responsive").DataTable().destroy();
+                $('#isi').load('inc/penyesuaian/data_stok.php', function() {
+                    $("#datatable-responsive").DataTable();
+                });
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

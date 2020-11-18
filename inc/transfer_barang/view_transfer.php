@@ -468,14 +468,17 @@ if (isset($_POST['simpanT'])) {
     }
 
     function hapus(id) {
-        axios.post('inc/transfer_barang/aksi_hapus_transfer.php', {
-            'divisi_id': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/transfer_barang/data_transfer.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/transfer_barang/aksi_hapus_transfer.php', {
+                'divisi_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/transfer_barang/data_transfer.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

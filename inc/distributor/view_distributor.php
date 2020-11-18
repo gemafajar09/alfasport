@@ -148,14 +148,17 @@
     }
 
     function hapus(id) {
-        axios.post('inc/distributor/aksi_hapus_distributor.php', {
-            'distributor_id': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/distributor/data_distributor.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/distributor/aksi_hapus_distributor.php', {
+                'distributor_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/distributor/data_distributor.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

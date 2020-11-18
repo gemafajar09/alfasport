@@ -72,26 +72,27 @@
         $('#dataCredit').modal()
     }
 
-    function simpan()
-    {
+    function simpan() {
         var metode = $('#metode').val()
-        axios.post('inc/diskon/credit/aksi_simpan_metode.php',
-        {'metode':metode}
-        ).then(function(res){
+        axios.post('inc/diskon/credit/aksi_simpan_metode.php', {
+            'metode': metode
+        }).then(function(res) {
             $('#dataCredit').modal('hide')
             $('#isi').load('inc/diskon/credit/data_credit.php');
         })
     }
 
-    function hapus(id)
-    {
-        axios.post('inc/diskon/credit/aksi_hapus_metode.php',
-        {'id':id}
-        ).then(function(res){
-            toastr.info('Delete Success')
-            $('#dataCredit').modal('hide')
-            $('#isi').load('inc/diskon/credit/data_credit.php');
-        })
+    function hapus(id) {
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/diskon/credit/aksi_hapus_metode.php', {
+                'id': id
+            }).then(function(res) {
+                toastr.info('Delete Success')
+                $('#dataCredit').modal('hide')
+                $('#isi').load('inc/diskon/credit/data_credit.php');
+            })
+        }
     }
 
     $('#isi').load('inc/diskon/credit/data_credit.php');

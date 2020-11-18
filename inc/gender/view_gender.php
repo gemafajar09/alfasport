@@ -113,14 +113,17 @@
     }
 
     function hapus(id) {
-        axios.post('inc/gender/aksi_hapus_gender.php', {
-            'gender_id': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/gender/data_gender.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/gender/aksi_hapus_gender.php', {
+                'gender_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/gender/data_gender.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

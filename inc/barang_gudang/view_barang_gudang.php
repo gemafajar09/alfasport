@@ -642,15 +642,18 @@
     }
 
     function hapus(barang_id) {
-        axios.post('inc/barang_gudang/aksi_hapus_barang_gudang.php', {
-            'barang_id': barang_id
-        }).then(function(res) {
-            var data = res.data
-            toastr.info('SUCCESS..');
-            $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
-        }).catch(function(err) {
-            toastr.warning('ERROR..')
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/barang_gudang/aksi_hapus_barang_gudang.php', {
+                'barang_id': barang_id
+            }).then(function(res) {
+                var data = res.data
+                toastr.info('SUCCESS..');
+                $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
+            }).catch(function(err) {
+                toastr.warning('ERROR..')
+            })
+        }
     }
 
     function kosong1() {
@@ -788,7 +791,5 @@
         })
     })
 
-    $(document).ready(function() {
-        $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
-    })
+    $('#isi').load('inc/barang_gudang/data_barang_gudang.php');
 </script>

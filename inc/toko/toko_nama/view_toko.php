@@ -195,14 +195,17 @@
     }
 
     function hapus(id) {
-        axios.post('inc/toko/toko_nama/aksi_hapus_toko.php', {
-            'id_toko': id
-        }).then(function(res) {
-            var hapus = res.data
-            $('#isi').load('inc/toko/toko_nama/data_toko.php');
-        }).catch(function(err) {
-            console.log(err)
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/toko/toko_nama/aksi_hapus_toko.php', {
+                'id_toko': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi').load('inc/toko/toko_nama/data_toko.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
     }
 
     function kosong() {

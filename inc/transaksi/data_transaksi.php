@@ -8,6 +8,7 @@ SELECT a.transaksi_id,
        e.kategori,
        a.transaksi_cash,
        a.transaksi_debit,
+       a.transaksi_point,
        a.transaksi_total_belanja,
        d.bank,
        a.transaksi_create_at,
@@ -28,6 +29,7 @@ foreach ($data as $i => $a) {
         <td><?= $a['kategori'] ?></td>
         <td><?= 'Rp.' . number_format($a['transaksi_cash']) ?></td>
         <td><?= 'Rp.' . number_format($a['transaksi_debit']) ?></td>
+        <td><?= 'Rp.' . number_format($a['transaksi_point']) ?></td>
         <td><?= 'Rp.' . number_format($a['transaksi_total_belanja']) ?></td>
         <td>
             <?php

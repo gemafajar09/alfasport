@@ -2,22 +2,22 @@
 include "../../config/koneksi.php";
 session_start();
 $data = $con->query("SELECT
-tb_transaksi_online_tmp.transol_tmp_id,
-tb_transaksi_online_tmp.transol_tmp_kode,
-tb_transaksi_online_tmp.transol_tmp_diskon1,
-tb_transaksi_online_tmp.transol_tmp_potongan,
-tb_gudang.nama,
-tb_gudang.artikel,
-tb_gudang_detail.barcode,
-tb_gudang.jual,
-tb_transaksi_online_tmp.transol_tmp_total_harga,
-tb_transaksi_online_tmp.transol_tmp_jumlah_beli,
-tb_transaksi_online_tmp.id_karyawan
-From
-tb_transaksi_online_tmp Inner Join
-tb_gudang_detail On tb_gudang_detail.id_detail = tb_transaksi_online_tmp.id_gudang
-Inner Join
-tb_gudang On tb_gudang_detail.id = tb_gudang.id WHERE tb_transaksi_online_tmp.id_karyawan = '$_COOKIE[id_karyawan]'
+                    tb_transaksi_online_tmp.transol_tmp_id,
+                    tb_transaksi_online_tmp.transol_tmp_kode,
+                    tb_transaksi_online_tmp.transol_tmp_diskon1,
+                    tb_transaksi_online_tmp.transol_tmp_potongan,
+                    tb_barang.barang_nama,
+                    tb_barang.barang_artikel,
+                    tb_barang_detail.barang_detail_barcode,
+                    tb_barang.barang_jual,
+                    tb_transaksi_online_tmp.transol_tmp_total_harga,
+                    tb_transaksi_online_tmp.transol_tmp_jumlah_beli,
+                    tb_transaksi_online_tmp.id_karyawan
+                    From
+                    tb_transaksi_online_tmp Inner Join
+                    tb_barang_detail On tb_barang_detail.barang_detail_id = tb_transaksi_online_tmp.id_gudang
+                    Inner Join
+                    tb_barang On tb_barang_detail.barang_id = tb_barang.barang_id WHERE tb_transaksi_online_tmp.id_karyawan = '$_COOKIE[id_karyawan]'
 ")->fetchAll();
 
 $jumlah = 0;
@@ -29,10 +29,10 @@ foreach ($data as $i => $a) {
 ?>
     <tr>
         <td><?= $i + 1 ?></td>
-        <td><?= $a['nama'] ?></td>
-        <td><?= $a['artikel'] ?></td>
+        <td><?= $a['barang_nama'] ?></td>
+        <td><?= $a['barang_artikel'] ?></td>
         <td><?= $a['transol_tmp_jumlah_beli'] ?></td>
-        <td><?= 'Rp. ' . number_format($a['jual']) ?></td>
+        <td><?= 'Rp. ' . number_format($a['barang_jual']) ?></td>
         <td><?= $a['transol_tmp_diskon1'] . '%' ?></td>
         <td><?= 'Rp. ' . number_format($a['transol_tmp_potongan']) ?></td>
         <td><?= number_format($a['transol_tmp_total_harga']) ?></td>

@@ -195,7 +195,5 @@
         });
     });
 
-    $(document).ready(function() {
-        $('#isi').load('inc/restock/restock_barang_lainnya/data_restock.php');
-    })
+    $('#isi').load('inc/restock/restock_barang_lainnya/data_restock.php');
 </script>

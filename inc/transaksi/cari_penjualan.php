@@ -31,10 +31,10 @@
                 <select name="artikel" id="artikel" class="form-control select2">
                     <option value="">-Artikel Barang-</option>
                     <?php
-                    $artikel = $con->select('tb_gudang', '*');
+                    $artikel = $con->select('tb_barang', '*');
                     foreach ($artikel as $a) {
                     ?>
-                        <option value="<?= $a['id_gudang'] ?>"><?= $a['nama'] ?> - <?= $a['artikel'] ?></option>
+                        <option value="<?= $a['barang_id'] ?>"><?= $a['barang_nama'] ?> - <?= $a['barang_artikel'] ?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -63,14 +63,7 @@
                         <th>No</th>
                         <th>Artikel</th>
                         <th>Nama</th>
-                        <th>
-                            <select name="ukuran_nama" id="ukuran_nama" class="form-control" width="100%">
-                                <option value="ue">UE</option>
-                                <option value="uk">UK</option>
-                                <option value="us">US</option>
-                                <option value="cm">CM</option>
-                            </select>
-                        </th>
+                        <th>Ukuran</th>
                         <th>Jumlah Penjualan</th>
                         <th>Tanggal Jual</th>
                     </tr>

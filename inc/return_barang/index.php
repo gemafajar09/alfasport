@@ -74,14 +74,17 @@
     $('#isi').load('inc/return_barang/listReturn.php')
 
     function hapus(return_barang_id) {
-        axios.post('inc/return_barang/hapusReturn.php', {
-            'return_barang_id': return_barang_id
-        }).then(function(res) {
-            toastr.success('Data Terhapus')
-            $('#isi').load('inc/return_barang/listReturn.php')
-        }).catch(function(err) {
-            $('#isi').load('inc/return_barang/listReturn.php')
-        })
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/return_barang/hapusReturn.php', {
+                'return_barang_id': return_barang_id
+            }).then(function(res) {
+                toastr.success('Data Terhapus')
+                $('#isi').load('inc/return_barang/listReturn.php')
+            }).catch(function(err) {
+                $('#isi').load('inc/return_barang/listReturn.php')
+            })
+        }
     }
 
     function views(return_barang_id) {

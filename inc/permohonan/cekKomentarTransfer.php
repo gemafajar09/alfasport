@@ -5,12 +5,14 @@ $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 ?>
 <style>
-    input:checked + .slider2 {
+    input:checked+.slider2 {
         background-color: green;
     }
+
     .slider2.round2 {
         border-radius: 34px;
     }
+
     .slider2 {
         position: absolute;
         cursor: pointer;
@@ -23,12 +25,14 @@ $_POST = json_decode($json, true);
         transition: .4s;
     }
 
-    input:checked + .slider3 {
+    input:checked+.slider3 {
         background-color: red;
     }
+
     .slider3.round3 {
         border-radius: 34px;
     }
+
     .slider3 {
         position: absolute;
         cursor: pointer;
@@ -40,7 +44,6 @@ $_POST = json_decode($json, true);
         -webkit-transition: .4s;
         transition: .4s;
     }
-
 </style>
 <table class="table">
     <thead>
@@ -125,13 +128,13 @@ $_POST = json_decode($json, true);
                 <td>
                     <label class="switch">
                         <?php
-                        $cek = $data['transfer_barang_detail_status']; 
-                        if($cek == 1){ ?>
+                        $cek = $data['transfer_barang_detail_status'];
+                        if ($cek == 1) { ?>
                             <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_barang_detail_id'] ?>, this)" <?php echo ($cek == '1') ? "checked" : "" ?>>
                             <span class="slider2 round2"></span>
-                        <?php }else{ ?>
+                        <?php } else { ?>
                             <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_barang_detail_id'] ?>, this)" <?php echo ($cek == '0') ? "" : "" ?>>
-                            <span class="slider3 round3"></span>
+                            <span class="slider round"></span>
                         <?php } ?>
                     </label>
                 </td>
@@ -145,30 +148,52 @@ $_POST = json_decode($json, true);
     <label for="">Keterangan</label>
     <input type="hidden" id="transfer_barang_id" name="transfer_barang_id" value="<?php echo $_POST['transfer_barang_id'] ?>">
     <textarea name="transfer_ket" id="transfer_ket" class="form-control" id="" cols="30" rows="2"><?= $keterangan ?></textarea>
-</div> 
+</div>
+<div class="row">
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+        <button type="button" id="klik" class="btn btn-warning btn-sm btn-block">Update</button>
+    </div>
+</div>
+
 <script>
-    function cekStatus(transfer_detail_id, status_checked) {
-        // if (status_checked.checked) {
-        //     axios.post('inc/permohonan/aksi_update_gudang.php', {
-        //         'transfer_detail_id': transfer_detail_id
-        //     }).then(function(res) {
-        //         var id = res.data
-        //         toastr.info('Sukses.. ')
-        //         // $(".cek_menipis").prop("checked", true);
-        //     }).catch(function(err) {
-        //         console.log(err)
-        //         toastr.warning('ERROR..')
-        //         // $(".cek_menipis").prop("checked", false);
-        //     })
-        // } else {
-        //     axios.post('inc/permohonan/aksi_update_kembali.php', {
-        //         'transfer_detail_id': transfer_detail_id
-        //     }).then(function(res) {
-        //         var data = res.data
-        //         toastr.info('Sukses.. ')
-        //     }).catch(function(err) {
-        //         toastr.warning('ERROR..')
-        //     })
-        // }
+    $('#klik').on('click', function() {
+        var transfer_barang_id = $('#transfer_barang_id').val()
+        var transfer_ket = $('#transfer_ket').val()
+        axios.post('inc/permohonan/acc_transfer_kurang.php', {
+            'transfer_barang_id': transfer_barang_id,
+            'transfer_ket': transfer_ket
+        }).then(function(res) {
+            $('#Acc').modal('hide');
+            window.location = "permohonan.html"
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
+
+
+    function cekStatus(transfer_barang_detail_id, status_checked) {
+        if (status_checked.checked) {
+            axios.post('inc/permohonan/aksi_update_gudang.php', {
+                'transfer_barang_detail_id': transfer_barang_detail_id
+            }).then(function(res) {
+                var id = res.data
+                toastr.info('Sukses.. ')
+                // $(".cek_menipis").prop("checked", true);
+            }).catch(function(err) {
+                console.log(err)
+                toastr.warning('ERROR..')
+                // $(".cek_menipis").prop("checked", false);
+            })
+        } else {
+            axios.post('inc/permohonan/aksi_update_kembali.php', {
+                'transfer_barang_detail_id': transfer_barang_detail_id
+            }).then(function(res) {
+                var data = res.data
+                toastr.info('Sukses.. ')
+            }).catch(function(err) {
+                toastr.warning('ERROR..')
+            })
+        }
     }
 </script>

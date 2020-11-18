@@ -66,38 +66,30 @@ if (isset($_COOKIE['success'])) {
 <script src="<?= $base_url ?>vendors/ckeditor/ckeditor.js"></script>
 <script src="https://unpkg.com/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
 <script>
-
   $('.select2').select2({
     dropdownAutoWidth: true
   });
 
-  $(document).ready(function(){
+  $(document).ready(function() {
     var x = document.getElementById('updates')
     var resi = document.getElementById('resi')
     var simpanResi = document.getElementById('simpanResi')
     var sts = $('#statusSekarang').val()
-    if(sts == 'Menunggu Pembayaran')
-    {
+    if (sts == 'Menunggu Pembayaran') {
       var value = 0;
       resi.style.display = "none";
       simpanResi.style.display = "none";
-    }
-    else if(sts == 'Pesanan Diproses')
-    {
+    } else if (sts == 'Pesanan Diproses') {
       var value = 1
       x.style.display = "none";
       resi.style.display = "block";
       simpanResi.style.display = "block";
-    }
-    else if(sts == 'Barang Telah Dikirim')
-    {
+    } else if (sts == 'Barang Telah Dikirim') {
       var value = 2
       x.style.display = "none";
       resi.style.display = "none";
       simpanResi.style.display = "none";
-    }
-    else if(sts == 'Barang Telah Diterima')
-    {
+    } else if (sts == 'Barang Telah Diterima') {
       var value = 3
       x.style.display = "none";
       resi.style.display = "none";
@@ -106,32 +98,33 @@ if (isset($_COOKIE['success'])) {
     console.log(value)
     // SmartWizard initialize
     $('#smartwizard').smartWizard({
-            selected: value, 
-            theme: 'dots',
-            transitionEffect: 'fade',
-            transitionSpeed: '400',
-            lang: { next: 'Selanjutnya', previous: 'Kembali'},
-            toolbarSettings: {
-                toolbarButtonPosition: 'center',
-                showNextButton: false,
-                showPreviousButton: false
-            }
-        })
+      selected: value,
+      theme: 'dots',
+      transitionEffect: 'fade',
+      transitionSpeed: '400',
+      lang: {
+        next: 'Selanjutnya',
+        previous: 'Kembali'
+      },
+      toolbarSettings: {
+        toolbarButtonPosition: 'center',
+        showNextButton: false,
+        showPreviousButton: false
+      }
+    })
   })
 
-  function convertToRupiah(angka)
-  {
-      var rupiah = '';		
-      var angkarev = angka.toString().split('').reverse().join('');
-      for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
-      return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+  function convertToRupiah(angka) {
+    var rupiah = '';
+    var angkarev = angka.toString().split('').reverse().join('');
+    for (var i = 0; i < angkarev.length; i++)
+      if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
+    return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
   }
 
-  function convertToAngka(rupiah)
-  {
-      return parseInt(rupiah.replace(/,.*|[^0-9]/g, ''), 10);
+  function convertToAngka(rupiah) {
+    return parseInt(rupiah.replace(/,.*|[^0-9]/g, ''), 10);
   }
-
 </script>
 <script src="<?= $base_url ?>App/content.js"></script>
 </body>
