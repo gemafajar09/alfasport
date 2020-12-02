@@ -37,9 +37,7 @@
                     <th>Email</th>
                     <th>No Telpon</th>
                     <th>Tanggal Lahir</th>
-                    <th>Provinsi</th>
-                    <th>Kota</th>
-                    <th>Alamat</th>
+                    <th>Alamat/Kota/Provinsi</th>
                     <th>Gender</th>
                     <th>Profesi</th>
                     <th>Action</th>

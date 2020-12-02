@@ -74,7 +74,7 @@ $dt = $con->query("SELECT
         tb_transaksi.transaksi_tipe_diskon,
         tb_transaksi.transaksi_diskon,
         tb_transaksi.transaksi_diskon_bank,
-        tb_barang_nama.jual
+        tb_barang.barang_jual
         From
         tb_transaksi_detail Inner Join
         tb_barang_detail On tb_barang_detail.barang_detail_id = tb_transaksi_detail.id_gudang
@@ -84,8 +84,11 @@ $dt = $con->query("SELECT
 
 $tipe_diskon_manual = $dt['transaksi_tipe_diskon'];
 $diskon_manual = $dt['transaksi_diskon'];
-$diskon_bank = $dt['transaksi_diskon_bank'];
-
+if ($dt['transaksi_diskon_bank'] == null) {
+        $diskon_bank = 0;
+} else {
+        $diskon_bank = $dt['transaksi_diskon_bank'];
+}
 // cari diskon bank
 $dB = ($subtotal * $diskon_bank) / 100;
 $hBank = $subtotal - $dB;

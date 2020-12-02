@@ -30,7 +30,9 @@ $data = $con->query("SELECT * FROM tb_transaksi WHERE transaksi_kode = '$id'")->
 $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE id_toko = '$data[id_toko]'")->fetch();
 ?>
 
-<body onload="window.print()">
+<!-- <body onload="window.print()"> -->
+
+<body>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
@@ -43,14 +45,14 @@ $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE 
                             <p><?= $toko['alamat_toko'] ?></p>
                         </h6>
                         <h6><?= $toko['telpon_toko'] ?> </h6>
-                        <span><i class="fa fa-instagram"> Alfasport</i></span> | <span><i class="fa  fa-envelope-o"> Alfasport</i></span>
+                        <span>www.alfasport.id</span>
                         <hr style="color:black; border: 1px solid;">
                     </div>
                     <div class="col-md-12">
                         <table style="font-size: 12px;">
                             <tr>
-                                <th>No Faktur</th>
-                                <td>:</td>
+                                <th width="100px">No Faktur</th>
+                                <td width="15px">:</td>
                                 <td><?= $_GET['invoice'] ?></td>
                             </tr>
                             <tr>
@@ -75,10 +77,20 @@ $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE 
                             $list = $con->query("SELECT 
                                         tb_transaksi_detail.detail_jumlah_beli,
                                         tb_transaksi_detail.detail_total_harga,
+                                        tb_transaksi_detail.detail_tipe_konsumen,
+                                        tb_transaksi_detail.id_konsumen,
                                         tb_merk.merk_nama,
+                                        tb_barang.barang_kategori,
                                         tb_barang.barang_nama,
                                         tb_barang.barang_artikel,
-                                        tb_ukuran.sepatu_ue
+                                        tb_ukuran.ukuran_default,
+                                        tb_ukuran.sepatu_ue,
+                                        tb_ukuran.sepatu_uk,
+                                        tb_ukuran.sepatu_us,
+                                        tb_ukuran.sepatu_cm,
+                                        tb_ukuran.kaos_kaki_eu,
+                                        tb_ukuran.kaos_kaki_size,
+                                        tb_ukuran.barang_lainnya_nama_ukuran
                                     FROM tb_transaksi_detail 
                                     JOIN tb_barang_detail ON tb_transaksi_detail.id_gudang=tb_barang_detail.barang_detail_id
                                     JOIN tb_ukuran ON tb_barang_detail.ukuran_id = tb_ukuran.ukuran_id
@@ -86,12 +98,32 @@ $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE 
                                     JOIN tb_merk On tb_barang.merk_id = tb_merk.merk_id WHERE tb_transaksi_detail.detail_kode = '$_GET[invoice]'")->fetchAll();
                             foreach ($list as $a) {
                                 $total += $a['detail_total_harga'];
+                                $detail_tipe_konsumen = $a['detail_tipe_konsumen'];
+                                $id_konsumen = $a['id_konsumen'];
                             ?>
                                 <tr>
                                     <td><?= $a['detail_jumlah_beli'] ?></td>
                                     <td><?= $a['barang_nama'] ?></td>
                                     <td><?= $a['merk_nama'] ?></td>
-                                    <td><?= $a['sepatu_ue'] ?></td>
+                                    <td>
+                                        <?php
+                                        if ($a['barang_kategori'] == 'Sepatu') {
+                                            if ($a['ukuran_default'] == 'EU') {
+                                                echo $a['sepatu_ue'];
+                                            } elseif ($a['ukuran_default'] == 'UK') {
+                                                echo $a['sepatu_uk'];
+                                            } elseif ($a['ukuran_default'] == 'US') {
+                                                echo $a['sepatu_us'];
+                                            } elseif ($a['ukuran_default'] == 'CM') {
+                                                echo $a['sepatu_cm'];
+                                            }
+                                        } elseif ($a['barang_kategori'] == 'Kaos Kaki') {
+                                            echo $a['kaos_kaki_eu'];
+                                        } elseif ($a['barang_kategori'] == 'Barang Lainnya') {
+                                            echo $a['barang_lainnya_nama_ukuran'];
+                                        }
+                                        ?>
+                                    </td>
                                     <td style="float: right;">Rp.<?= number_format($a['detail_total_harga']) ?></td>
                                 </tr>
                             <?php } ?>
@@ -152,10 +184,117 @@ $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE 
                         </table>
                         <hr style="color:black; border: 1px solid;">
                     </div>
-                    <div class="col-md-12 text-center" style="font-size: 10px;">
+                    <div class="col-md-12" style="font-size: 10px;">
+                        <h6 class="text-center">Member Info</h6>
+                        <?php
+                        if ($detail_tipe_konsumen == "Member") {
+                            $data_member = $con->query("SELECT * FROM tb_member 
+                                                        JOIN tb_member_point ON tb_member.member_id = tb_member_point.member_id
+                                                        WHERE tb_member.member_id = '$id_konsumen'")->fetch();
+                        ?>
+                            <table style="font-size: 12px;">
+                                <tr>
+                                    <th width="100px">ID Member</th>
+                                    <th width="10px">:</th>
+                                    <td><?= $data_member['member_kode']; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Loyalty</th>
+                                    <th>:</th>
+                                    <td><?php
+                                        if ($data_member['royalti'] <= 3499999) {
+                                            echo "
+                                                Silver
+                                            ";
+                                        } elseif ($data_member['royalti'] <= 3500000 and $data_member['royalti'] <= 10000000) {
+                                            echo "
+                                                Gold
+                                            ";
+                                        } else {
+                                            echo "
+                                                Platinum
+                                        ";
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Points</th>
+                                    <th>:</th>
+                                    <td><?= number_format($data_member['point']) . " Point"; ?></td>
+                                </tr>
+                            </table>
+                        <?php
+                        } else {
+                        ?>
+                            <table style="font-size: 12px;">
+                                <tr>
+                                    <th width="100px">ID Member</th>
+                                    <th width="10px">:</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th>Loyalty</th>
+                                    <th>:</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th>Points</th>
+                                    <th>:</th>
+                                    <td>-</td>
+                                </tr>
+                            </table>
+                        <?php
+                        }
+                        ?>
+                        <hr style="color:black; border: 1px solid;">
+                    </div>
+                    <div class="col-md-12" style="font-size: 10px;">
+                        <h6 class="text-center">Visit Us</h6>
+                        <table style="font-size: 12px;">
+                            <tr>
+                                <th width="100px">Email</th>
+                                <th width="15px">:</th>
+                                <td>alfasport.id@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <th>Instagram</th>
+                                <th>:</th>
+                                <td>@alfasport.id</td>
+                            </tr>
+                            <tr>
+                                <th>Twitter</th>
+                                <th>:</th>
+                                <td>@alfasport_id</td>
+                            </tr>
+                            <tr>
+                                <th>Tiktok</th>
+                                <th>:</th>
+                                <td>@alfasport.id</td>
+                            </tr>
+                            <tr>
+                                <th>Shopee</th>
+                                <th>:</th>
+                                <td>alfasport.id</td>
+                            </tr>
+                            <tr>
+                                <th>Tokopedia</th>
+                                <th>:</th>
+                                <td>alfasport_id</td>
+                            </tr>
+                            <tr>
+                                <th>Bukalapak</th>
+                                <th>:</th>
+                                <td>ALFA SPORT</td>
+                            </tr>
+                        </table>
+                        <hr style="color:black; border: 1px solid;">
+                    </div>
+                    <div class="col-md-12 text-center" style="font-size: 12px;">
                         <i>
                             <p>Terima Kasih</p>
                             <p>Barang yang sudah dibeli tidak dapat ditukar / dikembalikan</p>
+                            <p><b>- Selamat berjumpa kembali -</b></p>
                         </i>
                         <hr>
                         <table style="font-size: 12px;">

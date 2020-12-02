@@ -113,7 +113,20 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Ukuran Default</label>
+                                    <select name="ukuran_default" id="ukuran_default" class="form-control select2">
+                                        <option value="">-Pilih-</option>
+                                        <option value="EU">EU</option>
+                                        <option value="UK">UK</option>
+                                        <option value="US">US</option>
+                                        <option value="CM">CM</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Gender</label>
                                     <div style="display: block; font-size: 15px;">
@@ -131,6 +144,8 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="col-md-12">
                                 <div id="formInput">
                                     <div class="row">
@@ -228,7 +243,6 @@
                                 <label>Divisi</label>
                                 <select name="id_divisi" id="id_divisi2" class="form-group select2" style="width: 100%;">
                                     <option value="">-Pilih Divisi-</option>
-
                                 </select>
                             </div>
                         </div>
@@ -242,7 +256,20 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Ukuran Default</label>
+                                <select name="ukuran_default" id="ukuran_default2" class="form-control select2">
+                                    <option value="">-Pilih-</option>
+                                    <option value="EU">EU</option>
+                                    <option value="UK">UK</option>
+                                    <option value="US">US</option>
+                                    <option value="CM">CM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Gender</label>
                                 <div style="display: block; font-size: 15px;">
@@ -323,6 +350,7 @@ if (isset($_POST['simpanT'])) {
     $id_kategori = $_POST['id_kategori'];
     $id_divisi = $_POST['id_divisi'];
     $id_subdivisi = $_POST['id_subdivisi'];
+    $ukuran_default = $_POST['ukuran_default'];
     $a = $_POST['id_gender'];
     $id_gender = implode(",", $a);
     $ue = $_POST['ue'];
@@ -331,7 +359,7 @@ if (isset($_POST['simpanT'])) {
     $cm = $_POST['cm'];
 
     foreach ($ue as $i => $a) {
-        $con->query("INSERT INTO `tb_ukuran`(`ukuran_kategori`, `gender_id`, `merk_id`, `kategori_id`, `divisi_id`, `subdivisi_id`, `sepatu_ue`, `sepatu_uk`, `sepatu_us`, `sepatu_cm`) VALUES ('Sepatu','$id_gender','$id_merek','$id_kategori','$id_divisi','$id_subdivisi','$ue[$i]','$uk[$i]','$us[$i]','$cm[$i]')");
+        $con->query("INSERT INTO `tb_ukuran`(`ukuran_kategori`, `gender_id`, `merk_id`, `kategori_id`, `divisi_id`, `subdivisi_id`, `ukuran_default`,`sepatu_ue`, `sepatu_uk`, `sepatu_us`, `sepatu_cm`) VALUES ('Sepatu','$id_gender','$id_merek','$id_kategori','$id_divisi','$id_subdivisi', '$ukuran_default','$ue[$i]','$uk[$i]','$us[$i]','$cm[$i]')");
     }
 
     echo "<script>
@@ -459,6 +487,7 @@ if (isset($_POST['simpanT'])) {
         var kategori_id = $('#id_kategori2').val()
         var divisi_id = $('#id_divisi2').val()
         var subdivisi_id = $('#id_subdivisi2').val()
+        var ukuran_default = $('#ukuran_default2').val()
         var ue = $('#ue').val()
         var uk = $('#uk').val()
         var us = $('#us').val()
@@ -480,6 +509,7 @@ if (isset($_POST['simpanT'])) {
             'sepatu_uk': uk,
             'sepatu_cm': cm,
             'gender_id': id_gender,
+            'ukuran_default': ukuran_default,
             'ukuran_id': ukuran_id,
         }).then(function(res) {
             var simpan = res.data
@@ -503,6 +533,7 @@ if (isset($_POST['simpanT'])) {
             edit = res.data
             $('#id_ukuran').val(edit.ukuran_id)
             $('#id_merek').val(edit.merk_id).change()
+            $('#ukuran_default2').val(edit.ukuran_default).change()
             $('#ue').val(edit.sepatu_ue)
             $('#uk').val(edit.sepatu_uk)
             $('#us').val(edit.sepatu_us)

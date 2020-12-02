@@ -18,6 +18,7 @@ if ($_POST['ukuran_id'] == NULL) {
             "kategori_id" => $_POST["kategori_id"],
             "divisi_id" => $_POST["divisi_id"],
             "subdivisi_id" => $_POST["subdivisi_id"],
+            "ukuran_default" => $_POST["ukuran_default"],
             "sepatu_ue" => $_POST["sepatu_ue"],
             "sepatu_uk" => $_POST["sepatu_uk"],
             "sepatu_us" => $_POST["sepatu_us"],

@@ -2,7 +2,6 @@
     <div class="title_left">
         <h3>Data Voucher Ongkir</h3>
     </div>
-
     <div class="title_right">
         <div class="col-md-5 col-sm-5   form-group pull-right top_search">
         </div>
@@ -10,8 +9,8 @@
 </div>
 
 
-<div class="">
-    <div class="col-md-12 col-sm-12  ">
+<div class="container">
+    <div class="col-md-12 col-sm-12">
         <div class="x_panel">
             <div class="x_title">
                 <button type="button" onclick="tampil()" class="btn btn-success"><i class="fa fa-plus"> Buat Voucher</i></button>
@@ -24,7 +23,6 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-
                 <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#akan-datang" role="tab" aria-controls="home" aria-selected="true">Akan Datang</a>
@@ -101,9 +99,10 @@
     </div>
 </div>
 
-<!-- The Modal -->
+
+<!-- the modal set ongkir -->
 <div class="modal" id="dataVoucher">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <!-- Modal Header -->
@@ -140,59 +139,67 @@
                                 <input type="text" name="voucher_nama" id="voucher_nama" required="required" placeholder="Nama Voucher" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-12">
+
+
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label>Area Pengiriman</label>
-                                <select name="areapengiriman" id="areapengiriman" class="form-control select2" style="width:100%">
-                                    <option value="">Set Area Pengiriman</option>
+                                <label>Provinsi</label>
+                                <select class="form-control select2" style="width: 100%;" name="id_prov" id="id_prov" required>
+                                    <option selected disabled>-Pilih Provinsi-</option>
                                     <?php
-                                        $data = $con->query("SELECT * FROM `tb_kota` ")->fetchAll();
-                                        foreach($data as $a){
-                                    ?>
-                                    <option value="<?= $a['id_kota'] ?>"><?= $a['nama_kota'] ?></option>
-                                    <?php
-                                        }
+                                    $data = $con->select("tb_provinsi", '*');
+                                    foreach ($data as $i => $a) {
+                                        echo "<option value='" . $a['id_prov'] . "'>" . $a['nama_prov'] . "</option>";
+                                    }
                                     ?>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Kota/Kabupaten</label>
+                                <select name="areapengiriman" id="areapengiriman" class="form-control select2" style="width:100%">
+                                    <option selected disabled>-Pilih Kota-</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Jenis</label>
-                                <select name="voucher_jenis" id="voucher_jenis" class="form-control select2" style="width: 100%;">
+                                <select name="voucher_jenis" id="voucher_jenis" class="form-control" style="width: 100%;">
                                     <option value="harga">Potongan Harga</option>
                                     <option value="persen">Potongan Persen</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Potongan Harga</label>
                                 <input type="number" name="voucher_harga" id="voucher_harga" required="required" placeholder="Potongan Voucher" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Minimum Belanja</label>
                                 <input type="text" name="minimum" class="form-control" id="minimum" placeholder="Minimum Belanja">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Tanggal Mulai Voucher</label>
                                 <input type="date" name="voucher_tgl_mulai" id="voucher_tgl_mulai" required="required" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Tanggal Berakhir Voucher</label>
                                 <input type="date" name="voucher_tgl_akhir" id="voucher_tgl_akhir" required="required" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Toko</label>
-                                <select name="id_toko" class="form-control select2" style="width: 100%;" id="id_toko">
+                                <select name="id_toko" class="form-control" style="width: 100%;" id="id_toko">
                                     <option value="0">Semua Toko</option>
                                     <?php
                                     $data = $con->query("SELECT * FROM toko WHERE id_toko != 0");
@@ -203,7 +210,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Jumlah Voucher</label>
                                 <input type="number" name="voucher_jumlah" id="voucher_jumlah" required="required" placeholder="" class="form-control">
@@ -225,6 +232,23 @@
 
 
 <script>
+    // cari data kota
+    $("#id_prov").change(function() {
+        var id_prov = $('#id_prov option:selected').val();
+        console.log(id_prov);
+        $.ajax({
+            type: "GET",
+            url: "inc/diskon/ongkir/data_kota.php",
+            data: {
+                'id_prov': id_prov
+            },
+            success: function(response) {
+                $('#areapengiriman').html(response);
+            }
+        });
+    })
+
+
     function tampil() {
         $('#dataVoucher').modal()
     }

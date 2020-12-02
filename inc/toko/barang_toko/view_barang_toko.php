@@ -125,11 +125,12 @@
                     <th>Merek</th>
                     <th>Kategori</th>
                     <th>Divisi</th>
-                    <th>Sub Divisi</th>
+                    <th>Subdivisi</th>
                     <th>Gender</th>
                     <th>Jumlah</th>
                     <th>Modal</th>
                     <th>Jual</th>
+                    <th>Size</th>
                     <th class="text-center" style="width:160px">Action</th>
                 </tr>
             </thead>

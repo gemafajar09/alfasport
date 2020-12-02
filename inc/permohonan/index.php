@@ -100,12 +100,170 @@
 <div class="modal" id="Show">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-body">
-                <div class="container" id="pesan"></div>
-            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <div class="container" id="pesan">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2">
+                            <button type="submit" id="klik" name="simpanAcc" class="btn btn-warning btn-sm">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+<?php
+
+if (isset($_POST['simpanAcc'])) {
+    // var_dump($_POST);
+    $transfer_barang_id = $_POST['transfer_barang_id'];
+    $transfer_ket = $_POST['transfer_ket'];
+    $transfer_barang_detail_jml = $_POST['transfer_barang_detail_jml'];
+    $barang_detail_id = $_POST['barang_detail_id'];
+    $ukuran_id = $_POST['ukuran_id'];
+    $id_toko_asal = $_POST['id_toko_asal'];
+    $id_toko_tujuan = $_POST['id_toko_tujuan'];
+
+    // update status di tb_transfer_barang
+    $con->query("UPDATE tb_transfer_barang SET transfer_barang_acc_owner = '3', transfer_barang_ket = '$transfer_ket' WHERE transfer_barang_id = '$transfer_barang_id'");
+
+    $cek_status_tb_transfer_barang_detail = $con->query("SELECT transfer_barang_detail_id ,transfer_barang_detail_status FROM tb_transfer_barang_detail WHERE transfer_barang_id = '$transfer_barang_id'")->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($cek_status_tb_transfer_barang_detail as $i => $a) {
+        // dahulukan baris baru kolom
+        // var_dump($cek_status_tb_transfer_barang_detail[$i]['transfer_barang_detail_status'] == 1);
+        // exit;
+        if ($a['transfer_barang_detail_status'] == 2) {
+            // var_dump('rk');
+            // exit;
+            // cek apakah pengirim dari gudang
+            if ($id_toko_asal == 0 && $id_toko_tujuan != 0) {
+                // cek barang_toko_id
+                $data = $con->query("SELECT
+                                        barang_toko_id,
+                                        barang_toko_jml
+                                    FROM tb_barang_toko
+                                    WHERE id_toko = '$id_toko_tujuan' 
+                                    AND barang_detail_id = '$barang_detail_id[$i]' 
+                                    AND ukuran_id = '$ukuran_id[$i]' 
+                                    LIMIT 1
+                                    ")->fetch(PDO::FETCH_ASSOC);
+
+                if ($data['barang_toko_id'] != null) {
+                    // update stok tb_barang_toko (tambah)
+                    $con->query("UPDATE tb_barang_toko SET barang_toko_jml = barang_toko_jml + '$transfer_barang_detail_jml[$i]' WHERE barang_toko_id = '$data[barang_toko_id]'");
+                } else {
+                    // insert ke tb_barang_toko terlebih dahulu
+                    $con->insert(
+                        'tb_barang_toko',
+                        array(
+                            'id_toko' => $id_toko_tujuan,
+                            'barang_detail_id' => $barang_detail_id[$i],
+                            'ukuran_id' => $ukuran_id[$i],
+                            'barang_toko_jml' => $transfer_barang_detail_jml[$i],
+                            'barang_toko_tgl' => $tgl
+                        )
+                    );
+                }
+
+                // update stok tb_barang_detail (kurangi)
+                $con->query("UPDATE tb_barang_detail SET barang_detail_jml = barang_detail_jml - '$transfer_barang_detail_jml[$i]' WHERE barang_detail_id = '$barang_detail_id[$i]'");
+            }
+            // cek apakah tujuannya ke gudang
+            else if ($id_toko_asal != 0 && $id_toko_tujuan == 0) {
+                // update stok gudang (tambah)
+                $con->query("UPDATE tb_barang_detail SET barang_detail_jml = barang_detail_jml + '$transfer_barang_detail_jml[$i]' WHERE barang_detail_id = '$barang_detail_id[$i]'");
+
+                // cek id toko
+                $data = $con->query("SELECT
+                                        barang_toko_id,
+                                        barang_toko_jml
+                                    FROM tb_barang_toko
+                                    WHERE id_toko = '$id_toko_asal' 
+                                    AND barang_detail_id = '$barang_detail_id[$i]' 
+                                    AND ukuran_id = '$ukuran_id[$i]' 
+                                    LIMIT 1
+                                ")->fetch(PDO::FETCH_ASSOC);
+                // update stok toko (kurangi)
+                $con->query("UPDATE tb_barang_toko SET barang_toko_jml = barang_toko_jml - '$transfer_barang_detail_jml[$i]' WHERE barang_toko_id = '$data[barang_toko_id]'");
+            }
+            // cek apakah tujuan/asal tidak dari gudang
+            else if ($id_toko_asal != 0 && $id_toko_tujuan != 0) {
+                // cek data di stok toko tujuan apakah barang ada atau tidak
+                $cek_stok_toko = $con->query("SELECT
+                                                tb_barang_toko.barang_toko_id,
+                                                tb_barang_toko.barang_toko_jml
+                                            FROM tb_barang_toko
+                                            WHERE tb_barang_toko.id_toko = '$id_toko_tujuan' 
+                                            AND tb_barang_toko.barang_detail_id = '$barang_detail_id[$i]' 
+                                            AND tb_barang_toko.ukuran_id = '$ukuran_id[$i]' 
+                                            ")->fetch();
+
+                // jika ada maka tinggal update stok toko
+                if (!empty($cek_stok_toko)) {
+                    // update stok toko tujuan (tambah)
+                    $con->query("UPDATE tb_barang_toko 
+                                SET tb_barang_toko.barang_toko_jml = tb_barang_toko.barang_toko_jml + '$transfer_barang_detail_jml[$i]' 
+                                WHERE barang_toko_id = '$cek_stok_toko[barang_toko_id]'");
+                    $data1 = $con->query("SELECT
+                                                tb_barang_toko.barang_toko_id,
+                                                tb_barang_toko.barang_toko_jml
+                                            FROM tb_barang_toko
+                                            WHERE tb_barang_toko.id_toko = '$id_toko_asal' 
+                                            AND tb_barang_toko.barang_detail_id = '$barang_detail_id[$i]' 
+                                            AND tb_barang_toko.ukuran_id = '$ukuran_id[$i]'
+                                        ")->fetch(PDO::FETCH_ASSOC);
+                    // update stok toko asal (kurang) 
+                    $con->query("UPDATE tb_barang_toko 
+                                SET tb_barang_toko.barang_toko_jml = tb_barang_toko.barang_toko_jml - '$transfer_barang_detail_jml[$i]' 
+                                WHERE barang_toko_id = '$data1[barang_toko_id]'");
+                }
+                // jika tidak ada maka insert dan update
+                else {
+                    // cek id toko
+                    $data1 = $con->query("SELECT
+                                                tb_barang_toko.barang_toko_id,
+                                                tb_barang_toko.barang_toko_jml
+                                            FROM tb_barang_toko
+                                            WHERE tb_barang_toko.id_toko = '$id_toko_asal' 
+                                            AND tb_barang_toko.barang_detail_id = '$barang_detail_id[$i]' 
+                                            AND tb_barang_toko.ukuran_id = '$ukuran_id[$i]'
+                                        ")->fetch(PDO::FETCH_ASSOC);
+                    // var_dump($data1);
+                    // exit;
+                    // update stok toko asal (kurang) 
+                    $con->query("UPDATE tb_barang_toko 
+                                SET barang_toko_jml = barang_toko_jml - '$transfer_barang_detail_jml[$i]' 
+                                WHERE barang_toko_id = '$data1[barang_toko_id]'");
+                    // insert stok toko tujuan (tambah)
+                    $con->insert(
+                        "tb_barang_toko",
+                        array(
+                            "id_toko" => $id_toko_tujuan,
+                            "barang_detail_id" => $barang_detail_id[$i],
+                            "ukuran_id" => $ukuran_id[$i],
+                            "barang_toko_jml" => $transfer_barang_detail_jml[$i],
+                            "barang_toko_tgl" => $tgl
+                        )
+                    );
+                }
+            }
+        }
+    }
+    echo "<script>
+        window.location.href = 'permohonan.html';
+    </script>";
+}
+
+?>
+
 
 
 <script>

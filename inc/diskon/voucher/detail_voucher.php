@@ -73,6 +73,26 @@ $id = $data_voucher_detail['voucher_id'];
                         </h6>
                     </th>
                 </tr>
+                <tr>
+                    <td>
+                        <h6>Minimum Belanja</h6>
+                    </td>
+                    <td>
+                        <h6>:</h6>
+                    </td>
+                    <th>
+                        <h6>
+                            <?php
+                            if (!empty($data_voucher_detail['minimum_belanja'])) {
+                                echo "Rp." . number_format($data_voucher_detail['minimum_belanja']);
+                            } else {
+                                echo "-";
+                            }
+                            ?>
+                        </h6>
+                    </th>
+                </tr>
+
             </table>
         </div>
         <div class="clearfix"></div>
