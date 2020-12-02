@@ -6,6 +6,7 @@ $data = $con->query("SELECT
                         tb_kategori.kategori_nama,
                         tb_divisi.divisi_nama,
                         tb_subdivisi.subdivisi_nama,
+                        tb_ukuran.ukuran_default,
                         tb_ukuran.gender_id,
                         tb_ukuran.sepatu_ue,
                         tb_ukuran.sepatu_uk,
@@ -46,10 +47,42 @@ foreach ($data as $i => $a) {
             echo $a['kategori_nama'] . "<br>" . "<i><b>" . $a['divisi_nama'] . "</b></i>" . "<br>" . $a['subdivisi_nama'];
             ?>
         </td>
-        <td><?= $a['sepatu_ue'] ?></td>
-        <td><?= $a['sepatu_uk'] ?></td>
-        <td><?= $a['sepatu_us'] ?></td>
-        <td><?= $a['sepatu_cm'] ?></td>
+        <td>
+            <?php
+            if ($a['ukuran_default'] == 'EU') {
+                echo "<b>" . $a['sepatu_ue'] . "</b>";
+            } else {
+                echo $a['sepatu_ue'];
+            }
+            ?>
+        </td>
+        <td>
+            <?php
+            if ($a['ukuran_default'] == 'UK') {
+                echo "<b>" . $a['sepatu_uk'] . "</b>";
+            } else {
+                echo $a['sepatu_uk'];
+            }
+            ?>
+        </td>
+        <td>
+            <?php
+            if ($a['ukuran_default'] == 'US') {
+                echo "<b>" . $a['sepatu_us'] . "</b>";
+            } else {
+                echo $a['sepatu_us'];
+            }
+            ?>
+        </td>
+        <td>
+            <?php
+            if ($a['ukuran_default'] == 'CM') {
+                echo "<b>" . $a['sepatu_cm'] . "</b>";
+            } else {
+                echo $a['sepatu_cm'];
+            }
+            ?>
+        </td>
         <td>
             <button type="button" onclick="edit(<?= $a['ukuran_id'] ?>)" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
             <button type="button" id="hapus" onclick="hapus('<?= $a['ukuran_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>

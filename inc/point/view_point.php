@@ -36,7 +36,7 @@
                     <th>No Telpon Member</th>
                     <th>Email Member</th>
                     <th>Total Point</th>
-                    <th>Royalti</th>
+                    <th>Loyalty</th>
                     <th>Status</th>
                     <!-- <th class="text-center" style="width:140px">Action</th> -->
                 </tr>

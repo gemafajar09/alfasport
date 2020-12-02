@@ -86,6 +86,7 @@ if (isset($_POST['upload'])) {
                         "kategori_id" => $kategori_id,
                         "divisi_id" => $divisi_id,
                         "subdivisi_id" => $subdivisi_id,
+                        "ukuran_default" => $isi_baris[9],
                         "sepatu_ue" => $isi_baris[5],
                         "sepatu_uk" => $isi_baris[6],
                         "sepatu_us" => $isi_baris[7],

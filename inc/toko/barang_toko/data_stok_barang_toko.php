@@ -11,6 +11,8 @@ $data = $con->query("SELECT
                         tb_barang.barang_modal,
                         tb_barang.barang_jual,
                         tb_barang_detail.barang_detail_barcode,
+                        tb_ukuran.ukuran_id,
+                        tb_ukuran.ukuran_default,
                         tb_ukuran.sepatu_ue,
                         tb_ukuran.sepatu_uk,
                         tb_ukuran.sepatu_us,
@@ -54,6 +56,25 @@ foreach ($data as $i => $a) {
         <td><?= $a['barang_toko_jml'] ?></td>
         <td><?= $a['barang_modal'] ?></td>
         <td><?= $a['barang_jual'] ?></td>
+        <td>
+            <?php
+            if ($a['barang_kategori'] == 'Sepatu') {
+                if ($a['ukuran_default'] == 'EU') {
+                    echo "EU : " .  $a['sepatu_ue'];
+                } elseif ($a['ukuran_default'] == 'UK') {
+                    echo "UK : " .  $a['sepatu_uk'];
+                } elseif ($a['ukuran_default'] == 'US') {
+                    echo "US : " .  $a['sepatu_us'];
+                } elseif ($a['ukuran_default'] == 'CM') {
+                    echo "CM : " . $a['sepatu_cm'];
+                }
+            } elseif ($a['barang_kategori'] == 'Kaos Kaki') {
+                echo "EU : " . $a['kaos_kaki_eu'];
+            } elseif ($a['barang_kategori'] == 'Barang Lainnya') {
+                echo "EU : " . $a['barang_lainnya_nama_ukuran'];
+            }
+            ?>
+        </td>
         <td class="text-center">
             <button type="button" id="hapus" onclick="hapus('<?= $a['barang_toko_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             <button type="button" onclick="detail('<?= $a['barang_toko_id'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>

@@ -226,7 +226,7 @@
                                         <input type="hidden" class="form-control" id="diskonss" readonly>
                                     </div>
                                 </div> -->
-                                <!-- <div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tipe Diskon</label>
                                         <select name="tipe_diskon" id="tipe_diskon" class="form-control">
@@ -234,10 +234,10 @@
                                             <option value="dis_persen">Potongan Persen</option>
                                             <option value="dis_harga">Potongan Harga</option>
                                         </select>
-                                        <form action="voucher.html" method="POST" target="_blank">
+                                        <!-- <form action="voucher.html" method="POST" target="_blank">
                                             <input type="hidden" name="a" value="profile-tab">
                                             <button class="btn btn-sm btn-info" type="submit">Punya Voucher ?</button>
-                                        </form>
+                                        </form> -->
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -246,7 +246,7 @@
                                         <input type="text" class="form-control" name="diskon_persen" id="diskon_persen" style="display:none;" placeholder="Potongan Persen" onkeyup="potDis(this)">
                                         <input type="number" class="form-control" name="diskon_harga" id="diskon_harga" style="display: none;" placeholder="Potongan Harga">
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="col-md-12" style="display: block;" id="bayar_cash">
                                     <label>Bayar Cash</label>
                                     <div class="input-group mb-2">
@@ -298,7 +298,7 @@
 
 <script>
     $('#isi').load('inc/transaksi_online/data_keranjang_transaksi_online.php');
-    
+
     // menampilkan data gudang dari toko yang dipilih
     $("#id_toko").change(function() {
         var id_toko = $('#id_toko option:selected').val();
@@ -315,17 +315,17 @@
         });
     })
     // cari ukuran
-    $('#id_gudang').change(function(e){
+    $('#id_gudang').change(function(e) {
         e.preventDefault()
         var barang_id = $(this).val()
         var id_toko = $('#id_toko').val()
-        axios.post('inc/transaksi_online/filter/ukuran.php',{
-            'id_toko':id_toko,
-            'id':barang_id
-        }).then(function(res){
+        axios.post('inc/transaksi_online/filter/ukuran.php', {
+            'id_toko': id_toko,
+            'id': barang_id
+        }).then(function(res) {
             var data = res.data
             $('#ukurans').html(data)
-        }).catch(function(err){
+        }).catch(function(err) {
             console.log(err)
         })
     })
@@ -383,7 +383,7 @@
     //     });
     // })
 
-    
+
 
     // mendapatkan total harga dari jumlah beli kali dengan total harga
     function dapatHarga(nilai) {
@@ -477,48 +477,55 @@
 
     // proses checkout
     $('#checkout').on('click', function() {
-        var sub = document.getElementById('subtotal').value;
-        var tot = document.getElementById('jmlTot').value;
-        document.getElementById('subTotalBelanja').value = sub;
-        document.getElementById('subTotalBelanjaBantuan').value = sub;
-        document.getElementById('subTotalBelanja1').value = sub;
-        document.getElementById('jumlahTotal').value = tot;
-        console.log(sub)
-        console.log(tot)
-        $('#modalCheckout').modal()
-    })
+        var id_toko = $('#id_toko').val()
+        var data_toko_online_id = $('#data_toko_online_id').val()
+        if (id_toko == '' && data_toko_online_id == '') {
+            toastr.warning('Silahkan Pilih Toko');
+        } else {
 
-    document.getElementById("transaksi_tipe_bayar").addEventListener("change", function() {
-        if (this.value == 0) {
-            $('#kembalian').val(0);
-            $("#subTotalBelanja").val(hrgAwal);
-            $("#subTotalBelanjaBantuan").val(hrgAwal);
-            document.getElementById("tipe_bayar").style.display = "none";
-            document.getElementById("bayar_cash").style.display = "none";
-            document.getElementById("bayar_card").style.display = "none";
-            document.getElementById("diskonBank").style.display = "none";
-            document.getElementById("txtBayarCash").value = 0;
-            document.getElementById("txtBayarCard").value = 0;            
-        } else if (this.value == 2 || this.value == 3) {
-            document.getElementById("tipe_bayar").style.display = "block";
-            document.getElementById("bayar_card").style.display = "block";
-            document.getElementById("bayar_cash").style.display = "none";
-            document.getElementById("txtBayarCash").value = 0;
-            document.getElementById("txtBayarCard").value = 0;
-        } else if (this.value == 4 || this.value == 5) {
-            document.getElementById("tipe_bayar").style.display = "block";
-            document.getElementById("bayar_cash").style.display = "block";
-            document.getElementById("bayar_card").style.display = "block";
-            document.getElementById("txtBayarCash").value = 0;
-            document.getElementById("txtBayarCard").value = 0;
-        } else if (this.value == 1) {
-            document.getElementById("tipe_bayar").style.display = "none";
-            document.getElementById("bayar_cash").style.display = "block";
-            document.getElementById("bayar_card").style.display = "none";
-            document.getElementById("txtBayarCash").value = 0;
-            document.getElementById("txtBayarCard").value = 0;
+            var sub = document.getElementById('subtotal').value;
+            var tot = document.getElementById('jmlTot').value;
+            document.getElementById('subTotalBelanja').value = sub;
+            document.getElementById('subTotalBelanjaBantuan').value = sub;
+            document.getElementById('subTotalBelanja1').value = sub;
+            document.getElementById('jumlahTotal').value = tot;
+            console.log(sub)
+            console.log(tot)
+            $('#modalCheckout').modal()
         }
     })
+
+    // document.getElementById("transaksi_tipe_bayar").addEventListener("change", function() {
+    //     if (this.value == 0) {
+    //         $('#kembalian').val(0);
+    //         $("#subTotalBelanja").val(hrgAwal);
+    //         $("#subTotalBelanjaBantuan").val(hrgAwal);
+    //         document.getElementById("tipe_bayar").style.display = "none";
+    //         document.getElementById("bayar_cash").style.display = "none";
+    //         document.getElementById("bayar_card").style.display = "none";
+    //         document.getElementById("diskonBank").style.display = "none";
+    //         document.getElementById("txtBayarCash").value = 0;
+    //         document.getElementById("txtBayarCard").value = 0;            
+    //     } else if (this.value == 2 || this.value == 3) {
+    //         document.getElementById("tipe_bayar").style.display = "block";
+    //         document.getElementById("bayar_card").style.display = "block";
+    //         document.getElementById("bayar_cash").style.display = "none";
+    //         document.getElementById("txtBayarCash").value = 0;
+    //         document.getElementById("txtBayarCard").value = 0;
+    //     } else if (this.value == 4 || this.value == 5) {
+    //         document.getElementById("tipe_bayar").style.display = "block";
+    //         document.getElementById("bayar_cash").style.display = "block";
+    //         document.getElementById("bayar_card").style.display = "block";
+    //         document.getElementById("txtBayarCash").value = 0;
+    //         document.getElementById("txtBayarCard").value = 0;
+    //     } else if (this.value == 1) {
+    //         document.getElementById("tipe_bayar").style.display = "none";
+    //         document.getElementById("bayar_cash").style.display = "block";
+    //         document.getElementById("bayar_card").style.display = "none";
+    //         document.getElementById("txtBayarCash").value = 0;
+    //         document.getElementById("txtBayarCard").value = 0;
+    //     }
+    // })
 
     // menampilkan kembalian
     function dapatKembalian() {
@@ -621,7 +628,7 @@
         $('#transol_total_harga').val(0)
         $('#tmp_id').val(null)
         $('#disc').val(null)
-        document.getElementsByName("radio")[0].checked = false;
+        // document.getElementsByName("radio")[0].checked = false;
     }
 
     // untuk mengecek apak tipe diskon persen atau potongan harga

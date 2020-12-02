@@ -9,7 +9,7 @@ $id = $data_voucher_detail['voucher_id_ongkir'];
 
 <div class="page-title">
     <div class="title_left">
-        <a href="voucher.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
+        <a href="ongkir.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
     </div>
     <div class="title_right">
         <div class="col-md-5 col-sm-5   form-group pull-right top_search">
@@ -68,6 +68,25 @@ $id = $data_voucher_detail['voucher_id_ongkir'];
                                 echo "Rp." . number_format($data_voucher_detail['voucher_harga']);
                             } else {
                                 echo  $data_voucher_detail['voucher_harga'] . "%";
+                            }
+                            ?>
+                        </h6>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>Minimum Belanja</h6>
+                    </td>
+                    <td>
+                        <h6>:</h6>
+                    </td>
+                    <th>
+                        <h6>
+                            <?php
+                            if (!empty($data_voucher_detail['minimum_belanja'])) {
+                                echo "Rp." . number_format($data_voucher_detail['minimum_belanja']);
+                            } else {
+                                echo "-";
                             }
                             ?>
                         </h6>

@@ -23,7 +23,7 @@ if ($_POST['transol_id'] == NULL) {
         'transol_total_belanja' => $_POST['transol_total_belanja'],
         'transol_kembalian' => $_POST['transol_kembalian'],
         'transol_bank' => 0,
-        'transol_tipe_diskon' => 0,
+        'transol_tipe_diskon' => $_POST['transol_tipe_diskon'],
         'transol_diskon' => $_POST['transol_diskon'],
         'transol_diskon_bank' => 0,
         'transol_create_at' => $tgl,

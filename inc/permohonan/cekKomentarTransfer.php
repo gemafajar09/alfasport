@@ -97,6 +97,8 @@ $_POST = json_decode($json, true);
                             ")->fetchAll();
         foreach ($data_table as $i => $data) {
             $keterangan = $data['transfer_barang_ket'];
+            $id_toko_asal = $data['id_toko'];
+            $id_toko_tujuan = $data['id_toko_tujuan'];
         ?>
             <tr>
                 <td><?= $data['barang_kode'] ?></td>
@@ -104,11 +106,9 @@ $_POST = json_decode($json, true);
                 <td><?= $data['barang_nama'] ?></td>
                 <td><?= $data['barang_detail_barcode'] ?></td>
                 <td><?= $data['transfer_barang_detail_jml'] ?></td>
-                <input type="hidden" name="transfer_barang_detail_jml[]" value="<?= $data['transfer_barang_detail_jml'] ?>">
-                <input type="hidden" name="id_toko_asal[]" value="<?= $data['id_toko'] ?>">
-                <input type="hidden" name="id_toko_tujuan[]" value="<?= $data['id_toko_tujuan'] ?>">
                 <input type="hidden" name="barang_detail_id[]" value="<?= $data['barang_detail_id'] ?>">
                 <input type="hidden" name="ukuran_id[]" value="<?= $data['ukuran_id'] ?>">
+                <input type="hidden" name="transfer_barang_detail_jml[]" value="<?= $data['transfer_barang_detail_jml'] ?>">
                 <?php
                 if ($data['barang_kategori'] == 'Sepatu') {
                 ?>
@@ -130,7 +130,7 @@ $_POST = json_decode($json, true);
                         <?php
                         $cek = $data['transfer_barang_detail_status'];
                         if ($cek == 1) { ?>
-                            <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_barang_detail_id'] ?>, this)" <?php echo ($cek == '1') ? "checked" : "" ?>>
+                            <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" <?php echo ($cek == '1') ? "checked" : "" ?>>
                             <span class="slider2 round2"></span>
                         <?php } else { ?>
                             <input type="checkbox" class="cek_status" id="cek_status<?= $data['transfer_barang_detail_id'] ?>" value="<?= $data['transfer_barang_detail_id'] ?>" onchange="cekStatus(<?= $data['transfer_barang_detail_id'] ?>, this)" <?php echo ($cek == '0') ? "" : "" ?>>
@@ -147,29 +147,28 @@ $_POST = json_decode($json, true);
 <div class="form-group">
     <label for="">Keterangan</label>
     <input type="hidden" id="transfer_barang_id" name="transfer_barang_id" value="<?php echo $_POST['transfer_barang_id'] ?>">
+    <input type="hidden" id="id_toko_asal" name="id_toko_asal" value="<?php echo $id_toko_asal ?>">
+    <input type="hidden" id="id_toko_tujuan" name="id_toko_tujuan" value="<?php echo $id_toko_tujuan ?>">
     <textarea name="transfer_ket" id="transfer_ket" class="form-control" id="" cols="30" rows="2"><?= $keterangan ?></textarea>
 </div>
-<div class="row">
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-        <button type="button" id="klik" class="btn btn-warning btn-sm btn-block">Update</button>
-    </div>
-</div>
+
+
+
 
 <script>
-    $('#klik').on('click', function() {
-        var transfer_barang_id = $('#transfer_barang_id').val()
-        var transfer_ket = $('#transfer_ket').val()
-        axios.post('inc/permohonan/acc_transfer_kurang.php', {
-            'transfer_barang_id': transfer_barang_id,
-            'transfer_ket': transfer_ket
-        }).then(function(res) {
-            $('#Acc').modal('hide');
-            window.location = "permohonan.html"
-        }).catch(function(err) {
-            console.log(err)
-        })
-    })
+    // $('#klik').on('click', function() {
+    //     var transfer_barang_id = $('#transfer_barang_id').val()
+    //     var transfer_ket = $('#transfer_ket').val()
+    //     axios.post('inc/permohonan/acc_transfer_kurang.php', {
+    //         'transfer_barang_id': transfer_barang_id,
+    //         'transfer_ket': transfer_ket
+    //     }).then(function(res) {
+    //         $('#Acc').modal('hide');
+    //         window.location = "permohonan.html"
+    //     }).catch(function(err) {
+    //         console.log(err)
+    //     })
+    // })
 
 
     function cekStatus(transfer_barang_detail_id, status_checked) {

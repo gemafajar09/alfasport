@@ -37,7 +37,7 @@ foreach ($data as $i => $a) {
             ?>
         </td>
         <td>
-            <a href="detail-voucher-<?= $a['voucher_id_ongkir'] ?>.html" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+            <a href="detail-ongkir-<?= $a['voucher_id_ongkir'] ?>.html" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
         </td>
     </tr>
 <?php } ?>

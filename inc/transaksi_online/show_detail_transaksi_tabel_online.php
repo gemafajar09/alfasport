@@ -59,8 +59,9 @@ foreach ($data as $i => $a) {
         <th colspan="2">Jumlah</th>
         <th><?= $jumlah ?></th>
         <th colspan="2">&nbsp;</th>
-        <th>Total</th>
-        <th><b><?= 'Rp.' . number_format($subtotal) ?></b>
+        <th>Subtotal</th>
+        <th>
+                <b><?= 'Rp.' . number_format($subtotal) ?></b>
                 <input type="hidden" id="subtotal" value="<?= $subtotal ?>">
                 <input type="hidden" id="jmlTot" value="<?= $jumlah ?>">
         </th>
@@ -71,8 +72,8 @@ $dt = $con->query("SELECT
         tb_transaksi_online_detail.transol_detail_total_harga,
         tb_transaksi_online_detail.transol_detail_diskon1,
         tb_transaksi_online_detail.transol_detail_potongan,
-        tb_gudang.nama,
-        tb_gudang.jual,
+        tb_barang.barang_nama,
+        tb_barang.barang_jual,
         tb_transaksi_online.transol_cash,
         tb_transaksi_online.transol_debit,
         tb_transaksi_online.transol_tipe_diskon,
@@ -102,13 +103,13 @@ if ($tipe_diskon_manual == 'dis_persen') {
         $dManual = 0;
 }
 ?>
-<!-- <tr>
+<tr>
         <th colspan="5">&nbsp;</th>
-        <th>Diskon Bank + Diskon Manual</th>
+        <th>Diskon Manual</th>
         <th style="float: right;">Rp. <?= number_format($dB + $dManual) ?></th>
-</tr> -->
-<!-- <tr>
+</tr>
+<tr>
         <th colspan="5">&nbsp;</th>
         <th>Total</th>
         <th style="float: right;">Rp.<?= number_format($subtotal - ($dB + $dManual)) ?></th>
-</tr> -->
+</tr>

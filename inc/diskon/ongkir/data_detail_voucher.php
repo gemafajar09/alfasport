@@ -6,14 +6,14 @@ $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 
 $kode = $con->query("SELECT
-                        b.voucher_id,
-                        b.voucher_detail_id,
+                        b.voucher_detail_id_ongkir,
+                        b.voucher_id_ongkir,
                         b.voucher_detail_token,
                         b.voucher_detail_status,
                         tb_member.member_nama
                     FROM tb_voucher_detail_ongkir b 
                     LEFT JOIN tb_member On b.member_id = tb_member.member_id 
-                    WHERE b.voucher_id = '$_POST[voucher_id]'")->fetchAll();
+                    WHERE b.voucher_id_ongkir = '$_POST[voucher_id]'")->fetchAll();
 foreach ($kode as $i => $data) {
 ?>
     <tr>
@@ -50,7 +50,7 @@ foreach ($kode as $i => $data) {
             ?>
                 <label class="switch">
                     <?php $cek = $data['voucher_detail_status'] ?>
-                    <input type="checkbox" class="cek_menipis" id="cek_menipis<?= $data['voucher_detail_id'] ?>" value="<?= $data['voucher_detail_id'] ?>" onchange="cekMenipis(<?= $data['voucher_detail_id'] ?>,this)" <?php echo ($cek == '3') ? "checked" : "" ?>>
+                    <input type="checkbox" class="cek_menipis" id="cek_menipis<?= $data['voucher_detail_id_ongkir'] ?>" value="<?= $data['voucher_detail_id_ongkir'] ?>" onchange="cekMenipis(<?= $data['voucher_detail_id_ongkir'] ?>,this)" <?php echo ($cek == '3') ? "checked" : "" ?>>
                     <span class="slider round"></span>
                 </label>
                 <button type="button" class="btn btn-warning btn-sm" onclick="copyToClipboard('<?php echo $_POST['nama'] . " = " . $data['voucher_detail_token']  ?>')" id="copy">Copy</button>
