@@ -241,12 +241,12 @@ $data = $con->query(
 
 
 foreach ($data as $i => $a) {
-    $modal = 'Rp' . number_format($a['barang_modal']);
-    $jual = 'Rp' . number_format($a['barang_jual']);
+    $modal = 'Rp.' . number_format($a['barang_modal']);
+    $jual = 'Rp.' . number_format($a['barang_jual']);
 ?>
     <tr>
         <td><?= $i + 1 ?></td>
-        <td><?= $a['barang_kategori'] ?></td>
+        <!-- <td><?= $a['barang_kategori'] ?></td> -->
         <td><?= $a['barang_artikel'] ?></td>
         <td><?= $a['barang_nama'] ?></td>
         <td><?= $a['merk_nama'] ?></td>

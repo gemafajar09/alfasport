@@ -1,40 +1,79 @@
 <?php
 include "../../../config/koneksi.php";
+include "../../../App/MY_url_helper.php";
 
 $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 
-$data = $con->query("
-SELECT a.transaksi_id,
-       a.transaksi_kode,
-       b.nama_toko,
-       a.transaksi_tipe_bayar,
-       a.transaksi_cash,
-       a.transaksi_debit,
-       a.transaksi_bank,
-       a.transaksi_create_at,
-       a.transaksi_create_by
-FROM tb_transaksi a
-JOIN toko b ON a.id_toko=b.id_toko
-WHERE a.id_toko = '$_POST[toko]'
-")->fetchAll();
+if($_POST['toko'] != null){
+    $data = $con->query("
+    SELECT a.transaksi_id,
+           a.transaksi_kode,
+           b.nama_toko,
+           e.kategori,
+           a.transaksi_cash,
+           a.transaksi_debit,
+           a.transaksi_point,
+           a.transaksi_total_belanja,
+           d.bank,
+           a.transaksi_create_at,
+           c.nama,
+           a.keterangan
+    FROM tb_transaksi a
+    LEFT JOIN toko b ON a.id_toko=b.id_toko
+    LEFT JOIN tb_karyawan c ON a.transaksi_create_by = c.id_karyawan 
+    LEFT JOIN tb_bank d ON a.transaksi_bank=d.id_bank
+    LEFT JOIN tb_metode e ON a.transaksi_tipe_bayar=e.id_metode
+    WHERE a.id_toko = '$_POST[toko]'
+    ")->fetchAll();
+}else{
+    $data = $con->query("
+    SELECT a.transaksi_id,
+           a.transaksi_kode,
+           b.nama_toko,
+           e.kategori,
+           a.transaksi_cash,
+           a.transaksi_debit,
+           a.transaksi_point,
+           a.transaksi_total_belanja,
+           d.bank,
+           a.transaksi_create_at,
+           c.nama,
+           a.keterangan
+    FROM tb_transaksi a
+    LEFT JOIN toko b ON a.id_toko=b.id_toko
+    LEFT JOIN tb_karyawan c ON a.transaksi_create_by = c.id_karyawan 
+    LEFT JOIN tb_bank d ON a.transaksi_bank=d.id_bank
+    LEFT JOIN tb_metode e ON a.transaksi_tipe_bayar=e.id_metode
+    ")->fetchAll();
+}
 foreach ($data as $i => $a) {
 ?>
     <tr>
         <td><?= $i + 1 ?></td>
         <td><?= $a['transaksi_kode'] ?></td>
         <td><?= $a['nama_toko'] ?></td>
-        <td><?= $a['transaksi_tipe_bayar'] ?></td>
-        <td><?= number_format($a['transaksi_cash']) ?></td>
-        <td><?= number_format($a['transaksi_debit']) ?></td>
-        <td><?= $a['transaksi_bank'] ?></td>
-        <td><?= $a['transaksi_create_at'] ?></td>
-        <td><?= $a['transaksi_create_by'] ?></td>
-        <!-- <td></td> -->
-        <td class="text-center">
-            <a href="update-gudang-<?= $a['transaksi_id'] ?>.html" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></a>
+        <td><?= $a['kategori'] ?></td>
+        <td><?= 'Rp.' . number_format($a['transaksi_cash']) ?></td>
+        <td><?= 'Rp.' . number_format($a['transaksi_debit']) ?></td>
+        <td><?= 'Rp.' . number_format($a['transaksi_point']) ?></td>
+        <td><?= 'Rp.' . number_format($a['transaksi_total_belanja']) ?></td>
+        <td>
+            <?php
+            if ($a['bank'] == NULL) {
+                echo "-";
+            } else {
+                echo $a['bank'];
+            }
+            ?>
+        </td>
+        <td><?= tgl_indo_waktu($a['transaksi_create_at']) ?></td>
+        <!-- <td><?= $a['nama'] ?></td> -->
+        <td><?= $a['keterangan'] ?></td>
+        <td class="text-center" >
             <button type="button" id="hapus" onclick="hapus('<?= $a['transaksi_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             <button type="button" onclick="show('<?= $a['transaksi_id'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+            <a href="inc/struk/invo1.php?invoice=<?= $a['transaksi_kode'] ?>" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-print"></i></a>
         </td>
     </tr>
 <?php } ?>

@@ -126,13 +126,24 @@
                             </select>
                         </div>
                     </div>
-                    <div id="customer" class="col-xs-12 col-sm-6 col-md-3 col-lg-3"></div>
-                    <div id="pts" class="col-xs-8 col-sm-6 col-md-3 col-lg-2">
+                    <div id="customer" class="col-xs-12 col-sm-6 col-md-4 col-lg-3"></div>
+                    <div id="pts" class="col-xs-8 col-sm-6 col-md-3 col-lg-2" style="display: none;">
                         <label for="">Point</label>
                         <input type="text" readonly id="points" class="form-control">
                     </div>
+                    <div id="nmember" class="col-xs-8 col-sm-6 col-md-3 col-lg-2" style="display: none;">
+                        <label for="">Nama</label>
+                        <input type="text" readonly id="nmembers" class="form-control">
+                    </div>
+                    <div id="emember" class="col-xs-8 col-sm-6 col-md-4 col-lg-3" style="display: none;">
+                        <label for="">Email</label>
+                        <input type="text" readonly id="emembers" class="form-control">
+                    </div>
                     <br>
                     <br>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <a href="data_member.html" target="_blank" class="btn btn-warning btn-sm">Tampilkan Data Member</a>
+                    </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label>&nbsp;</label>
@@ -146,6 +157,7 @@
 
         <!-- tabel keranjang -->
         <div class="x_content">
+            <button type="button" onclick="deleteAll('<?php echo $_SESSION['auto_kodes']; ?>')" class="btn btn-danger btn-md" style="float: left;">Delete All</button>
             <button type="button" id="checkout" class="btn btn-primary btn-md" style="float: right;">Checkout</button>
             <table class="table table-striped" id="" style="font-size:11px;font: italic small-caps bold;">
                 <thead>
@@ -166,7 +178,7 @@
         </div>
 
         <!-- awal modal checkout -->
-        <div class="modal" id="modalCheckout">
+        <div class="modal" id="modalCheckout" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <!-- Modal Header -->
@@ -183,12 +195,7 @@
                                         <label>Cara Bayar</label>
                                         <select name="transaksi_tipe_bayar" id="transaksi_tipe_bayar" class="form-control" required>
                                             <option value="0">-Pilih-</option>
-                                            <?php
-                                            $diskon = $con->select('tb_metode', '*');
-                                            foreach ($diskon as $a) {
-                                            ?>
-                                                <option value="<?= $a['id_metode'] ?>"><?= $a['kategori'] ?></option>
-                                            <?php } ?>
+                                           
                                         </select>
                                     </div>
                                 </div>
@@ -352,7 +359,7 @@
                 <?php
                 $datag = $con->select('tb_member', '*');
                 foreach ($datag as $member) {
-                ?> "<option value = '<?= $member['member_id'] ?>' > <?= $member['member_notelp'] ?></option>" +
+                ?> "<option value = '<?= $member['member_id'] ?>' > <?= $member['member_notelp'] ?> | <?= $member['member_kode'] ?></option>" +
                 <?php } ?> "</select>" +
                 "</div>";
             document.getElementById('customer').innerHTML = member;
@@ -366,8 +373,13 @@
                     'id_member': id_member
                 }).then(function(res) {
                     var data = res.data
+                    console.log(data);
                     $('#pts').show()
+                    $('#nmember').show()
+                    $('#emember').show()
                     $('#points').val(data.point)
+                    $('#nmembers').val(data.member_nama)
+                    $('#emembers').val(data.member_email)
                     $('#member_id').val(id_member)
                     $('#distributor_id').val('')
                 }).catch(function(err) {
@@ -399,12 +411,16 @@
                 $('#member_id').val('')
             })
             $('#pts').hide()
+            $('#nmember').hide()
+            $('#emember').hide()    
             $('#points').val(0)
         } else {
             document.getElementById('customer').innerHTML = '';
             $('#member_id').val('')
             $('#distributor_id').val('')
             $('#pts').hide()
+            $('#nmember').hide()
+            $('#emember').hide() 
             $('#points').val(0)
 
         }
@@ -507,6 +523,18 @@
         }
     })
 
+    // isi pilihan tipe bayar
+    <?php 
+        $nonmember = $con->query("SELECT * FROM `tb_metode` WHERE kategori NOT LIKE '%point%'")->fetchAll(PDO::FETCH_ASSOC);
+    
+        $diskon = $con->select('tb_metode', '*');
+    ?>
+    var kalau_member = <?= json_encode($diskon); ?>;
+    var kalau_nonmember = <?= json_encode($nonmember); ?>;
+
+    // console.log(kalau_member);
+    // console.log(kalau_nonmember);
+
     // proses checkout
     $('#checkout').on('click', function() {
         var sub = document.getElementById('subtotal').value;
@@ -521,6 +549,35 @@
         if (tipe_konsumen == '') {
             toastr.warning('Silahkan Pilih Tipe Konsumen');
         } else {
+                document.getElementById("transaksi_tipe_bayar").innerHTML = "<option value='0'>-Pilih-</option>"
+            if(tipe_konsumen == "Member"){
+                for(var x = 0; x < kalau_member.length; x++)
+                {
+                    document.getElementById("transaksi_tipe_bayar").innerHTML += "<option value='" + kalau_member[x].id_metode + "'>" + kalau_member[x].kategori + "</option>"
+                }
+
+                $("#tipenya_kalau_selain_member").css("display", "none");
+                $("#tipenya_kalau_selain_member").prop("disabled", true);
+                $("#tipenya_kalau_member").css("display", "block");
+                $("#tipenya_kalau_member").prop("disabled", false);
+                // $('td[name^="transaksi_tipe_bayar"]').attr('id', 'a') //awal
+                // document.getElementsByName('transaksi_tipe_bayar')[1].id = 'gogo';
+                // document.getElementsByName('transaksi_tipe_bayar')[0].id = 'transaksi_tipe_bayar';
+                // 
+            }else{
+                for(var x = 0; x < kalau_nonmember.length; x++)
+                {
+                    document.getElementById("transaksi_tipe_bayar").innerHTML += "<option value='" + kalau_nonmember[x].id_metode + "'>" + kalau_nonmember[x].kategori + "</option>"
+                }
+                
+                $("#tipenya_kalau_member").css("display", "none");
+                $("#tipenya_kalau_member").prop("disabled", true);
+                $("#tipenya_kalau_selain_member").css("display", "block");
+                $("#tipenya_kalau_selain_member").prop("disabled", false);
+                // $('td[name$="transaksi_tipe_bayar"]').attr('id', 'b') // end 
+                // document.getElementsByName('transaksi_tipe_bayar')[1].id = 'transaksi_tipe_bayar';
+                // document.getElementsByName('transaksi_tipe_bayar')[0].id = 'koko';
+            }
             $('#modalCheckout').modal()
         }
     })
@@ -567,6 +624,7 @@
 
     // cari tipe pembayaran
     document.getElementById("transaksi_tipe_bayar").addEventListener("change", function() {
+        console.log(this.value);
         var poin = parseInt($('#points').val())
         var tot = parseInt($('#subTotalBelanjaBantuan').val())
         var hrgAwal = parseInt($('#subTotalBelanja1').val())
@@ -897,8 +955,11 @@
         $('#transaksi_jumlah_beli').val(0)
         // $('[name="radio"]').prop('checked', false);
     })
-
-    $('#pts').hide()
+    $(document).ready(function () {
+        $('#nmember').hide()
+        $('#pts').hide()
+        $('#emember').hide()
+    });
 
     // // type bayar
     // $('#transaksi_tipe_bayar').change(function(e) {
@@ -943,4 +1004,20 @@
     //         })
     //     }
     // })
+
+    function deleteAll(id) {  
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/transaksi/aksi_hapus_transaksi_all_tmp.php', {
+                'tmp_kode': id
+            }).then(function(res) {
+                var data = res.data
+                toastr.info('SUCCESS..')
+                $('#isi').load('inc/transaksi/data_keranjang_transaksi.php');
+            }).catch(function(err) {
+                toastr.error('ERROR..')
+            })
+        }
+    }
+
 </script>

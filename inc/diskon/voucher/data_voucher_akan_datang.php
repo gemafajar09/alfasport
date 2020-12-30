@@ -38,6 +38,7 @@ foreach ($data as $i => $a) {
         </td>
         <td>
             <a href="detail-voucher-<?= $a['voucher_id'] ?>.html" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+            <button type="button" id="hapus" onclick="hapus('<?= $a['voucher_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
         </td>
     </tr>
 <?php } ?>

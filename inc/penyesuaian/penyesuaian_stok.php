@@ -14,7 +14,7 @@
     <div class="x_title">
         <div class="row">
             <div class="col-md-6">
-                <div class="col-md-5" style="padding-left:26px">
+                <!-- <div class="col-md-5" style="padding-left:26px">
                     <label>Nama Toko</label>
                     <select name="" id="penyesuaian_toko_download" class="form-control select2" style="font-size:12px">
                         <option value="">-SELECT TOKO-</option>
@@ -25,7 +25,8 @@
                             <option value="<?= $a['id_toko'] ?>"><?= $a['nama_toko'] ?></option>
                         <?php } ?>
                     </select>
-                </div>
+                </div> -->
+                <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button>
             </div>
             <div class="col-md-6">
                 <ul class="nav navbar-right panel_toolbox">
@@ -36,8 +37,8 @@
                 </ul>
             </div>
         </div>
-        <hr>
-        <button type="button" onclick="tampil()" class="btn btn-success btn-round"><i class="fa fa-plus"></i></button>
+        <!-- <hr> -->
+        
         <div id='tampilkan_download' style="display: inline;">
 
         </div>

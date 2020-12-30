@@ -43,9 +43,10 @@ foreach ($data as $i => $a) {
         <td><?= tgl_indo_waktu($a['transaksi_create_at']) ?></td>
         <!-- <td><?= $a['nama'] ?></td> -->
         <td><?= $a['keterangan'] ?></td>
-        <td class="text-center">
+        <td class="text-center" >
             <button type="button" id="hapus" onclick="hapus('<?= $a['transaksi_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             <button type="button" onclick="show('<?= $a['transaksi_id'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+            <a href="inc/struk/invo1.php?invoice=<?= $a['transaksi_kode'] ?>" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-print"></i></a>
         </td>
     </tr>
 <?php } ?>
