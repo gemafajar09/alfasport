@@ -66,11 +66,11 @@ $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE 
                     <div class="col-md-12">
                         <table style="font-size: 12px;" width="100%">
                             <tr>
-                                <th>Qty</th>
-                                <th>Nama Barang</th>
-                                <th>Merk</th>
-                                <th>Ukuran</th>
-                                <th style="float: right;">Subtotal</th>
+                                <th style="text-align: center">Qty</th>
+                                <th style="text-align: center">Nama Barang</th>
+                                <th style="text-align: center">Merk</th>
+                                <th style="text-align: center">Ukuran</th>
+                                <th style="float: right; ">Subtotal</th>
                             </tr>
                             <?php
                             $total = 0;
@@ -102,10 +102,10 @@ $toko = $con->query("SELECT nama_toko, alamat_toko, telpon_toko FROM toko WHERE 
                                 $id_konsumen = $a['id_konsumen'];
                             ?>
                                 <tr>
-                                    <td><?= $a['detail_jumlah_beli'] ?></td>
-                                    <td><?= $a['barang_nama'] ?></td>
-                                    <td><?= $a['merk_nama'] ?></td>
-                                    <td>
+                                    <td style="text-align: center"><?= $a['detail_jumlah_beli'] ?></td>
+                                    <td style="text-align: center"><?= $a['barang_nama'] ?></td>
+                                    <td style="text-align: center"><?= $a['merk_nama'] ?></td>
+                                    <td style="text-align: center">
                                         <?php
                                         if ($a['barang_kategori'] == 'Sepatu') {
                                             if ($a['ukuran_default'] == 'EU') {

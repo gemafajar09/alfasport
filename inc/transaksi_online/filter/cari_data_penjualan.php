@@ -39,7 +39,7 @@ if ($_POST['id_toko'] == NULL) {
                                 Inner Join
                                     toko On toko.id_toko = tb_transaksi_online.id_toko
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'
-                                GROUP BY tb_barang.barang_nama")->fetchAll();
+                                GROUP BY tb_transaksi_online_detail.transol_detail_tgl")->fetchAll();
 } else {
     $json['table'] = $con->query("SELECT
                                     tb_transaksi_online_detail.transol_detail_tgl,
@@ -72,7 +72,7 @@ if ($_POST['id_toko'] == NULL) {
                                     toko On toko.id_toko = tb_transaksi_online.id_toko
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'
                                 AND tb_transaksi_online_detail.id_toko = '$_POST[id_toko]'
-                                GROUP BY tb_barang.barang_nama")->fetchAll();
+                                GROUP BY tb_transaksi_online_detail.transol_detail_tgl")->fetchAll();
 
     // grup berdasarkan id_toko=> , tb_transaksi_online.id_toko
 }

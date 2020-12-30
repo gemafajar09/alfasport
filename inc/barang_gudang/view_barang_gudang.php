@@ -118,7 +118,7 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Kategori</th>
+                    <!-- <th>Kategori</th> -->
                     <th>Artikel</th>
                     <th>Nama</th>
                     <th>Merek</th>

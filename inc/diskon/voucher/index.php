@@ -263,6 +263,22 @@
         $('#voucher_id').val('')
     }
 
+    function hapus(id) {
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/diskon/voucher/aksi_hapus_voucher.php', {
+                'voucher_id': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi-akan-datang').load('inc/diskon/voucher/data_voucher_akan_datang.php');
+                $('#isi-sedang-berjalan').load('inc/diskon/voucher/data_voucher_sedang_berlaku.php');
+                $('#isi-telah-berlalu').load('inc/diskon/voucher/data_voucher_telah_berlalu.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
+    }
+
 
     $('#isi-akan-datang').load('inc/diskon/voucher/data_voucher_akan_datang.php');
     $('#isi-sedang-berjalan').load('inc/diskon/voucher/data_voucher_sedang_berlaku.php');

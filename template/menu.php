@@ -21,9 +21,9 @@
                                 <li><a href="data_karyawan.html">Data Karyawan</a></li>
                                 <li><a href="data_jabatan.html">Data Jabatan</a></li>
                                 <li><a href="data_umur_barang.html">Data Umur Barang</a></li>
-                                <li><a href="data_member.html">Member</a></li>
-                                <li><a href="point_member.html">Point Member</a></li>
-                                <li><a href="data_profesi.html">Data Profesi Member</a></li>
+                                <!-- <li><a href="data_member.html">Member</a></li> -->
+                                <!-- <li><a href="point_member.html">Point Member</a></li>
+                                <li><a href="data_profesi.html">Data Profesi Member</a></li> -->
                                 <li><a href="data_supplier.html">Supplier</a></li>
                                 <li><a href="data_vendor.html">Vendor</a></li>
                             </ul>
@@ -93,6 +93,13 @@
                             </ul>
                         </li>
                         <li><a href="orderPembelian.html"><i class="fa fa-cart-plus"></i>Pesanan Website <span class="badge badge-warning">0</span></a></li>
+                        <li><a><i class="fa fa-users"></i> Member <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="data_member.html"> Data Member</a></li>
+                                <li><a href="point_member.html">Point Member</a></li>
+                                <li><a href="data_profesi.html">Data Profesi Member</a></li>
+                            </ul>
+                        </li>
                         <li><a href="return_barang.html"><i class="fa fa-cube"></i> Customer Return</a></li>
                         <!-- <li><a href="return.html"><i class="fa fa-cube"></i> Customer Return</a></li> -->
                         <li>
@@ -127,7 +134,7 @@
                         <li><a href="pembelian_barang.html"><i class="fa fa-shopping-bag "></i> Pembelian</a></li>
                         <!-- <li><a href="pembelian.html"><i class="fa fa-shopping-bag "></i> Pembelian</a></li> -->
                         <li><a href="penjualan.html"><i class="fa fa-shopping-cart "></i> Penjualan Offline</a></li>
-                        <li><a href="penjualan_online.html"><i class="fa fa-shopping-cart "></i> Penjualan Online</a></li>
+                        <li><a href="penjualan_online.html"><i class="fa fa-cart-plus "></i> Penjualan Marketplace</a></li>
                     </ul>
                 <?php
                 } elseif ($_COOKIE['jabatan_id'] == 2) {

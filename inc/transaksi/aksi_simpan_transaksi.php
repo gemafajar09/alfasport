@@ -40,14 +40,20 @@ if ($_POST['transaksi_id'] == NULL) {
     // cari point
     $p = (int)$_POST['transaksi_total_belanja'] / 100;
     $point = round($p);
+    $member_id = $data_tmp[0]['id_konsumen'];
     if ($data_tmp[0]['tmp_tipe_konsumen'] == 'Member') {
-        $member_id = $data_tmp[0]['id_konsumen'];
+        if($_POST['transaksi_tipe_bayar'] >= 1 AND $_POST['transaksi_tipe_bayar'] <= 5){
 
-        // kurangi point dahulu
-        $con->query("UPDATE tb_member_point SET point = point - '$_POST[points]' WHERE member_id = '$member_id'");
-
-        // baru tambahkan yang baru
-        $con->query("UPDATE tb_member_point SET point = point + '$point', royalti = royalti + '$point' WHERE member_id = '$member_id'");
+            
+            // kurangi point dahulu
+            $con->query("UPDATE tb_member_point SET point = point - '$_POST[points]' WHERE member_id = '$member_id'");
+            
+            // baru tambahkan yang baru
+            $con->query("UPDATE tb_member_point SET point = point + '$point', royalti = royalti + '$point' WHERE member_id = '$member_id'");
+        }else{
+            // kurangi point dahulu
+            $con->query("UPDATE tb_member_point SET point = point - '$_POST[points]' WHERE member_id = '$member_id'");
+        }
     }
 
     $sim = $con->query("INSERT INTO tb_transaksi_detail (transaksi_id, detail_kode, detail_tgl, id_toko,id_gudang,detail_tipe_konsumen, id_konsumen, detail_jumlah_beli, detail_total_harga, detail_potongan, detail_diskon1) 

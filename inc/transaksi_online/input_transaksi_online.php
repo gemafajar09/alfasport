@@ -150,6 +150,7 @@
 
         <!-- tabel keranjang -->
         <div class="x_content">
+            <button type="button" onclick="deleteAll('<?php echo $_SESSION['auto_kodes']; ?>')" class="btn btn-danger btn-md" style="float: left;">Delete All</button>
             <button type="button" id="checkout" class="btn btn-primary btn-md" style="float: right;">Checkout</button>
             <table class="table table-striped" id="" style="font-size:11px;font: italic small-caps bold;">
                 <thead>
@@ -685,4 +686,20 @@
         $('#transol_tmp_jumlah_beli').val(0)
         $('[name="radio"]').prop('checked', false);
     })
+
+    // 
+    function deleteAll(id) {  
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/transaksi_online/aksi_hapus_transaksi_all_tmp.php', {
+                'transol_tmp_kode': id
+            }).then(function(res) {
+                var data = res.data
+                toastr.info('SUCCESS..')
+                $('#isi').load('inc/transaksi_online/data_keranjang_transaksi_online.php');
+            }).catch(function(err) {
+                toastr.error('ERROR..')
+            })
+        }
+    }
 </script>

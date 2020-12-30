@@ -124,9 +124,9 @@
                                     $kode = (int) $nilai;
                                     //tambahkan sebanyak + 1
                                     $kode = $kode + 1;
-                                    $auto_kode = "V" . str_pad($kode, 5, "0",  STR_PAD_LEFT);
+                                    $auto_kode = "O" . str_pad($kode, 5, "0",  STR_PAD_LEFT);
                                 } else {
-                                    $auto_kode = "V00001";
+                                    $auto_kode = "O00001";
                                 }
                                 $_SESSION["auto_kode"] = $auto_kode;
                                 ?>
@@ -305,6 +305,23 @@
         $('#minimum').val('')
         $('#voucher_id').val('')
     }
+
+    function hapus(id) {
+        var tanya = confirm('Yakin hapus ?');
+        if (tanya == true) {
+            axios.post('inc/diskon/ongkir/aksi_hapus_voucher.php', {
+                'voucher_id_ongkir': id
+            }).then(function(res) {
+                var hapus = res.data
+                $('#isi-akan-datang').load('inc/diskon/ongkir/data_voucher_akan_datang.php');
+                $('#isi-sedang-berjalan').load('inc/diskon/ongkir/data_voucher_sedang_berlaku.php');
+                $('#isi-telah-berlalu').load('inc/diskon/ongkir/data_voucher_telah_berlalu.php');
+            }).catch(function(err) {
+                console.log(err)
+            })
+        }
+    }
+
 
 
     $('#isi-akan-datang').load('inc/diskon/ongkir/data_voucher_akan_datang.php');

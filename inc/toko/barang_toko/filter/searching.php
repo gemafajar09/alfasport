@@ -257,7 +257,7 @@ foreach ($data as $i => $a) {
     <tr>
         <td><?= $i + 1 ?></td>
         <td><?= $a['nama_toko'] ?></td>
-        <td><?= $a['barang_kategori'] ?></td>
+        <!-- <td><?= $a['barang_kategori'] ?></td> -->
         <td><?= $a['barang_detail_barcode'] ?></td>
         <td><?= $a['barang_artikel'] ?></td>
         <td><?= $a['barang_nama'] ?></td>
@@ -267,8 +267,8 @@ foreach ($data as $i => $a) {
         <td><?= $a['subdivisi_nama'] ?></td>
         <td><?= $a['gender_nama'] ?></td>
         <td><?= $a['barang_toko_jml'] ?></td>
-        <td><?= $a['barang_modal'] ?></td>
-        <td><?= $a['barang_jual'] ?></td>
+        <td><?= 'Rp.' . number_format($a['barang_modal']) ?></td>
+        <td><?= 'Rp.' . number_format($a['barang_jual']) ?></td>
         <td class="text-center">
             <button type="button" id="hapus" onclick="hapus('<?= $a['barang_toko_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             <button type="button" onclick="detail('<?= $a['barang_toko_id'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>

@@ -18,18 +18,11 @@ AND tb_barang_toko.id_toko = '$_POST[id_toko]'");
 
 echo "<option value=''>Pilih Ukuran</option>";
 foreach ($data as $i => $a) {
-    if($a['ukuran_kategori'] == 'Sepatu')
-    {
-        echo "<option value=" . $a['barang_toko_id'] . ">EU : ". $a['sepatu_ue'] ." | UK : ". $a['sepatu_ue'] ." | US : ". $a['sepatu_us'] ." | CM : ". $a['sepatu_cm'] ."</option>";
+    if ($a['ukuran_kategori'] == 'Sepatu') {
+        echo "<option value=" . $a['barang_toko_id'] . ">EU : " . $a['sepatu_ue'] . " | UK : " . $a['sepatu_uk'] . " | US : " . $a['sepatu_us'] . " | CM : " . $a['sepatu_cm'] . "</option>";
+    } elseif ($a['ukuran_kategori'] == 'Kaos Kaki') {
+        echo "<option value=" . $a['barang_toko_id'] . ">EU : " . $a['kaos_kaki_eu'] . " | Size : " . $a['kaos_kaki_size'] . "</option>";
+    } elseif ($a['ukuran_kategori'] == 'Barang Lainnya') {
+        echo "<option value=" . $a['barang_toko_id'] . ">Ukuran : " . $a['barang_lainnya_nama_ukuran'] . "</option>";
     }
-    elseif($a['ukuran_kategori'] == 'Kaos Kaki')
-    {
-        echo "<option value=" . $a['barang_toko_id'] . ">EU : ". $a['kaos_kaki_eu'] ." | Size : ". $a['kaos_kaki_size'] ."</option>";
-    }
-    elseif($a['ukuran_kategori'] == 'Barang Lainnya')
-    {
-        echo "<option value=" . $a['barang_toko_id'] . ">Ukuran : ". $a['barang_lainnya_nama_ukuran'] ."</option>";
-        
-    }
-
 }

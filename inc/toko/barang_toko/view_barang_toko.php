@@ -118,7 +118,7 @@
                 <tr>
                     <th>No</th>
                     <th>Nama Toko</th>
-                    <th>Jenis</th>
+                    <!-- <th>Jenis</th> -->
                     <th>Barcode</th>
                     <th>Artikel</th>
                     <th>Nama</th>

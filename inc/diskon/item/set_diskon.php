@@ -79,7 +79,7 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                     <table class="table table-striped">
                                                     
                         <?php
-                            $detail = $con->query("SELECT * FROM tb_barang_detail a LEFT JOIN tb_ukuran b ON a.ukuran_id=b.ukuran_id LEFT JOIN tb_barang c ON a.barang_id=c.barang_id WHERE a.barang_id='$a[artikel]'")->fetchAll(PDO::FETCH_ASSOC);
+                            $detail = $con->query("SELECT * FROM tb_barang_detail a LEFT JOIN tb_ukuran b ON a.ukuran_id=b.ukuran_id LEFT JOIN tb_barang c ON a.barang_id=c.barang_id WHERE a.barang_id='$a[artikel]'");
                             
                             $data_barang[$i]['detail'] = array();
                             foreach($detail as $ii => $isi):
@@ -87,14 +87,17 @@ $cekD = $con->query("SELECT * FROM `tb_flash_diskon` WHERE id_diskon='$session'"
                                 $awal  = date_create($isi['barang_tgl']);
                                 $akhir = date_create();
                                 $diff  = date_diff($awal, $akhir);
+                                // var_dump($diff);
+
                             if ($diff->y == 0 && $diff->m == 0) {
                                 $umur = $diff->d;
                             } elseif ($diff->y == 0 && $diff->m != 0) {
-                                $umur = $diff->m + ($diff->d * 30);
+                                $umur = ($diff->m * 30) + $diff->d;
                             } else if ($diff->y != 0) {
-                                $umur = ($diff->y * 365) + ($diff->m + 30) + $diff->d;
+                                $umur = ($diff->y * 365) + ($diff->m * 30) + $diff->d;
                             }
-                            $cariUmur = $con->query("SELECT IF(umur<= $umur, diskon, 0) as diskon FROM `tb_diskon_umur`")->fetch(PDO::FETCH_ASSOC);
+                            // var_dump($umur);
+                            $cariUmur = $con->query("SELECT IF( umur <= $umur, diskon, 0) as diskon FROM `tb_diskon_umur` ORDER BY diskon DESC LIMIT 1")->fetch(PDO::FETCH_ASSOC);
                             $hitungSelisih = $isi['barang_jual'] * $cariUmur['diskon'] / 100;
                             $hitungDiskon  = $isi['barang_jual'] - $hitungSelisih;
                         ?>

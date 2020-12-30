@@ -38,6 +38,7 @@ foreach ($data as $i => $a) {
         <td><?= $a['data_profesi_nama'] ?></td>
         <td>
             <button type="button" id="hapus" onclick="hapus('<?= $a['member_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+            <a href="inc/member/cetak.php?id=<?= $a['member_id'] ?>" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-print"></i></a>
         </td>
     </tr>
 <?php } ?>
