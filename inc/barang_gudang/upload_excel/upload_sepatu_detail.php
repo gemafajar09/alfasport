@@ -62,7 +62,7 @@ if (isset($_POST['csv_sepatu_detail'])) {
                                 'ukuran_id' => $ukuran_id,
                                 'barang_detail_barcode' => $isi_baris[3],
                                 'barang_detail_jml' => $brc['barang_detail_jml'] + $isi_baris[8],
-                                'barang_detail_tgl' => date('Y-m-d')
+                                'barang_detail_tgl' => $isi_baris[9]
                             ),
                             array(
                                 'barang_detail_id' => $barang_detail_id
@@ -76,7 +76,7 @@ if (isset($_POST['csv_sepatu_detail'])) {
                                 'ukuran_id' => $ukuran_id,
                                 'barang_detail_barcode' => $isi_baris[3],
                                 'barang_detail_jml' => $isi_baris[8],
-                                'barang_detail_tgl' => date('Y-m-d')
+                                'barang_detail_tgl' => $isi_baris[9]
                             )
                         );
                     }
