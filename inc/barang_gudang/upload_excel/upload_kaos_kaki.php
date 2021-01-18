@@ -78,7 +78,7 @@ if (isset($_POST['csv_kaos_kaki'])) {
                         'barang_modal' => $isi_baris[2],
                         'barang_jual' => $isi_baris[3],
                         'barang_berat' => $isi_baris[4],
-                        'barang_tgl' => $tanggal,
+                        'barang_tgl' => $isi_baris[16],
                         'gender_id' => $gender['gender_id'],
                         'merk_id' => $mer,
                         'kategori_id' => $kate,

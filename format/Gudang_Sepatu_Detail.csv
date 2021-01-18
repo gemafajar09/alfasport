@@ -1,4 +1,4 @@
-Artikel,Merk,Subdivisi,Barcode,EU,UK,US,CM,Jumlah
-SP234,Nike,Sepatu Basket,1,1,1,1,1,10
-SP234,Nike,Sepatu Basket,2,1,1,1,1,10
-SP234,Nike,Sepatu Basket,5,1,1,1,1,10
+Artikel,Merk,Subdivisi,Barcode,EU,UK,US,CM,Jumlah,Tanggal
+SP234,Nike,Sepatu Basket,1,1,1,1,1,10,10/13/20
+SP234,Nike,Sepatu Basket,2,1,1,1,1,10,01/19/20
+SP234,Nike,Sepatu Basket,5,1,1,1,1,10,02/03/20
