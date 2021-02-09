@@ -133,7 +133,7 @@
                         </li>
                         <li><a href="pembelian_barang.html"><i class="fa fa-shopping-bag "></i> Pembelian</a></li>
                         <!-- <li><a href="pembelian.html"><i class="fa fa-shopping-bag "></i> Pembelian</a></li> -->
-                        <li><a href="penjualan.html"><i class="fa fa-shopping-cart "></i> Penjualan Offline</a></li>
+                        <li><a href="penjualan.html"><i class="fa fa-shopping-cart "></i> Penjualan Retail</a></li>
                         <li><a href="penjualan_online.html"><i class="fa fa-cart-plus "></i> Penjualan Marketplace</a></li>
                     </ul>
                 <?php

@@ -69,7 +69,11 @@ foreach ($data as $i => $a) {
                     echo "CM : " . $a['sepatu_cm'];
                 }
             } elseif ($a['barang_kategori'] == 'Kaos Kaki') {
-                echo "EU : " . $a['kaos_kaki_eu'];
+                if ($a['ukuran_default'] == 'EU') {
+                    echo "EU : " .  $a['kaos_kaki_eu'];
+                } elseif($a['ukuran_default'] == 'Size') {
+                    echo "Size : " .  $a['kaos_kaki_size'];
+                }
             } elseif ($a['barang_kategori'] == 'Barang Lainnya') {
                 echo "EU : " . $a['barang_lainnya_nama_ukuran'];
             }

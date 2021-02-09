@@ -8,7 +8,8 @@ $data = $con->query("SELECT
                         tb_subdivisi.subdivisi_nama,
                         tb_ukuran.gender_id,
                         tb_ukuran.kaos_kaki_eu,
-                        tb_ukuran.kaos_kaki_size
+                        tb_ukuran.kaos_kaki_size,
+                        tb_ukuran.ukuran_default
                     From
                     tb_ukuran 
                     LEFT Join 
@@ -44,8 +45,26 @@ foreach ($data as $i => $a) {
             echo $a['kategori_nama'] . "<br>" . "<i><b>" . $a['divisi_nama'] . "</b></i>" . "<br>" . $a['subdivisi_nama'];
             ?>
         </td>
-        <td><?= $a['kaos_kaki_eu'] ?></td>
-        <td><?= $a['kaos_kaki_size'] ?></td>
+        
+        <td>
+            <?php
+                if ($a['ukuran_default'] == 'EU') {
+                    echo "<b>" . $a['kaos_kaki_eu'] . "</b>";
+                } else {
+                    echo $a['kaos_kaki_eu'];
+                }
+            ?>
+        </td>
+
+        <td>
+            <?php
+                if ($a['ukuran_default'] == 'Size') {
+                    echo "<b>" . $a['kaos_kaki_size'] . "</b>";
+                } else {
+                    echo $a['kaos_kaki_size'];
+                }
+            ?>
+        </td>
         <td>
             <button type="button" onclick="edit(<?= $a['ukuran_id'] ?>)" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i></button>
             <button type="button" id="hapus" onclick="hapus('<?= $a['ukuran_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>

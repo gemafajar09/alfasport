@@ -102,14 +102,25 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Subivisi</label>
+                                    <label>Subdivisi</label>
                                     <select name="id_subdivisi" id="id_subdivisi" class="form-group select2" style="width: 100%;">
                                         <option value="">-Pilih Subdivisi-</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Ukuran Default</label>
+                                    <select name="ukuran_default" id="ukuran_default" class="form-control select2">
+                                        <option value="">-Pilih-</option>
+                                        <option value="EU">EU</option>
+                                        <option value="Size">Size</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Gender</label>
                                     <div style="display: block; font-size: 15px;">
@@ -222,8 +233,18 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Ukuran Default</label>
+                                <select name="ukuran_default" id="ukuran_default2" class="form-control select2">
+                                    <option value="">-Pilih-</option>
+                                    <option value="EU">EU</option>
+                                    <option value="Size">Size</option>
+                                </select>
+                            </div>
+                        </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Gender</label>
                                 <div style="display: block; font-size: 15px;">
@@ -292,13 +313,14 @@ if (isset($_POST['simpanT'])) {
     $id_kategori = $_POST['id_kategori'];
     $id_divisi = $_POST['id_divisi'];
     $id_subdivisi = $_POST['id_subdivisi'];
+    $ukuran_default = $_POST['ukuran_default'];
     $a = $_POST['id_gender'];
     $id_gender = implode(",", $a);
     $kaos_kaki_eu = $_POST['ukuran_kaos_kaki_ue'];
     $kaos_kaki_size = $_POST['ukuran_kaos_kaki_size'];
 
     foreach ($kaos_kaki_eu as $i => $a) {
-        $con->query("INSERT INTO `tb_ukuran` (`ukuran_kategori`, `gender_id`, `merk_id`, `kategori_id`, `divisi_id`, `subdivisi_id`, `kaos_kaki_eu`, `kaos_kaki_size`) VALUES ('Kaos Kaki','$id_gender','$id_merek','$id_kategori','$id_divisi','$id_subdivisi','$kaos_kaki_eu[$i]','$kaos_kaki_size[$i]')");
+        $con->query("INSERT INTO `tb_ukuran` (`ukuran_kategori`, `gender_id`, `merk_id`, `kategori_id`, `divisi_id`, `subdivisi_id`,`ukuran_default`, `kaos_kaki_eu`, `kaos_kaki_size`) VALUES ('Kaos Kaki','$id_gender','$id_merek','$id_kategori','$id_divisi','$id_subdivisi','$ukuran_default','$kaos_kaki_eu[$i]','$kaos_kaki_size[$i]')");
     }
 
     echo "<script>
@@ -416,6 +438,7 @@ if (isset($_POST['simpanT'])) {
         var subdivisi_id = $('#id_subdivisi2').val()
         var kaos_kaki_eu = $('#ukuran_kaos_kaki_ue').val()
         var kaos_kaki_size = $('#ukuran_kaos_kaki_size').val()
+        var ukuran_default = $('#ukuran_default2').val()
         var gender_id = new Array();
         $('input[name="id_gender2"]:checked').each(function() {
             gender_id.push(this.value);
@@ -429,6 +452,7 @@ if (isset($_POST['simpanT'])) {
             'kaos_kaki_eu': kaos_kaki_eu,
             'kaos_kaki_size': kaos_kaki_size,
             'gender_id': gender_id,
+            'ukuran_default': ukuran_default,
             'ukuran_id': ukuran_id,
         }).then(function(res) {
             var simpan = res.data
@@ -455,6 +479,7 @@ if (isset($_POST['simpanT'])) {
             $('#id_merek').val(edit.merk_id).change()
             $('#ukuran_kaos_kaki_ue').val(edit.kaos_kaki_eu)
             $('#ukuran_kaos_kaki_size').val(edit.kaos_kaki_size)
+            $('#ukuran_default2').val(edit.ukuran_default).change()
             var a = edit.gender_id;
             var cek = a.split(",");
             var list_gender = document.getElementsByName("id_gender2");

@@ -88,6 +88,7 @@ if (isset($_POST['upload'])) {
                         "subdivisi_id" => $subdivisi_id,
                         "kaos_kaki_eu" => $isi_baris[5],
                         "kaos_kaki_size" => $isi_baris[6],
+                        "kaos_kaki_size" => $isi_baris[6],
                     )
                 );
             }
