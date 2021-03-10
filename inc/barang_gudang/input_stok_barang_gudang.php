@@ -27,6 +27,7 @@ $ambil = $con->get('tb_barang', '*', array('barang_kode' => $_GET['kode']));
                         <div class="card-body" id="formInput">
                             <div class="row">
                                 <input name="barang_id" type="hidden" value="<?= $ambil['barang_id'] ?>" class="form-control">
+                                <input name="barang_detail_tgl" type="hidden" value="<?= $ambil['barang_tgl'] ?>" class="form-control">
                                 <div class="col-md-2">
                                     <label>Artikel</label><br>
                                     <input name="barang_detail_artikel[]" value="<?= $ambil['barang_artikel'] ?>" class="form-control" readonly>
