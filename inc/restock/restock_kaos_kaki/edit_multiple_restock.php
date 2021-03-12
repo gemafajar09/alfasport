@@ -40,7 +40,7 @@ if (isset($_POST['update'])) {
 <div class="page-title">
     <div class="title_left">
         <h3>
-            Restock Barang Gudang Sepatu
+            Restock Barang Gudang Kaos Kaki
         </h3>
     </div>
     <div class="title_right">
@@ -78,7 +78,8 @@ if (isset($_POST['update'])) {
                                     tb_ukuran.kaos_kaki_eu,
                                     tb_ukuran.kaos_kaki_size,
                                     tb_barang_detail.barang_detail_jml,
-                                    tb_barang_detail.barang_detail_id
+                                    tb_barang_detail.barang_detail_id,
+                                    tb_barang_detail.barang_detail_barcode
                                 From
                                     tb_barang Inner Join
                                     tb_barang_detail On tb_barang_detail.barang_id =
@@ -90,20 +91,20 @@ if (isset($_POST['update'])) {
             foreach ($ambil as $i => $data) {
             ?>
                 <div class="row" style="font-size:12px">
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <div class="form-group">
                             <label>Artikel</label>
-                            <input type="text" value="<?php echo $data['barang_kode'] . " - " . $data['barang_nama'] . " - " . "(" . $data['kaos_kaki_eu'] . "/" . $data['kaos_kaki_size'] . ")" ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
+                            <input type="text" value="<?php echo $data['barang_artikel'] . " - " . $data['barang_detail_barcode'] . " - " . $data['barang_nama'] . " - " . "(EU : " . $data['kaos_kaki_eu'] . " / Size : " . $data['kaos_kaki_size'] . ")" ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
                             <input type="hidden" name="barang_kode[]" id="barang_kode" value="<?php echo $data['barang_kode'] ?>" required="required" placeholder="Nama Artikel" class="form-control" readonly>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-1">
                         <div class="form-group">
                             <label>Stok Awal</label>
                             <input type="text" name="jumlah[]" id="jumlah" value="<?php echo $data['barang_detail_jml'] ?>" required="required" placeholder="Diskon" readonly class="form-control">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label>Restock Barang</label>
                             <input type="number" name="jumlah_restock[]" id="jumlah_restock" required="required" placeholder="" class="form-control">
