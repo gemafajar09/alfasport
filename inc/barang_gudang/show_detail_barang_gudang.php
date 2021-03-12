@@ -40,6 +40,11 @@ $data = $con->query(
                 <th><i>&nbsp;&nbsp;<?= $data['barang_artikel'] ?></i></th>
             </tr>
             <tr>
+                <th>Nama</th>
+                <th>:</th>
+                <th><i>&nbsp;&nbsp;<?= $data['barang_nama'] ?></i></th>
+            </tr>
+            <tr>
                 <th>Harga Modal</th>
                 <th>:</th>
                 <th><i>&nbsp;&nbsp;Rp.<?= number_format($data['barang_modal']) ?></i></th>
@@ -110,7 +115,6 @@ $data = $con->query(
                     <tr>
                         <th>No</th>
                         <th>ID</th>
-                        <th>Nama Barang</th>
                         <th>Barcode</th>
                         <th class="text-center" colspan="4">Ukuran</th>
                         <th>Jumlah</th>
@@ -118,7 +122,7 @@ $data = $con->query(
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <th colspan="4"></th>
+                        <th colspan="3"></th>
                         <th>EU</th>
                         <th>UK</th>
                         <th>US</th>
@@ -127,13 +131,13 @@ $data = $con->query(
                     </tr>
                 </thead>
                 <tbody>
+
                     <?php
                     foreach ($isi as $i => $a) {
                     ?>
                         <tr>
                             <td><?= $i + 1 ?></td>
                             <td><?= $a['barang_kode'] ?></td>
-                            <td><?= $a['barang_nama'] ?></td>
                             <td><?= $a['barang_detail_barcode'] ?></td>
                             <td><?= $a['sepatu_ue'] ?></td>
                             <td><?= $a['sepatu_uk'] ?></td>
