@@ -19,16 +19,16 @@ $data = $con->query("SELECT
                         tb_barang Inner Join
                         tb_barang_detail On tb_barang_detail.barang_id = tb_barang.barang_id Inner Join
                         tb_ukuran On tb_ukuran.ukuran_id = tb_barang_detail.ukuran_id
-                    ORDER BY tb_barang.barang_kategori DESC
+                    ORDER BY tb_barang.barang_kategori DESC, tb_barang.barang_artikel   
                     ");
 
 echo "<option>-Pilih Barang-</option>";
 foreach ($data as $i => $a) {
     if ($a['barang_kategori'] == 'Sepatu') {
-        echo "<option value=" . $a['barang_detail_id'] . ">" . $a['barang_nama'] . " - " . $a['barang_artikel'] . " - " . $a['barang_detail_barcode'] . " - ( EU : " . $a['sepatu_ue'] . " / UK : " . $a['sepatu_uk'] . " / US : " . $a['sepatu_us'] . " / CM : " . $a['sepatu_cm']  . ")</option>";
+        echo "<option value=" . $a['barang_detail_id'] . ">" . $a['barang_artikel'] . " - " . $a['barang_detail_barcode'] . " - " . $a['barang_nama'] . " - ( EU : " . $a['sepatu_ue'] . " / UK : " . $a['sepatu_uk'] . " / US : " . $a['sepatu_us'] . " / CM : " . $a['sepatu_cm']  . ")</option>";
     } elseif ($a['barang_kategori'] == 'Kaos Kaki') {
-        echo "<option value=" . $a['barang_detail_id'] . ">" . $a['barang_nama'] . " - " . $a['barang_artikel'] . " - " . $a['barang_detail_barcode'] . " - ( EU : " . $a['kaos_kaki_eu'] . " / Size : " . $a['kaos_kaki_size'] . ")</option>";
+        echo "<option value=" . $a['barang_detail_id'] . ">" . $a['barang_artikel'] . " - " . $a['barang_detail_barcode'] . " - " . $a['barang_nama'] . " - ( EU : " . $a['kaos_kaki_eu'] . " / Size : " . $a['kaos_kaki_size'] . ")</option>";
     } elseif ($a['barang_kategori'] == 'Barang Lainnya') {
-        echo "<option value=" . $a['barang_detail_id'] . ">" . $a['barang_nama'] . " - " . $a['barang_artikel'] . " - " . $a['barang_detail_barcode'] . " - ( Ukuran : " . $a['barang_lainnya_nama_ukuran'] . ")</option>";
+        echo "<option value=" . $a['barang_detail_id'] . ">" . $a['barang_artikel'] . " - " . $a['barang_detail_barcode'] . " - " . $a['barang_nama'] . " - ( Ukuran : " . $a['barang_lainnya_nama_ukuran'] . ")</option>";
     }
 }

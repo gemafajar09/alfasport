@@ -12,7 +12,8 @@ $data = $con->query("SELECT
                         tb_transfer_barang Inner Join
                         toko On toko.id_toko = tb_transfer_barang.id_toko Inner Join
                         toko toko1 On toko1.id_toko = tb_transfer_barang.id_toko_tujuan
-                    GROUP BY tb_transfer_barang.transfer_barang_kode 
+                    GROUP BY tb_transfer_barang.transfer_barang_kode
+                    ORDER BY tb_transfer_barang.transfer_barang_id DESC
                     ")->fetchAll();
 foreach ($data as $i => $a) {
 ?>
