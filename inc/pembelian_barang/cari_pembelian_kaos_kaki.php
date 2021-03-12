@@ -63,8 +63,8 @@
                     <tr>
                         <th>No</th>
                         <th>Artikel</th>
-                        <th>Nama</th>
                         <th>Barcode</th>
+                        <th>Nama</th>
                         <th>
                             <select name="ukuran_nama" id="ukuran_nama" class="form-control select2" width="100%">
                                 <option value="ue">EU</option>
@@ -72,6 +72,7 @@
                             </select>
                         </th>
                         <th>Jumlah Beli</th>
+                        <th>No Invoice</th>
                         <th>Tanggal Beli</th>
                     </tr>
                 </thead>

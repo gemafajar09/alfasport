@@ -100,9 +100,10 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Jenis</th>
                                 <th>Artikel</th>
+                                <th>Barcode</th>
                                 <th>Nama</th>
+                                <th>Size</th>
                                 <th>Jumlah</th>
                                 <th>Satuan</th>
                             </tr>

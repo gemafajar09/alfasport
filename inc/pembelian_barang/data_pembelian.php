@@ -13,6 +13,7 @@ $data = $con->query("SELECT
                         tb_beli Inner Join
                         tb_supplier On tb_supplier.supplier_id = tb_beli.supplier_id Inner Join
                         tb_karyawan On tb_karyawan.id_karyawan = tb_beli.beli_create_by
+                    ORDER BY tb_beli.beli_id DESC
                     ")->fetchAll();
 foreach ($data as $i => $a) {
 ?>

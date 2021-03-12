@@ -3,7 +3,7 @@
         <form method="POST">
             <div class="card-header">
                 <div class="text-left">
-                    <a href="pembelian.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
+                    <a href="pembelian_barang.html" class="btn btn-info btn-round"><i class="fa fa-arrow-circle-left"></i></a>
                 </div>
                 <div class="text-center">
                     Input Pembelian
@@ -49,7 +49,7 @@
                                     <option value="<?= $b['supplier_id'] ?>"><?= $b['supplier_nama'] ?></option>
                                 <?php } ?>
                             </select>
-                            <input type="text" id="beli_id">
+                            <input type="hidden" id="beli_id">
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-1 col-lg-1">
@@ -61,11 +61,11 @@
                 </div>
             </div>
         </form>
-        <hr style="border: 10px solid; border-radius: 5px;">
+        <hr style="border: 1px solid; border-radius: 5px;">
 
         <!-- tabel keranjang -->
         <div class="x_content">
-            <button type="button" id="checkout" class="btn btn-primary btn-md" style="float: right;">Checkout</button>
+            <button type="button" id="checkout" class="btn btn-primary btn-md" style="float: right;">Submit</button>
             <table class="table table-striped" id="" style="font-size:11px;font: italic small-caps bold;">
                 <thead>
                     <tr>

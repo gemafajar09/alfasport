@@ -6,7 +6,10 @@ $json = file_get_contents('php://input');
 $_POST = json_decode($json, true);
 
 $gambar = $con->get("tb_beli", ["beli_nota"], array("beli_id" => $_POST["beli_id"]));
-unlink("../../img/nota_pembelian/" . $gambar['beli_nota']);
+
+if($gambar['beli_nota'] != 'a4.png'){
+    unlink("../../img/nota_pembelian/" . $gambar['beli_nota']);
+}
 
 
 $con->delete("tb_beli_detail", array("beli_id" => $_POST["beli_id"]));
