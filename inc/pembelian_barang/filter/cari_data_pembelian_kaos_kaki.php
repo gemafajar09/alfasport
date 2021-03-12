@@ -35,6 +35,7 @@ if ($_POST['supplier_id'] == NULL) {
                                     tb_supplier.supplier_id = tb_beli.supplier_id
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'
                                 AND tb_barang.barang_kategori = 'Kaos Kaki'
+                                ORDER BY tb_beli.beli_id DESC
                                 ")->fetchAll();
 } else {
     $json['table'] = $con->query("SELECT
@@ -64,7 +65,8 @@ if ($_POST['supplier_id'] == NULL) {
                                     tb_supplier.supplier_id = tb_beli.supplier_id
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'
                                 AND tb_supplier.supplier_id = '$_POST[supplier_id]'
-                                AND tb_barang.barang_kategori = 'Kaos Kaki'")->fetchAll();
+                                AND tb_barang.barang_kategori = 'Kaos Kaki'
+                                ORDER BY tb_beli.beli_id DESC")->fetchAll();
 }
 // pending hasil sebelum kirim ke window/browser
 ob_start();
