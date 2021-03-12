@@ -45,11 +45,12 @@
                 <select name="toko" id="toko" class="form-control select2">
                     <option value="">-Semua Toko-</option>
                     <?php
-                    if ($_COOKIE['id_toko'] == 0) {
-                        $toko = $con->query('SELECT * FROM toko WHERE id_toko != 0');
-                    } else {
-                        $toko = $con->query("SELECT * FROM toko WHERE id_toko = '$_COOKIE[id_toko]'");
-                    }
+                    // if ($_COOKIE['id_toko'] == 0) {
+                    //     $toko = $con->query('SELECT * FROM toko WHERE id_toko != 0');
+                    // } else {
+                    //     $toko = $con->query("SELECT * FROM toko WHERE id_toko = '$_COOKIE[id_toko]'");
+                    // }
+                    $toko = $con->query('SELECT * FROM toko');
                     foreach ($toko as $t) {
                     ?>
                         <option value="<?= $t['id_toko'] ?>"><?= $t['nama_toko'] ?></option>
