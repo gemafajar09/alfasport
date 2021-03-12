@@ -42,7 +42,7 @@ $ID = 'STO_' . $shuffle;
                                 <select name="toko" id="toko" class="form-control select2">
                                     <option value="">-Toko-</option>
                                     <?php
-                                    $toko = $con->query("SELECT * FROM toko WHERE nama_toko != 'Gudang'");
+                                    $toko = $con->query("SELECT * FROM toko WHERE id_toko != 0");
                                     foreach ($toko as $toko) {
                                     ?>
                                         <option value="<?= $toko['id_toko'] ?>"><?= $toko['nama_toko'] ?></option>

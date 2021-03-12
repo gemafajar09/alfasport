@@ -83,7 +83,7 @@
                                         <option selected disabled>Pilih Toko</option>
                                         <option value="gudang">Gudang</option>
                                         <?php
-                                        $data = $con->query("SELECT * FROM toko WHERE nama_toko != 'Gudang'");
+                                        $data = $con->query("SELECT * FROM toko WHERE id_toko != 0");
                                         foreach ($data as $i => $a) {
                                             echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
                                         }
