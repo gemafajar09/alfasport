@@ -10,6 +10,7 @@ $json = array("table" => null);
 
 if ($_POST['id_toko'] == NULL) {
     $json['table'] = $con->query("SELECT
+                                    tb_transaksi_online.transol_kode,
                                     tb_transaksi_online_detail.transol_detail_tgl,
                                     SUM(tb_transaksi_online_detail.transol_detail_jumlah_beli) AS transol_detail_jumlah_beli,
                                     tb_transaksi_online.transol_id,
@@ -18,7 +19,9 @@ if ($_POST['id_toko'] == NULL) {
                                     tb_barang.barang_kategori,
                                     tb_barang.barang_artikel,
                                     tb_barang.barang_nama,
+                                    tb_barang_detail.barang_detail_barcode,
                                     toko.nama_toko,
+                                    tb_data_toko_online.data_toko_online_nama,
                                     tb_ukuran.sepatu_ue,
                                     tb_ukuran.sepatu_uk,
                                     tb_ukuran.sepatu_us,
@@ -38,10 +41,15 @@ if ($_POST['id_toko'] == NULL) {
                                     tb_barang On tb_barang.barang_id = tb_barang_detail.barang_id 
                                 Inner Join
                                     toko On toko.id_toko = tb_transaksi_online.id_toko
+                                Inner Join
+                                    tb_data_toko_online On tb_data_toko_online.data_toko_online_id = tb_transaksi_online.data_toko_online_id
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'
-                                GROUP BY tb_transaksi_online_detail.transol_detail_tgl")->fetchAll();
+                                GROUP BY tb_transaksi_online_detail.transol_detail_tgl
+                                ORDER BY tb_transaksi_online.transol_id DESC
+                                ")->fetchAll();
 } else {
     $json['table'] = $con->query("SELECT
+                                    tb_transaksi_online.transol_kode,
                                     tb_transaksi_online_detail.transol_detail_tgl,
                                     SUM(tb_transaksi_online_detail.transol_detail_jumlah_beli) AS transol_detail_jumlah_beli,
                                     tb_transaksi_online.transol_id,
@@ -50,7 +58,9 @@ if ($_POST['id_toko'] == NULL) {
                                     tb_barang.barang_kategori,
                                     tb_barang.barang_artikel,
                                     tb_barang.barang_nama,
+                                    tb_barang_detail.barang_detail_barcode,
                                     toko.nama_toko,
+                                    tb_data_toko_online.data_toko_online_nama,
                                     tb_ukuran.sepatu_ue,
                                     tb_ukuran.sepatu_uk,
                                     tb_ukuran.sepatu_us,
@@ -70,9 +80,13 @@ if ($_POST['id_toko'] == NULL) {
                                     tb_barang On tb_barang.barang_id = tb_barang_detail.barang_id 
                                 Inner Join
                                     toko On toko.id_toko = tb_transaksi_online.id_toko
+                                Inner Join
+                                    tb_data_toko_online On tb_data_toko_online.data_toko_online_id = tb_transaksi_online.data_toko_online_id
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'
-                                AND tb_transaksi_online_detail.id_toko = '$_POST[id_toko]'
-                                GROUP BY tb_transaksi_online_detail.transol_detail_tgl")->fetchAll();
+                                AND tb_transaksi_online_detail.data_toko_online_id = '$_POST[id_toko]'
+                                GROUP BY tb_transaksi_online_detail.transol_detail_tgl
+                                ORDER BY tb_transaksi_online.transol_id DESC
+                                ")->fetchAll();
 
     // grup berdasarkan id_toko=> , tb_transaksi_online.id_toko
 }
@@ -82,7 +96,9 @@ foreach ($json['table'] as $i => $a) {
 ?>
     <tr>
         <td><?= $i + 1 ?></td>
+        <td><?= $a['nama_toko'] ?></td>
         <td><?= $a['barang_artikel'] ?></td>
+        <td><?= $a['barang_detail_barcode'] ?></td>
         <td><?= $a['barang_nama'] ?></td>
         <td>
             <?php
@@ -96,6 +112,7 @@ foreach ($json['table'] as $i => $a) {
             ?>
         </td>
         <td><?= $a['transol_detail_jumlah_beli'] ?></td>
+        <td><?= $a['transol_kode'] ?></td>
         <td><?= tgl_indo($a['transol_detail_tgl']) ?></td>
     </tr>
 <?php }

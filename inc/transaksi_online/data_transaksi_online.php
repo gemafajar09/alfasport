@@ -36,6 +36,7 @@ foreach ($data as $i => $a) {
         <td class="text-center">
             <button type="button" id="hapus" onclick="hapus('<?= $a['transol_id'] ?>')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
             <button type="button" onclick="show('<?= $a['transol_id'] ?>')" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></button>
+            <a href="inc/struk/invoonline.php?invoice=<?= $a['transol_kode'] ?>" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-print"></i></a>
         </td>
     </tr>
 <?php } ?>

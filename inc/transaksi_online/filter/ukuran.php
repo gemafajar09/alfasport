@@ -6,7 +6,8 @@ $_POST = json_decode($json, true);
 
 $data = $con->query("SELECT
 tb_barang_toko.barang_toko_id,
-tb_ukuran.*
+tb_ukuran.*,
+tb_barang_detail.barang_detail_barcode
 From
 tb_barang Inner Join
 tb_barang_detail On tb_barang_detail.barang_id = tb_barang.barang_id Inner Join
@@ -20,15 +21,15 @@ echo "<option value=''>Pilih Ukuran</option>";
 foreach ($data as $i => $a) {
     if($a['ukuran_kategori'] == 'Sepatu')
     {
-        echo "<option value=" . $a['barang_toko_id'] . ">EU : ". $a['sepatu_ue'] ." | UK : ". $a['sepatu_ue'] ." | US : ". $a['sepatu_us'] ." | CM : ". $a['sepatu_cm'] ."</option>";
+        echo "<option value=" . $a['barang_toko_id'] . ">". $a['barang_detail_barcode'] ." -- EU : ". $a['sepatu_ue'] ." | UK : ". $a['sepatu_uk'] ." | US : ". $a['sepatu_us'] ." | CM : ". $a['sepatu_cm'] ."</option>";
     }
     elseif($a['ukuran_kategori'] == 'Kaos Kaki')
     {
-        echo "<option value=" . $a['barang_toko_id'] . ">EU : ". $a['kaos_kaki_eu'] ." | Size : ". $a['kaos_kaki_size'] ."</option>";
+        echo "<option value=" . $a['barang_toko_id'] . ">". $a['barang_detail_barcode'] ." -- EU : ". $a['kaos_kaki_eu'] ." | Size : ". $a['kaos_kaki_size'] ."</option>";
     }
     elseif($a['ukuran_kategori'] == 'Barang Lainnya')
     {
-        echo "<option value=" . $a['barang_toko_id'] . ">Ukuran : ". $a['barang_lainnya_nama_ukuran'] ."</option>";
+        echo "<option value=" . $a['barang_toko_id'] . ">" . $a['barang_detail_barcode'] . " -- Ukuran : ". $a['barang_lainnya_nama_ukuran'] ."</option>";
         
     }
 
