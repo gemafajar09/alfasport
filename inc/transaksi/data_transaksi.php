@@ -1,25 +1,25 @@
 <?php
 include "../../config/koneksi.php";
 include "../../App/MY_url_helper.php";
-$data = $con->query("
-SELECT a.transaksi_id,
-       a.transaksi_kode,
-       b.nama_toko,
-       e.kategori,
-       a.transaksi_cash,
-       a.transaksi_debit,
-       a.transaksi_point,
-       a.transaksi_total_belanja,
-       d.bank,
-       a.transaksi_create_at,
-       c.nama,
-       a.keterangan
-FROM tb_transaksi a
-LEFT JOIN toko b ON a.id_toko=b.id_toko
-LEFT JOIN tb_karyawan c ON a.transaksi_create_by = c.id_karyawan 
-LEFT JOIN tb_bank d ON a.transaksi_bank=d.id_bank
-LEFT JOIN tb_metode e ON a.transaksi_tipe_bayar=e.id_metode
-")->fetchAll();
+$data = $con->query("SELECT a.transaksi_id,
+                        a.transaksi_kode,
+                        b.nama_toko,
+                        e.kategori,
+                        a.transaksi_cash,
+                        a.transaksi_debit,
+                        a.transaksi_point,
+                        a.transaksi_total_belanja,
+                        d.bank,
+                        a.transaksi_create_at,
+                        c.nama,
+                        a.keterangan
+                    FROM tb_transaksi a
+                    LEFT JOIN toko b ON a.id_toko=b.id_toko
+                    LEFT JOIN tb_karyawan c ON a.transaksi_create_by = c.id_karyawan 
+                    LEFT JOIN tb_bank d ON a.transaksi_bank=d.id_bank
+                    LEFT JOIN tb_metode e ON a.transaksi_tipe_bayar=e.id_metode
+                    ORDER BY a.transaksi_id DESC
+                    ")->fetchAll();
 foreach ($data as $i => $a) {
 ?>
     <tr>

@@ -62,9 +62,11 @@
                     <tr>
                         <th>No</th>
                         <th>Artikel</th>
+                        <th>Barcode</th>
                         <th>Nama</th>
                         <th>Ukuran</th>
                         <th>Jumlah Penjualan</th>
+                        <th>No Invoice</th>
                         <th>Tanggal Jual</th>
                     </tr>
                 </thead>

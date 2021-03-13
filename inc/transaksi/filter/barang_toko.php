@@ -9,5 +9,5 @@ $data = $con->query("SELECT * FROM tb_barang_toko
                         GROUP BY tb_barang.barang_nama");
 echo "<option value=''>Pilih Barang</option>";
 foreach ($data as $i => $a) {
-    echo "<option value=" . $a['barang_id'].">" . $a['barang_nama'] . " - " . $a['barang_artikel'] . "</option>";
+    echo "<option value=" . $a['barang_id'].">" . $a['barang_artikel'] . " - " . $a['barang_nama'] . "</option>";
 }
