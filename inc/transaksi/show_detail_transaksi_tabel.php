@@ -16,7 +16,8 @@ $data = $con->query("SELECT
                         tb_transaksi.transaksi_diskon,
                         tb_transaksi.transaksi_diskon_bank,
                         tb_barang.barang_jual,
-                        tb_barang.barang_artikel,
+                        tb_barang.barang_artikel,  
+                        tb_barang_detail.barang_detail_barcode,
                         tb_ukuran.sepatu_ue,
                         tb_ukuran.sepatu_uk,
                         tb_ukuran.sepatu_us,
@@ -43,7 +44,7 @@ foreach ($data as $i => $a) {
 ?>
         <tr>
                 <td><?= $i + 1 ?></td>
-                <td><?= $a['barang_artikel'] ?>/<?= $a['barang_nama'] ?></td>
+                <td><?= $a['barang_artikel'] ?> - <?= $a['barang_detail_barcode'] ?> - <?= $a['barang_nama'] ?></td>
                 <td><?= $a['detail_jumlah_beli'] ?></td>
                 <td><?= 'Rp.' . number_format($a['barang_jual']) ?></td>
                 <td><?= $a['detail_diskon1'] . '%' ?></td>
