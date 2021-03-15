@@ -114,7 +114,6 @@ $data = $con->query(
                 <thead style="background-color:grey">
                     <tr>
                         <th>No</th>
-                        <th>ID</th>
                         <th>Barcode</th>
                         <th class="text-center" colspan="4">Ukuran</th>
                         <th>Jumlah</th>
@@ -122,7 +121,7 @@ $data = $con->query(
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <th colspan="3"></th>
+                        <th colspan="2"></th>
                         <th>EU</th>
                         <th>UK</th>
                         <th>US</th>
@@ -137,7 +136,6 @@ $data = $con->query(
                     ?>
                         <tr>
                             <td><?= $i + 1 ?></td>
-                            <td><?= $a['barang_kode'] ?></td>
                             <td><?= $a['barang_detail_barcode'] ?></td>
                             <td><?= $a['sepatu_ue'] ?></td>
                             <td><?= $a['sepatu_uk'] ?></td>
@@ -162,8 +160,6 @@ $data = $con->query(
                 <thead style="background-color:grey">
                     <tr>
                         <th>No</th>
-                        <th>ID</th>
-                        <th>Nama Barang</th>
                         <th>Barcode</th>
                         <th class="text-center" colspan="2">Ukuran</th>
                         <th>Jumlah</th>
@@ -171,7 +167,7 @@ $data = $con->query(
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <th colspan="4"></th>
+                        <th colspan="2"></th>
                         <th>EU</th>
                         <th>SIZE</th>
                         <th colspan="3"></th>
@@ -183,8 +179,6 @@ $data = $con->query(
                     ?>
                         <tr>
                             <td><?= $i + 1 ?></td>
-                            <td><?= $a['barang_kode'] ?></td>
-                            <td><?= $a['barang_nama'] ?></td>
                             <td><?= $a['barang_detail_barcode'] ?></td>
                             <td><?= $a['kaos_kaki_eu'] ?></td>
                             <td><?= $a['kaos_kaki_size'] ?></td>
@@ -207,8 +201,6 @@ $data = $con->query(
                 <thead style="background-color:grey">
                     <tr>
                         <th>No</th>
-                        <th>ID</th>
-                        <th>Nama Barang</th>
                         <th>Barcode</th>
                         <th>Ukuran</th>
                         <th>Jumlah</th>
@@ -222,8 +214,6 @@ $data = $con->query(
                     ?>
                         <tr>
                             <td><?= $i + 1 ?></td>
-                            <td><?= $a['barang_kode'] ?></td>
-                            <td><?= $a['barang_nama'] ?></td>
                             <td><?= $a['barang_detail_barcode'] ?></td>
                             <td><?= $a['barang_lainnya_nama_ukuran'] ?></td>
                             <td><?= $a['barang_detail_jml'] ?></td>
