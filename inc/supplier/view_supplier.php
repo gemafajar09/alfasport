@@ -80,7 +80,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <textarea name="supplier_alamat" style="height:118px" id="supplier_alamat" class="form-control"></textarea>
+                                <textarea class="form-control ckeditor" name="supplier_alamat" id="supplier_alamat" cols="30" rows="10"></textarea>
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
         var supplier_perusahaan = $('#supplier_perusahaan').val()
         var supplier_notelp = $('#supplier_notelp').val()
         var supplier_email = $('#supplier_email').val()
-        var supplier_alamat = $('#supplier_alamat').val()
+        var supplier_alamat = CKEDITOR.instances.supplier_alamat.getData()
         var supplier_id = $('#supplier_id').val()
         axios.post('inc/supplier/aksi_simpan_supplier.php', {
             'supplier_nama': supplier_nama,
@@ -138,7 +138,7 @@
             $('#supplier_perusahaan').val(edit.supplier_perusahaan)
             $('#supplier_notelp').val(edit.supplier_notelp)
             $('#supplier_email').val(edit.supplier_email)
-            $('#supplier_alamat').val(edit.supplier_alamat)
+            CKEDITOR.instances.supplier_alamat.setData(edit.supplier_alamat)
             $('#supplier_id').val(edit.supplier_id)
             $('#dataSupplier').modal()
         }).catch(function(err) {
@@ -165,7 +165,7 @@
         $('#supplier_perusahaan').val('')
         $('#supplier_notelp').val('')
         $('#supplier_email').val('')
-        $('#supplier_alamat').val('')
+        CKEDITOR.instances.supplier_alamat.setData('')
         $('#supplier_id').val('')
     }
 

@@ -3,8 +3,79 @@
         <h3>Data Ukuran Barang Lainnya</h3>
     </div>
     <div class="title_right">
-        <div class="col-md-5 col-sm-5   form-group pull-right top_search">
-            //
+        <div class="col-md-12 col-sm-12 form-group pull-right top_search">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Merek</label>
+                        <select name="merek" id="merek" class="form-control select2">
+                            <option value="">-Merek-</option>
+                            <?php
+                            $merek = $con->select('tb_merk', '*');
+                            foreach ($merek as $merk) {
+                            ?>
+                                <option value="<?= $merk['merk_id'] ?>"><?= $merk['merk_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Ketegori</label>
+                        <select name="kategori" id="kategori" class="form-control select2">
+                            <option value="">-Kategori-</option>
+                            <?php
+                            $kategori = $con->select('tb_kategori', '*');
+                            foreach ($kategori as $kategori) {
+                            ?>
+                                <option value="<?= $kategori['kategori_id'] ?>"><?= $kategori['kategori_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Divisi</label>
+                        <select name="divisi" id="divisi" class="form-control select2">
+                            <option value="">-Divisi-</option>
+                            <?php
+                            $divisi = $con->select('tb_divisi', '*');
+                            foreach ($divisi as $divisi) {
+                            ?>
+                                <option value="<?= $divisi['divisi_id'] ?>"><?= $divisi['divisi_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Sub Divisi</label>
+                        <select name="subdivisi" id="subdivisi" class="form-control select2">
+                            <option value="">-Sub Divisi-</option>
+                            <?php
+                            $subdivisi = $con->select('tb_subdivisi', '*');
+                            foreach ($subdivisi as $subdivisi) {
+                            ?>
+                                <option value="<?= $subdivisi['subdivisi_id'] ?>"><?= $subdivisi['subdivisi_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select name="gender" id="gender" class="form-control select2">
+                            <option value="">-Gender-</option>
+                            <?php
+                            $gender = $con->select('tb_gender', '*');
+                            foreach ($gender as $gender) {
+                            ?>
+                                <option value="<?= $gender['gender_id'] ?>"><?= $gender['gender_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -292,7 +363,18 @@ if (isset($_POST['simpanT'])) {
     </script>";
 }
 ?>
-
+<script src="<?= $base_url ?>vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 <script>
     $("#id_kategori").change(function() {
         var id_kategori = $('#id_kategori option:selected').val();
@@ -487,6 +569,106 @@ if (isset($_POST['simpanT'])) {
     function shows() {
         $('#uploadCsv').modal()
     }
+
+    $('#merek').change(function(e) {
+        e.preventDefault()
+        var merek = $(this).val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/data_ukuran_barang_lainnya/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
+
+    $('#kategori').change(function(e) {
+        e.preventDefault()
+        var kategori = $(this).val()
+        var merek = $("#merek").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/data_ukuran_barang_lainnya/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
+
+    $('#divisi').change(function(e) {
+        e.preventDefault()
+        var divisi = $(this).val()
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/data_ukuran_barang_lainnya/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
+
+    $('#subdivisi').change(function(e) {
+        e.preventDefault()
+        var subdivisi = $(this).val()
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/data_ukuran_barang_lainnya/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
+
+    $('#gender').change(function(e) {
+        e.preventDefault()
+        var gender = $(this).val()
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        axios.post('inc/data_ukuran_barang_lainnya/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
 
     $('#isi').load('inc/data_ukuran_barang_lainnya/data_ukuran_barang_lainnya.php');
 </script>

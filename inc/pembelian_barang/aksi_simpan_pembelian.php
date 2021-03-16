@@ -9,6 +9,8 @@ session_start();
 $nm_foto = $_FILES['beli_nota']['name'];
 if (!empty($nm_foto)) {
     $nama_foto = fileUpload($_FILES['beli_nota'], "../../img/nota_pembelian/");
+}else{
+    $nama_foto = 'a4.png';
 }
 $tgl = date('Y-m-d H:i:s');
 

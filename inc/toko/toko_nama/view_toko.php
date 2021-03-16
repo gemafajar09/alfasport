@@ -100,11 +100,6 @@
                                     <option selected disabled>Pilih Kota</option>
                                 </select>
                             </div>
-
-                            <div class="form-group">
-                                <label>Alamat Toko</label>
-                                <textarea name="alamat_toko" style="height:100px" id="alamat_toko" class="form-control"></textarea>
-                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -119,6 +114,12 @@
                                 <label>Email</label>
                                 <input type="text" class="form-control" name="email" id="email" required="required" placeholder="Email">
                                 <input type="hidden" id="id_toko">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Alamat Toko</label>
+                                <textarea class="form-control ckeditor" name="alamat_toko" id="alamat_toko" cols="30" rows="10"></textarea>
                             </div>
                         </div>
                     </div>
@@ -141,7 +142,7 @@
 
     function simpan() {
         var nama_toko = $('#nama_toko').val()
-        var alamat_toko = $('#alamat_toko').val()
+        var alamat_toko = CKEDITOR.instances.alamat_toko.getData()
         var no_telpon = $('#no_telpon').val()
         var kode_pos = $('#kode_pos').val()
         var email = $('#email').val()
@@ -177,7 +178,7 @@
         }).then(function(res) {
             edit = res.data
             $('#nama_toko').val(edit.nama_toko)
-            $('#alamat_toko').val(edit.alamat_toko)
+            CKEDITOR.instances.alamat_toko.setData(edit.alamat_toko)
             $('#no_telpon').val(edit.telpon_toko)
             $('#kode_pos').val(edit.kode_pos_toko)
             $('#email').val(edit.email)
@@ -210,7 +211,7 @@
 
     function kosong() {
         $('#nama_toko').val('')
-        $('#alamat_toko').val('')
+        CKEDITOR.instances.alamat_toko.setData('')
         $('#no_telpon').val('')
         $('#kode_pos').val('')
         $('#email').val('')

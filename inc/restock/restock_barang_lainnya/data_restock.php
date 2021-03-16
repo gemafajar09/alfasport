@@ -19,6 +19,7 @@ $data = $con->query("SELECT
                     INNER JOIN tb_ukuran ON
                     tb_ukuran.ukuran_id = tb_barang_detail.ukuran_id
                     WHERE tb_barang.barang_kategori = 'Barang Lainnya'
+                    ORDER BY tb_barang_detail.barang_detail_tgl DESC
                     ")->fetchAll();
 foreach ($data as $i => $a) {
 ?>

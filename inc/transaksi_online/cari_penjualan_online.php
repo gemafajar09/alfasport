@@ -44,15 +44,15 @@
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6">
             <div class="form-group">
-                <label>Toko</label>
+                <label>Marketplace</label>
                 <select name="id_toko" id="id_toko" class="form-control select2">
                     <option value="">-Semua Toko-</option>
                     <?php
-                    $toko = $con->query('SELECT * FROM toko WHERE id_toko != 0');
+                    $toko = $con->query('SELECT * FROM tb_data_toko_online');
                     foreach ($toko as $t) {
                     ?>
-                        <option value="<?= $t['id_toko'] ?>">
-                            <?= $t['nama_toko'] ?>
+                        <option value="<?= $t['data_toko_online_id'] ?>">
+                            <?= $t['data_toko_online_nama'] ?>
                         </option>
                     <?php } ?>
                 </select>
@@ -66,10 +66,13 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Nama Toko</th>
                         <th>Artikel</th>
+                        <th>Barcode</th>
                         <th>Nama</th>
                         <th>Ukuran</th>
                         <th>Jumlah Penjualan</th>
+                        <th>No Invoice</th>
                         <th>Tanggal Jual</th>
                     </tr>
                 </thead>

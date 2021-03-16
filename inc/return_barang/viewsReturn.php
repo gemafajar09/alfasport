@@ -9,6 +9,7 @@ $data = $con->query("SELECT
                         tb_return_barang.return_barang_kode,
                         tb_return_barang.return_barang_id,
                         tb_return_barang.return_barang_tgl,
+                        tb_return_barang.no_resi,
                         toko.nama_toko
                     From
                         tb_return_barang Inner Join
@@ -18,7 +19,7 @@ $data = $con->query("SELECT
 ?>
 <div class="x_title">
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-2">
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
             <div class="form-group">
                 <div class="input-group-content">
                     <label for="vid">ID</label>
@@ -26,7 +27,7 @@ $data = $con->query("SELECT
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-content">
@@ -36,12 +37,22 @@ $data = $con->query("SELECT
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-content">
                         <label>Toko</label>
                         <input type="text" id="nama_toko" readonly name="nama_toko" value="<?= $data['nama_toko'] ?>" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-content">
+                        <label>No Resi</label>
+                        <input type="text" id="nama_toko" readonly name="nama_toko" value="<?= $data['no_resi'] ?>" class="form-control">
                     </div>
                 </div>
             </div>
@@ -55,8 +66,9 @@ $data = $con->query("SELECT
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Jenis</th>
                     <th>Artikel</th>
+                    <th>Barcode</th>
+                    <th>Nama</th>
                     <th>Ukuran</th>
                     <th>Stok Awal</th>
                     <th>Return</th>
@@ -66,6 +78,7 @@ $data = $con->query("SELECT
             <tbody>
                 <?php
                 $data = $con->query("SELECT
+                                        tb_barang_detail.barang_detail_barcode,
                                         tb_barang.barang_kode,
                                         tb_barang.barang_kategori,
                                         tb_barang.barang_artikel,
@@ -98,8 +111,9 @@ $data = $con->query("SELECT
                 ?>
                     <tr>
                         <td><?= $i + 1 ?></td>
-                        <td><?= $a['barang_kategori'] ?></td>
                         <td><?= $a['barang_artikel'] ?></td>
+                        <td><?= $a['barang_detail_barcode'] ?></td>
+                        <td><?= $a['barang_nama'] ?></td>
                         <?php
                         if ($a['barang_kategori'] == 'Sepatu') {
                         ?>

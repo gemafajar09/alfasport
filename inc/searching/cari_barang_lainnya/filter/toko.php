@@ -52,6 +52,7 @@ if ($_POST['toko'] == NULL) {
                                     INNER JOIN tb_gender ON
                                         tb_gender.gender_id = tb_barang.gender_id
                                     WHERE tb_barang.barang_id = '$_POST[artikel]'
+                                    GROUP BY tb_ukuran.sepatu_ue
                                 ")->fetchAll();
 
 
@@ -81,11 +82,8 @@ if ($_POST['toko'] == NULL) {
                                         tb_kategori.kategori_id = tb_barang.kategori_id
                                     WHERE tb_barang.barang_id = '$_POST[artikel]' LIMIT 1")->fetch();
 } else {
-    $json['table'] = $con->query("SELECT
-                                        tb_barang_toko.barang_toko_jml,
-                                        tb_barang_toko.barang_toko_tgl,
-                                        tb_barang_toko.barang_detail_id,
-                                        toko.nama_toko,
+    if ($_POST['toko'] == 0){
+        $json['table'] = $con->query("SELECT
                                         tb_barang.barang_kode,
                                         tb_barang.barang_kategori,
                                         tb_barang.barang_artikel,
@@ -93,43 +91,122 @@ if ($_POST['toko'] == NULL) {
                                         tb_barang.barang_modal,
                                         tb_barang.barang_jual,
                                         tb_barang.barang_tgl,
-                                        tb_merk.merk_nama,
-                                        tb_kategori.kategori_nama,
-                                        tb_divisi.divisi_nama,
-                                        tb_gender.gender_nama,
                                         tb_barang_detail.barang_detail_barcode,
+                                        tb_barang_detail.barang_detail_jml,
+                                        tb_barang_detail.barang_detail_tgl,
+                                        tb_ukuran.ukuran_default,
                                         tb_ukuran.sepatu_ue,
                                         tb_ukuran.sepatu_uk,
                                         tb_ukuran.sepatu_us,
                                         tb_ukuran.sepatu_cm,
                                         tb_ukuran.kaos_kaki_eu,
                                         tb_ukuran.kaos_kaki_size,
-                                        tb_ukuran.barang_lainnya_nama_ukuran
-                                    FROM
-                                        tb_barang_toko
-                                    INNER JOIN toko ON
-                                        toko.id_toko = tb_barang_toko.id_toko
-                                    INNER JOIN tb_ukuran ON
-                                        tb_ukuran.ukuran_id = tb_barang_toko.ukuran_id
-                                    INNER JOIN tb_barang_detail ON
-                                        tb_barang_detail.barang_detail_id = tb_barang_toko.barang_detail_id
-                                    INNER JOIN tb_barang ON
-                                        tb_barang.barang_id = tb_barang_detail.barang_id
-                                    INNER JOIN tb_merk ON
-                                        tb_merk.merk_id = tb_barang.merk_id
-                                    INNER JOIN tb_kategori ON
-                                        tb_kategori.kategori_id = tb_barang.kategori_id
-                                    INNER JOIN tb_divisi ON
-                                        tb_divisi.divisi_id = tb_barang.divisi_id
-                                    INNER JOIN tb_gender ON
-                                        tb_gender.gender_id = tb_barang.gender_id
+                                        tb_ukuran.barang_lainnya_nama_ukuran,
+                                        tb_gender.gender_nama,
+                                        tb_merk.merk_nama,
+                                        tb_kategori.kategori_nama,
+                                        tb_divisi.divisi_nama,
+                                        tb_subdivisi.subdivisi_nama
+                                    From
+                                        tb_barang 
+                                    Inner Join
+                                        tb_barang_detail On tb_barang_detail.barang_id = tb_barang.barang_id 
+                                    Inner Join
+                                        tb_ukuran On tb_ukuran.ukuran_id = tb_barang_detail.ukuran_id
+                                    Inner Join
+                                        tb_gender On tb_gender.gender_id = tb_barang.gender_id 
+                                    Inner Join
+                                        tb_merk On tb_merk.merk_id = tb_barang.merk_id 
+                                    Inner Join
+                                    tb_kategori On tb_kategori.kategori_id = tb_barang.kategori_id 
+                                    Inner Join
+                                        tb_divisi On tb_divisi.divisi_id = tb_barang.divisi_id 
+                                    Inner Join
+                                        tb_subdivisi On tb_subdivisi.subdivisi_id = tb_barang.subdivisi_id
                                     WHERE tb_barang.barang_id = '$_POST[artikel]'
-                                    AND toko.id_toko = '$_POST[toko]'
+                                    GROUP BY tb_ukuran.sepatu_ue
                                     ")->fetchAll();
 
 
 
-    $json['detail'] = $con->query("SELECT
+        $json['detail'] = $con->query("SELECT
+                                            tb_barang.barang_kategori,
+                                            tb_barang.barang_artikel,
+                                            tb_barang.barang_nama,
+                                            tb_barang.barang_modal,
+                                            tb_barang.barang_jual,
+                                            tb_merk.merk_nama,
+                                            tb_gender.gender_nama,
+                                            tb_kategori.kategori_nama,
+                                            tb_divisi.divisi_nama
+                                        From
+                                        tb_barang 
+                                        Inner Join
+                                            tb_barang_detail On tb_barang_detail.barang_id = tb_barang.barang_id 
+                                        Inner Join
+                                            tb_ukuran On tb_ukuran.ukuran_id = tb_barang_detail.ukuran_id
+                                        Inner Join
+                                            tb_gender On tb_gender.gender_id = tb_barang.gender_id 
+                                        Inner Join
+                                            tb_merk On tb_merk.merk_id = tb_barang.merk_id 
+                                        Inner Join
+                                        tb_kategori On tb_kategori.kategori_id = tb_barang.kategori_id 
+                                        Inner Join
+                                            tb_divisi On tb_divisi.divisi_id = tb_barang.divisi_id 
+                                        Inner Join
+                                            tb_subdivisi On tb_subdivisi.subdivisi_id = tb_barang.subdivisi_id
+                                        WHERE tb_barang.barang_id = '$_POST[artikel]'
+                                        LIMIT 1")->fetch();
+    }else{
+        $json['table'] = $con->query("SELECT
+                                            tb_barang_toko.barang_toko_jml,
+                                            tb_barang_toko.barang_toko_tgl,
+                                            tb_barang_toko.barang_detail_id,
+                                            toko.nama_toko,
+                                            tb_barang.barang_kode,
+                                            tb_barang.barang_kategori,
+                                            tb_barang.barang_artikel,
+                                            tb_barang.barang_nama,
+                                            tb_barang.barang_modal,
+                                            tb_barang.barang_jual,
+                                            tb_barang.barang_tgl,
+                                            tb_merk.merk_nama,
+                                            tb_kategori.kategori_nama,
+                                            tb_divisi.divisi_nama,
+                                            tb_gender.gender_nama,
+                                            tb_barang_detail.barang_detail_barcode,
+                                            tb_ukuran.sepatu_ue,
+                                            tb_ukuran.sepatu_uk,
+                                            tb_ukuran.sepatu_us,
+                                            tb_ukuran.sepatu_cm,
+                                            tb_ukuran.kaos_kaki_eu,
+                                            tb_ukuran.kaos_kaki_size,
+                                            tb_ukuran.barang_lainnya_nama_ukuran
+                                        FROM
+                                            tb_barang_toko
+                                        INNER JOIN toko ON
+                                            toko.id_toko = tb_barang_toko.id_toko
+                                        INNER JOIN tb_ukuran ON
+                                            tb_ukuran.ukuran_id = tb_barang_toko.ukuran_id
+                                        INNER JOIN tb_barang_detail ON
+                                            tb_barang_detail.barang_detail_id = tb_barang_toko.barang_detail_id
+                                        INNER JOIN tb_barang ON
+                                            tb_barang.barang_id = tb_barang_detail.barang_id
+                                        INNER JOIN tb_merk ON
+                                            tb_merk.merk_id = tb_barang.merk_id
+                                        INNER JOIN tb_kategori ON
+                                            tb_kategori.kategori_id = tb_barang.kategori_id
+                                        INNER JOIN tb_divisi ON
+                                            tb_divisi.divisi_id = tb_barang.divisi_id
+                                        INNER JOIN tb_gender ON
+                                            tb_gender.gender_id = tb_barang.gender_id
+                                        WHERE tb_barang.barang_id = '$_POST[artikel]'
+                                        AND toko.id_toko = '$_POST[toko]'
+                                        ")->fetchAll();
+
+
+
+        $json['detail'] = $con->query("SELECT
                                         tb_barang.barang_kategori,
                                         tb_barang.barang_artikel,
                                         tb_barang.barang_nama,
@@ -157,8 +234,8 @@ if ($_POST['toko'] == NULL) {
                                         tb_kategori.kategori_id = tb_barang.kategori_id
                                     WHERE tb_barang.barang_id = '$_POST[artikel]'
                                     AND toko.id_toko = '$_POST[toko]' LIMIT 1")->fetch();
+    }
 }
-
 // pending hasil sebelum kirim ke window/browser
 ob_start();
 
@@ -190,12 +267,24 @@ ob_start();
                     <?php
                     if ($_POST['toko'] == NULL) {
                         echo "Semua Toko";
+                    }elseif ($_POST['toko'] == 0) {
+                        echo "Warehouse";
                     } else {
                         echo $a['nama_toko'];
                     }
                     ?>
                 </td>
-                <td><?= $a['barang_toko_jml'] ?></td>
+                <td>
+                    <?php
+                    if ($_POST['toko'] == NULL) {
+                        echo $a['barang_toko_jml'];
+                    }elseif ($_POST['toko'] == 0) {
+                        echo $a['barang_detail_jml'];
+                    } else {
+                        echo $a['barang_toko_jml']; 
+                    } 
+                    ?>
+                </td>
                 <td style="display: block;" name="barang_lainnya_nama_ukuran"><?= $a['barang_lainnya_nama_ukuran'] ?></td>
                 <td>
                     <?php
@@ -209,7 +298,17 @@ ob_start();
                     ?>
                 </td>
                 <td><?= tgl_indo($a['barang_tgl']) ?></td>
-                <td><?= tgl_indo($a['barang_toko_tgl']) ?></td>
+                <td>
+                    <?php
+                    if ($_POST['toko'] == NULL) {
+                        echo tgl_indo($a['barang_toko_tgl']);
+                    }elseif ($_POST['toko'] == 0) {
+                        echo '-';
+                    } else {
+                        echo tgl_indo($a['barang_toko_tgl']);
+                    } 
+                    ?>
+                </td>
             </tr>
         <?php } ?>
     </tbody>

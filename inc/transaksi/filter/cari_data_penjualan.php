@@ -11,6 +11,8 @@ $json = array("table" => null);
 if ($_POST['id_toko'] == NULL) {
     $json['table'] = $con->query("SELECT
                                     tb_transaksi_detail.detail_tgl,
+                                    tb_transaksi.transaksi_create_at,
+                                    tb_transaksi.transaksi_kode,
                                     SUM(tb_transaksi_detail.detail_jumlah_beli) AS detail_jumlah_beli,
                                     tb_transaksi.transaksi_id,
                                     tb_transaksi.id_toko,
@@ -18,6 +20,7 @@ if ($_POST['id_toko'] == NULL) {
                                     tb_barang.barang_kategori,
                                     tb_barang.barang_artikel,
                                     tb_barang.barang_nama,
+                                    tb_barang_detail.barang_detail_barcode,
                                     toko.nama_toko,
                                     tb_ukuran.sepatu_ue,
                                     tb_ukuran.sepatu_uk,
@@ -39,10 +42,13 @@ if ($_POST['id_toko'] == NULL) {
                                 INNER JOIN tb_ukuran ON
                                     tb_ukuran.ukuran_id = tb_barang_detail.ukuran_id
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'    
-                                GROUP BY tb_transaksi_detail.detail_tgl")->fetchAll();
+                                GROUP BY tb_transaksi_detail.detail_tgl
+                                ORDER BY tb_transaksi.transaksi_kode DESC")->fetchAll();
 } else {
     $json['table'] = $con->query("SELECT
                                     tb_transaksi_detail.detail_tgl,
+                                    tb_transaksi.transaksi_create_at,
+                                    tb_transaksi.transaksi_kode,
                                     SUM(tb_transaksi_detail.detail_jumlah_beli) AS detail_jumlah_beli,
                                     tb_transaksi.transaksi_id,
                                     tb_transaksi.id_toko,
@@ -50,6 +56,7 @@ if ($_POST['id_toko'] == NULL) {
                                     tb_barang.barang_kategori,
                                     tb_barang.barang_artikel,
                                     tb_barang.barang_nama,
+                                    tb_barang_detail.barang_detail_barcode,
                                     toko.nama_toko,
                                     tb_ukuran.sepatu_ue,
                                     tb_ukuran.sepatu_uk,
@@ -72,7 +79,8 @@ if ($_POST['id_toko'] == NULL) {
                                     tb_ukuran.ukuran_id = tb_barang_detail.ukuran_id
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'
                                 AND tb_transaksi_detail.id_toko = '$_POST[id_toko]'
-                                GROUP BY tb_transaksi_detail.detail_tgl")->fetchAll();
+                                GROUP BY tb_transaksi_detail.detail_tgl
+                                ORDER BY tb_transaksi.transaksi_kode DESC")->fetchAll();
 }
 // pending hasil sebelum kirim ke window/browser
 ob_start();
@@ -81,6 +89,7 @@ foreach ($json['table'] as $i => $a) {
     <tr>
         <td><?= $i + 1 ?></td>
         <td><?= $a['barang_artikel'] ?></td>
+        <td><?= $a['barang_detail_barcode'] ?></td>
         <td><?= $a['barang_nama'] ?></td>
         <td>
             <?php
@@ -94,7 +103,8 @@ foreach ($json['table'] as $i => $a) {
             ?>
         </td>
         <td><?= $a['detail_jumlah_beli'] ?></td>
-        <td><?= tgl_indo($a['detail_tgl']) ?></td>
+        <td><?= $a['transaksi_kode'] ?></td>
+        <td><?= tgl_indo_waktu($a['transaksi_create_at']) ?></td>
     </tr>
 <?php }
 

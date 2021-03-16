@@ -51,19 +51,18 @@
                             </select>
                         </div>
                     </div>
-
                     <input type="hidden" name="namaPelanggan" id="member_id">
                     <input type="hidden" name="namaPelanggan" id="distributor_id">
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5">
                         <div class="form-group">
                             <label>Nama Barang</label>
                             <select class="form-control select2" name="id_gudang" id="id_gudang" required style="width: 100%;">
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                         <div class="form-group">
                             <label id="sizes">Ukuran</label>
                             <select class="form-control select2" name="ukurans" id="ukurans" required style="width: 100%;">
@@ -122,7 +121,7 @@
                                 <option value="">-SELECT-</option>
                                 <option value="Non Member">Non Member</option>
                                 <option value="Member">Member</option>
-                                <option value="Distributor">Distributor</option>
+                                <!-- <option value="Distributor">Distributor</option> -->
                             </select>
                         </div>
                     </div>

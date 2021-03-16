@@ -18,6 +18,7 @@ if ($_POST['ukuran_id'] == NULL) {
             "kategori_id" => $_POST["kategori_id"],
             "divisi_id" => $_POST["divisi_id"],
             "subdivisi_id" => $_POST["subdivisi_id"],
+            "ukuran_default" => $_POST["ukuran_default"],
             "kaos_kaki_eu" => $_POST["kaos_kaki_eu"],
             "kaos_kaki_size" => $_POST["kaos_kaki_size"]
         ),

@@ -3,8 +3,79 @@
         <h3>Data Ukuran Kaos Kaki</h3>
     </div>
     <div class="title_right">
-        <div class="col-md-5 col-sm-5   form-group pull-right top_search">
-            //
+        <div class="col-md-12 col-sm-12 form-group pull-right top_search">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Merek</label>
+                        <select name="merek" id="merek" class="form-control select2">
+                            <option value="">-Merek-</option>
+                            <?php
+                            $merek = $con->select('tb_merk', '*');
+                            foreach ($merek as $merk) {
+                            ?>
+                                <option value="<?= $merk['merk_id'] ?>"><?= $merk['merk_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Ketegori</label>
+                        <select name="kategori" id="kategori" class="form-control select2">
+                            <option value="">-Kategori-</option>
+                            <?php
+                            $kategori = $con->select('tb_kategori', '*');
+                            foreach ($kategori as $kategori) {
+                            ?>
+                                <option value="<?= $kategori['kategori_id'] ?>"><?= $kategori['kategori_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Divisi</label>
+                        <select name="divisi" id="divisi" class="form-control select2">
+                            <option value="">-Divisi-</option>
+                            <?php
+                            $divisi = $con->select('tb_divisi', '*');
+                            foreach ($divisi as $divisi) {
+                            ?>
+                                <option value="<?= $divisi['divisi_id'] ?>"><?= $divisi['divisi_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Sub Divisi</label>
+                        <select name="subdivisi" id="subdivisi" class="form-control select2">
+                            <option value="">-Sub Divisi-</option>
+                            <?php
+                            $subdivisi = $con->select('tb_subdivisi', '*');
+                            foreach ($subdivisi as $subdivisi) {
+                            ?>
+                                <option value="<?= $subdivisi['subdivisi_id'] ?>"><?= $subdivisi['subdivisi_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select name="gender" id="gender" class="form-control select2">
+                            <option value="">-Gender-</option>
+                            <?php
+                            $gender = $con->select('tb_gender', '*');
+                            foreach ($gender as $gender) {
+                            ?>
+                                <option value="<?= $gender['gender_id'] ?>"><?= $gender['gender_nama'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -102,14 +173,25 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Subivisi</label>
+                                    <label>Subdivisi</label>
                                     <select name="id_subdivisi" id="id_subdivisi" class="form-group select2" style="width: 100%;">
                                         <option value="">-Pilih Subdivisi-</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Ukuran Default</label>
+                                    <select name="ukuran_default" id="ukuran_default" class="form-control select2">
+                                        <option value="">-Pilih-</option>
+                                        <option value="EU">EU</option>
+                                        <option value="Size">Size</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Gender</label>
                                     <div style="display: block; font-size: 15px;">
@@ -222,8 +304,18 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Ukuran Default</label>
+                                <select name="ukuran_default" id="ukuran_default2" class="form-control select2">
+                                    <option value="">-Pilih-</option>
+                                    <option value="EU">EU</option>
+                                    <option value="Size">Size</option>
+                                </select>
+                            </div>
+                        </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Gender</label>
                                 <div style="display: block; font-size: 15px;">
@@ -292,13 +384,14 @@ if (isset($_POST['simpanT'])) {
     $id_kategori = $_POST['id_kategori'];
     $id_divisi = $_POST['id_divisi'];
     $id_subdivisi = $_POST['id_subdivisi'];
+    $ukuran_default = $_POST['ukuran_default'];
     $a = $_POST['id_gender'];
     $id_gender = implode(",", $a);
     $kaos_kaki_eu = $_POST['ukuran_kaos_kaki_ue'];
     $kaos_kaki_size = $_POST['ukuran_kaos_kaki_size'];
 
     foreach ($kaos_kaki_eu as $i => $a) {
-        $con->query("INSERT INTO `tb_ukuran` (`ukuran_kategori`, `gender_id`, `merk_id`, `kategori_id`, `divisi_id`, `subdivisi_id`, `kaos_kaki_eu`, `kaos_kaki_size`) VALUES ('Kaos Kaki','$id_gender','$id_merek','$id_kategori','$id_divisi','$id_subdivisi','$kaos_kaki_eu[$i]','$kaos_kaki_size[$i]')");
+        $con->query("INSERT INTO `tb_ukuran` (`ukuran_kategori`, `gender_id`, `merk_id`, `kategori_id`, `divisi_id`, `subdivisi_id`,`ukuran_default`, `kaos_kaki_eu`, `kaos_kaki_size`) VALUES ('Kaos Kaki','$id_gender','$id_merek','$id_kategori','$id_divisi','$id_subdivisi','$ukuran_default','$kaos_kaki_eu[$i]','$kaos_kaki_size[$i]')");
     }
 
     echo "<script>
@@ -306,6 +399,19 @@ if (isset($_POST['simpanT'])) {
     </script>";
 }
 ?>
+
+<script src="<?= $base_url ?>vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="<?= $base_url ?>vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
 
 <script>
     $("#id_kategori").change(function() {
@@ -416,6 +522,7 @@ if (isset($_POST['simpanT'])) {
         var subdivisi_id = $('#id_subdivisi2').val()
         var kaos_kaki_eu = $('#ukuran_kaos_kaki_ue').val()
         var kaos_kaki_size = $('#ukuran_kaos_kaki_size').val()
+        var ukuran_default = $('#ukuran_default2').val()
         var gender_id = new Array();
         $('input[name="id_gender2"]:checked').each(function() {
             gender_id.push(this.value);
@@ -429,6 +536,7 @@ if (isset($_POST['simpanT'])) {
             'kaos_kaki_eu': kaos_kaki_eu,
             'kaos_kaki_size': kaos_kaki_size,
             'gender_id': gender_id,
+            'ukuran_default': ukuran_default,
             'ukuran_id': ukuran_id,
         }).then(function(res) {
             var simpan = res.data
@@ -455,6 +563,7 @@ if (isset($_POST['simpanT'])) {
             $('#id_merek').val(edit.merk_id).change()
             $('#ukuran_kaos_kaki_ue').val(edit.kaos_kaki_eu)
             $('#ukuran_kaos_kaki_size').val(edit.kaos_kaki_size)
+            $('#ukuran_default2').val(edit.ukuran_default).change()
             var a = edit.gender_id;
             var cek = a.split(",");
             var list_gender = document.getElementsByName("id_gender2");
@@ -511,6 +620,106 @@ if (isset($_POST['simpanT'])) {
     function shows() {
         $('#uploadCsv').modal()
     }
+
+    $('#merek').change(function(e) {
+        e.preventDefault()
+        var merek = $(this).val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/data_ukuran_kaos_kaki/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
+
+    $('#kategori').change(function(e) {
+        e.preventDefault()
+        var kategori = $(this).val()
+        var merek = $("#merek").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/data_ukuran_kaos_kaki/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
+
+    $('#divisi').change(function(e) {
+        e.preventDefault()
+        var divisi = $(this).val()
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var subdivisi = $("#subdivisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/data_ukuran_kaos_kaki/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
+
+    $('#subdivisi').change(function(e) {
+        e.preventDefault()
+        var subdivisi = $(this).val()
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var gender = $("#gender").val()
+        axios.post('inc/data_ukuran_kaos_kaki/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
+
+    $('#gender').change(function(e) {
+        e.preventDefault()
+        var gender = $(this).val()
+        var merek = $("#merek").val()
+        var kategori = $("#kategori").val()
+        var divisi = $("#divisi").val()
+        var subdivisi = $("#subdivisi").val()
+        axios.post('inc/data_ukuran_kaos_kaki/filter/searching.php', {
+            'merek': merek,
+            'kategori': kategori,
+            'divisi': divisi,
+            'subdivisi': subdivisi,
+            'gender': gender
+        }).then(function(res) {
+            $('#isi').html(res.data)
+        }).catch(function(err) {
+            console.log(err)
+        })
+    })
 
     $('#isi').load('inc/data_ukuran_kaos_kaki/data_ukuran_kaos_kaki.php');
 </script>

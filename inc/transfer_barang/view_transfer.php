@@ -46,7 +46,7 @@
 
 <!-- The Modal -->
 <div class="modal" id="dataTransfer">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
 
             <!-- Modal Header -->
@@ -81,9 +81,9 @@
                                     <label>Nama Toko Asal</label>
                                     <select class="form-control " name="id_toko" id="id_toko" required style="width: 100%;">
                                         <option selected disabled>Pilih Toko</option>
-                                        <option value="gudang">Gudang</option>
+                                        <option value="gudang">Warehouse</option>
                                         <?php
-                                        $data = $con->query("SELECT * FROM toko WHERE nama_toko != 'Gudang'");
+                                        $data = $con->query("SELECT * FROM toko WHERE id_toko != 0");
                                         foreach ($data as $i => $a) {
                                             echo "<option value=" . $a['id_toko'] . ">" . $a['nama_toko'] . "</option>";
                                         }

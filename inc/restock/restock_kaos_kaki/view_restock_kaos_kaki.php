@@ -157,7 +157,7 @@
             var edit = res.data
             console.log(edit);
             $('#barang_kode').val(edit.barang_kode);
-            $('#artikel').val(edit.barang_nama + " - " + edit.barang_artikel + " - " + edit.barang_detail_barcode)
+            $('#artikel').val(edit.barang_artikel + " - " + edit.barang_detail_barcode + " - " + edit.barang_nama)
             $('#barang_detail_id').val(edit.barang_detail_id)
             $('#jumlah').val(edit.barang_detail_jml)
             $('#dataStokGudang').modal()

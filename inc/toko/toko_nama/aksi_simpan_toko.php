@@ -10,6 +10,38 @@ if ($_POST['id_toko'] == NULL) {
     $simpan = $con->query("UPDATE toko SET nama_toko='$_POST[nama_toko]',id_prov='$_POST[id_prov]',id_kota='$_POST[id_kota]', alamat_toko='$_POST[alamat_toko]', telpon_toko='$_POST[no_telpon]', kode_pos_toko='$_POST[kode_pos]', email='$_POST[email]' WHERE id_toko = $_POST[id_toko]");
 }
 
+if ($_POST['id_toko'] == NULL) {
+    $simpan = $con->insert(
+        "toko",
+        array(
+            "nama_toko" => $_POST["nama_toko"],
+            "id_prov" => $_POST["id_prov"],
+            "id_kota" => $_POST["id_kota"],
+            "alamat_toko" => $_POST["alamat_toko"],
+            "telpon_toko" => $_POST["no_telpon"],
+            "kode_pos_toko" => $_POST["kode_pos"],
+            "email" => $_POST["email"],
+        )
+    );
+} else {
+    $simpan = $con->update(
+        "toko",
+        array(
+            "nama_toko" => $_POST["nama_toko"],
+            "id_prov" => $_POST["id_prov"],
+            "id_kota" => $_POST["id_kota"],
+            "alamat_toko" => $_POST["alamat_toko"],
+            "telpon_toko" => $_POST["no_telpon"],
+            "kode_pos_toko" => $_POST["kode_pos"],
+            "email" => $_POST["email"],
+        ),
+        array(
+            "id_toko" => $_POST["id_toko"]
+        )
+    );
+}
+
+
 if ($simpan == TRUE) {
     echo json_encode('SUCCESS');
 } else {

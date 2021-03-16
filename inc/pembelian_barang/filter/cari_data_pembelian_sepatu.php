@@ -21,7 +21,8 @@ if ($_POST['supplier_id'] == NULL) {
                                     tb_ukuran.sepatu_cm,
                                     tb_beli_detail.beli_detail_jml,
                                     tb_beli_detail.barang_detail_id,
-                                    tb_beli.beli_tgl_beli
+                                    tb_beli.beli_tgl_beli,
+                                    tb_beli.beli_invoice
                                 FROM
                                     tb_barang
                                 INNER JOIN tb_barang_detail ON
@@ -36,6 +37,7 @@ if ($_POST['supplier_id'] == NULL) {
                                     tb_supplier.supplier_id = tb_beli.supplier_id
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'
                                 AND tb_barang.barang_kategori = 'Sepatu'
+                                ORDER BY tb_beli.beli_id DESC
                                 ")->fetchAll();
 } else {
     $json['table'] = $con->query("SELECT
@@ -51,7 +53,8 @@ if ($_POST['supplier_id'] == NULL) {
                                     tb_ukuran.sepatu_cm,
                                     tb_beli_detail.beli_detail_jml,
                                     tb_beli_detail.barang_detail_id,
-                                    tb_beli.beli_tgl_beli
+                                    tb_beli.beli_tgl_beli,
+                                    tb_beli.beli_invoice
                                 FROM
                                     tb_barang
                                 INNER JOIN tb_barang_detail ON
@@ -66,7 +69,9 @@ if ($_POST['supplier_id'] == NULL) {
                                     tb_supplier.supplier_id = tb_beli.supplier_id
                                 WHERE tb_barang.barang_id = '$_POST[artikel]'
                                 AND tb_supplier.supplier_id = '$_POST[supplier_id]'
-                                AND tb_barang.barang_kategori = 'Sepatu'")->fetchAll();
+                                AND tb_barang.barang_kategori = 'Sepatu'
+                                ORDER BY tb_beli.beli_id DESC
+                                ")->fetchAll();
 }
 // pending hasil sebelum kirim ke window/browser
 ob_start();
@@ -75,13 +80,14 @@ foreach ($json['table'] as $i => $a) {
     <tr>
         <td><?= $i + 1 ?></td>
         <td><?= $a['barang_artikel'] ?></td>
-        <td><?= $a['barang_nama'] ?></td>
         <td><?= $a['barang_detail_barcode'] ?></td>
+        <td><?= $a['barang_nama'] ?></td>
         <td style="display: block;" class="ukuran_ue" id="ukuran_ue" name="ukuran_ue"><?= $a['sepatu_ue'] ?></td>
         <td style="display: none;" class="ukuran_us" id="ukuran_us" name="ukuran_us"><?= $a['sepatu_us'] ?></td>
         <td style="display: none;" class="ukuran_uk" id="ukuran_uk" name="ukuran_uk"><?= $a['sepatu_uk'] ?></td>
         <td style="display: none;" class="ukuran_cm" id="ukuran_cm" name="ukuran_cm"><?= $a['sepatu_cm'] ?></td>
         <td><?= $a['beli_detail_jml'] ?></td>
+        <td><?= $a['beli_invoice'] ?></td>
         <td><?= tgl_indo($a['beli_tgl_beli']) ?></td>
     </tr>
 <?php }

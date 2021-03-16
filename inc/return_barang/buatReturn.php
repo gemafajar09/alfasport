@@ -34,6 +34,16 @@ $ID = 'STO_' . $shuffle;
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-content">
+                                <label>No Resi</label>
+                                <input type="text" id="no_resi" class="form-control" name="no_resi">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <div class="input-group">
@@ -42,7 +52,7 @@ $ID = 'STO_' . $shuffle;
                                 <select name="toko" id="toko" class="form-control select2">
                                     <option value="">-Toko-</option>
                                     <?php
-                                    $toko = $con->query("SELECT * FROM toko WHERE nama_toko != 'Gudang'");
+                                    $toko = $con->query("SELECT * FROM toko WHERE id_toko != 0");
                                     foreach ($toko as $toko) {
                                     ?>
                                         <option value="<?= $toko['id_toko'] ?>"><?= $toko['nama_toko'] ?></option>
@@ -87,7 +97,7 @@ $ID = 'STO_' . $shuffle;
     </div>
 </div>
 
-<div class="modal" id="returnEntry">
+<div class="modal" id="returnEntry" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -150,13 +160,15 @@ $ID = 'STO_' . $shuffle;
         var id_toko = $('#toko').val()
         var tanggal = $('#tanggal').val()
         var id = $('#id').val()
+        var no_resi = $('#no_resi').val()
         if (id_toko == '') {
             toastr.warning('Silahkan Pilih Toko');
         } else {
             axios.post('inc/return_barang/simpan_ke_tb_return_barang.php', {
                 'return_barang_kode': id,
                 'return_barang_tgl': tanggal,
-                'id_toko': id_toko
+                'id_toko': id_toko,
+                'no_resi': no_resi,
             }).then(function(res) {
                 var data = res.data
                 $('#returnEntry').modal()

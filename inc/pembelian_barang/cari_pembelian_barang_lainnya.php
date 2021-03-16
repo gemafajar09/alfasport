@@ -63,12 +63,11 @@
                     <tr>
                         <th>No</th>
                         <th>Artikel</th>
-                        <th>Nama</th>
                         <th>Barcode</th>
-                        <th>
-                            Nama Ukuran
-                        </th>
+                        <th>Nama</th>
+                        <th>Nama Ukuran</th>
                         <th>Jumlah Beli</th>
+                        <th>No Invoice</th>
                         <th>Tanggal Beli</th>
                     </tr>
                 </thead>

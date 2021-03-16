@@ -6,7 +6,7 @@ if (isset($_POST['simpan'])) {
     $ukuran_id = $_POST['ukuran_id'];
     $barang_detail_jml = $_POST['barang_detail_jml'];
     $barang_detail_barcode = $_POST['barang_detail_barcode'];
-    $tanggal = date('Y-m-d');
+    $tanggal = $_POST['barang_detail_tgl'];
     foreach ($ukuran_id as $i => $a) {
         // cek apakah barcode sudah ada
         $barang = $con->query("SELECT barang_detail_id, barang_detail_jml 
